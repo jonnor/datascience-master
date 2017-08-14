@@ -18,3 +18,4 @@ At Norwegian University of Life Sciences.
 
 * Image Processing, use imgflo/GEGL
 * Image Processing, [smart-cad](https://github.com/jonnor/projects/tree/master/smart-cad) prototyping
+* FBP/NoFlo execution for Jupyter. Kernel?. .fbp renderer, component/JavaScript evaluator

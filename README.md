@@ -25,15 +25,19 @@ At Norwegian University of Life Sciences.
 
 ## Ideas
 
-* Image Processing, use imgflo/GEGL
+* Image Processing/analysis using imgflo/GEGL
 * Image Processing, [smart-cad](https://github.com/jonnor/projects/tree/master/smart-cad) prototyping
 * FBP/NoFlo execution for Jupyter. Kernel?. .fbp renderer, component/JavaScript evaluator
-
-* Energy usage at Bitraf/c-base, relative to weather. Reporting/monitoring
+* Energy usage at Bitraf/c-base, relative to weather. Anomaly detection, reporting/monitoring
+* Integrated data visualization for programming, [dataviz](https://github.com/jonnor/projects/tree/master/introspectable-computing/dataviz)
+* Modelling of guitar distortion (non-linear). Using neural-network? 
+* Automatic part layout of useful for CNC/laser
 
 ## References
 
 * [The Elements of Statistical Learning](https://web.stanford.edu/~hastie/Papers/ESLII.pdf).
 Recommended by Kristin T. regarding classification, regression methods.
-
+* [Relationship between Ridge regression and PCA regression](https://stats.stackexchange.com/questions/81395/relationship-between-ridge-regression-and-pca-regression)
+* [Relationship between SVD and PCA. How to use SVD to perform PCA?](https://stats.stackexchange.com/questions/134282/relationship-between-svd-and-pca-how-to-use-svd-to-perform-pca)
+* [How Are Principal Component Analysis and Singular Value Decomposition Related](https://intoli.com/blog/pca-and-svd/)
 * [pandas](http://pandas.pydata.org/), Python package for analysing large amounts of data.

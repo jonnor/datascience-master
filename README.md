@@ -9,19 +9,26 @@ At Norwegian University of Life Sciences.
 
 ## Interesting specializations
 
+Construction
+
 * [TBA210 Building Structures II](https://www.nmbu.no/course/TBA210).
 !Requires [TBA190](https://www.nmbu.no/course/TBA190)
 * [TBA331 Building Performance Simulation](https://www.nmbu.no/course/TBA331)
 !Requires TBA210
-* [TEL240 Control Engineering and Automation](https://www.nmbu.no/course/tel240)
-* [FYS375 Energy Technology](https://www.nmbu.no/emne/FYS375)
 * [TBM250 Finite Element Method](https://www.nmbu.no/emne/TBM250)
 * [TBM200 Material Science](https://www.nmbu.no/emne/TBM200)
+
+Renewable energy
+
+* [FYS375 Energy Technology](https://www.nmbu.no/emne/FYS375)
 * [FORN200 Renewable Energy](https://www.nmbu.no/emne/FORN200)
 * [FORN330 Renewable Energy analysis](https://www.nmbu.no/emne/FORN330)
+
+Robotics
+
+* [TEL240 Control Engineering and Automation](https://www.nmbu.no/course/tel240)
 * [TEL250 Robotics and automation](https://www.nmbu.no/emne/TEL250)
 * [TMPP350C Prosessregulation](https://www.nmbu.no/emne/TMPP350C)
-
 
 ## Ideas
 
@@ -29,9 +36,11 @@ At Norwegian University of Life Sciences.
 * Image Processing, [smart-cad](https://github.com/jonnor/projects/tree/master/smart-cad) prototyping
 * FBP/NoFlo execution for Jupyter. Kernel?. .fbp renderer, component/JavaScript evaluator
 * Energy usage at Bitraf/c-base, relative to weather. Anomaly detection, reporting/monitoring
+* CNC usage at Bitraf. How many of the jobs/parts can be done on a 60x120 cm workarea machine. Take gcode/dxfs from Dropbox, analyse
 * Integrated data visualization for programming, [dataviz](https://github.com/jonnor/projects/tree/master/introspectable-computing/dataviz)
 * Modelling of guitar distortion (non-linear). Using neural-network? 
-* Automatic part layout of useful for CNC/laser
+* Automatic part layout of useful parts in remainder of cutsheet for CNC/laser. Automatic creation of cutlines to discard pieces smaller than w,h.
+* Using machine learning to (assist in) reverse engineering protocols for machine control. Record input, output pairs. Change
 
 ## References
 

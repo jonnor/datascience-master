@@ -42,6 +42,14 @@ Robotics
 * Automatic part layout of useful parts in remainder of cutsheet for CNC/laser. Automatic creation of cutlines to discard pieces smaller than w,h.
 * Using machine learning to (assist in) reverse engineering protocols for machine control. Record input, output pairs. Change
 
+## Publishing
+
+Is TapeCore/Doverail/fabricatable-machines publishable in Open Hardware Journal?
+https://openhardware.metajnl.com/about/#hardware-metapapers
+Could I do the work as a 5-point self-organized topic (ie in robotics)?
+Can/should I use NMBU as affiliation? Would they sponsor the publishing costs?
+Would/should there be research uses at NMBU for testing practical application?
+
 ## References
 
 * [The Elements of Statistical Learning](https://web.stanford.edu/~hastie/Papers/ESLII.pdf).

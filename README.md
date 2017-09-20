@@ -7,6 +7,16 @@ At Norwegian University of Life Sciences.
 
 [Programme structure](https://www.nmbu.no/en/studies/study-options/master/master-of-science-in-data-science/programme-structure)
 
+## Courses
+
+### [INF121](https://github.com/jonnor/bike-sharing-oslo)
+
+### [INF200](https://bitbucket.org/jonnor/inf200_jonnordby)
+
+### [INF221](./inf221)
+
+### [INF250](./inf250)
+
 ## Interesting specializations
 
 Construction
@@ -34,6 +44,7 @@ Robotics
 
 * Image Processing/analysis using imgflo/GEGL
 * Image Processing, [smart-cad](https://github.com/jonnor/projects/tree/master/smart-cad) prototyping
+* From Jupyter to cloud-scale service using msgflo-python
 * FBP/NoFlo execution for Jupyter. Kernel?. .fbp renderer, component/JavaScript evaluator
 * Energy usage at Bitraf/c-base, relative to weather. Anomaly detection, reporting/monitoring
 * CNC usage at Bitraf. How many of the jobs/parts can be done on a 60x120 cm workarea machine. Take gcode/dxfs from Dropbox, analyse

@@ -12,6 +12,17 @@ __email__ = "jonord@nmbu.no"
 
 import numpy as np
 import scipy.misc
+import math
+
+def to_grayscale(image):
+  shape = np.shape(image)
+  if len(shape) == 3:
+    # sRGB image, convert to luminance (Y)
+    srgb = np.array((0.2126, 0.7152, 0.0722))
+    image = (image * srgb).sum(axis=-1)
+  elif len(shape) > 3:
+    raise ValueError('Must be at 2D image')
+  return image
 
 def threshold(image, th=None):
     """Returns a binarised version of given image, thresholded at given value.
@@ -36,20 +47,18 @@ def threshold(image, th=None):
     """
     # Setup
     shape = np.shape(image)
-    binarised = np.zeros([shape[0], shape[1]], dtype=np.uint8)
-
-    if len(shape) == 3:
-        # FIXME: use a better conversion of color image to luminance
-        image = image.mean(axis=2)
-    elif len(shape) > 3:
-        raise ValueError('Must be at 2D image')
+    image = image = to_grayscale(image)
 
     if th is None:
-        th = find_threshold_otsu(image)
+        th = find_threshold(image)
 
     # Apply thresholding
-    for (x, y), value in np.ndenumerate(image):
-        binarised[x][y] = 255 if value > th else 0
+    binarised = np.where(image > th, 255, 0)
+
+#   Note: above is equivalent to looping over manually, just much faster
+#    binarised = np.zeros([shape[0], shape[1]], dtype=np.uint8)
+#    for (x, y), value in np.ndenumerate(image):
+#      binarised[x][y] = 255 if value > th else 0
 
     return binarised
 
@@ -63,26 +72,74 @@ def histogram(image):
     if len(shape) != 2:
         raise ValueError('Must be a 2D image')
 
-    # Start to make the histogram
-    ## WRITE YOUR CODE HERE
-
-    histogram, _ = np.histogram(image, bins=256)
+    histogram, _ = np.histogram(image, bins=256, range=(0, 255))
+    
+#   Note: above equivalent to looping over manually, just faster
+#    histogram = np.zeros([256], dtype=np.uint64)
+#    for value in np.nditer(image):
+#      v = int(value)
+#      histogram[v] += 1
 
     return histogram
 
 
-def find_threshold_otsu(image):
+def find_threshold(image):
     """Finds the optimal thresholdvalue of given image using Otsu's method.
     """
+
+    image = to_grayscale(image)
+
     hist = histogram(image)
-    th = 0
 
-    print(hist)
+    # Find threshold by maximizing between-class variance
+    # This gives same result as minimizing within-class variance,
+    # but with fewer calculations
 
-    ## WRITE YOUR CODE HERE
+    # Precompute cumulative number of histogram entries, and the weighted-sum
+    # Allows quick lookup when going through the possible thresholds
+    total_pixels = image.size
+    cumsum = np.cumsum(hist)
+    cumvalues = np.cumsum(np.arange(256) * hist)
+    total_values = cumvalues[255]
+
+    # background class (_b) has pixel values {0,t}
+    # foreground class (_f) has pixel values {t,255}
+    def between_class_variance(t):
+      weight_b = cumsum[t]
+      weight_f = total_pixels - weight_b 
+
+      if weight_b == 0 or weight_f == 0:
+        # no pixel values in class, avoid division-by-zero
+        return -math.inf
+
+      s = cumvalues[t]
+      mean_b = s / weight_b
+      mean_f = (total_values - s) / weight_f
+
+      between = weight_b * weight_f * (mean_b - mean_f)**2
+      return between
+
+    # Calculate between-class-variance for possible thresholds
+    scores = list(between_class_variance(t) for t in range(256))
+
+    # Chose threshold which maximises between-class-variance
+    th = max(range(256), key=lambda t: scores[t])
 
     return th
 
+def test():
+  filepath = 'bie_threshold.jpeg'
+  #p = 'a1.jpg'
+  img = scipy.misc.imread(filepath)
+
+  th = find_threshold(img)
+  expected = 104 # verified visually. Also very close to what OpenCV returns
+  assert th == expected, "{} != {}".format(th, expected)
+
+  binary = threshold(img, None)
+
+if __name__ == '__main__':
+  test()
 
 
-    
+

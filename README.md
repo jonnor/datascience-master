@@ -68,4 +68,7 @@ Recommended by Kristin T. regarding classification, regression methods.
 * [Relationship between Ridge regression and PCA regression](https://stats.stackexchange.com/questions/81395/relationship-between-ridge-regression-and-pca-regression)
 * [Relationship between SVD and PCA. How to use SVD to perform PCA?](https://stats.stackexchange.com/questions/134282/relationship-between-svd-and-pca-how-to-use-svd-to-perform-pca)
 * [How Are Principal Component Analysis and Singular Value Decomposition Related](https://intoli.com/blog/pca-and-svd/)
-* [pandas](http://pandas.pydata.org/), Python package for analysing large amounts of data.
+* [pandas](http://pandas.pydata.org/), Python package for analysing large amounts of data
+* [Clever Machines Learn How to Be Curious](https://www.quantamagazine.org/clever-machines-learn-how-to-be-curious-20170919/).
+Rewarding agents for curiosity, exploring their environment and preferring actions which they can least confidently predict.
+In this way being able to learn to perform tasks without predefined goal and associated cost function.

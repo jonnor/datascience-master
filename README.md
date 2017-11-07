@@ -72,3 +72,23 @@ Recommended by Kristin T. regarding classification, regression methods.
 * [Clever Machines Learn How to Be Curious](https://www.quantamagazine.org/clever-machines-learn-how-to-be-curious-20170919/).
 Rewarding agents for curiosity, exploring their environment and preferring actions which they can least confidently predict.
 In this way being able to learn to perform tasks without predefined goal and associated cost function.
+* [Feature Visualization: How neural networks build up their understanding of images](https://distill.pub/2017/feature-visualization/).
+Starting with feeding in noise, and then optimizing the response for some parameter (neuron, channel, logits.).
+Discusses this approach versus finding representative examples in a dataset.
+Using a 'diversity' term to optimization objective that pushes multiple examples to be different from eachother.
+Optimizing for pairs of neurons, interpolating between them.
+Discussed multiple existing approaches to regularization of the model to give representative results.
+Broadly classified into: Frequency penalization, transformation robustness, learned priors.
+Can also use preconditioning: transformations on the gradient. Can give good results in fewer steps, and reduces high-frequency impact
+Paper presentation: Nice semi-interactive image galleries where one can adjust parameters and it gives results at that combo.
+
+
+## Interesting subproblems
+
+Neural networks
+
+* When used on images incredibly texture dependent. For instance cause vunerability to adverserial examples.
+How to mitigate? Learning rate influences, higher rate, more noise.
+* Seem that there is a lot of 'unecessary' complexity/information being encoded, that are irrelevant to the objective at hand.
+How can one know how much complexity is needed to perform a particular function? How to estimate that it is well spent?
+Are there information-theory approaches that can be applied?

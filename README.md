@@ -81,6 +81,22 @@ Discussed multiple existing approaches to regularization of the model to give re
 Broadly classified into: Frequency penalization, transformation robustness, learned priors.
 Can also use preconditioning: transformations on the gradient. Can give good results in fewer steps, and reduces high-frequency impact
 Paper presentation: Nice semi-interactive image galleries where one can adjust parameters and it gives results at that combo.
+* [Eliezer Yudkowsky – AI Alignment: Why It's Hard, and Where to Start](https://www.youtube.com/watch?v=EUjc1WuyPT8).
+Utility functions for intelligent agent behavior, challenges and ways to deal with.
+Recent work in progress:
+Utility indifference. Agent must respect an off/suspend switch. Paper: Corrigibility
+Low impact: Agents that deliberately reduce their agency on the world. Paper: Reduced Impact Artificial Intelligence
+Ambiguity indentification. Have the AI ask you about using new capabilities. Paper: The Value Learning Problem
+Conservatism. Creating robust boundaries/space between desired and non-desired classifications,
+such that new capabilities/stategries will fall on right side. Conservative white-listing instead of black-listing.
+Specifying environmental goals using sensory data. What if AI is like modern machine learning. Paper: Formalizing Two Problems in Realistic World-Models. Being able to express environmental goals instead of just goals in terms of directly observable sensory input.
+Inverse reinforcement learning. Watch another agent, induce what it wants. Paper: Learning the preference of Bounded Agents.
+Act-based agent. Supervised learning by observing human behavior/strategies.
+Mild optimization. Don't optimize your utility function so hard/narrow.
+Recent completed work:
+AXAI. How to create an AGI given unbounded computation. Paper: Universal Algorithmic Intelligence
+Intelligent software agent cooperation. Program Equilibrium in the Prisoners Dilemma via Lobs Theorem.
+Probabilitic game theory. Paper: Reflective oracles.
 
 
 ## Interesting subproblems

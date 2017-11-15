@@ -48,15 +48,21 @@ def centre_of_mass(image, black_blob=False):
     centre = np.array([0, 0]).astype(float)
 
     #------------------------------START YOUR CODE-----------------------------#
-    xs = 0.0
-    ys = 0.0
-    s = 0.0    
-    for y in range(shape[0]):
-        for x in range(shape[1]):
-             p = image[y, x]
-             xs += x*p
-             ys += y*p
-             s += p
+    s = np.sum(image)
+    indices = np.mgrid[0:image.shape[0],0:image.shape[1]]
+    ys = np.sum(indices[0]*image)
+    xs = np.sum(indices[1]*image)
+
+    # Equivalent, but slower
+    #xs = 0.0
+    #ys = 0.0
+    #s = 0.0    
+    #for y in range(shape[0]):
+    #    for x in range(shape[1]):
+    #         p = image[y, x]
+    #         xs += x*p
+    #         ys += y*p
+    #         s += p
 
     centre = np.array([ ys/s, xs/s ])
     #-------------------------------END YOUR CODE------------------------------#
@@ -83,14 +89,14 @@ def select_one_blob(labeled, colour):
     one_blob = labeled.copy()
 
     #------------------------------START YOUR CODE-----------------------------#
-
-    shape = one_blob.shape
-    for y in range(shape[0]):
-        for x in range(shape[1]):
-             p = one_blob[y, x]
-             if p != colour:
-                one_blob[y, x] = 0
-
+    one_blob[labeled != colour] = 0
+    # Equivalent, but slower    
+    #shape = one_blob.shape
+    #for y in range(shape[0]):
+    #    for x in range(shape[1]):
+    #         p = one_blob[y, x]
+    #         if p != colour:
+    #            one_blob[y, x] = 0
     #-------------------------------END YOUR CODE------------------------------#
 
     return one_blob
@@ -149,10 +155,7 @@ def blob_detection(image, th=None, black_blobs=True, min_area=None,
     # The i-th value in the `wanted_blobs list should be True if the
     # corresponding blob has an area within the range we consider.    
     #------------------------------START YOUR CODE-----------------------------#
-    wanted_blobs = [True]*no_blobs
-    for i in range(no_blobs):
-        area = areas[i]
-        wanted_blobs[i] = max_area > area > min_area    
+    wanted_blobs = [ max_area > a > min_area for a in areas ]
     #-------------------------------END YOUR CODE------------------------------#
 
     # Remove unwanted blobs and recompute areas

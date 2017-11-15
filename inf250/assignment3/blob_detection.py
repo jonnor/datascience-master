@@ -48,7 +48,17 @@ def centre_of_mass(image, black_blob=False):
     centre = np.array([0, 0]).astype(float)
 
     #------------------------------START YOUR CODE-----------------------------#
+    xs = 0.0
+    ys = 0.0
+    s = 0.0    
+    for y in range(shape[0]):
+        for x in range(shape[1]):
+             p = image[y, x]
+             xs += x*p
+             ys += y*p
+             s += p
 
+    centre = np.array([ ys/s, xs/s ])
     #-------------------------------END YOUR CODE------------------------------#
     return centre.astype(int)
 
@@ -73,6 +83,13 @@ def select_one_blob(labeled, colour):
     one_blob = labeled.copy()
 
     #------------------------------START YOUR CODE-----------------------------#
+
+    shape = one_blob.shape
+    for y in range(shape[0]):
+        for x in range(shape[1]):
+             p = one_blob[y, x]
+             if p != colour:
+                one_blob[y, x] = 0
 
     #-------------------------------END YOUR CODE------------------------------#
 
@@ -121,20 +138,21 @@ def blob_detection(image, th=None, black_blobs=True, min_area=None,
     areas = histogram(labeled)[1:]
     areas = np.trim_zeros(areas, 'b') # Remove trailing zeros
     #-----WRITE A SHORT DESRIPTION OF WHY THIS GIVES THE AREA OF EACH BLOB-----#
-    #
-    #
-    #
+    # Each blob has its pixel values set to
+    # The histogram counts how many times each value appears,
+    # effectively counting how many pixels the blob consists of,
+    # that is: the area of the blob
     #------------------------------END DESCRIPTION-----------------------------#
 
     # Filter blobs:
     # Array with the blob-labels to consider
+    # The i-th value in the `wanted_blobs list should be True if the
+    # corresponding blob has an area within the range we consider.    
+    #------------------------------START YOUR CODE-----------------------------#
     wanted_blobs = [True]*no_blobs
     for i in range(no_blobs):
-        pass
-        # The i-th value in the `wanted_blobs list should be True if the
-        # corresponding blob has an area within the range we consider.
-    #------------------------------START YOUR CODE-----------------------------#
-
+        area = areas[i]
+        wanted_blobs[i] = max_area > area > min_area    
     #-------------------------------END YOUR CODE------------------------------#
 
     # Remove unwanted blobs and recompute areas
@@ -147,12 +165,12 @@ def blob_detection(image, th=None, black_blobs=True, min_area=None,
         'pos' : np.array([None, None]),
         'area' : None,
     } for _ in range(no_blobs)]
-
-    for blob in range(no_blobs):
-        blob_id = blob + 1 # Blob labels start at 1
-
     #-----------------------------YOUR CODE HERE-------------------------------#
-
+    for blob in range(no_blobs): 
+        blobs[blob]['area'] = areas[blob]
+        color = blob + 1 # Blob labels start at 1
+        isolated = select_one_blob(labeled, color) 
+        blobs[blob]['pos'] = centre_of_mass(isolated)
     #-----------------------------END YOUR CODE--------------------------------#
 
     return blobs, labeled

@@ -1,12 +1,13 @@
 # -*- coding: utf-8 -*-
 
 """
-Skeleton for first part of the blob-detection coursework as part of INF250
-at NMBU (Autumn 2017).
+Blob-detection coursework as part of INF250 at NMBU (Autumn 2017).
+
+Based on skeleton code by Yngve Mardal Moe
 """
 
-__author__ = "Yngve Mardal Moe"
-__email__ = "yngve.m.moe@gmail.com"
+__author__ = "Jon Nordby"
+__email__ = "jononor@gmail.com"
 
 import numpy as np
 from threshold import threshold, histogram

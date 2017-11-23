@@ -3,11 +3,11 @@
 ((* set cell_style = 'style_python.tplx' *))
 
 ((* block author *))
-    \author{Hans Ekkehard Plesser \and Joe Doe}
+    \author{Jon Nordby}
 ((* endblock author *))
 
 ((* block title *))
-    \title{INF221 Term Paper Material}
+    \title{Performance of sorting algorithms in Python}
 ((* endblock title *))
 
 ((* block header *))
@@ -20,8 +20,8 @@
 
 ((* block abstract *))
    \abstract{
-   This report provides a brief summary of some relevant
-   material for the INF221 Term Paper.
+   A study on the performance of classic sorting algorithms implemented in Python,
+   including using the Numba Just-in-Time compilation framework to speed them up.
    }
 
    \tableofcontents

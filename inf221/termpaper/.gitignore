@@ -1,0 +1,8 @@
+*.pdf
+*.tex
+*.log
+*.aux
+s.log
+*.toc
+*.out
+*_files/

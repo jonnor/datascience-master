@@ -1,0 +1,34 @@
+((*- extends 'article.tplx' -*))
+
+((* set cell_style = 'style_python.tplx' *))
+
+((* block author *))
+    \author{Hans Ekkehard Plesser \and Joe Doe}
+((* endblock author *))
+
+((* block title *))
+    \title{INF221 Term Paper Material}
+((* endblock title *))
+
+((* block header *))
+    ((( super() )))
+    
+    \usepackage[authoryear,round]{natbib}
+    \date{}
+    % insert other LaTeX packages you may need here   
+((* endblock header *))
+
+((* block abstract *))
+   \abstract{
+   This report provides a brief summary of some relevant
+   material for the INF221 Term Paper.
+   }
+
+   \tableofcontents
+((* endblock abstract *))
+
+
+((* block bibliography *))
+\bibliographystyle{plainnat}
+\bibliography{term_paper}
+((* endblock bibliography *))

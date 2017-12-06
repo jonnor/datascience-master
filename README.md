@@ -42,24 +42,59 @@ Robotics
 
 ## Ideas
 
-* Image Processing/analysis using imgflo/GEGL
-* Image Processing, [smart-cad](https://github.com/jonnor/projects/tree/master/smart-cad) prototyping
+Flowhub related
+
 * From Jupyter to cloud-scale service using msgflo-python
 * FBP/NoFlo execution for Jupyter. Kernel?. .fbp renderer, component/JavaScript evaluator
+* Integrated data visualization for programming, [dataviz](https://github.com/jonnor/projects/tree/master/introspectable-computing/dataviz)
+
+Basic data science applications
+
 * Energy usage at Bitraf/c-base, relative to weather. Anomaly detection, reporting/monitoring
 * CNC usage at Bitraf. How many of the jobs/parts can be done on a 60x120 cm workarea machine. Take gcode/dxfs from Dropbox, analyse
-* Integrated data visualization for programming, [dataviz](https://github.com/jonnor/projects/tree/master/introspectable-computing/dataviz)
-* Modelling of guitar distortion (non-linear). Using neural-network? 
-* Automatic part layout of useful parts in remainder of cutsheet for CNC/laser. Automatic creation of cutlines to discard pieces smaller than w,h.
-* Using machine learning to (assist in) reverse engineering protocols for machine control. Record input, output pairs. Change
+
+Machine learning
+
+* Modelling of guitar distortion (non-linear). Using neural-network?
+* Assist in reverse engineering of protocols, for example for machine control (Shopbot,Redsail).
+Record input, output pairs. Change input parameters, find corresponding change in output.
+
+Bigger projects, potentially novel
+
+* Machine-vision-assisted construction of . [smart-cad](https://github.com/jonnor/projects/tree/master/smart-cad)
+* Automation of CAM paths for maximizing material usage and waste management. Machine-vision
+Automatic part layout of useful parts in remainder of cutsheet for CNC/laser.
+Automatic creation of cutlines to discard pieces smaller than w,h.
+
+* Better automated circuit board layouts
+Reusable modules with pre-laidout schematic/board snippets for a given functionality.
+Autolayout by placing modules as black-box rectangles/polygons.
+Using reduction in netlist size (implicit ignoring local connections) for better autorouting.
+Using contraints to express requirements, solving to autosuggest sub-circuit solutions.
 
 ## Publishing
 
+[Open Hardware Journal](https://openhardware.metajnl.com/about/#hardware-metapapers)
+
 Is TapeCore/Doverail/fabricatable-machines publishable in Open Hardware Journal?
-https://openhardware.metajnl.com/about/#hardware-metapapers
 Could I do the work as a 5-point self-organized topic (ie in robotics)?
 Can/should I use NMBU as affiliation? Would they sponsor the publishing costs?
 Would/should there be research uses at NMBU for testing practical application?
+
+[Brage @ NMBU](https://www.nmbu.no/en/about-nmbu/library/publishing/brage). Open Access publishing for NMBU affiliates. 
+Note: NMBU operates an internal publishing fund for Open Access publications, up to 15k NOK for publication.
+
+[ArXiv](https://arxiv.org). Pre-print / working paper publishing. Widely used open/free source of papers.
+
+[Hackaday Journal](https://journal.hackaday.io/submissions). Possiblity of presenting at the Hackaday Superconference.
+
+## Conferences
+
+* Fablab conference. FAB14 in France
+* Open Source Hardware conference.
+* FOSDEM
+* Libre Graphics Meeting
+
 
 ## References
 

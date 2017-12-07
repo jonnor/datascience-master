@@ -65,12 +65,17 @@ Bigger projects, potentially novel
 * Automation of CAM paths for maximizing material usage and waste management. Machine-vision
 Automatic part layout of useful parts in remainder of cutsheet for CNC/laser.
 Automatic creation of cutlines to discard pieces smaller than w,h.
+Can a greedy algorithm perform well for part layout, ie does the problem have optimal substructure?
 
-* Better automated circuit board layouts
+* Component-based PCB autolayout & routing
 Reusable modules with pre-laidout schematic/board snippets for a given functionality.
 Autolayout by placing modules as black-box rectangles/polygons.
 Using reduction in netlist size (implicit ignoring local connections) for better autorouting.
+But this can be detected via strongly connected components of the graph?
+Note, one can also use [Planarity_testing](https://en.wikipedia.org/wiki/Planarity_testing) to determine subgraphs
+which can be laid out without 
 Using contraints to express requirements, solving to autosuggest sub-circuit solutions.
+http://www.electronicdesign.com/what-s-difference-between/what-s-difference-pcb-routing-then-and-now
 
 ## Publishing
 
@@ -133,6 +138,24 @@ AXAI. How to create an AGI given unbounded computation. Paper: Universal Algorit
 Intelligent software agent cooperation. Program Equilibrium in the Prisoners Dilemma via Lobs Theorem.
 Probabilitic game theory. Paper: Reflective oracles.
 
+* [Deep reinforcement for robotics](https://www.facebook.com/nipsfoundation/videos/1554594181298482)
+Reinforcement learning is different from supervised methods. The agent observes its environment and performs actions on it.
+It observes the outcome of its actions and compares this with desired outcome.
+Current RL algorithms are fully generic (mathematically). They can get superhuman performance, but the learning efficiency is very low.
+Can we make it more efficient by making use of particular information about the environment. Ie: obey our laws of physics
+Can we meta-reinformcement learn? That let the agent learn to reinformcement learn?
+Using Recurrent Neural Net as a generic compute achitecture, with both compute and storage ability. 
+Evaluating on Multi-armed bandit problem, and known asymptomatically optimall algorithm.
+Currently meta-learning works 2/3 of the time. Reasons for not working inlclude overfitting (or underfitting), and insufficient signal.
+Model-Agnostic Meta-Learning.
+Imitation learning. Many success stories in robotics. Human shows how to perform task, agent learns the policy.
+Lifelong learning. Instead of only training/learning up-front, will learn continiously after deployment.
+Simulation is very important. Huge advantages to training in real world.
+Challenge is for the learnings in simulation to transfer over into real world.
+One approach is randomized simulation domains. With enough variation - even when not high fidelity,
+allows to train agent which performs well on real-life scenario without any real-life training data.
+How to increase signal for reinformement learning?
+Hindsight Experience Replay. Also learn from failures. Inject goals into old experiences
 
 ## Interesting subproblems
 

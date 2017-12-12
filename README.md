@@ -52,6 +52,7 @@ Basic data science applications
 
 * Energy usage at Bitraf/c-base, relative to weather. Anomaly detection, reporting/monitoring
 * CNC usage at Bitraf. How many of the jobs/parts can be done on a 60x120 cm workarea machine. Take gcode/dxfs from Dropbox, analyse
+* Predicting likelyhood of someone opening for guests upon ringing the doorbell.
 
 Machine learning
 
@@ -59,7 +60,7 @@ Machine learning
 * Assist in reverse engineering of protocols, for example for machine control (Shopbot,Redsail).
 Record input, output pairs. Change input parameters, find corresponding change in output.
 
-Bigger projects, potentially novel
+Larger projects, potentially novel
 
 * Machine-vision-assisted construction of . [smart-cad](https://github.com/jonnor/projects/tree/master/smart-cad)
 * Automation of CAM paths for maximizing material usage and waste management. Machine-vision
@@ -76,6 +77,43 @@ Note, one can also use [Planarity_testing](https://en.wikipedia.org/wiki/Planari
 which can be laid out without 
 Using contraints to express requirements, solving to autosuggest sub-circuit solutions.
 http://www.electronicdesign.com/what-s-difference-between/what-s-difference-pcb-routing-then-and-now
+
+Big themes
+
+Sustainability
+* Energy production
+* Recycling, waste-management
+* Manufacturing, low-scale automation. Cheap robotics and deployment
+* Agriculture, food-production
+* Understanding and predicting impacts (economic,social,environmental)
+* Co-op organization for achieving scale where automation gives good return-of-investment.
+Useful outputs as primary dividends. Competitive with buying the goods on-the-market.
+Secondary dividends profits made from selling surplus capacity.
+Slight premiums possible for additional convenience, and transparency (environmental,economical,social).
+Costs: Development, build/setup, operating costs. Marginal costs, and size between each scaling step.
+Is machine tending compatible with another job? Software engineering?
+
+Demand:
+What high-value (ref production cost) things do people need a lot of?
+Staple foods are consumed a lot, but low-value?
+Spices are consumed regularly but in small amounts, and semi-high value. Garlic, chillies, oregany?
+Fruits and vegetables are relatively high value versus staples, and underconsumed.
+Medicines are very high value. Some need them a lot, but most don't? Challenging regulations,safety
+What about vitamins/supplements, can often be underconsumed?
+What can be provided consistently (all-year)?
+What can be stored efficiently? So that variation in supply/demand can be evened out.
+What can be transported efficiently? So that transport costs stay low
+3d-printer filament? From bio-sources, food waste. 300 kr/kg on spool in store. 20-50 kr/kg as pellets.
+25 kg minimum order.
+https://www.alibaba.com/product-detail/Zhangjiagang-Friend-Machinery-ABS-PLA-Mini_60350189459.html
+10k NOK. 0.5 kg/hour.
+PLA sheets? For lasercutting,vacumforming. Better mechanically than acrylic, though not transparent.
+Pellets can be used for injection molding of parts, profile extrusions
+Can offer to take in waste material for recycling, get NN% amount of fresh material back.
+Pickup point in Oslo center, for purchased material/recycling. At Bitraf/Fellesverkstedet.
+Plywood? XXX kr/sheet.
+What things could be further refined on/near-site? For future expansion of value chain.
+What things facilitate a circular lifecycle? So that unused or finished produce can come back as inputs again?
 
 ## Publishing
 
@@ -137,7 +175,6 @@ Recent completed work:
 AXAI. How to create an AGI given unbounded computation. Paper: Universal Algorithmic Intelligence
 Intelligent software agent cooperation. Program Equilibrium in the Prisoners Dilemma via Lobs Theorem.
 Probabilitic game theory. Paper: Reflective oracles.
-
 * [Deep reinforcement for robotics](https://www.facebook.com/nipsfoundation/videos/1554594181298482)
 Reinforcement learning is different from supervised methods. The agent observes its environment and performs actions on it.
 It observes the outcome of its actions and compares this with desired outcome.
@@ -156,6 +193,11 @@ One approach is randomized simulation domains. With enough variation - even when
 allows to train agent which performs well on real-life scenario without any real-life training data.
 How to increase signal for reinformement learning?
 Hindsight Experience Replay. Also learn from failures. Inject goals into old experiences
+* [Amit's thoughts on pathfinding](http://theory.stanford.edu/~amitp/GameProgramming/Heuristics.html).
+Detailed and well explained use of A* for pathfinding in games, including practical considerations.
+Chosing heuristics function, its values. Tie breaking, data structures, making behavior interesting
+* [Visual foresight](https://sites.google.com/view/visual-foresight).
+Robots using real-time predictions of the visual/camera stimuly to learn how to perform tasks.
 
 ## Interesting subproblems
 
@@ -163,6 +205,9 @@ Neural networks
 
 * When used on images incredibly texture dependent. For instance cause vunerability to adverserial examples.
 How to mitigate? Learning rate influences, higher rate, more noise.
+Could one reduce by automatically generating variants of the training inputs?.
+For instance on images, use smoothening filters, color changes, brightness/contrast changes, noise addition, scaling, rotating.
+Also maybe helps with small datasets, especially for supervised learning (where labeling is expensive).
 * Seem that there is a lot of 'unecessary' complexity/information being encoded, that are irrelevant to the objective at hand.
 How can one know how much complexity is needed to perform a particular function? How to estimate that it is well spent?
 Are there information-theory approaches that can be applied?

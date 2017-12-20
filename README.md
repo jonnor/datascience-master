@@ -137,7 +137,17 @@ Note: NMBU operates an internal publishing fund for Open Access publications, up
 * Open Source Hardware conference.
 * FOSDEM
 * Libre Graphics Meeting
-
+* Linux Audio Conference. 2018, June, Berlin
+* DAFX. 2018, September, Aveiro Portugal.
+[CFP March 29](https://www.mail-archive.com/sursound@music.vt.edu/msg09198.html)
+* EuroPython 2018, Edinbourgh, July. [Announce](http://www.europython-society.org/post/167520379525/europython-2018-location-and-dates)
+* EuroSciPy 2018, time/loc not announced
+*  [ECDA 2018](https://euads.org/events/ecda-2018/). Paderborn, Germany, 4th – 6th July, 2018.
+* Vipimage. 2018 not announced yet
+* Open Source Summit Europe 2018. Oct 22-24, Edinbourgh.
+[CFP until June 30](https://events.linuxfoundation.org/events/open-source-summit-europe-2018/program/cfp/)
+* Embedded Linux Conference Europe. [CFP until June 30](https://events.linuxfoundation.org/events/elce-2018/program/cfp/)
+* European Conference on Computer Vision. [2018](https://eccv2018.org/dates/), September, Munich
 
 ## References
 
@@ -198,6 +208,15 @@ Detailed and well explained use of A* for pathfinding in games, including practi
 Chosing heuristics function, its values. Tie breaking, data structures, making behavior interesting
 * [Visual foresight](https://sites.google.com/view/visual-foresight).
 Robots using real-time predictions of the visual/camera stimuly to learn how to perform tasks.
+* [Bilateral_Filtering](http://homepages.inf.ed.ac.uk/rbf/CVonline/LOCAL_COPIES/MANDUCHI1/Bilateral_Filtering.html).
+When performed in CIE-Lab gives very natural blurring, not introducing new colors. Also preserves edges and shadows well.
+Can be applied iteratively, which effectively reduces the amount of colors present. Reducing/removing texture.
+Could be used as a pre-processing step to color quantize an image? 
+* [Optimizing fixed-point FIR filters](https://se.mathworks.com/help/dsp/examples/optimized-fixed-point-fir-filters.html),
+by quantizing filter coefficients.  
+* [dspguru FIR implementation](https://dspguru.com/dsp/faqs/fir/implementation/), some tricks in C
+* [TIIR filters](https://ccrma.stanford.edu/~jos/tiirts/TIIR_Filters.html), truncated IIRs.
+Using two IIRs to get the response of an FIR filter, but with fewer calculations.
 
 ## Interesting subproblems
 

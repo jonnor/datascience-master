@@ -110,7 +110,17 @@ c. high contrast: low and high end of histogram contain most of the values. Extr
 
 ## 2.D. Angi formelen for histogramutjevning og forklar prosessen for histogramutjevning
 
-TODO:
+    heq(v) = round( (cdf(v)-cdf_min)/(M*N)-1 * (L-1) ), where
+
+    cdf(v) is the cumulative histogram of the image
+    L is the number of gray levels
+    M,N is the number of pixels width,height
+
+* Compute the cumulative histogram of the input
+* For each of the graylevels [0:L-1] compute the mapping h
+* Go through all the pixels in the image, replace the pixel value with h(pixel)
+
+Histogram equalization is a special case of histogram matching to a uniform distributed histogram.
 
 ## 2.E. Forklar hvordan histogrammet av et 8 bits gråtonebilde kan reduseres fra 256 bins til for eksempel et 32 bins histogram.
 
@@ -207,7 +217,23 @@ The number of components are usually chosen such that they explain a certain amo
 
 # 4.B. Beskriv kort begrepet bildetekstur.
 
-TODO:
+Image texture is .
+Textures can be isotropic (stocastic), ansitropic (deterministic) and semi-isotropic
+The texture measurements depend a lot on scale, ie an image may have one texture at a small scale, and another at a large scale.
+
+Texture of a region can be quantified using histogram-based methods,
+including variance, skewness, kurtosis.
+However this fails to describe geometric features inside the region. 
+
+A more comprehensive method is to compute a graylevel co-occurence matrix (GLCM),
+which specifies how often pairs of pixels with a specific gray-level occurs with a certain spatial distance.
+From this matrix one can compute statistics, like homogenity,dissimilarity,correlation,constrast and energy.
+
+Texture measures are most often used for classification.
+One can calculate it for a detected object, or for windowed regions across entire image.
+However it can also be used as a basis for segmentation.
+
+[GLCM tutorial, Uni Calgary](https://prism.ucalgary.ca/bitstream/handle/1880/51900/texture%20tutorial%20v%203_0%20170329.pdf)
 
 # 4.C. Utfør en tenkt PCA på bildestack som har som formål å karakterisere de ulike bildene med hensyn på teksturklassene K1 og K2.
 

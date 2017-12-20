@@ -19,26 +19,53 @@ At Norwegian University of Life Sciences.
 
 ## Interesting specializations
 
+Techniques: Intelligent embedded systems, robotics, computer vision, simulation.
+Applications: Renewable energy, sustainability, automation/processindustry
+
+Robotics
+
+* [TEL240 Control Engineering and Automation](https://www.nmbu.no/course/tel240). Spring. 10p
+* [TEL250 Introduction to robotics and automation](https://www.nmbu.no/emne/TEL250). January block. 5p
+* [TMPP350C Prosessregulation](https://www.nmbu.no/emne/TMPP350C). Pass/no, 5p, autumn seminar. !requires TEL240
+* [INF4380 - Introduksjon til robotteknologi](http://www.uio.no/studier/emner/matnat/ifi/INF4380/index.html)
+* [UNIK4490 - Control of manipulators and mobile robots](http://www.uio.no/studier/emner/matnat/its/UNIK4490/index-eng.html)
+* [UNIK4570 - Robust multivariabel regulering](http://www.uio.no/studier/emner/matnat/its/UNIK4570/index.html)
+
+Computer vision
+
+* [UNIK4690 - Maskinsyn](http://www.uio.no/studier/emner/matnat/its/UNIK4690/index.html). Spring. 10p. Project-based evaluation
+* [UNIK4590 - Pattern Recognition](http://www.uio.no/studier/emner/matnat/its/UNIK4590/index-eng.html)
+
+Renewable energy
+
+* [FYS375 Energy Technology](https://www.nmbu.no/emne/FYS375), lab-oriented
+* [FORN200 Renewable Energy](https://www.nmbu.no/emne/FORN200). Autumn, 10p
+* [FORN330 Renewable Energy analysis](https://www.nmbu.no/emne/FORN330). Autumn, 10p
+* [UNIK4800 - Renewable Energy: science and technology](http://www.uio.no/studier/emner/matnat/its/UNIK4800/index.html). Autumn, 10p
+* [UNIK4830 - Solenergisystemer](http://www.uio.no/studier/emner/matnat/its/UNIK4830/index.html). Spring, 10p
+
+Foundations
+
+* [MNKOM4000 - Formidling og vitenskapsjournalistikk](http://www.uio.no/studier/emner/matnat/ibv/MNKOM4000/index.html). Pass/not, 10p, weekly tasks. Spring
+* [UNIK4660 - Visualisering av vitenskapelige data](http://www.uio.no/studier/emner/matnat/its/UNIK4660/index.html)
+* [TMP261 Varme og strømningssimulering](https://www.nmbu.no/emne/TMP261)
+* [FYS251 Varmeoverføring og energi](https://www.nmbu.no/emne/fys251)
+* [STAT210 Design of Experiments and Analysis of Variance](https://www.nmbu.no/course/STAT210)
+
 Construction
 
+* [TIP200 Produktutvikling og produktdesign med 3D](https://www.nmbu.no/emne/tip200). Project-based evaluation
+* [TBM200 Material Science](https://www.nmbu.no/emne/TBM200). Autumn, 10p
+* [TBM250 Finite Element Method](https://www.nmbu.no/emne/TBM250). !Requires [TBM120](https://www.nmbu.no/emne/TBM120), 10p, autumn.
 * [TBA210 Building Structures II](https://www.nmbu.no/course/TBA210).
 !Requires [TBA190](https://www.nmbu.no/course/TBA190)
 * [TBA331 Building Performance Simulation](https://www.nmbu.no/course/TBA331)
 !Requires TBA210
-* [TBM250 Finite Element Method](https://www.nmbu.no/emne/TBM250)
-* [TBM200 Material Science](https://www.nmbu.no/emne/TBM200)
+* [TBA222 Konstruksjonsteknikk stål og tre](https://www.nmbu.no/emne/tba222). !Requires TBM120
 
-Renewable energy
 
-* [FYS375 Energy Technology](https://www.nmbu.no/emne/FYS375)
-* [FORN200 Renewable Energy](https://www.nmbu.no/emne/FORN200)
-* [FORN330 Renewable Energy analysis](https://www.nmbu.no/emne/FORN330)
 
-Robotics
 
-* [TEL240 Control Engineering and Automation](https://www.nmbu.no/course/tel240)
-* [TEL250 Robotics and automation](https://www.nmbu.no/emne/TEL250)
-* [TMPP350C Prosessregulation](https://www.nmbu.no/emne/TMPP350C)
 
 ## Ideas
 

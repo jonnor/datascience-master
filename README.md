@@ -195,8 +195,13 @@ Note: NMBU operates an internal publishing fund for Open Access publications, up
 
 ## References
 
+Books
+
 * [The Elements of Statistical Learning](https://web.stanford.edu/~hastie/Papers/ESLII.pdf).
 Recommended by Kristin T. regarding classification, regression methods.
+
+Web
+
 * [Relationship between Ridge regression and PCA regression](https://stats.stackexchange.com/questions/81395/relationship-between-ridge-regression-and-pca-regression)
 * [Relationship between SVD and PCA. How to use SVD to perform PCA?](https://stats.stackexchange.com/questions/134282/relationship-between-svd-and-pca-how-to-use-svd-to-perform-pca)
 * [How Are Principal Component Analysis and Singular Value Decomposition Related](https://intoli.com/blog/pca-and-svd/)
@@ -261,6 +266,20 @@ by quantizing filter coefficients.
 * [dspguru FIR implementation](https://dspguru.com/dsp/faqs/fir/implementation/), some tricks in C
 * [TIIR filters](https://ccrma.stanford.edu/~jos/tiirts/TIIR_Filters.html), truncated IIRs.
 Using two IIRs to get the response of an FIR filter, but with fewer calculations.
+* Search a problemsolving for fully-observable,deterministic,known environments.
+Solution is a sequence of actions that lead to the goal.
+`SMA*`, simplified memory-limited A* graph search. Optimal with *admissible* heuristic, and a robust solution for many problems.
+Challenge is in defining a good heuristic function (and meaningful path distances).
+Must be non-negative, never overestimate, respect 'triangle equality', and h(goal) = 0.
+The heuristic determines overall performance, and can be evaluated by looking at the effective branching factor on example problems.
+How many nodes are evaluated versus path length to reach a solution. Should be quite small.
+One method for developing heuristic is to transform the problem to a simplified version, by removing restrictions/rules.
+If the problem is defined in a formal language, it is possible to automatically derive such simplified versions.
+One can use a composed heuristic function which takes the max of a family of heuristic functions.
+Heuristics can also be made using a database of solutions to subproblems.
+Heuristics can be learned by creating a prediction model between feature(s) of a state and the distance to the goal.
+When using multiple features, often use linear weighted combinations to get one number. 
+= Chapter 3, AI A Modern Approach. 
 
 ## Interesting subproblems
 

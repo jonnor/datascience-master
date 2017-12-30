@@ -100,7 +100,7 @@ Basic data science applications
 
 Machine learning
 
-* Modelling of guitar distortion (non-linear). Using neural-network?
+* Modelling of guitar distortion (non-linear). Using neural-network? Some work already done
 * Assist in reverse engineering of protocols, for example for machine control (Shopbot,Redsail).
 Record input, output pairs. Change input parameters, find corresponding change in output.
 
@@ -121,6 +121,29 @@ Note, one can also use [Planarity_testing](https://en.wikipedia.org/wiki/Planari
 which can be laid out without 
 Using contraints to express requirements, solving to autosuggest sub-circuit solutions.
 http://www.electronicdesign.com/what-s-difference-between/what-s-difference-pcb-routing-then-and-now
+
+Robotics
+
+* Analyzing low-cost motion systems.
+Using force-sensors on motors/actuator/effector and recording data at high speed
+Perform tests on running different kind of jobs.
+Measure: static/dynamic friction, coefficient.
+Forces due to acceleration.
+Forces working back on effector (CNC milling).
+Slop. Backlash.
+Compare with simulated data, detect anomalies.
+Compare different technologies/techniques .
+Use to guide development of ultra-low-cost, reprap-style, motion systems.
+Note, friction coefficient very dependent on how tight bearings are.
+Slop/precision also dependent on this. Especially for plain-bearings.
+Should at least measure slop. For instance measure force needed to rotate N degrees?
+Could try to tune slop to be same for doing comparative studies?
+HEX711 IC commonly used only allows for 80 samples/second.
+Would need. A load-cell is a Weathstone bridge, so an instrumentation amplifier is way to go.
+ADC can be done in a fast microcontroller. STM32 etc.
+Example circuit based on INA125, instrumentation amp with precision voltage reference included:
+http://www.mechtechplace.net/mech-tech-electronics/building-a-low-cost-strain-gage-load-cell-amplifier/
+INA125 has 4.5kHz bandwith @ 100x gain, should be good for 1k+ samples/second.
 
 Big themes
 
@@ -177,10 +200,10 @@ Note: NMBU operates an internal publishing fund for Open Access publications, up
 
 ## Conferences
 
-* Fablab conference. FAB14 in France
+* Fablab conference. July. FAB14 in France, http://www.fab14.org/
 * Open Source Hardware conference.
-* FOSDEM
-* Libre Graphics Meeting
+* FOSDEM. February, Brussels
+* Libre Graphics Meeting. 2018, Sevilla
 * Linux Audio Conference. 2018, June, Berlin
 * DAFX. 2018, September, Aveiro Portugal.
 [CFP March 29](https://www.mail-archive.com/sursound@music.vt.edu/msg09198.html)

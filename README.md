@@ -56,11 +56,11 @@ Foundations
 * [IN5000 - Qualitative Research Methods](http://www.uio.no/studier/emner/matnat/ifi/IN5000/index.html)
 * [TMP261 Varme og strømningssimulering](https://www.nmbu.no/emne/TMP261)
 * [FYS251 Varmeoverføring og energi](https://www.nmbu.no/emne/fys251)
-* [STAT210 Design of Experiments and Analysis of Variance](https://www.nmbu.no/course/STAT210)
+* [STAT210 Design of Experiments and Analysis of Variance](https://www.nmbu.no/course/STAT210). 5p, August block
 
 Construction
 
-* [TIP200 Produktutvikling og produktdesign med 3D](https://www.nmbu.no/emne/tip200). Project-based evaluation
+* [TIP200 Produktutvikling og produktdesign med 3D](https://www.nmbu.no/emne/tip200). Autumn, 10p. Project-based evaluation
 * [TBM200 Material Science](https://www.nmbu.no/emne/TBM200). Autumn, 10p
 * [KJM-MENA5555 - Polymerer og makromolekyler](http://www.uio.no/studier/emner/matnat/kjemi/KJM-MENA5555/index.html)
 * [TBM250 Finite Element Method](https://www.nmbu.no/emne/TBM250). !Requires [TBM120](https://www.nmbu.no/emne/TBM120), 10p, autumn.
@@ -216,12 +216,23 @@ Note: NMBU operates an internal publishing fund for Open Access publications, up
 * Embedded Linux Conference Europe. [CFP until June 30](https://events.linuxfoundation.org/events/elce-2018/program/cfp/)
 * European Conference on Computer Vision. [2018](https://eccv2018.org/dates/), September, Munich
 
+## Inbox
+
+* [Hadley Wickham: Tidy data](http://vita.had.co.nz/papers/tidy-data.html). This paper tackles a small, but important, component of data cleaning: data tidying.
+
+Huge amount of Computer Science papers: https://github.com/papers-we-love/papers-we-love
+
 ## References
 
 Books
 
 * [The Elements of Statistical Learning](https://web.stanford.edu/~hastie/Papers/ESLII.pdf).
 Recommended by Kristin T. regarding classification, regression methods.
+
+Lectures
+
+* [Statistical Computing for Scientists and Engineers, U.Notre Dame](https://www.zabaras.com/statisticalcomputing).
+Dense syllabus: from Bayesian Statistics, many Monte Carlo methods, and Uncertainty Quantification.
 
 Web
 
@@ -303,6 +314,12 @@ Heuristics can also be made using a database of solutions to subproblems.
 Heuristics can be learned by creating a prediction model between feature(s) of a state and the distance to the goal.
 When using multiple features, often use linear weighted combinations to get one number. 
 = Chapter 3, AI A Modern Approach. 
+
+Datasets / data sources
+
+* [libsvm](https://www.csie.ntu.edu.tw/~cjlin/libsvmtools/datasets/).
+Standardized format with some 50 small to medium dataset examples, covering classification, regression.
+* [mldata.org](http://mldata.org/). Some 800 datasets, searchable with tags.
 
 ## Interesting subproblems
 

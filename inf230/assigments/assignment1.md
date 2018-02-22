@@ -38,7 +38,18 @@ Payment
 - subscription : PhoneSubscription
 
 
+Python library for working with SQL, records looks nice
+https://github.com/kennethreitz/records
+
+Visualizing can be done with SchemaCrawler or SchemaSpy
+
+http://sualeh.github.io/SchemaCrawler/diagramming.html
+http://schemaspy.org/sample/relationships.html
+
+
 ## Part 2
+
+Maybe use the Jupyter bash kernel? https://github.com/takluyver/bash_kernel
 
 1. Make the database "University" and write the command you used.
 

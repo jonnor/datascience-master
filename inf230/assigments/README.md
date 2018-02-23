@@ -9,34 +9,32 @@ and underline possible unique identificators in each table.
 4. Draw a simple map of the relations as shown in the figure, if any relation between the tables.
 Draw a line between the tables and columns that are related.
 
+# sqlite
 
-Customer
-- id PRIMARY
-- name
-- email
-- address
+```shell
+sqlite3 telenor.sqlite
+```
 
-PhonePlan
-- id PRIMARY
-- price
-- data_limit
-- description
+```sql
+DROP TABLE payments;
+DROP TABLE subscriptions;
+DROP TABLE plans;
+DROP TABLE customers;
 
-PhoneSubscription
-- id PRIMARY
-- phonenumber
-- starts_at
-- ends_at
-- plan : PhonePlan
-- customer : Customer
+CREATE TABLE customers(id INTEGER PRIMARY KEY, name TEXT, email TEXT, address TEXT);
+CREATE TABLE plans(id INTEGER PRIMARY KEY, price INTEGER, data_limit_bytes INTEGER, description TEXT);
+CREATE TABLE subscriptions(id INTEGER PRIMARY KEY, phonenumber TEXT, starts_at DATE, ends_at DATE,
+    plan INTEGER NOT NULL, customer INTEGER NOT NULL,
+    FOREIGN KEY(plan) REFERENCES plans(id),
+    FOREIGN KEY(customer) REFERENCES customers(id)
+);
+CREATE TABLE payments(id INTEGER PRIMARY KEY, kid INTEGER UNIQUE, due DATE, paid DATE, subscription INTEGER NOT NULL,
+    FOREIGN KEY(subscription) REFERENCES subscriptions(id) );
+```
 
-Payment
-- id PRIMARY
-- kid UNIQUE
-- due_date
-- paid_date
-- subscription : PhoneSubscription
-
+```shell
+schemaspy -o ./schemaspy/ -t sqlite.properties -u user -db telenor.sqlite
+```
 
 Python library for working with SQL, records looks nice
 https://github.com/kennethreitz/records

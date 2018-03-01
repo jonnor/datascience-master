@@ -100,7 +100,7 @@ Basic data science applications
 
 Machine learning
 
-* Modelling of guitar distortion (non-linear). Using neural-network? Some work already done
+* Machine learning (inference) on embedded devices/microcontrollers. On-edge/on-node processing. See notes in [DAT200](./dat200)
 * Assist in reverse engineering of protocols, for example for machine control (Shopbot,Redsail).
 Record input, output pairs. Change input parameters, find corresponding change in output.
 
@@ -153,34 +153,7 @@ Sustainability
 * Manufacturing, low-scale automation. Cheap robotics and deployment
 * Agriculture, food-production
 * Understanding and predicting impacts (economic,social,environmental)
-* Co-op organization for achieving scale where automation gives good return-of-investment.
-Useful outputs as primary dividends. Competitive with buying the goods on-the-market.
-Secondary dividends profits made from selling surplus capacity.
-Slight premiums possible for additional convenience, and transparency (environmental,economical,social).
-Costs: Development, build/setup, operating costs. Marginal costs, and size between each scaling step.
-Is machine tending compatible with another job? Software engineering?
 
-Demand:
-What high-value (ref production cost) things do people need a lot of?
-Staple foods are consumed a lot, but low-value?
-Spices are consumed regularly but in small amounts, and semi-high value. Garlic, chillies, oregany?
-Fruits and vegetables are relatively high value versus staples, and underconsumed.
-Medicines are very high value. Some need them a lot, but most don't? Challenging regulations,safety
-What about vitamins/supplements, can often be underconsumed?
-What can be provided consistently (all-year)?
-What can be stored efficiently? So that variation in supply/demand can be evened out.
-What can be transported efficiently? So that transport costs stay low
-3d-printer filament? From bio-sources, food waste. 300 kr/kg on spool in store. 20-50 kr/kg as pellets.
-25 kg minimum order.
-https://www.alibaba.com/product-detail/Zhangjiagang-Friend-Machinery-ABS-PLA-Mini_60350189459.html
-10k NOK. 0.5 kg/hour.
-PLA sheets? For lasercutting,vacumforming. Better mechanically than acrylic, though not transparent.
-Pellets can be used for injection molding of parts, profile extrusions
-Can offer to take in waste material for recycling, get NN% amount of fresh material back.
-Pickup point in Oslo center, for purchased material/recycling. At Bitraf/Fellesverkstedet.
-Plywood? XXX kr/sheet.
-What things could be further refined on/near-site? For future expansion of value chain.
-What things facilitate a circular lifecycle? So that unused or finished produce can come back as inputs again?
 
 ## Publishing
 
@@ -218,7 +191,8 @@ Note: NMBU operates an internal publishing fund for Open Access publications, up
 
 ## Inbox
 
-* [Hadley Wickham: Tidy data](http://vita.had.co.nz/papers/tidy-data.html). This paper tackles a small, but important, component of data cleaning: data tidying.
+* [Hadley Wickham: Tidy data](http://vita.had.co.nz/papers/tidy-data.html).
+This paper tackles a small, but important, component of data cleaning: data tidying.
 
 Huge amount of Computer Science papers: https://github.com/papers-we-love/papers-we-love
 

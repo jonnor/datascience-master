@@ -50,3 +50,28 @@ Example usecases
 
 * Predictive maintenance, using audio/vibration data
 * Activitity detection for people, using audio/accelerometer data
+
+# Audio classification
+
+* [Audio classification overview](http://www.nyu.edu/classes/bello/ACA_files/8-classification.pdf)
+Criterias for good features,
+PCA/LDA for dimensionality reduction. Sequential forward/backward selection
+* [Environmental sound recognition: a survey](https://www.cambridge.org/core/services/aop-cambridge-core/content/view/S2048770314000122) (2014).
+Mentiones MPEG-7 based features, efficient and perceptual.
+* [Dolph-Chebyshev Window](http://practicalcryptography.com/miscellaneous/machine-learning/implementing-dolph-chebyshev-window/),
+good window function for audio. C reference implementation.
+* [Voice Activity Detection, tutorial](http://practicalcryptography.com/miscellaneous/machine-learning/voice-activity-detection-vad-tutorial/)
+Using 5 simple features.
+
+## Tools
+* [pyAudioAnalysis](https://github.com/tyiannak/pyAudioAnalysis/wiki/3.-Feature-Extraction).
+Chroma Vector, Mel Frequency Cepstral Coefficients, Zero Crossing Rate, Spectral Centroid...
+
+## Datasets
+* [Urbansound-8k](https://serv.cusp.nyu.edu/projects/urbansounddataset/urbansound8k.html).
+8k samples, 10 classes. Compiled from freesound.org data
+* [ESC-50: Dataset for Environmental Sound Classification](https://github.com/karoldvl/ESC-50).
+2k samples, 40 classes in 5 major categories. Compiled from freesound.org data
+* [NOIZEUS: A noisy speech corpus for evaluation of speech enhancement algorithms](http://ecs.utdallas.edu/loizou/speech/noizeus/)
+30 sentences corrupted by 8 real-world noises. 
+

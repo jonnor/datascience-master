@@ -1,4 +1,9 @@
 
+# References
+
+* [Feature Crossing](https://developers.google.com/machine-learning/crash-course/feature-crosses/crossing-one-hot-vectors)
+Creating new (non-linear) features by combining existing features, in pairs or more. 
+* [FeatureTools](https://docs.featuretools.com/index.html), automatically generating features from datasets. Python library.
 
 # Ideas
 

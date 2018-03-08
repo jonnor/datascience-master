@@ -7,6 +7,38 @@ Creating new (non-linear) features by combining existing features, in pairs or m
 
 # Ideas
 
+## Distributed hyperparameter search
+
+Existing work
+
+* [Dask GridSearchCV](https://www.kdnuggets.com/2017/05/dask-searchcv-distributed-hyperparameter-optimization-scikit-learn.html)
+* [Apache Spark GridSeachCV](https://databricks.com/blog/2016/02/08/auto-scaling-scikit-learn-with-apache-spark.html)
+* Hard to do on AWS lambda, because sklearn is bigger than Lambda code limit of 50MB
+
+Could do something similar as a Python module, for instance using Heroku API.
+
+Job inputs:
+- (git revision)
+- Model hyperparameters
+- test train/splits
+
+Job outputs:
+- inputs
+- git revision
+- training accurancy
+- testing accuracy
+- classification outputs (on compete)
+
+Job generator
+- can run locally
+
+Job output saver
+- can run locally
+
+Autoscaler
+- can run locally
+
+
 ## Machine learning on embedded/microcontroller
 
 Implement inference/prediction part of an algorithm for microcontroller.

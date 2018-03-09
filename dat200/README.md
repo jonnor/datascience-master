@@ -4,6 +4,18 @@
 * [Feature Crossing](https://developers.google.com/machine-learning/crash-course/feature-crosses/crossing-one-hot-vectors)
 Creating new (non-linear) features by combining existing features, in pairs or more. 
 * [FeatureTools](https://docs.featuretools.com/index.html), automatically generating features from datasets. Python library.
+* [Feature engineering Guide](http://adataanalyst.com/machine-learning/comprehensive-guide-feature-engineering/).
+Lots of relevant things, well explained
+
+CA02
+
+* http://adataanalyst.com/kaggle/kaggle-tutorial-kobe-bryant/, good plots for showing, some cleaning steps
+* http://adataanalyst.com/kaggle/kaggle-tutorial-using-kobe-bryant-dataset-part-3/
+good pairplots, shows non-linear effects in loc_y/x
+using timeRemaining instead of timeplayed - same?
+195 has a more accurate shot_distance calculation
+* http://adataanalyst.com/kaggle/kaggle-tutorial-using-kobe-bryant-dataset-part-4/
+lots of attempts at shots last seconds, with much worse accuracy
 
 # Ideas
 

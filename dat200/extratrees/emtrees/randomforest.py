@@ -210,9 +210,11 @@ class RandomForest:
 		if self.n_features is None:
 			self.n_features = math.sqrt(len(X[0]))
 
+		# Internally targets are expected to be part of same list/array as features
 		data = []
 		for x, y in zip(X, Y):
-			data.append(x + y)
+			row = list(x) + [ y ]
+			data.append(row)
 
 		trees = list()
 		for i in range(self.n_trees):
@@ -273,7 +275,7 @@ def main():
 
 			algorithm.fit(train_X, train_Y)
 			predicted = algorithm.predict(test_X)
-			accuracy = accuracy_metric(actual, test_Y)
+			accuracy = accuracy_metric(test_Y, predicted)
 
 			scores.append(accuracy)
 		return scores

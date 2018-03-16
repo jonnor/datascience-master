@@ -8,15 +8,15 @@ Keywords: Decision trees, Extratrees, Random Forest
 
 0.1
 
-* pytests covering Python interface
 * pytests covering C interface
 * Move to dedicated repository
-* Rename modules/files/APIs to `emtrees`
 
 0.2
 
 * De-duplicate leaf nodes
-* Add performance tests
+* Support multi-target classification
+* Add performance benchmark
+* Optimize training time
 * Release as Python library on PyPI
 
 1.0

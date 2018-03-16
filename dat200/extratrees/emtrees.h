@@ -24,6 +24,10 @@ typedef struct _Emtrees {
     // int8_t n_classes;
 } Emtrees;
 
+typedef enum _EmtreesError {
+    EmtreesUnknownError,
+    EmtreesOK = 0,
+} EmtreesError;
 
 #ifndef EMTREES_MAX_CLASSES
 #define EMTREES_MAX_CLASSES 10
@@ -34,10 +38,11 @@ emtrees_tree_predict(const Emtrees *forest, int32_t tree_root, const EmtreesValu
     int32_t node_idx = tree_root;
 
     while (forest->nodes[node_idx].feature > 0) {
-        //printf("n %d\n", node_idx);
         const int8_t feature = forest->nodes[node_idx].feature;
         const EmtreesValue value = features[feature];
-        node_idx = (value < forest->nodes[node_idx].value) ? forest->nodes[node_idx].left : forest->nodes[node_idx].right;
+        const EmtreesValue point = forest->nodes[node_idx].value;
+        //printf("node %d feature %d. %d < %d\n", node_idx, feature, value, point);
+        node_idx = (value < point) ? forest->nodes[node_idx].left : forest->nodes[node_idx].right;
     }
     return forest->nodes[node_idx].value;
 }

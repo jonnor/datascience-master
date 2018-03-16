@@ -187,19 +187,41 @@ def flatten_tree(tree):
 	return flat
 
 # TODO: de-duplicate identical leaves
-def generate_c(flat, name='mytree'):
+def generate_c_nodes(flat, name):
 	
 	def node(n):
 		return "{{ {}, {}, {}, {} }}".format(*n)
 
 	nodes_structs = ',\n  '.join(node(n) for n in flat)
-	nodes_name = "{}_nodes".format(name)
+	nodes_name = name
 	nodes_length = len(flat)
 	nodes = "ExNode {nodes_name}[{nodes_length}] = {{\n  {nodes_structs} \n}};".format(**locals());
-	tree = "ExTree {name} = {{ {nodes_length}, {nodes_name} }};".format(**locals())
 
-	return nodes + '\n\n' + tree + '\n\n'
+	return nodes
 	
+# TODO: store forest flattened, one bunch of nodes plus roots of each tree
+def generate_c_forest(trees, name='myclassifier'):
+
+	if len(trees) > 1:
+		raise NotImplementedError('multiple trees not implemented yet')
+
+	nodes_name = name+'_nodes'
+	nodes = generate_c_nodes(trees[0], nodes_name)
+	nodes_length = len(trees[0])
+
+	tree_roots_length = len(trees)
+	tree_roots_name = name+'_tree_roots';
+	tree_roots_values = ', '.join(str(len(t)-1) for t in trees[:1])
+	tree_roots = 'int32_t {tree_roots_name}[{tree_roots_length}] = {{ {tree_roots_values} }};'.format(**locals())
+
+	forest = """ExForest {name} = {{
+		{nodes_length},
+		{nodes_name},	  
+		{tree_roots_length},
+		{tree_roots_name},
+	}};""".format(**locals())
+	
+	return '\n\n'.join([nodes, tree_roots, forest]) 
 
 
 def predict(flat, row):
@@ -274,7 +296,7 @@ def main():
 		scores = evaluate_algorithm(dataset, estimator, n_folds)
 
 		with open('mytree.h', 'w') as f:
-			f.write(generate_c(estimator.trees[0]))
+			f.write(generate_c_forest(estimator.trees))
 
 		print('Trees: %d' % n_trees)
 		print("Node storage: {} bytes".format(sum(len(t) * 8 for t in estimator.trees)))

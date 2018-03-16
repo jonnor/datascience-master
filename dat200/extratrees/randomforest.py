@@ -167,7 +167,57 @@ def predict(node, row):
 			return predict(node['right'], row)
 		else:
 			return node['right']
- 
+
+# Tree representation as 2d array
+# feature, value, left_child, right_child
+# Leaf node: -1, class, -1, -1
+def flatten_tree(tree):
+	flat = []
+	next_node_idx = 0
+	node_map = {}
+
+	def is_leaf(node):
+		return not isinstance(node, dict)
+	def get_node_idx(node):
+		nonlocal next_node_idx
+		idx = node_map.get(id(node))
+		if idx is None:
+			idx = next_node_idx
+			node_map[id(node)] = idx
+			next_node_idx += 1
+		return idx
+
+	def flatten_node(node):
+		get_node_idx(node)
+
+		if is_leaf(node):
+			flat.append((-1, node, -1, -1))
+		else:
+			l = get_node_idx(node['left'])
+			r = get_node_idx(node['right'])
+			flat.append((node['index'], node['value'], l, r))
+			flatten_node(node['left'])
+			flatten_node(node['right'])
+	flatten_node(tree)
+	return flat
+
+
+def predict_flattened(flat, row):
+	fields = { 'feature': 0, 'value': 1, 'left': 2, 'right': 3 }
+
+	node_idx = 0 # root
+	node = flat[node_idx]
+	while node[fields['feature']] > 0:
+		feature = node[fields['feature']]
+		val = row[feature] 
+		if val < node[fields['value']]:
+			node_idx = node[fields['left']]
+		else:
+			node_idx = node[fields['right']]
+		node = flat[node_idx]
+
+	return node[fields['value']]
+
 # Create a random subsample from the dataset with replacement
 def subsample(dataset, ratio):
 	sample = list()
@@ -220,9 +270,11 @@ def main():
 	n_folds = 5
 
 	for n_trees in [1, 5, 10]:
-		estimator = RandomForest(n_trees=n_trees, n_features=n_features, max_depth=10, min_size=1, sample_size=1.0)
+		estimator = RandomForest(n_trees=n_trees, n_features=n_features, max_depth=10, min_size=10, sample_size=1.0)
 		scores = evaluate_algorithm(dataset, estimator, n_folds)
+
 		print('Trees: %d' % n_trees)
+		print("Node storage: {} bytes".format(sum(len(flatten_tree(t)) * 8 for t in estimator.trees)))
 		print('Scores: %s' % scores)
 		print('Mean Accuracy: %.3f%%' % (sum(scores)/float(len(scores))))
 

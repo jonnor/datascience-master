@@ -1,7 +1,7 @@
 
 #include <stdio.h>
 
-#include "trees.h"
+#include "emtrees.h"
 
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
@@ -11,19 +11,19 @@ namespace py = pybind11;
 class EmtreesClassifier {
 private:
     std::vector<int32_t> roots;
-    ExNode *nodes;
-    ExForest forest;
+    EmtreesNode *nodes;
+    Emtrees forest;
 
 public:
-    EmtreesClassifier(std::vector<ExValue> node_data, std::vector<int32_t> _roots)
+    EmtreesClassifier(std::vector<EmtreesValue> node_data, std::vector<int32_t> _roots)
         : roots(_roots)
     {
         // FIXME: check node_data is multiple of 4
         const int n_nodes = node_data.size() / 4;
-        nodes = (ExNode *)malloc(sizeof(ExNode)*n_nodes);
+        nodes = (EmtreesNode *)malloc(sizeof(EmtreesNode)*n_nodes);
 
         for (int i=0; i<n_nodes; i++) {
-            ExNode n = {
+            EmtreesNode n = {
                 (int8_t) node_data[i*4+0],
                 node_data[i*4+1],
                 (int16_t)node_data[i*4+2],
@@ -41,8 +41,8 @@ public:
         free(nodes);
     }
 
-    int32_t predict(std::vector<ExValue> values) {
-        return exforest_predict(&forest, &values[0], values.size());
+    int32_t predict(std::vector<EmtreesValue> values) {
+        return emtrees_predict(&forest, &values[0], values.size());
     }
 };
 
@@ -50,7 +50,7 @@ PYBIND11_MODULE(emtreesc, m) {
     m.doc() = "Tree-based machine learning classifiers for embedded devices";
 
     py::class_<EmtreesClassifier>(m, "Classifier")
-        .def(py::init<std::vector<ExValue>, std::vector<int32_t>>())
+        .def(py::init<std::vector<EmtreesValue>, std::vector<int32_t>>())
         //.def_readwrite("dt", &PID::dt)
         .def("predict", &EmtreesClassifier::predict);
 }

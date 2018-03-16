@@ -149,7 +149,7 @@ def generate_c_nodes(flat, name):
 	nodes_structs = ',\n  '.join(node(n) for n in flat)
 	nodes_name = name
 	nodes_length = len(flat)
-	nodes = "ExNode {nodes_name}[{nodes_length}] = {{\n  {nodes_structs} \n}};".format(**locals());
+	nodes = "EmtreesNode {nodes_name}[{nodes_length}] = {{\n  {nodes_structs} \n}};".format(**locals());
 
 	return nodes
 	
@@ -166,7 +166,7 @@ def generate_c_forest(forest, name='myclassifier'):
 	tree_roots_values = ', '.join(str(t) for t in roots)
 	tree_roots = 'int32_t {tree_roots_name}[{tree_roots_length}] = {{ {tree_roots_values} }};'.format(**locals())
 
-	forest = """ExForest {name} = {{
+	forest = """Emtrees {name} = {{
 		{nodes_length},
 		{nodes_name},	  
 		{tree_roots_length},

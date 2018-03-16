@@ -154,19 +154,6 @@ def build_tree(train, max_depth, min_size, n_features):
 	root = get_split(train, n_features)
 	split(root, max_depth, min_size, n_features, 1)
 	return root
- 
-# Make a prediction with a decision tree
-def predict(node, row):
-	if row[node['index']] < node['value']:
-		if isinstance(node['left'], dict):
-			return predict(node['left'], row)
-		else:
-			return node['left']
-	else:
-		if isinstance(node['right'], dict):
-			return predict(node['right'], row)
-		else:
-			return node['right']
 
 # Tree representation as 2d array
 # feature, value, left_child, right_child
@@ -174,38 +161,41 @@ def predict(node, row):
 def flatten_tree(tree):
 	flat = []
 	next_node_idx = 0
-	node_map = {}
 
 	def is_leaf(node):
 		return not isinstance(node, dict)
 	def get_node_idx(node):
 		nonlocal next_node_idx
-		idx = node_map.get(id(node))
-		if idx is None:
-			idx = next_node_idx
-			node_map[id(node)] = idx
-			next_node_idx += 1
+		idx = next_node_idx
+		next_node_idx += 1
 		return idx
 
 	def flatten_node(node):
-		get_node_idx(node)
-
 		if is_leaf(node):
 			flat.append((-1, node, -1, -1))
-		else:
-			l = get_node_idx(node['left'])
-			r = get_node_idx(node['right'])
-			flat.append((node['index'], node['value'], l, r))
-			flatten_node(node['left'])
-			flatten_node(node['right'])
-	flatten_node(tree)
+			return get_node_idx(node)
+
+		#l = get_node_idx(node['left'])
+		#r = get_node_idx(node['right'])
+		#assert l != r, "left != right : {} != {}  {}".format(l, r, node)
+		#assert l != n, "left != parent : {} != {}  {}".format(l, n, node)
+		#assert r != n, "right != parent : {} != {} {}".format(r, n, node)
+		l = flatten_node(node['left'])
+		r = flatten_node(node['right'])
+		flat.append((node['index'], node['value'], l, r))
+		return get_node_idx(node)
+
+	r_idx = flatten_node(tree)
+	assert r_idx == next_node_idx -1
+	assert r_idx == len(flat) - 1
+
 	return flat
 
-
-def predict_flattened(flat, row):
+# TODO: generate C header for nodes, implement prediction
+def predict(flat, row):
 	fields = { 'feature': 0, 'value': 1, 'left': 2, 'right': 3 }
 
-	node_idx = 0 # root
+	node_idx = len(flat) - 1 # root
 	node = flat[node_idx]
 	while node[fields['feature']] > 0:
 		feature = node[fields['feature']]
@@ -232,7 +222,7 @@ def bagging_predict(trees, row):
 	predictions = [predict(tree, row) for tree in trees]
 	return max(set(predictions), key=predictions.count)
  
-
+# TODO: implement max_nodes limit
 class RandomForest:
 	def __init__(self, n_features, max_depth=10, min_size=1, sample_size=1.0, n_trees=10):
 		self.trees = None
@@ -248,7 +238,7 @@ class RandomForest:
 			sample = subsample(data, self.sample_size)
 			tree = build_tree(sample, self.max_depth, self.min_size, self.n_features)
 			trees.append(tree)
-		self.trees = trees
+		self.trees = [ flatten_tree(t) for t in trees ]
 
 	def predict(self, data):
 		predictions = [bagging_predict(self.trees, row) for row in data]
@@ -274,7 +264,7 @@ def main():
 		scores = evaluate_algorithm(dataset, estimator, n_folds)
 
 		print('Trees: %d' % n_trees)
-		print("Node storage: {} bytes".format(sum(len(flatten_tree(t)) * 8 for t in estimator.trees)))
+		print("Node storage: {} bytes".format(sum(len(t) * 8 for t in estimator.trees)))
 		print('Scores: %s' % scores)
 		print('Mean Accuracy: %.3f%%' % (sum(scores)/float(len(scores))))
 

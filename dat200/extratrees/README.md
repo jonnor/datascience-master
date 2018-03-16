@@ -1,0 +1,24 @@
+
+# emtrees
+Tree-based machine learning classifiers for embedded systems
+
+Keywords: Decision trees, Extratrees, Random Forest
+
+## TODO
+
+0.1
+
+* Use Python interface for the C-based classifier
+* pytests covering Python interface
+* pytests covering C output
+* Use fixed-point intead of float
+* Move to dedicated repository
+* Rename modules/files/APIs to `emtrees`
+
+0.2
+
+* Release as Python library on PyPI
+
+1.0
+
+* Support serializing/deserializing trees

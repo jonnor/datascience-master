@@ -8,7 +8,6 @@ Keywords: Decision trees, Extratrees, Random Forest
 
 0.1
 
-* Use Python interface for the C-based classifier
 * pytests covering Python interface
 * pytests covering C output
 * Use fixed-point intead of float

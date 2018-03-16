@@ -34,6 +34,7 @@ extree_predict(const ExForest *forest, int32_t tree_root, const ExValue *feature
     int32_t node_idx = tree_root;
 
     while (forest->nodes[node_idx].feature > 0) {
+        //printf("n %d\n", node_idx);
         const int8_t feature = forest->nodes[node_idx].feature;
         const ExValue value = features[feature];
         node_idx = (value < forest->nodes[node_idx].value) ? forest->nodes[node_idx].left : forest->nodes[node_idx].right;
@@ -44,12 +45,15 @@ extree_predict(const ExForest *forest, int32_t tree_root, const ExValue *feature
 int32_t
 exforest_predict(const ExForest *forest, const ExValue *features, int8_t features_length) {
 
+    //printf("features %d\n", features_length);
+    //printf("trees %d\n", forest->n_trees);
+
     // FIXME: check if number of tree features is bigger than provided
     // FIXME: check if number of classes is bigger than MAX_CLASSES, error
  
     int32_t votes[EX_MAX_CLASSES] = {0};
     for (int32_t i=0; i<forest->n_trees; i++) {
-        const int32_t _class = extree_predict(forest, forest->tree_roots[i],features, features_length);
+        const int32_t _class = extree_predict(forest, forest->tree_roots[i], features, features_length);
         //printf("pred[%d]: %d\n", i, _class);
         if (_class >= 0) {
             votes[_class] += 1;
@@ -65,6 +69,7 @@ exforest_predict(const ExForest *forest, const ExValue *features, int8_t feature
             most_voted_votes = votes[i];
         }
     }
+
     return most_voted_class;
 }
 

@@ -2,6 +2,7 @@
 import random
 import math
 
+import emtrees
   
 # Split a dataset based on an attribute and an attribute value
 def test_split(index, value, dataset):
@@ -89,6 +90,7 @@ def build_tree(train, max_depth, min_size, n_features):
 # Tree representation as 2d array
 # feature, value, left_child, right_child
 # Leaf node: -1, class, -1, -1
+# 	fields = { 'feature': 0, 'value': 1, 'left': 2, 'right': 3 }
 def flatten_tree(tree):
 	flat = []
 	next_node_idx = 0
@@ -119,10 +121,10 @@ def flatten_tree(tree):
 
 # TODO: de-duplicate identical leaves
 def flatten_forest(trees):
-
 	tree_roots = []
 	tree_offset = 0
 	forest_nodes = []
+
 	for tree in trees: 
 		flat = flatten_tree(tree)
 
@@ -141,7 +143,6 @@ def flatten_forest(trees):
 
 
 def generate_c_nodes(flat, name):
-	
 	def node(n):
 		return "{{ {}, {}, {}, {} }}".format(*n)
 
@@ -175,22 +176,6 @@ def generate_c_forest(forest, name='myclassifier'):
 	return '\n\n'.join([nodes_c, tree_roots, forest]) 
 
 
-def predict(flat, root, row):
-	fields = { 'feature': 0, 'value': 1, 'left': 2, 'right': 3 }
-
-	node_idx = root
-	node = flat[node_idx]
-	while node[fields['feature']] > 0:
-		feature = node[fields['feature']]
-		val = row[feature] 
-		if val < node[fields['value']]:
-			node_idx = node[fields['left']]
-		else:
-			node_idx = node[fields['right']]
-		node = flat[node_idx]
-
-	return node[fields['value']]
-
 # Create a random subsample from the dataset with replacement
 def subsample(dataset, ratio):
 	sample = list()
@@ -200,11 +185,7 @@ def subsample(dataset, ratio):
 		sample.append(dataset[index])
 	return sample
  
-# Make a prediction with a list of bagged trees
-def bagging_predict(forest, row):
-	nodes, roots = forest
-	predictions = [predict(nodes, root, row) for root in roots]
-	return max(set(predictions), key=predictions.count)
+import copy
  
 # TODO: implement max_nodes limit
 class RandomForest:
@@ -215,8 +196,10 @@ class RandomForest:
 		self.min_size = min_size
 		self.max_depth = max_depth
 		self.n_features = n_features
+		self.classifier = None
 
 	def fit(self, data):
+		# TODO: pass features and targets separately
 		trees = list()
 		for i in range(self.n_trees):
 			sample = subsample(data, self.sample_size)
@@ -224,10 +207,16 @@ class RandomForest:
 			trees.append(tree)
 
 		self.forest = flatten_forest(trees)
+		nodes, roots = self.forest
+		node_data = []
+		for node in nodes:
+			node_data += node # copy.copy(node)
+		self.classifier = emtrees.Classifier(node_data, roots)
 
 	def predict(self, data):
-		predictions = [bagging_predict(self.forest, row) for row in data]
-		return(predictions)
+		# TODO: only pass features
+		predictions = [ self.classifier.predict(row[:-1]) for row in data ]
+		return predictions
 
 def main():
 	# Example usage on Sonar Dataset

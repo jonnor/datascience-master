@@ -3,7 +3,7 @@
 
 #include <stdint.h>
 
-typedef float ExValue; // TODO: make integer/fixed-point
+typedef int32_t ExValue;
 
 typedef struct _ExNode {
     int8_t feature;
@@ -47,6 +47,7 @@ exforest_predict(const ExForest *forest, const ExValue *features, int8_t feature
 
     //printf("features %d\n", features_length);
     //printf("trees %d\n", forest->n_trees);
+    //printf("nodes %d\n", forest->n_nodes);
 
     // FIXME: check if number of tree features is bigger than provided
     // FIXME: check if number of classes is bigger than MAX_CLASSES, error
@@ -55,8 +56,10 @@ exforest_predict(const ExForest *forest, const ExValue *features, int8_t feature
     for (int32_t i=0; i<forest->n_trees; i++) {
         const int32_t _class = extree_predict(forest, forest->tree_roots[i], features, features_length);
         //printf("pred[%d]: %d\n", i, _class);
-        if (_class >= 0) {
+        if (_class >= 0 && _class < EX_MAX_CLASSES) {
             votes[_class] += 1;
+        } else {
+            // FIXME: error when this happens
         }
     }
     

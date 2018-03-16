@@ -10,7 +10,6 @@ Keywords: Decision trees, Extratrees, Random Forest
 
 * pytests covering Python interface
 * pytests covering C output
-* Use fixed-point intead of float
 * Move to dedicated repository
 * Rename modules/files/APIs to `emtrees`
 

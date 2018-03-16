@@ -218,6 +218,7 @@ class RandomForest:
 		predictions = [ self.classifier.predict(row[:-1]) for row in data ]
 		return predictions
 
+
 def main():
 	# Example usage on Sonar Dataset
 	import csv
@@ -300,10 +301,16 @@ def main():
 		str_column_to_float(dataset, i)
 	# convert class column to integers
 	str_column_to_int(dataset, len(dataset[0])-1)
+
+	# convert floats to integer
+	for row in dataset:
+		for idx, data in enumerate(row[:-1]):
+			fixed = int(data * 2**16)
+			row[idx] = fixed
+
 	# evaluate algorithm
 	n_features = int(math.sqrt(len(dataset[0])-1))
 	n_folds = 5
-
 	for n_trees in [1, 5, 10]:
 		estimator = RandomForest(n_trees=n_trees, n_features=n_features, max_depth=10, min_size=10, sample_size=1.0)
 		scores = evaluate_algorithm(dataset, estimator, n_folds)

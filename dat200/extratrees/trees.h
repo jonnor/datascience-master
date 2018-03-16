@@ -26,7 +26,7 @@ typedef struct _ExForest {
 
 
 #ifndef EX_MAX_CLASSES
-#define EX_MAX_CLASSES 5
+#define EX_MAX_CLASSES 10
 #endif
 
 static int32_t

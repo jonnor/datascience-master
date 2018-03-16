@@ -172,12 +172,12 @@ def flatten_tree(tree):
 
 	def flatten_node(node):
 		if is_leaf(node):
-			flat.append((-1, node, -1, -1))
+			flat.append([-1, node, -1, -1])
 			return get_node_idx(node)
 
 		l = flatten_node(node['left'])
 		r = flatten_node(node['right'])
-		flat.append((node['index'], node['value'], l, r))
+		flat.append([node['index'], node['value'], l, r])
 		return get_node_idx(node)
 
 	r_idx = flatten_node(tree)
@@ -185,6 +185,27 @@ def flatten_tree(tree):
 	assert r_idx == len(flat) - 1
 
 	return flat
+
+def flatten_forest(trees):
+
+	tree_roots = []
+	tree_offset = 0
+	forest_nodes = []
+	for tree in trees: 
+		flat = flatten_tree(tree)
+
+		# Offset the nodes in tree, so they can be stored in one array 
+		root = len(flat) - 1 + tree_offset
+		for node in flat:
+			if node[2] > 0:
+				node[2] += tree_offset
+			if node[3] > 0:
+				node[3] += tree_offset
+		tree_offset += len(flat)
+		tree_roots.append(root)
+		forest_nodes += flat
+
+	return forest_nodes, tree_roots
 
 # TODO: de-duplicate identical leaves
 def generate_c_nodes(flat, name):
@@ -200,18 +221,16 @@ def generate_c_nodes(flat, name):
 	return nodes
 	
 # TODO: store forest flattened, one bunch of nodes plus roots of each tree
-def generate_c_forest(trees, name='myclassifier'):
-
-	if len(trees) > 1:
-		raise NotImplementedError('multiple trees not implemented yet')
+def generate_c_forest(forest, name='myclassifier'):
+	nodes, roots = forest
 
 	nodes_name = name+'_nodes'
-	nodes = generate_c_nodes(trees[0], nodes_name)
-	nodes_length = len(trees[0])
+	nodes_length = len(nodes)
+	nodes_c = generate_c_nodes(nodes, nodes_name)
 
-	tree_roots_length = len(trees)
+	tree_roots_length = len(roots)
 	tree_roots_name = name+'_tree_roots';
-	tree_roots_values = ', '.join(str(len(t)-1) for t in trees[:1])
+	tree_roots_values = ', '.join(str(t) for t in roots)
 	tree_roots = 'int32_t {tree_roots_name}[{tree_roots_length}] = {{ {tree_roots_values} }};'.format(**locals())
 
 	forest = """ExForest {name} = {{
@@ -221,13 +240,13 @@ def generate_c_forest(trees, name='myclassifier'):
 		{tree_roots_name},
 	}};""".format(**locals())
 	
-	return '\n\n'.join([nodes, tree_roots, forest]) 
+	return '\n\n'.join([nodes_c, tree_roots, forest]) 
 
 
-def predict(flat, row):
+def predict(flat, root, row):
 	fields = { 'feature': 0, 'value': 1, 'left': 2, 'right': 3 }
 
-	node_idx = len(flat) - 1 # root
+	node_idx = root
 	node = flat[node_idx]
 	while node[fields['feature']] > 0:
 		feature = node[fields['feature']]
@@ -250,14 +269,15 @@ def subsample(dataset, ratio):
 	return sample
  
 # Make a prediction with a list of bagged trees
-def bagging_predict(trees, row):
-	predictions = [predict(tree, row) for tree in trees]
+def bagging_predict(forest, row):
+	nodes, roots = forest
+	predictions = [predict(nodes, root, row) for root in roots]
 	return max(set(predictions), key=predictions.count)
  
 # TODO: implement max_nodes limit
 class RandomForest:
 	def __init__(self, n_features, max_depth=10, min_size=1, sample_size=1.0, n_trees=10):
-		self.trees = None
+		self.forest = None
 		self.n_trees = n_trees
 		self.sample_size = sample_size
 		self.min_size = min_size
@@ -270,10 +290,11 @@ class RandomForest:
 			sample = subsample(data, self.sample_size)
 			tree = build_tree(sample, self.max_depth, self.min_size, self.n_features)
 			trees.append(tree)
-		self.trees = [ flatten_tree(t) for t in trees ]
+
+		self.forest = flatten_forest(trees)
 
 	def predict(self, data):
-		predictions = [bagging_predict(self.trees, row) for row in data]
+		predictions = [bagging_predict(self.forest, row) for row in data]
 		return(predictions)
 
 def main():
@@ -291,15 +312,15 @@ def main():
 	n_features = int(sqrt(len(dataset[0])-1))
 	n_folds = 5
 
-	for n_trees in [1]:
+	for n_trees in [1, 5, 10]:
 		estimator = RandomForest(n_trees=n_trees, n_features=n_features, max_depth=10, min_size=10, sample_size=1.0)
 		scores = evaluate_algorithm(dataset, estimator, n_folds)
 
 		with open('mytree.h', 'w') as f:
-			f.write(generate_c_forest(estimator.trees))
+			f.write(generate_c_forest(estimator.forest))
 
 		print('Trees: %d' % n_trees)
-		print("Node storage: {} bytes".format(sum(len(t) * 8 for t in estimator.trees)))
+		print("Node storage: {} bytes".format(len(t) * 8 for t in estimator.forest[0]))
 		print('Scores: %s' % scores)
 		print('Mean Accuracy: %.3f%%' % (sum(scores)/float(len(scores))))
 

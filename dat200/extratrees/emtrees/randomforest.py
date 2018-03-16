@@ -2,7 +2,7 @@
 import random
 import math
 
-import emtrees
+import emtreesc
   
 # Split a dataset based on an attribute and an attribute value
 def test_split(index, value, dataset):
@@ -189,17 +189,31 @@ import copy
  
 # TODO: implement max_nodes limit
 class RandomForest:
-	def __init__(self, n_features, max_depth=10, min_size=1, sample_size=1.0, n_trees=10):
-		self.forest = None
+	def __init__(self, n_features=None, max_depth=10, min_size=1, sample_size=1.0, n_trees=10):
 		self.n_trees = n_trees
 		self.sample_size = sample_size
 		self.min_size = min_size
 		self.max_depth = max_depth
 		self.n_features = n_features
+
+		self.forest = None
 		self.classifier = None
 
-	def fit(self, data):
-		# TODO: pass features and targets separately
+	def get_params(self, deep=False):
+		param_names = ['n_trees', 'sample_size', 'min_size', 'max_depth', 'n_features']
+		params = {}
+		for name in param_names:
+			params[name] = getattr(self, name)
+		return params
+
+	def fit(self, X, Y):
+		if self.n_features is None:
+			self.n_features = math.sqrt(len(X[0]))
+
+		data = []
+		for x, y in zip(X, Y):
+			data.append(x + y)
+
 		trees = list()
 		for i in range(self.n_trees):
 			sample = subsample(data, self.sample_size)
@@ -211,11 +225,11 @@ class RandomForest:
 		node_data = []
 		for node in nodes:
 			node_data += node # copy.copy(node)
-		self.classifier = emtrees.Classifier(node_data, roots)
+		self.classifier = emtreesc.Classifier(node_data, roots)
 
-	def predict(self, data):
+	def predict(self, X):
 		# TODO: only pass features
-		predictions = [ self.classifier.predict(row[:-1]) for row in data ]
+		predictions = [ self.classifier.predict(row) for row in X ]
 		return predictions
 
 
@@ -252,15 +266,15 @@ def main():
 			train_set = list(folds)
 			train_set.remove(fold)
 			train_set = sum(train_set, [])
-			test_set = list()
-			for row in fold:
-				row_copy = list(row)
-				test_set.append(row_copy)
-				row_copy[-1] = None
-			algorithm.fit(train_set)
-			predicted = algorithm.predict(test_set)
-			actual = [row[-1] for row in fold]
-			accuracy = accuracy_metric(actual, predicted)
+			train_X = [row[:-1] for row in train_set]
+			train_Y = [row[-1] for row in train_set] 
+			test_X = [row[:-1] for row in fold]
+			test_Y = [row[-1] for row in fold]
+
+			algorithm.fit(train_X, train_Y)
+			predicted = algorithm.predict(test_X)
+			accuracy = accuracy_metric(actual, test_Y)
+
 			scores.append(accuracy)
 		return scores
 
@@ -309,10 +323,9 @@ def main():
 			row[idx] = fixed
 
 	# evaluate algorithm
-	n_features = int(math.sqrt(len(dataset[0])-1))
 	n_folds = 5
 	for n_trees in [1, 5, 10]:
-		estimator = RandomForest(n_trees=n_trees, n_features=n_features, max_depth=10, min_size=10, sample_size=1.0)
+		estimator = RandomForest(n_trees=n_trees, max_depth=10, min_size=10, sample_size=1.0)
 		scores = evaluate_algorithm(dataset, estimator, n_folds)
 
 		with open('mytree.h', 'w') as f:

@@ -75,7 +75,7 @@ class BuildExt(build_ext):
 
 ext_modules = [
     Extension(
-        'emtrees',
+        'emtreesc',
         ['emtreesmodule.cpp'],
         include_dirs=[
             # Path to pybind11 headers

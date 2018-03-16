@@ -175,11 +175,6 @@ def flatten_tree(tree):
 			flat.append((-1, node, -1, -1))
 			return get_node_idx(node)
 
-		#l = get_node_idx(node['left'])
-		#r = get_node_idx(node['right'])
-		#assert l != r, "left != right : {} != {}  {}".format(l, r, node)
-		#assert l != n, "left != parent : {} != {}  {}".format(l, n, node)
-		#assert r != n, "right != parent : {} != {} {}".format(r, n, node)
 		l = flatten_node(node['left'])
 		r = flatten_node(node['right'])
 		flat.append((node['index'], node['value'], l, r))
@@ -191,7 +186,22 @@ def flatten_tree(tree):
 
 	return flat
 
-# TODO: generate C header for nodes, implement prediction
+# TODO: de-duplicate identical leaves
+def generate_c(flat, name='mytree'):
+	
+	def node(n):
+		return "{{ {}, {}, {}, {} }}".format(*n)
+
+	nodes_structs = ',\n  '.join(node(n) for n in flat)
+	nodes_name = "{}_nodes".format(name)
+	nodes_length = len(flat)
+	nodes = "ExNode {nodes_name}[{nodes_length}] = {{\n  {nodes_structs} \n}};".format(**locals());
+	tree = "ExTree {name} = {{ {nodes_length}, {nodes_name} }};".format(**locals())
+
+	return nodes + '\n\n' + tree + '\n\n'
+	
+
+
 def predict(flat, row):
 	fields = { 'feature': 0, 'value': 1, 'left': 2, 'right': 3 }
 
@@ -259,9 +269,12 @@ def main():
 	n_features = int(sqrt(len(dataset[0])-1))
 	n_folds = 5
 
-	for n_trees in [1, 5, 10]:
+	for n_trees in [1]:
 		estimator = RandomForest(n_trees=n_trees, n_features=n_features, max_depth=10, min_size=10, sample_size=1.0)
 		scores = evaluate_algorithm(dataset, estimator, n_folds)
+
+		with open('mytree.h', 'w') as f:
+			f.write(generate_c(estimator.trees[0]))
 
 		print('Trees: %d' % n_trees)
 		print("Node storage: {} bytes".format(sum(len(t) * 8 for t in estimator.trees)))

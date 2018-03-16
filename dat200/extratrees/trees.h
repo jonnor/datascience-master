@@ -8,8 +8,8 @@ typedef float ExValue; // TODO: make integer/fixed-point
 typedef struct _ExNode {
     int8_t feature;
     ExValue value;
-    int8_t left;
-    int8_t right;
+    int16_t left;
+    int16_t right;
 } ExNode;
 
 

@@ -1,77 +1,8 @@
-# Random Forest Algorithm on Sonar Dataset
-from random import seed
-from random import randrange
-from csv import reader
-from math import sqrt
- 
-# Load a CSV file
-def load_csv(filename):
-	dataset = list()
-	with open(filename, 'r') as file:
-		csv_reader = reader(file)
-		for row in csv_reader:
-			if not row:
-				continue
-			dataset.append(row)
-	return dataset
- 
-# Convert string column to float
-def str_column_to_float(dataset, column):
-	for row in dataset:
-		row[column] = float(row[column].strip())
- 
-# Convert string column to integer
-def str_column_to_int(dataset, column):
-	class_values = [row[column] for row in dataset]
-	unique = set(class_values)
-	lookup = dict()
-	for i, value in enumerate(unique):
-		lookup[value] = i
-	for row in dataset:
-		row[column] = lookup[row[column]]
-	return lookup
- 
-# Split a dataset into k folds
-def cross_validation_split(dataset, n_folds):
-	dataset_split = list()
-	dataset_copy = list(dataset)
-	fold_size = int(len(dataset) / n_folds)
-	for i in range(n_folds):
-		fold = list()
-		while len(fold) < fold_size:
-			index = randrange(len(dataset_copy))
-			fold.append(dataset_copy.pop(index))
-		dataset_split.append(fold)
-	return dataset_split
- 
-# Calculate accuracy percentage
-def accuracy_metric(actual, predicted):
-	correct = 0
-	for i in range(len(actual)):
-		if actual[i] == predicted[i]:
-			correct += 1
-	return correct / float(len(actual)) * 100.0
- 
-# Evaluate an algorithm using a cross validation split
-def evaluate_algorithm(dataset, algorithm, n_folds):
-	folds = cross_validation_split(dataset, n_folds)
-	scores = list()
-	for fold in folds:
-		train_set = list(folds)
-		train_set.remove(fold)
-		train_set = sum(train_set, [])
-		test_set = list()
-		for row in fold:
-			row_copy = list(row)
-			test_set.append(row_copy)
-			row_copy[-1] = None
-		algorithm.fit(train_set)
-		predicted = algorithm.predict(test_set)
-		actual = [row[-1] for row in fold]
-		accuracy = accuracy_metric(actual, predicted)
-		scores.append(accuracy)
-	return scores
- 
+
+import random
+import math
+
+  
 # Split a dataset based on an attribute and an attribute value
 def test_split(index, value, dataset):
 	left, right = list(), list()
@@ -108,7 +39,7 @@ def get_split(dataset, n_features):
 	b_index, b_value, b_score, b_groups = 999, 999, 999, None
 	features = list()
 	while len(features) < n_features:
-		index = randrange(len(dataset[0])-1)
+		index = random.randrange(len(dataset[0])-1)
 		if index not in features:
 			features.append(index)
 	for index in features:
@@ -186,6 +117,7 @@ def flatten_tree(tree):
 
 	return flat
 
+# TODO: de-duplicate identical leaves
 def flatten_forest(trees):
 
 	tree_roots = []
@@ -207,7 +139,7 @@ def flatten_forest(trees):
 
 	return forest_nodes, tree_roots
 
-# TODO: de-duplicate identical leaves
+
 def generate_c_nodes(flat, name):
 	
 	def node(n):
@@ -220,7 +152,7 @@ def generate_c_nodes(flat, name):
 
 	return nodes
 	
-# TODO: store forest flattened, one bunch of nodes plus roots of each tree
+
 def generate_c_forest(forest, name='myclassifier'):
 	nodes, roots = forest
 
@@ -264,7 +196,7 @@ def subsample(dataset, ratio):
 	sample = list()
 	n_sample = round(len(dataset) * ratio)
 	while len(sample) < n_sample:
-		index = randrange(len(dataset))
+		index = random.randrange(len(dataset))
 		sample.append(dataset[index])
 	return sample
  
@@ -298,8 +230,79 @@ class RandomForest:
 		return(predictions)
 
 def main():
+	# Example usage on Sonar Dataset
+	import csv
+
+	# Split a dataset into k folds
+	def cross_validation_split(dataset, n_folds):
+		dataset_split = list()
+		dataset_copy = list(dataset)
+		fold_size = int(len(dataset) / n_folds)
+		for i in range(n_folds):
+			fold = list()
+			while len(fold) < fold_size:
+				index = random.randrange(len(dataset_copy))
+				fold.append(dataset_copy.pop(index))
+			dataset_split.append(fold)
+		return dataset_split
+	 
+	# Calculate accuracy percentage
+	def accuracy_metric(actual, predicted):
+		correct = 0
+		for i in range(len(actual)):
+			if actual[i] == predicted[i]:
+				correct += 1
+		return correct / float(len(actual)) * 100.0
+	 
+	# Evaluate an algorithm using a cross validation split
+	def evaluate_algorithm(dataset, algorithm, n_folds):
+		folds = cross_validation_split(dataset, n_folds)
+		scores = list()
+		for fold in folds:
+			train_set = list(folds)
+			train_set.remove(fold)
+			train_set = sum(train_set, [])
+			test_set = list()
+			for row in fold:
+				row_copy = list(row)
+				test_set.append(row_copy)
+				row_copy[-1] = None
+			algorithm.fit(train_set)
+			predicted = algorithm.predict(test_set)
+			actual = [row[-1] for row in fold]
+			accuracy = accuracy_metric(actual, predicted)
+			scores.append(accuracy)
+		return scores
+
+	# Load a CSV file
+	def load_csv(filename):
+		dataset = list()
+		with open(filename, 'r') as file:
+			csv_reader = csv.reader(file)
+			for row in csv_reader:
+				if not row:
+					continue
+				dataset.append(row)
+		return dataset
+	 
+	# Convert string column to float
+	def str_column_to_float(dataset, column):
+		for row in dataset:
+			row[column] = float(row[column].strip())
+	 
+	# Convert string column to integer
+	def str_column_to_int(dataset, column):
+		class_values = [row[column] for row in dataset]
+		unique = set(class_values)
+		lookup = dict()
+		for i, value in enumerate(unique):
+			lookup[value] = i
+		for row in dataset:
+			row[column] = lookup[row[column]]
+		return lookup
+
 	# Test the random forest algorithm
-	seed(3)
+	random.seed(3)
 	# load and prepare data
 	filename = 'sonar.all-data.csv'
 	dataset = load_csv(filename)
@@ -309,7 +312,7 @@ def main():
 	# convert class column to integers
 	str_column_to_int(dataset, len(dataset[0])-1)
 	# evaluate algorithm
-	n_features = int(sqrt(len(dataset[0])-1))
+	n_features = int(math.sqrt(len(dataset[0])-1))
 	n_folds = 5
 
 	for n_trees in [1, 5, 10]:
@@ -320,7 +323,7 @@ def main():
 			f.write(generate_c_forest(estimator.forest))
 
 		print('Trees: %d' % n_trees)
-		print("Node storage: {} bytes".format(len(t) * 8 for t in estimator.forest[0]))
+		print("Node storage: {} bytes".format(len(estimator.forest[0]) * 9))
 		print('Scores: %s' % scores)
 		print('Mean Accuracy: %.3f%%' % (sum(scores)/float(len(scores))))
 

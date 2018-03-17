@@ -17,6 +17,12 @@ At Norwegian University of Life Sciences.
 
 ### [INF250](./inf250)
 
+### [DAT200](./dat200)
+
+### [TEL240](./tel240)
+
+### [INF230](./inf230)
+
 ## Interesting specializations
 
 Techniques: Intelligent embedded systems, robotics, computer vision, simulation.
@@ -79,7 +85,9 @@ Topics
 * Robotics
 * Sustainability
 * Renewable energy
-* Internet of Things
+* Internet of Things, Embedded Systems
+* Automation.
+* CAD/CAM
 * Blockchain
 
 
@@ -106,7 +114,8 @@ Record input, output pairs. Change input parameters, find corresponding change i
 
 Larger projects, potentially novel
 
-* Machine-vision-assisted construction of . [smart-cad](https://github.com/jonnor/projects/tree/master/smart-cad)
+* Machine-vision-assisted construction of CAD models. Reverse engineering
+[smart-cad](https://github.com/jonnor/projects/tree/master/smart-cad)
 * Automation of CAM paths for maximizing material usage and waste management. Machine-vision
 Automatic part layout of useful parts in remainder of cutsheet for CNC/laser.
 Automatic creation of cutlines to discard pieces smaller than w,h.
@@ -148,9 +157,10 @@ INA125 has 4.5kHz bandwith @ 100x gain, should be good for 1k+ samples/second.
 Big themes
 
 Sustainability
+
 * Energy production
 * Recycling, waste-management
-* Manufacturing, low-scale automation. Cheap robotics and deployment
+* Manufacturing, low-scale automation. Cheap robotics and deployment. CAD/CAM improvements
 * Agriculture, food-production
 * Understanding and predicting impacts (economic,social,environmental)
 
@@ -176,18 +186,20 @@ Note: NMBU operates an internal publishing fund for Open Access publications, up
 * Fablab conference. July. FAB14 in France, http://www.fab14.org/
 * Open Source Hardware conference.
 * FOSDEM. February, Brussels
-* Libre Graphics Meeting. 2018, Sevilla
+* Libre Graphics Meeting. 2018, Seville
 * Linux Audio Conference. 2018, June, Berlin
 * DAFX. 2018, September, Aveiro Portugal.
 [CFP March 29](https://www.mail-archive.com/sursound@music.vt.edu/msg09198.html)
-* EuroPython 2018, Edinbourgh, July. [Announce](http://www.europython-society.org/post/167520379525/europython-2018-location-and-dates)
-* EuroSciPy 2018, time/loc not announced
-*  [ECDA 2018](https://euads.org/events/ecda-2018/). Paderborn, Germany, 4th – 6th July, 2018.
+* [EuroPython 2018](https://ep2018.europython.eu/), Edinbourgh, July. CFP opens in March/April.
+* EuroSciPy 2018. August 28 - September 1, Trento, Italy. CFP not open as of March
+* [ECDA 2018](https://euads.org/events/ecda-2018/). Paderborn, Germany, 4th – 6th July, 2018.
 * Vipimage. 2018 not announced yet
 * Open Source Summit Europe 2018. Oct 22-24, Edinbourgh.
 [CFP until June 30](https://events.linuxfoundation.org/events/open-source-summit-europe-2018/program/cfp/)
 * Embedded Linux Conference Europe. [CFP until June 30](https://events.linuxfoundation.org/events/elce-2018/program/cfp/)
 * European Conference on Computer Vision. [2018](https://eccv2018.org/dates/), September, Munich
+
+
 
 ## Inbox
 

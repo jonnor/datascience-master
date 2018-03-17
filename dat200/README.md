@@ -53,9 +53,17 @@ Autoscaler
 
 ## Machine learning on embedded/microcontroller
 
-Implement inference/prediction part of an algorithm for microcontroller.
-Using sklearn for the training, serialized and then deserialized again.
-DecisionTreeClassifier?
+Implement at least inference/prediction part of an algorithm for microcontroller.
+Training phase would then run on a standard computer, using existing tools as much as possible.
+
+### Online learning
+
+It is also desirable to learn on-the-fly.
+First level is hybrid systems where new samples is used to tune/improve a pre-trained model.
+More advanced is on-line training which can automatically detect new classes.
+Get closer to typical Artificial Intelligence field, since now have an intelligent agent able to learn on its own.
+
+Hybrid learning, adaptive machine learning, progressive learning, semi-supervised learning.
 
 ### References
 
@@ -71,6 +79,13 @@ k-Nearest Neighbor implementation. Can run on Atmel AVR8
 Support Vector Machines. Target system used for auto-tunic a mobile ad-hoc network (MANET) by
 earns the relationships among configuration parameters. Running on ARMv7 and PPC, 128MB+ RAM.
 Lots of detail about how they optimized an existing SVM implementation, in the end running 20x faster.
+* [Embedded Learning Library](https://github.com/Microsoft/ELL) by Microsoft.
+Set of C++ libraries for machine learning on embedded platforms. Includes code for kNN, RandomForest etc.
+Also has some node-based dataflow system in place it seems. JavaScript and Python bindings.
+
+Books
+
+* [Learning in Embedded Systems](https://mitpress.mit.edu/books/learning-embedded-systems), May 1993.
 
 ### On-edge processing cases
 
@@ -99,6 +114,38 @@ Example usecases
 
 * Predictive maintenance, using audio/vibration data
 * Activitity detection for people, using audio/accelerometer data
+* Appliance disaggregation, using aggregated power consumption data. "Non-Intrusive Load Monitoring" (NILM)
+* Anomaly/change detection for predictive maintenance, using audio/vibration data
+
+#### Random Forests
+Some work in [emtrees](https://github.com/jonnor/emtrees)
+
+#### Extra trees
+
+Like random forest (of decision trees) but even simpler.
+Often performing just as good or even slightly better on classification tasks.
+
+Resources
+
+* [libextratrees](https://github.com/paolo-losi/libextratrees/), C implementation. Clean code.
+Uses dynamic allocation and floats.
+* Standalone example of Random Forest implementation in Python, with results.
+[1](https://machinelearningmastery.com/implement-random-forest-scratch-python/), shows the principles well.
+* [How are feature_importances in RandomForestClassifier determined?](https://stackoverflow.com/a/15820105)
+* [Current peak based device classification in NILM on a low-cost embedded platform using extra-trees](http://ieeexplore.ieee.org/document/8284200/). Published November 2017. Ran on a Rasperry PI 3, classification of an event was done in 400ms. Events were detected based on a current draw profile of 1 second / 60 current peaks. No details on the code used, probably a standard toolset like Python/sklearn.
+Possibly a testcase.
+
+#### Audio
+
+Existing work
+* [ML-KWS-for-MCU](https://github.com/ARM-software/ML-KWS-for-MCU/tree/master/Deployment).
+Speech recognition on microcontroller.
+Neural network trained with TensorFlow, then deployed on Cortex-M7, with FPU.
+Using CMSIS NN and DSP modules.
+* [CASE2012](http://elaf1.fi.mdp.edu.ar/electronica/grupos/lac/pdf/lizondo_CASE2012.pdf).
+Implemented speech recognition using MFCC on 16-bit dsPIC with 40 MIPS and 16kB RAM.
+A Cortex-M3 at 80 MHz should have 100+MIPS.
+
 
 # Audio classification
 
@@ -111,6 +158,7 @@ Mentiones MPEG-7 based features, efficient and perceptual.
 good window function for audio. C reference implementation.
 * [Voice Activity Detection, tutorial](http://practicalcryptography.com/miscellaneous/machine-learning/voice-activity-detection-vad-tutorial/)
 Using 5 simple features.
+* [Machine Learning for Audio, Image and Video Analysis](http://www.dcs.gla.ac.uk/~vincia/textbook.pdf).
 
 ## Tools
 * [pyAudioAnalysis](https://github.com/tyiannak/pyAudioAnalysis/wiki/3.-Feature-Extraction).
@@ -123,4 +171,6 @@ Chroma Vector, Mel Frequency Cepstral Coefficients, Zero Crossing Rate, Spectral
 2k samples, 40 classes in 5 major categories. Compiled from freesound.org data
 * [NOIZEUS: A noisy speech corpus for evaluation of speech enhancement algorithms](http://ecs.utdallas.edu/loizou/speech/noizeus/)
 30 sentences corrupted by 8 real-world noises. 
+* [Speech Commands Data Set](https://www.kaggle.com/c/tensorflow-speech-recognition-challenge/data).
+Kaggle competition required submissions to run in below 200ms on a Raspberry PI3.
 

@@ -181,6 +181,8 @@ Note: NMBU operates an internal publishing fund for Open Access publications, up
 
 [Hackaday Journal](https://journal.hackaday.io/submissions). Possiblity of presenting at the Hackaday Superconference.
 
+[Modelling, Identidication and Control](http://www.mic-journal.no/), Nordic journal. Open Access.
+
 ## Conferences
 
 * Fablab conference. July. FAB14 in France, http://www.fab14.org/

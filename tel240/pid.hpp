@@ -1,4 +1,10 @@
 
+// TODO: Use Backward Euler with incremental formulation, 
+// TODO: implement integrator anti-windup
+// MAYBE, implement first-order filtering on D term
+// http://www.mic-journal.no/PDF/ref/Haugen2010.pdf
+// http://www.control.lth.se/media/Education/EngineeringProgram/FRTN01/2012/L8_12_Multi.pdf
+
 typedef float pid_number;
 
 class PID {

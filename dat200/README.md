@@ -98,24 +98,49 @@ ML-learning tasks
 
 More valuabel when
 
-* High bandwidth sensor input.
-Audio, video, IMU
-* Rare events
-* Low bandwidth algorithm output
-* Unreliable connection
-* Low cost senor unit
-* Low energy usage needed
-* Low/predictable latency needed
 * Local response needed
+* Adaptable response needed. Over time, in context
+* Low/predictable latency needed
 * Sending raw sensor data has privacy implications.
 Audio, video
+* Unreliable connection
+* High bandwidth sensor input.
+Audio, video, IMU
+* Low bandwidth algorithm output
+* Events of interest are rare
+* Low energy usage needed
+* Full/raw sensor data is not valuable to store
+* Low cost sensor unit
+
 
 Example usecases
 
 * Predictive maintenance, using audio/vibration data
-* Activitity detection for people, using audio/accelerometer data
+* Activitity detection for people, using audio/accelerometer data. Assistive tech
 * Appliance disaggregation, using aggregated power consumption data. "Non-Intrusive Load Monitoring" (NILM)
-* Anomaly/change detection for predictive maintenance, using audio/vibration data
+* Anomaly/change detection for predictive maintenance, using audio/vibration data, or electrical data
+* Gesture recognition as human input device, using accelerometer/gyro data.
+* Speech/command recognition as human input device, using microphone
+* ? Estimating battery lifetime of sensor
+* ? Battery saving by normally sending day/week aggregates, and on event detection send data directly
+* ? Quality monitoring in production line, using ?? data
+* ? Health detection of individual animals. Using local ML to transmit when problematic
+
+Techniques
+
+* Decision trees, random forests
+* Linear regression/classifiers, SVM
+* Neural networks
+* kNN. Challenge: Storage/memory use
+* Model-based approaches
+
+#### Hardware
+
+* Microcontroller with connectivity. Ex: ESP8266/ESP32 with WiFi/BLE
+* Microphone. [Analog](https://www.digikey.co.uk/products/en/audio-products/microphones/158?k=microphone&k=&pkeyword=microphone&FV=ffe0009e%2Ca40062&quantity=0&ColumnSort=1000011&page=1&stock=1&nstock=1&datasheet=1&pageSize=25) [I2S](https://www.digikey.co.uk/products/en/audio-products/microphones/158?FV=ffe0009e%2Ca4027e&quantity=&ColumnSort=1000011&page=1&k=microphone&pageSize=25&pkeyword=microphone)
+* IMU
+* Piezo vibration sensor?
+* SPI ADC, [MCP3002](https://www.digikey.no/product-detail/en/microchip-technology/MCP3002T-I-SN/MCP3002T-I-SN-ND/319415)
 
 #### Random Forests
 Some work in [emtrees](https://github.com/jonnor/emtrees)
@@ -174,3 +199,23 @@ Chroma Vector, Mel Frequency Cepstral Coefficients, Zero Crossing Rate, Spectral
 * [Speech Commands Data Set](https://www.kaggle.com/c/tensorflow-speech-recognition-challenge/data).
 Kaggle competition required submissions to run in below 200ms on a Raspberry PI3.
 
+# Vibration analysis
+Often used for 'machine condition' analysis, especially for rotating machines.
+
+* [Fundamentals of Vibration Measurement and Analysis Explained](http://www.lifetime-reliability.com/free-articles/maintenance-management/Fundamentals_of_Vibration_Measurement_and_Analysis_Explained.pdf), explains how to capture data, process it to commonly used features etc
+* [Beginning Vibration Analysis](http://www.vibranalysis.co.za/ctc/pdf/pubTechPapers/01-Beginning%20Vibration%20Analysis.pdf),
+page 82+ shows data for some problematic cases
+
+# Noise removal
+
+* Denoising autoencoders. sDSA, stacked... [Theano tutorial](http://deeplearning.net/tutorial/SdA.html)
+* mSDA, fast denoising autoencoder. [Applied to robot arm](http://fastml.com/very-fast-denoising-autoencoder-with-a-robot-arm/)
+* 
+
+# Change detection
+Novelity detection.
+Anomaly detection.
+Change point detection (mostly in time series).
+
+* [Change point detection in time series data with random forests](https://www.sciencedirect.com/science/article/pii/S0967066110001073)
+* [Two approaches for novelty detection using random forest](https://www.sciencedirect.com/science/article/pii/S0957417414008070)

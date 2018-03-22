@@ -98,7 +98,8 @@ Flowhub related
 
 * From Jupyter to cloud-scale service using msgflo-python
 * FBP/NoFlo execution for Jupyter. Kernel?. .fbp renderer, component/JavaScript evaluator
-* Integrated data visualization for programming, [dataviz](https://github.com/jonnor/projects/tree/master/introspectable-computing/dataviz)
+* Integrated data visualization for programming,
+[dataviz](https://github.com/jonnor/projects/tree/master/introspectable-computing/dataviz)
 
 Basic data science applications
 
@@ -115,7 +116,10 @@ Record input, output pairs. Change input parameters, find corresponding change i
 Larger projects, potentially novel
 
 * Machine-vision-assisted construction of CAD models. Reverse engineering
-[smart-cad](https://github.com/jonnor/projects/tree/master/smart-cad)
+[smart-cad](https://github.com/jonnor/projects/tree/master/smart-cad).
+Bunch of research already done, both planar models.
+Maybe possible to focus on making more practical via smartphone camera
+
 * Automation of CAM paths for maximizing material usage and waste management. Machine-vision
 Automatic part layout of useful parts in remainder of cutsheet for CNC/laser.
 Automatic creation of cutlines to discard pieces smaller than w,h.
@@ -153,6 +157,11 @@ ADC can be done in a fast microcontroller. STM32 etc.
 Example circuit based on INA125, instrumentation amp with precision voltage reference included:
 http://www.mechtechplace.net/mech-tech-electronics/building-a-low-cost-strain-gage-load-cell-amplifier/
 INA125 has 4.5kHz bandwith @ 100x gain, should be good for 1k+ samples/second.
+
+Detect failures modes in CNC machining though a model-based approach:
+Generate from the CAM files the expected load conditions and compare it continiously, detect and flag anomalies. 
+* [Tool breakage detection in CNC high-speed milling based in feed-motor current signals](https://link.springer.com/article/10.1007/s00170-010-2907-9). 
+* [Prediction of Cutting Force in 3-Axis CNC Milling Machines Based on Voxelization Framework for Digital Manufacturing](https://ac.els-cdn.com/S2351978915010227/1-s2.0-S2351978915010227-main.pdf?_tid=abd03b3c-bcf8-419f-8e85-6b3b5870b1e8&acdnat=1521660091_5873ea8ff3d1ea396b558157776a4981)
 
 Big themes
 
@@ -302,6 +311,26 @@ Heuristics can also be made using a database of solutions to subproblems.
 Heuristics can be learned by creating a prediction model between feature(s) of a state and the distance to the goal.
 When using multiple features, often use linear weighted combinations to get one number. 
 = Chapter 3, AI A Modern Approach. 
+
+Dealing with lack of (labeled) data
+
+* Self learning. [Using Pseudo labeling for semi-supervised learning](https://towardsdatascience.com/simple-explanation-of-semi-supervised-learning-and-pseudo-labeling-c2218e8c769b). After having trained model on labeled data, run it on the unlabeled data to get (pseudo) labels, then train it on the combined setup. Up to 25% pseudo labels in a batch. When method provides confidence score, take only the most confident samples into training set.
+Also called .
+* Semi-supervised learning can be done using a generative model, like Gaussian mixture, Naive Bayes, Hidden Markov.
+Cluster-and-label: Use a clustering algorithm (unsupervised), take the labels of the majority of labeled data.
+[Introduction to semi-supervised learning](http://pages.cs.wisc.edu/~jerryzhu/pub/sslicml07.pdf).
+Can define a graph of similarities.
+* Co-training. Semi-supervised learning. Each sample is encoded with two strong and different features, ie text and image.
+Train one classifier per feature, then have the two classifiers teach eachother. Multiview 
+* Active learning. Training phase done in batches, most important/pivotal candidates then labeled
+* Generative Adverserial learning. Is/can it be used outside of GAN?
+* Human/user-in-the-loop. Ask the user about the correct label
+* Synthesising samples. Oversampling: duplicate some samples as-is.
+Randomly sample attributes.
+SMOTE, especially for balancing minority classes.
+* Programmatic supervision. Distant supervision. 
+* Weak supervision. [Data Programming](http://dawn.cs.stanford.edu/pubs/snorkel-nips2016.pdf)
+generates labels that are noisy and possibly conflicting, then learns the inaccuracies.
 
 Datasets / data sources
 

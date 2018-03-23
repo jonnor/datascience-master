@@ -112,31 +112,46 @@ Audio, video, IMU
 * Full/raw sensor data is not valuable to store
 * Low cost sensor unit
 
+Keywords
+
+* Wireless Sensor networks
 
 Example usecases
 
 * Predictive maintenance, using audio/vibration data
-* Activitity detection for people, using audio/accelerometer data. Assistive tech
+* Activitity detection for people, using audio/accelerometer data. Assistive tech, medical
 * Appliance disaggregation, using aggregated power consumption data. "Non-Intrusive Load Monitoring" (NILM)
 * Anomaly/change detection for predictive maintenance, using audio/vibration data, or electrical data
 * Gesture recognition as human input device, using accelerometer/gyro data.
-* Speech/command recognition as human input device, using microphone
+* Speech/command recognition as human input device, using microphone. Keyword detection
 * ? Estimating battery lifetime of sensor
 * ? Battery saving by normally sending day/week aggregates, and on event detection send data directly
 * ? Quality monitoring in production line, using ?? data
-* ? Health detection of individual animals. Using local ML to transmit when problematic
+* Health status of animals via activity detected using accelerometer
+* Monitoring eating activity using accelerometer [1](https://www.sciencedirect.com/science/article/pii/S0010482515000086)
+* Environmental monitoring, using microphone to detect unwanted activity like cutting down trees
+* Adaptive signalling and routing for wireless transmission
 
 Techniques
 
 * Decision trees, random forests
-* Linear regression/classifiers, SVM
-* Neural networks
+* Naive Bayes
+* Binary Neural networks
+* SVM. Linear/kernel
 * kNN. Challenge: Storage/memory use
+* k-means clustering.
+* PCA.
 * Model-based approaches
+* Q-learning (reinforcement learning)
+
+#### References
+* [Machine Learning in Wireless Sensor Networks: Algorithms, Strategies, and Applications](https://arxiv.org/pdf/1405.4463.pdf). 2013.
+Review and summary of many papers. Discusses dynamic routing, local data aggregation, collaborative/distributed data processing, event detection, positioning. PCA for data compression, plus Compressive sensing, Expectation-Maximimization.
+"80 percent of nodes energy consumed when sending data".
 
 #### Hardware
 
-* Microcontroller with connectivity. Ex: ESP8266/ESP32 with WiFi/BLE
+* Microcontroller with connectivity. Ex: ESP8266/ESP32 with WiFi/BLE. Or some ARM Cortex M
 * Microphone. [Analog](https://www.digikey.co.uk/products/en/audio-products/microphones/158?k=microphone&k=&pkeyword=microphone&FV=ffe0009e%2Ca40062&quantity=0&ColumnSort=1000011&page=1&stock=1&nstock=1&datasheet=1&pageSize=25) [I2S](https://www.digikey.co.uk/products/en/audio-products/microphones/158?FV=ffe0009e%2Ca4027e&quantity=&ColumnSort=1000011&page=1&k=microphone&pageSize=25&pkeyword=microphone)
 * IMU
 * Piezo vibration sensor?
@@ -159,6 +174,40 @@ Uses dynamic allocation and floats.
 * [How are feature_importances in RandomForestClassifier determined?](https://stackoverflow.com/a/15820105)
 * [Current peak based device classification in NILM on a low-cost embedded platform using extra-trees](http://ieeexplore.ieee.org/document/8284200/). Published November 2017. Ran on a Rasperry PI 3, classification of an event was done in 400ms. Events were detected based on a current draw profile of 1 second / 60 current peaks. No details on the code used, probably a standard toolset like Python/sklearn.
 Possibly a testcase.
+
+#### Naive Bayes
+
+Simple and very effective at some classification problems.
+
+Coefficients to store. For Gaussian 2xNxM: 2=mean,stddev. N classes and M 
+Prediction: multiply probabilities together.
+Probably need to do log trick to avoid underflow issues.
+Fixed point representation should have domain [0 1.0].
+
+Naive Bayes classifier implementations
+ 
+* Python. Discrete Naive Bayes. [AppliedMachineLearning](https://appliedmachinelearning.wordpress.com/2017/05/23/understanding-naive-bayes-classifier-from-scratch-python-code/)
+* Gaussian Naive Bayes in Python. 
+[MachineLearningMastery](https://machinelearningmastery.com/naive-bayes-classifier-scratch-python/)
+* Discrete Naive Bayes in C++ [codeforge](http://www.codeforge.com/read/387365/BayesianClassifier.cpp__html)
+* Discrete,Gaussian,Multinomial,etc in Python [scikit-learn](https://github.com/scikit-learn/scikit-learn/blob/master/sklearn/naive_bayes.py)
+
+#### Binarized Neural Networks
+
+Bitwise arithmetic packed into integer representations.
+Decreases weights storage drastically.
+Implementable efficiently on constrained hardware (only fixed-point units).
+Also called BNN, Binary Neutral Network, and XNOR neural network. 
+
+* [Introduction](https://software.intel.com/en-us/articles/accelerating-neural-networks-with-binary-arithmetic)
+* Paper: [Binarized Neural Networks: raining Neural Networks with Weights and Activations Constrained to +1 or −1](https://ai.intel.com/wp-content/uploads/sites/53/2017/06/1602.02830v3.pdf)
+* eBNN. Paper: [Embedded Binarized Neural Networks](http://www.eecs.harvard.edu/~htk/publication/2017-ewsn-mcdanel-teerapittayanon-kung.pdf).
+Runs MINST with 95% accuracy in under 50ms on Intel Curie. 32bit, 16KB RAM, 32MHz.
+Reorders computation compared to BNN to only need a single floating point intermediate value, instead of one per layer.
+[Code](https://gitlab.com/kunglab/ddnn). Python module which generates a C header, plus C library.
+* [Deep Learning Binary Neural Network on an FPG](https://web.wpi.edu/Pubs/ETD/Available/etd-042717-145953/unrestricted/sredkar.pdf).
+332,164 images per second with 85% accuracy on CIFAR-10.
+* [Accelerating Binarized Neural Networks: Comparison of FPGA, CPU, GPU, and ASIC](http://jaewoong.org/pubs/fpt16-accelerating-bnn.pdf)
 
 #### Audio
 
@@ -210,7 +259,6 @@ page 82+ shows data for some problematic cases
 
 * Denoising autoencoders. sDSA, stacked... [Theano tutorial](http://deeplearning.net/tutorial/SdA.html)
 * mSDA, fast denoising autoencoder. [Applied to robot arm](http://fastml.com/very-fast-denoising-autoencoder-with-a-robot-arm/)
-* 
 
 # Change detection
 Novelity detection.

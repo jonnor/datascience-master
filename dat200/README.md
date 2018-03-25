@@ -149,6 +149,13 @@ Techniques
 Review and summary of many papers. Discusses dynamic routing, local data aggregation, collaborative/distributed data processing, event detection, positioning. PCA for data compression, plus Compressive sensing, Expectation-Maximimization.
 "80 percent of nodes energy consumed when sending data".
 
+#### Research groups
+
+* NTNU [Autonomous Adaptive Sensing](https://www.ntnu.edu/iik/aas)
+* NTNU Telenor [AI lab](https://www.ntnu.edu/ailab)
+* Simula [Relient Networks and Applications](https://www.simula.no/research/projects/center-resilient-networks-and-applications)
+* [SINTEF Digital](https://www.sintef.no/digital/om-sintef-ikt/#Vreavdelinger)
+
 #### Hardware
 
 * Microcontroller with connectivity. Ex: ESP8266/ESP32 with WiFi/BLE. Or some ARM Cortex M
@@ -209,6 +216,10 @@ Reorders computation compared to BNN to only need a single floating point interm
 332,164 images per second with 85% accuracy on CIFAR-10.
 * [Accelerating Binarized Neural Networks: Comparison of FPGA, CPU, GPU, and ASIC](http://jaewoong.org/pubs/fpt16-accelerating-bnn.pdf)
 
+#### SVM
+
+* [SVM classification step on embedded system with RBF kernel](https://stats.stackexchange.com/questions/51287/svm-classification-step-on-embedded-system-with-rbf-kernel). Contains siple MATLAB example code for RBF kernel.
+
 #### Audio
 
 Existing work
@@ -220,6 +231,23 @@ Using CMSIS NN and DSP modules.
 Implemented speech recognition using MFCC on 16-bit dsPIC with 40 MIPS and 16kB RAM.
 A Cortex-M3 at 80 MHz should have 100+MIPS.
 
+MFCC Feature extration
+
+* [KWS](https://github.com/ARM-software/ML-KWS-for-MCU/blob/8ea22926f743f53c7d17d9c73eb2f1b22257ebe2/Deployment/Source/MFCC/mfcc.cpp)
+Runs on ARM Cortex M(4F). Uses CMSIS for FFT. Clear code struture. Some things, like filterbank, can be precomputed in Python? Apache 2.0
+* [libmfcc](https://github.com/wirahayy/libmfcc/blob/master/libmfcc.c). Takes FFT spectrum as input. MIT.
+* Fixed-point is challenging. A naive approach to fixed-point FFT causes noise to go up a lot, and classification ability is drastically reduced. Optimized implementation proposed in  [Accuracy of MFCC-Based Speaker Recognition in Series 60 Device](https://link.springer.com/content/pdf/10.1155/ASP.2005.2816.pdf)
+* STM32F103 (Cortex M3 at 72MHz) can do 1024 point FFT in 3ms using CMSIS, Q15/Q31 fixed point. radix-4 FFT.
+STM32F091 (Cortex M0 at 48Mhz) takes 20 ms.
+[STM32 DSP](http://www.st.com/content/ccc/resource/technical/document/application_note/group0/c1/ee/18/7a/f9/45/45/3b/DM00273990/files/DM00273990.pdf/jcr:content/translations/en.DM00273990.pdf).
+Using software-emulated floating point for FFT on Cortex M4 is 10x slower than the FPU unit.
+M4F is 3-4 times as energy efficient as the M3 (when using floats?).
+[EMF32 DSP](https://www.silabs.com/documents/public/application-notes/AN0051.pdf).
+CMSIS FFT is about 3-4x faster than a generic KissFFT-based version.
+Teensy 3.2 was able to do approx 400 ops/sec (3ms) on 512 point FFT with generic version, using int32.2
+[OpenAudio Benchmarking FFT](http://openaudio.blogspot.no/2016/09/benchmarking-fft-speed.html).
+[FFT on ARM-Based Low-Power Microcontrollers](https://pdfs.semanticscholar.org/9eca/f67d19b8df4a508ad5c3d198989b70f16aa6.pdf)
+found that CMSIS FFT with Q31 had slightly less error than with F32.
 
 # Audio classification
 
@@ -233,10 +261,12 @@ good window function for audio. C reference implementation.
 * [Voice Activity Detection, tutorial](http://practicalcryptography.com/miscellaneous/machine-learning/voice-activity-detection-vad-tutorial/)
 Using 5 simple features.
 * [Machine Learning for Audio, Image and Video Analysis](http://www.dcs.gla.ac.uk/~vincia/textbook.pdf).
+* [Notes on Music Information Retrieval](https://musicinformationretrieval.com/index.html), series of Jupyter notebooks.
+Lots of goodies, from feature extraction
 
 ## Tools
-* [pyAudioAnalysis](https://github.com/tyiannak/pyAudioAnalysis/wiki/3.-Feature-Extraction).
-Chroma Vector, Mel Frequency Cepstral Coefficients, Zero Crossing Rate, Spectral Centroid...
+* [librosa](https://librosa.github.io/librosa/feature.html)
+* [essentia](http://essentia.upf.edu/documentation/algorithms_overview.html)
 
 ## Datasets
 * [Urbansound-8k](https://serv.cusp.nyu.edu/projects/urbansounddataset/urbansound8k.html).
@@ -247,6 +277,11 @@ Chroma Vector, Mel Frequency Cepstral Coefficients, Zero Crossing Rate, Spectral
 30 sentences corrupted by 8 real-world noises. 
 * [Speech Commands Data Set](https://www.kaggle.com/c/tensorflow-speech-recognition-challenge/data).
 Kaggle competition required submissions to run in below 200ms on a Raspberry PI3.
+* Mozilla [Common Voice](https://voice.mozilla.org), crowd sourcing. Compiled dataset [on Kaggle](https://www.kaggle.com/mozillaorg/common-voice), 
+* [VoxCeleb](http://www.robots.ox.ac.uk/~vgg/data/voxceleb/), 100k utterances for 1251 celebrities.
+* [Speakers in the Wild](https://www.sri.com/work/publications/speakers-wild-sitw-speaker-recognition-database)
+* [Google AudioSet](https://research.google.com/audioset/). 2,084,320 human-labeled 10-second sounds, 632 audio event classes. 
+* [BirdCLEF 2016](http://www.imageclef.org/lifeclef/2016/bird). 24k audio clips of 999 birds species
 
 # Vibration analysis
 Often used for 'machine condition' analysis, especially for rotating machines.

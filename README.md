@@ -322,12 +322,15 @@ Cluster-and-label: Use a clustering algorithm (unsupervised), take the labels of
 Can define a graph of similarities.
 * Co-training. Semi-supervised learning. Each sample is encoded with two strong and different features, ie text and image.
 Train one classifier per feature, then have the two classifiers teach eachother. Multiview 
-* Active learning. Training phase done in batches, most important/pivotal candidates then labeled
+* Active learning. Training phase done in batches, most important/pivotal candidates then labeled.
+[Novak 2010](http://vhosts.eecs.umich.edu/ssp2012/nowak.pdf), active learning using binary search in low-rank embedding space.
 * Generative Adverserial learning. Is/can it be used outside of GAN?
 * Human/user-in-the-loop. Ask the user about the correct label
 * Synthesising samples. Oversampling: duplicate some samples as-is.
 Randomly sample attributes.
 SMOTE, especially for balancing minority classes.
+* Data augmentation. Creating new samples based on peturbations of originals.
+Example: [librosa sound augmentation](https://www.kaggle.com/huseinzol05/sound-augmentation-librosa)
 * Programmatic supervision. Distant supervision. 
 * Weak supervision. [Data Programming](http://dawn.cs.stanford.edu/pubs/snorkel-nips2016.pdf)
 generates labels that are noisy and possibly conflicting, then learns the inaccuracies.

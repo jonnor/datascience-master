@@ -1,11 +1,12 @@
 
 # Master of Data Science
 
-At Norwegian University of Life Sciences.
+Studying machine learning, data mining, applied statistics.
+At Norwegian University of Life Sciences ([NMBU](https://nmbu.no)).
 
-[Programme](https://www.nmbu.no/en/studies/study-options/master/master-of-science-in-data-science)
+## Research
 
-[Programme structure](https://www.nmbu.no/en/studies/study-options/master/master-of-science-in-data-science/programme-structure)
+### [Machine Learning for Embedded Systems](./embeddedml)
 
 ## Courses
 
@@ -91,7 +92,6 @@ Topics
 * Blockchain
 
 
-
 ## Ideas
 
 Flowhub related
@@ -104,12 +104,12 @@ Flowhub related
 Basic data science applications
 
 * Energy usage at Bitraf/c-base, relative to weather. Anomaly detection, reporting/monitoring
-* CNC usage at Bitraf. How many of the jobs/parts can be done on a 60x120 cm workarea machine. Take gcode/dxfs from Dropbox, analyse
+* CNC usage at Bitraf. How many of the jobs/parts can be done on a 60x120 cm workarea machine.
+Take gcode/dxfs from Dropbox, analyse.
 * Predicting likelyhood of someone opening for guests upon ringing the doorbell.
 
 Machine learning
 
-* Machine learning (inference) on embedded devices/microcontrollers. On-edge/on-node processing. See notes in [DAT200](./dat200)
 * Assist in reverse engineering of protocols, for example for machine control (Shopbot,Redsail).
 Record input, output pairs. Change input parameters, find corresponding change in output.
 
@@ -341,15 +341,4 @@ Datasets / data sources
 Standardized format with some 50 small to medium dataset examples, covering classification, regression.
 * [mldata.org](http://mldata.org/). Some 800 datasets, searchable with tags.
 
-## Interesting subproblems
 
-Neural networks
-
-* When used on images incredibly texture dependent. For instance cause vunerability to adverserial examples.
-How to mitigate? Learning rate influences, higher rate, more noise.
-Could one reduce by automatically generating variants of the training inputs?.
-For instance on images, use smoothening filters, color changes, brightness/contrast changes, noise addition, scaling, rotating.
-Also maybe helps with small datasets, especially for supervised learning (where labeling is expensive).
-* Seem that there is a lot of 'unecessary' complexity/information being encoded, that are irrelevant to the objective at hand.
-How can one know how much complexity is needed to perform a particular function? How to estimate that it is well spent?
-Are there information-theory approaches that can be applied?

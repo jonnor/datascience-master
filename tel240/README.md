@@ -25,12 +25,27 @@ Explains Bode-plot and gain-phase margins relationship to stability.
 
 ## TODO
 
+April
+
 * Complete CA3
 * Implement PID regulator in MicroFlo
-* Complete LAB1,LAB2,LAB3,LAB4
+* Complete LAB1,LAB2
 * Decide on project
 * Complete 1 previous exam. Write down weakspots
+
+May
+
+* Complete LAB3,LAB4
 * Complete CA4
 * Complete project
 * Complete all previous exams
+
+## Project
+
+### Ideas
+
+* Regulator for 3d-printer hotend
+* Regulator for PLA synthesis chamber
+* Regulator for PLA recycler in oil
+* Closed-loop regulation for DC/brushless motor using optical encoder
 

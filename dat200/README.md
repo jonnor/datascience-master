@@ -17,6 +17,16 @@ using timeRemaining instead of timeplayed - same?
 * http://adataanalyst.com/kaggle/kaggle-tutorial-using-kobe-bryant-dataset-part-4/
 lots of attempts at shots last seconds, with much worse accuracy
 
+# TODO
+
+* Write list of learning goals. Methods, key concepts
+* Review all lecture notes
+* Skim the book
+
+Maybe
+
+* Implement linear/kernel SVM on microcontroller. `emsvm` 
+
 # Ideas
 
 ## Distributed hyperparameter search

@@ -3,6 +3,13 @@
 [Kaggle challenge](https://www.kaggle.com/c/trackml-particle-identification)
 
 
+## TODO
+
+* Setup feature transformation pipeline
+* Attempt to learn a custom distance metric
+* Use distance metric with DBSCAN
+* Setup cross-validation
+
 ## Notes
 
 Clustering?
@@ -16,18 +23,19 @@ Need to express similarity pair-wise.
 
 Challenge: Data likely to be noisy
 
-* DBSCAN:
+* DBSCAN. Has concept of noise, can eliminate outliers
 * OPTIM: (deals better with difference in density)
 
 Hierarchical clustering
 
-* 
+* How to specify/find right number of clusters?
 * Use a custom linkage function, which checks to which degree cluster is a good track?
 
 Learn a distance/similarity metric?
 
 * Global versus local. 
-* [Distance metric learning, with application to clustering with side-information](https://ai.stanford.edu/%7Eang/papers/nips02-metric.pdf)
+* [Distance metric learning, with application to clustering with side-information](https://ai.stanford.edu/%7Eang/papers/nips02-metric.pdf).
+Probabilistic Global Distance Metric Learning / PGDM / MMC. Eric P. Xing, Andrew Y. Ng, Michael I. Jordan and Stuart Russell.
 * [Supervised distance metric learning through maximization of the Jeffrey divergence](https://www.sciencedirect.com/science/article/pii/S0031320316303600)
 * [Distance metric learning in R](https://github.com/terrytangyuan/dml), huge list of methods implemented. 
 * [metric-learn](https://github.com/metric-learn/metric-learn), Python library implementing many metric learning methods. sklearn-like API

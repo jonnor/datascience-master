@@ -39,6 +39,10 @@ can limit higher-order filters. Solution: break down transfer function to cascad
 Can then use 32bit words for most inputs. Example C++ code (using doubles) for second-order filter and PID.
 Explains Bode-plot and gain-phase margins relationship to stability.
 6dB and 60 degrees considered safe, 3dB and 30 degrees considered potentially unsafe.
+* [Discrete control #3: Designing for the zero-order hold](https://www.youtube.com/watch?v=yetLPW9sQaI),
+covers details of going between continious and discrete models. Different z-transform methods have different behavior,
+and for correct modelling needs to match what our real-life system is doing.
+To design in the s-domain when using Zero-order-hold DAC, can use Pade approximation. 
 
 ### Laplace transforms
 

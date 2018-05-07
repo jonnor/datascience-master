@@ -192,22 +192,38 @@ Note: NMBU operates an internal publishing fund for Open Access publications, up
 
 ## Conferences
 
+Lists
+
+* [WikiCFP](http://www.wikicfp.com/cfp/call?conference=computer%20science). Loots
+
 * Fablab conference. July. FAB14 in France, http://www.fab14.org/
 * Open Source Hardware conference.
 * FOSDEM. February, Brussels
 * Libre Graphics Meeting. 2018, Seville
 * Linux Audio Conference. 2018, June, Berlin
-* DAFX. 2018, September, Aveiro Portugal.
-[CFP March 29](https://www.mail-archive.com/sursound@music.vt.edu/msg09198.html)
 * [EuroPython 2018](https://ep2018.europython.eu/), Edinbourgh, July. CFP opens in March/April.
 * EuroSciPy 2018. August 28 - September 1, Trento, Italy. CFP not open as of March
-* [ECDA 2018](https://euads.org/events/ecda-2018/). Paderborn, Germany, 4th – 6th July, 2018.
 * Vipimage. 2018 not announced yet
+
+Open source
+
 * Open Source Summit Europe 2018. Oct 22-24, Edinbourgh.
 [CFP until June 30](https://events.linuxfoundation.org/events/open-source-summit-europe-2018/program/cfp/)
+
+Embedded
+
 * Embedded Linux Conference Europe. [CFP until June 30](https://events.linuxfoundation.org/events/elce-2018/program/cfp/)
+* [ECDA 2018](https://euads.org/events/ecda-2018/). European Association for Data Science. Paderborn, Germany, 4th – 6th July, 2018.
+
+
+Computer vision
+
 * European Conference on Computer Vision. [2018](https://eccv2018.org/dates/), September, Munich
 
+Signal processing
+
+* DAFX. 2018, September, Aveiro Portugal.
+[CFP March 29](https://www.mail-archive.com/sursound@music.vt.edu/msg09198.html)
 
 
 ## Inbox

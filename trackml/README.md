@@ -5,10 +5,12 @@
 
 ## TODO
 
-* Setup feature transformation pipeline
+* Add more features
+* Plot feature values for match/no-match
+* Attempt feature compression
 * Attempt to learn a custom distance metric
-* Use distance metric with DBSCAN
-* Setup cross-validation
+* Use distance metric with clustering DBSCAN
+* Setup pipeline with cross-validation, gridsearch
 
 ## Notes
 
@@ -42,6 +44,7 @@ Probabilistic Global Distance Metric Learning / PGDM / MMC. Eric P. Xing, Andrew
 * [Local Discriminative Distance Metrics Ensemble Learning](https://www.cs.umb.edu/~ding/papers/pr2013.pdf). 2013.
 Learns an ensemble of local distance metrics, to deal with non-uniform distances in the sample space.
 * [Distance Metric Learning: A Comprehensive Survey](https://www.cs.cmu.edu/~liuy/frame_survey_v2.pdf). 2006
+* LDA or PLSR as transformation. Limitation: linear only? Alt: Kernel SVM, Random Forests
 
 Supervised clustering
 
@@ -87,19 +90,27 @@ Kalman filter often starts from outside going in towards center.
 ### Features
 Hits that from the same particle should lie on a helical track
 
-- Angle phi
-- Distance R
-- Distance Z
-- Position X,Y
+#### Per hit
 
-Between two
+- Angle phi (in XY)
+- Angle theta (in Z). Absolute value may say something about momentum?
+- Distance R (in XY)
+- Distance Z (absolute)
+- Position X,Y. (redundant with phi,R)
+
+[Coordinate transformation ex](https://www.kaggle.com/mikhailhushchyn/dbscan-benchmark)
+
+#### Between two hits
 
 - Distance between hits
 - Angle phi between hits
 - Angle of hits in Z
 - Difference in angles
 
-Between three
+Distances should maybe be normalized to compensate for different density/sparseness.
+Divide by r*r in XY plane and z in Z plane?
+
+#### Between three hits
 
 - Difference in XY angle (AB, BC). Expect small, as helix curve
 

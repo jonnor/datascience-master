@@ -1,6 +1,115 @@
 
 # TEL240: Control Theory
 
+## Topics
+
+Regulation
+Purpose
+Core concepts
+Components of a (digital) regulated system
+
+### Stability
+Open vs closed loop.
+First-order linear
+Second-order linear.
+Routh-Hurwith criterion
+General linear systems
+
+### System modelling
+Dynamic systems
+Linear dynamic systems
+First-order
+Second-order
+Higher-order
+Time delay
+Characteristic polynomial
+
+Differential equations
+As multiple first-order functions
+
+Disturbances
+
+Non-linear phenomenon
+Saturation
+Deadband
+Linearization (lab3)
+
+Friction of moving body v**2
+Simple pendulum. sin(q)
+Double pendulum.
+Robot arm. 6 axis
+
+Causality
+Time-domain
+
+Laplace transform
+Principle,usefulness
+Forward transform
+Final value theorem
+Inverse transform
+Method of Residuals. extra-2-2
+
+Transfer functions
+Interpreting. extra-1-5
+
+State-space
+Matrix representation
+
+Block diagrams
+Simulink
+
+### Regulators
+
+Feedback
+In laplace/transfer domain
+
+P-controller
+PI-controller
+PID-controller
+
+Ziegler-Nichols methods
+open
+closed
+
+Pole placement control (pendelum lab)
+
+Reference tracking
+Challenges, solutions
+
+Forward coupling
+
+Model-based regulation
+Lyapunov-based regulation
+
+Predictive regulation
+Optimal regulation
+! LQR-regulator
+
+### Example systems
+
+Ship. Speed
+Car. Speed
+UAV. Speed,position
+
+Watertank.
+Pump vs valves as actuator.
+Hysteresis, deadband
+
+Heater. Temperature.
+
+Inverted Pendelum.
+Balance one on top of another.
+Unstable,non-linear.
+
+Magnetic Levitation. Position
+Non-linear
+lab3
+
+DC electric motor. Speed, position.
+Field control
+
+Car dampener-spring (lab4)
+Calculating parameter limits from model
 
 ## References
 
@@ -112,28 +221,20 @@ Good walkthrough: [Control Valve Problems](http://blog.opticontrols.com/archives
 
 ## TODO
 
-April
-
-* Complete CA3
-* Implement PID regulator in MicroFlo
-* Complete LAB1,LAB2
-* Decide on project
-* Complete 1 previous exam. Write down weakspots
-
-May
-
-* Complete LAB3,LAB4
+* Complete 1 previous exam
 * Complete CA4
-* Complete project
-* Complete all previous exams
+* Complete 2. previous exam
+* Complete 3. previous exam
+* Do a simple project. PID regulator
+* Write a summary sheet
 
 ## Project
 
 ### Ideas
 
-* Regulator for 3d-printer hotend
-* Regulator for PLA synthesis chamber
-* Regulator for PLA recycler in oil
+* Regulator for 3d-printer hotend temperature
+* Regulator for PLA synthesis chamber temperature
+* Regulator for PLA recycler in oil temperature
 * Closed-loop regulation for DC/brushless motor using optical encoder
 * Hot-water mixer for showering.
 

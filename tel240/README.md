@@ -8,13 +8,6 @@ Purpose
 Core concepts
 Components of a (digital) regulated system
 
-### Stability
-Open vs closed loop.
-First-order linear
-Second-order linear.
-Routh-Hurwith criterion
-General linear systems
-
 ### System modelling
 Dynamic systems
 Linear dynamic systems
@@ -22,7 +15,16 @@ First-order
 Second-order
 Higher-order
 Time delay
+
 Characteristic polynomial
+
+    The coefficients of the characteristic polynomial are all positive
+    <=>
+    The real part of the roots of the characteristic polynomial are negative
+
+Factorizing polynomials
+
+Natural vs forced response
 
 Differential equations
 As multiple first-order functions
@@ -43,35 +45,52 @@ Causality
 Time-domain
 
 Laplace transform
+essay-1
 Principle,usefulness
 Forward transform
+Rewrite to forced+natural response
+
+Initial value theorem
 Final value theorem
+
 Inverse transform
 Method of Residuals. extra-2-2
 
 Transfer functions
-Interpreting. extra-1-5
+Interpreting. extra-1-5, essay-1
+num higher order than den => non-causal
+num order == den order => casual with direct transmission
+num order < den order => casual without direct transmission
+
 
 State-space
 Matrix representation
 
 Block diagrams
+Elementary blocks. Integral, Sum, Gain
 Simulink
+
+Discretization
+z-transform
+Forward
+Backward
+Euler
+Tustin
+
 
 ### Regulators
 
 Feedback
-In laplace/transfer domain
+In Laplace/transfer domain
 
 P-controller
 PI-controller
 PID-controller
+Discrete formulation
 
 Ziegler-Nichols methods
 open
 closed
-
-Pole placement control (pendelum lab)
 
 Reference tracking
 Challenges, solutions
@@ -82,8 +101,33 @@ Model-based regulation
 Lyapunov-based regulation
 
 Predictive regulation
+
+Full state feedback
+Pole placement control
+(pendelum lab)
+MATLAB: place(A,B,poles)
+
 Optimal regulation
-! LQR-regulator
+How to place poles optimally
+Linear-quadratic regulator (LQR)
+linear full-state controller
+quadratic cost function,
+(weighted) sum of costs,
+ex deviations from speed/position references,
+energy spent on actuation
+MATLAB: lqr(A,B,Q,R)
+https://www.youtube.com/watch?v=1_UobILf3cc
+
+
+### Stability
+Open vs closed loop.
+First-order linear
+Second-order linear.
+Routh-Hurwith criterion
+General linear systems
+
+Lyapunov stability. CA4
+BIBO, Bounded Input Bounded Output
 
 ### Example systems
 
@@ -96,6 +140,8 @@ Pump vs valves as actuator.
 Hysteresis, deadband
 
 Heater. Temperature.
+
+Pendelum.
 
 Inverted Pendelum.
 Balance one on top of another.
@@ -110,6 +156,9 @@ Field control
 
 Car dampener-spring (lab4)
 Calculating parameter limits from model
+
+## Out-of-scope
+z-domain
 
 ## References
 
@@ -221,10 +270,8 @@ Good walkthrough: [Control Valve Problems](http://blog.opticontrols.com/archives
 
 ## TODO
 
-* Complete 1 previous exam
-* Complete CA4
-* Complete 2. previous exam
-* Complete 3. previous exam
+* Complete last 2 exams
+* Complete CA4 Simulink tasks
 * Do a simple project. PID regulator
 * Write a summary sheet
 

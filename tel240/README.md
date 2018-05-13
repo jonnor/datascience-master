@@ -1,20 +1,24 @@
 
 # TEL240: Control Theory
 
-## Topics
+## Topics covered
 
 Regulation
 Purpose
 Core concepts
-Components of a (digital) regulated system
+Components of a regulated system
+Analog
 
 ### System modelling
+
 Dynamic systems
-Linear dynamic systems
-First-order
-Second-order
-Higher-order
-Time delay
+
+Linear systems
+
+* First-order
+* Second-order
+* Higher-order
+* Time delay
 
 Characteristic polynomial
 
@@ -27,80 +31,81 @@ Factorizing polynomials
 Natural vs forced response
 
 Differential equations
-As multiple first-order functions
+
+* As multiple first-order functions
 
 Disturbances
 
 Non-linear phenomenon
-Saturation
-Deadband
-Linearization (lab3)
 
-Friction of moving body v**2
-Simple pendulum. sin(q)
-Double pendulum.
-Robot arm. 6 axis
+* Saturation
+* Deadband
+* Linearization (lab3)
+* Friction of moving body v**2
+* Rotary joints. sin(q). Simple pendulum. Robot arm, 6 axis.
 
 Causality
 Time-domain
+Continious time vs discrete time
 
-Laplace transform
-essay-1
-Principle,usefulness
-Forward transform
-Rewrite to forced+natural response
+Laplace transform, essay-1
 
-Initial value theorem
-Final value theorem
-
-Inverse transform
-Method of Residuals. extra-2-2
+* Principle,usefulness
+* Forward transform
+* Rewrite to forced+natural response
+* Initial value theorem
+* Final value theorem
+* Inverse transform
+* Method of Residuals. extra-2-2
 
 Transfer functions
+
 Interpreting. extra-1-5, essay-1
 num higher order than den => non-causal
 num order == den order => casual with direct transmission
 num order < den order => casual without direct transmission
 
-
 State-space
 Matrix representation
+From transfer function
+To transfer function
 
 Block diagrams
-Elementary blocks. Integral, Sum, Gain
-Simulink
+
+* Elementary blocks. Integral, Sum, Gain
+* Formula from diagram
+* Diagram from formula
+* Simulink
 
 Discretization
-z-transform
-Forward
-Backward
-Euler
-Tustin
 
+* z-transform
+* Forward,Backward
+* Euler,Tustin
 
 ### Regulators
 
 Feedback
 In Laplace/transfer domain
 
-P-controller
-PI-controller
-PID-controller
-Discrete formulation
+PID
 
-Ziegler-Nichols methods
-open
-closed
+* P-controller
+* PI-controller
+* PID-controller
+* Discrete formulation
+* Ziegler-Nichols methods. open/closed
 
 Reference tracking
 Challenges, solutions
+Anti-windup on integral
 
-Forward coupling
-
-Model-based regulation
 Lyapunov-based regulation
 
-Predictive regulation
+Model-based regulation
+
+* Forward coupling
+* Predictive regulation
 
 Full state feedback
 Pole placement control
@@ -108,16 +113,6 @@ Pole placement control
 MATLAB: place(A,B,poles)
 
 Optimal regulation
-How to place poles optimally
-Linear-quadratic regulator (LQR)
-linear full-state controller
-quadratic cost function,
-(weighted) sum of costs,
-ex deviations from speed/position references,
-energy spent on actuation
-MATLAB: lqr(A,B,Q,R)
-https://www.youtube.com/watch?v=1_UobILf3cc
-
 
 ### Stability
 Open vs closed loop.
@@ -127,7 +122,7 @@ Routh-Hurwith criterion
 General linear systems
 
 Lyapunov stability. CA4
-BIBO, Bounded Input Bounded Output
+BIBO, Bounded Input/Bounded Output
 
 ### Example systems
 
@@ -160,11 +155,24 @@ Calculating parameter limits from model
 ## Out-of-scope
 z-domain
 
+Linear-quadratic regulator (LQR)
+linear full-state controller
+quadratic cost function,
+(weighted) sum of costs,
+ex deviations from speed/position references,
+energy spent on actuation
+MATLAB: lqr(A,B,Q,R)
+https://www.youtube.com/watch?v=1_UobILf3cc
+
+
 ## References
 
 ### Dynamic system models
 
-Second-order linear. [1](https://apmonitor.com/pdc/index.php/Main/SecondOrderSystems)
+#### 2. order linear
+
+[1](https://apmonitor.com/pdc/index.php/Main/SecondOrderSystems)
+
 Characterized by:
 
 * Kp, process gain
@@ -255,7 +263,7 @@ Using frequency response to derive transfer functions for controller, the output
 [mstarlabs](http://www.mstarlabs.com/control/selftest.html)
 * Iterative Feedback technique. Systematic process for which direction to change PI(D) parameters.
 IE gives direction, and then using a 'learning rate' to step in that direction, re-test.
-[mstartlabs](http://www.mstarlabs.com/control/selftune.html)
+[mstarlabs](http://www.mstarlabs.com/control/selftune.html)
 
 ### Real system considerations
 
@@ -270,10 +278,14 @@ Good walkthrough: [Control Valve Problems](http://blog.opticontrols.com/archives
 
 ## TODO
 
-* Complete last 2 exams
-* Complete CA4 Simulink tasks
-* Do a simple project. PID regulator
+Exam
+
 * Write a summary sheet
+
+Post
+
+* Do a simple project. Basic control with PID regulator
+* Do an advanced project. Optimal control with LQR
 
 ## Project
 

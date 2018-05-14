@@ -17,6 +17,7 @@ https://nmbu.instructure.com/courses/304/pages/pensumliste
 
     Chapter 1. Introduction
     Chapter 2. Queries to one table
+
     Chapter 3. Create and use tables
     Chapter 4. Queries to multiple tables
     Chapter 5. Advanced queries
@@ -46,11 +47,10 @@ Data Mining
 
 ### Data analysis
 
-Multivariate data analysis 
+Multivariate data analysis
 PCA
 Scores,loadings
 Correlation-loadings plot
-
 
 Davis weather stations analysis
 
@@ -59,9 +59,11 @@ Davis weather stations analysis
 
 Exam
 
-* Write down list of topics
-Sources: Summary, Lecture notes, previous exams, assignments, plenary, repetition questions
+* Try run queries chapter 2
+* Write down list of topics.
+Sources: Lecture notes, previous exams, assignments, plenary, repetition questions.
+* Read through book chapters 1-8, 12.
+* Complete unfinished SQL queries in CA2
 * Do 1 previous exam
 * Do the book quiz, http://www.dbsys.info/Databasesystemer/quiz/index.html
 * Do the assingments
-*

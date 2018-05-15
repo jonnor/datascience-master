@@ -13,37 +13,48 @@ https://nmbu.instructure.com/courses/304/pages/pensumliste
     Datalogging from external devices.
     Data and security.
 
-### Book
-
-    Chapter 1. Introduction
-    Chapter 2. Queries to one table
-
-    Chapter 3. Create and use tables
-    Chapter 4. Queries to multiple tables
-    Chapter 5. Advanced queries
-    Chapter 6. Relation model 
-    Chapter 7. Data modelling with E/R 
-    Chapter 8. From model to database
-    Chapter 12. Web applications
 
 ### SQL
 
+Book
+
+    Chapter 1. Introduction
+    Chapter 2. Queries to one table
+    Chapter 3. Create and use tables
+    Chapter 4. Queries to multiple tables
+    Chapter 5. Advanced queries
+
+Chapter 6. Relation model
+
+    Mathematical underpinnings
+ 
+Chapter 7. Data modelling with ER
+
+    Entity Relationship
+    1-1
+    1-N
+    N-N
+
+Chapter 8. From model to database
+
+    Normalization. Process
+    1NF
+    2NF
+    3NF
+    BCNF
+    Denormalization
+
+
+Chapter 12. Web applications
+
+
 Mysql Workbench
-
-Chapter 5: Advanced queries
-
-Chapters 7 and 8: Modeling and normalisations
-
-Chapter 12: Web applications
-
 Python and SQL 
 
 ### Data capture
 
 Data logging
-
 Data Mining
-
 
 ### Data analysis
 
@@ -59,10 +70,9 @@ Davis weather stations analysis
 
 Exam
 
-* Try run queries chapter 2
-* Write down list of topics.
-Sources: Lecture notes, previous exams, assignments, plenary, repetition questions.
-* Read through book chapters 1-8, 12.
+* Fill out list of topics.
+Sources: Lecture notes, book, previous exams, assignments, plenary, repetition questions.
+* Try run queries book notes, ch.2
 * Complete unfinished SQL queries in CA2
 * Do 1 previous exam
 * Do the book quiz, http://www.dbsys.info/Databasesystemer/quiz/index.html

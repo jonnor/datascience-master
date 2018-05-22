@@ -9,7 +9,7 @@
 * Plot feature values for match/no-match
 * Attempt feature compression
 * Attempt to learn a custom distance metric
-* Use distance metric with clustering DBSCAN
+* Use distance metric with clustering H/DBSCAN
 * Setup pipeline with cross-validation, gridsearch
 
 ## Notes
@@ -27,6 +27,9 @@ Challenge: Data likely to be noisy
 
 * DBSCAN. Has concept of noise, can eliminate outliers
 * OPTIM: (deals better with difference in density)
+* HDBSCAN: 
+With custom projection (unrolled helix, partitioned), has gotten 0.4x score (top3 as of May 22),
+https://www.kaggle.com/c/trackml-particle-identification/discussion/57180
 
 Hierarchical clustering
 
@@ -45,6 +48,16 @@ Probabilistic Global Distance Metric Learning / PGDM / MMC. Eric P. Xing, Andrew
 Learns an ensemble of local distance metrics, to deal with non-uniform distances in the sample space.
 * [Distance Metric Learning: A Comprehensive Survey](https://www.cs.cmu.edu/~liuy/frame_survey_v2.pdf). 2006
 * LDA or PLSR as transformation. Limitation: linear only? Alt: Kernel SVM, Random Forests
+
+Challenge: Comparing pairwise distances has complexity N**2
+
+* Can we partition. Ex. Hits in positive Z are probably rarely in same track as hits in negative Z?
+* Can we eliminate hits by finding the easy tracks (linear or near linear)?
+* How can we eliminate the noise hits (particle_id=0)?
+* How to split the learning into batches? Bagging ensemble with trees?
+https://stackoverflow.com/questions/42920148/using-sklearn-voting-ensemble-with-partial-fit
+Stocastic Gradient Descent, with criterion SVM/logic?
+http://scikit-learn.org/stable/modules/generated/sklearn.linear_model.SGDClassifier.html
 
 Supervised clustering
 
@@ -89,6 +102,19 @@ Kalman filter often starts from outside going in towards center.
 
 ### Features
 Hits that from the same particle should lie on a helical track
+
+In momentum space tracks are typically arcs
+https://www.kaggle.com/c/trackml-particle-identification/discussion/56668
+
+#### Specials
+
+about 32% of the tracks are almost perfectly straight and they make up about 0.368 of the total metric score.
+about 43% of the track are quite straight, makeup 0.52 of metric score.
+https://www.kaggle.com/c/trackml-particle-identification/discussion/56580
+
+2.5 times higher probability that particle_id /track_id is equal 0
+https://www.kaggle.com/c/trackml-particle-identification/discussion/57004
+
 
 #### Per hit
 

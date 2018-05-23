@@ -8,8 +8,8 @@
 
 ## TODO
 
+* Try to use current RandomForest -> change to regression and.
 * Add more features
-* Plot feature values for match/no-match
 * Attempt feature compression (PCA/PSLR)
 * Attempt to learn a custom distance metric
 * Use distance metric with clustering H/DBSCAN

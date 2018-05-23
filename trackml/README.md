@@ -2,15 +2,19 @@
 
 [Kaggle challenge](https://www.kaggle.com/c/trackml-particle-identification)
 
+## Done
+
+* TrackML Python library: [Fixing reading of some files](https://github.com/LAL/trackml-library/pull/9)
 
 ## TODO
 
 * Add more features
 * Plot feature values for match/no-match
-* Attempt feature compression
+* Attempt feature compression (PCA/PSLR)
 * Attempt to learn a custom distance metric
 * Use distance metric with clustering H/DBSCAN
 * Setup pipeline with cross-validation, gridsearch
+
 
 ## Notes
 

@@ -17,6 +17,7 @@ Should be designed, manufactured, tested and documented within 3 weeks.
 EmbeddedML
 
 * Casing for first sensor data collector.
+* Power harvesting module. [Hackaday Challenge](https://hackaday.io/prize/details#two)
 
 TapeCore
 
@@ -27,7 +28,7 @@ Bioplastic
 
 * PreciousPlastic shredder redesign for wood + metal inserts.
 * Flat-filament hotend + extruder. Partially designed already
-* Profile die for Filastruder
+* Profile dies for Filastruder. Hollow circle, square tube, 20x20 prof
 * Extruder for profile extrusions.
-Challenging to make? Can it be milled in slices?
+Challenging to make the screw? Maybe it can be milled in slices?
 

@@ -1,4 +1,94 @@
 
+# Assignments
+
+##Digits classification
+[Jupyter notebook](./assignment1/Handwriting.ipynb)
+
+##Basket shots prediction
+[Jupyter notebook](./assignment2/Basketball.ipynb)
+
+##Titanic survival prediction
+[Jupyter notebook](./assignment3/Titanic.ipynb)
+
+# TODO
+
+Exam prep
+
+* Write list of learning goals. Methods, key concepts
+* Answer potential exam questions
+* Skim the book
+* Review all lecture notes
+
+Maybe
+
+* Implement linear/kernel SVM on microcontroller. `emsvm` 
+
+
+# Book
+
+## Ch 1. Intro
+Supervised learning. Prediction. Classification, Regression
+Reinforcement learning, interactive problems.
+Unsupervised learning. Discovering structure. Clustering, dimensionality reduction.
+
+## Ch 2. Classifiers principles
+Artificial neurons
+Perceptron learning
+Adaptive linear neurons
+Learning convergence
+Gradient Descent
+Stocastic Gradient Descent
+
+## Ch 3. Classifiers tour
+Perceptron
+Logistic regression
+Support Vector Machines
+Kernel SVM
+Decision-trees,Random Forest
+K-nearest neighbours
+
+## Ch 4. Data preprocessing, training sets
+Missing data
+Imputation
+Categorical data
+One-hot-encoding
+Train-test splitting
+Feature scaling
+Feature selection
+using L1 regularization
+using sequential feature selection
+Feature importance using Random Forests
+
+## Ch 5. Dimensionality reduction
+PCA
+PLSR
+LDA
+
+## Ch 6. Model evaluation, hyperparameter tuning
+sklearn Pipelines
+k-fold cross-validation
+Learning and validation curves
+Grid search hyperparamters
+Performance evaluation metrics
+
+## Ch 7. Ensemble Learning
+Majority vote
+Weighted majority vote
+Bagging
+Boosting, Adaboost
+
+## Ch 10. Regression
+Ordinary Least Squares
+RANSAC
+Polynomial regression
+
+## Ch 11. Clustering
+k-means
+Hierarchical tree clustering
+DBSCAN
+
+
+
 # References
 
 * [Feature Crossing](https://developers.google.com/machine-learning/crash-course/feature-crosses/crossing-one-hot-vectors)
@@ -16,16 +106,6 @@ using timeRemaining instead of timeplayed - same?
 195 has a more accurate shot_distance calculation
 * http://adataanalyst.com/kaggle/kaggle-tutorial-using-kobe-bryant-dataset-part-4/
 lots of attempts at shots last seconds, with much worse accuracy
-
-# TODO
-
-* Write list of learning goals. Methods, key concepts
-* Review all lecture notes
-* Skim the book
-
-Maybe
-
-* Implement linear/kernel SVM on microcontroller. `emsvm` 
 
 # Ideas
 

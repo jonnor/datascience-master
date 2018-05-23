@@ -185,7 +185,6 @@ Can be plotted as the cumulative values. Useful for deciding where to cutoff
 Exam prep
 
 * Complete unfinished SQL queries in CA2
-* Do 1 previous exam
 * Try run queries from book notes, ch.2
 * Read up on Python and SQL
 * Do 2 previous exam

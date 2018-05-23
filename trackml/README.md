@@ -53,6 +53,13 @@ Learns an ensemble of local distance metrics, to deal with non-uniform distances
 * [Distance Metric Learning: A Comprehensive Survey](https://www.cs.cmu.edu/~liuy/frame_survey_v2.pdf). 2006
 * LDA or PLSR as transformation. Limitation: linear only? Alt: Kernel SVM, Random Forests
 
+Metric learning, single hit with triple loss.
+https://www.kaggle.com/c/trackml-particle-identification/discussion/57354
+Contrastive loss, center loss, magnet loss.
+
+Custom loss function for Gradient Descent in Python with autograd
+http://willwolf.io/2015/11/18/so-you-want-to-implement-a-custom-loss-function/
+
 Challenge: Comparing pairwise distances has complexity N**2
 
 * Can we partition. Ex. Hits in positive Z are probably rarely in same track as hits in negative Z?

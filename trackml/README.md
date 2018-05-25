@@ -8,9 +8,16 @@
 
 ## TODO
 
-* Calculate distance from RandomForest probability 
-* Plug distance metric into H/DBSCAN clustering
-* Update RandomForest to use RFD feature formulation
+* Find a way to reduce number of pairwise combinations to consider.
+Look at distance metrics. Can we do some simple partitionings on position combinations beforehand?
+Looking for a 10-100x reduction in pairs for problem to become tractable.
+Try to learn a simple desicion tree on hit positions+matches, with existing sampling.
+The limits can then be applied to original hits using numpy
+* Maybe use emtrees RandomForest to calculate distance.
+Need predict_proba() support.
+Add OpenMP multithreading?
+* Fix/investigate discrepancy in validation accuracy drop compared to test
+* Do test/validation including DBSCAN clustering
 * Add RFD position vector also
 * Add more/different features
 * Change code into a proper pipeline/estimators

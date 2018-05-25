@@ -8,13 +8,13 @@
 
 ## TODO
 
-* Try to use current RandomForest -> change to regression and.
-* Add more features
-* Attempt feature compression (PCA/PSLR)
-* Attempt to learn a custom distance metric
-* Use distance metric with clustering H/DBSCAN
-* Setup pipeline with cross-validation, gridsearch
-
+* Calculate distance from RandomForest probability 
+* Plug distance metric into H/DBSCAN clustering
+* Update RandomForest to use RFD feature formulation
+* Add RFD position vector also
+* Add more/different features
+* Change code into a proper pipeline/estimators
+* Build training/testset sampled across a larger set of events
 
 ## Notes
 
@@ -30,8 +30,8 @@ Need to express similarity pair-wise.
 Challenge: Data likely to be noisy
 
 * DBSCAN. Has concept of noise, can eliminate outliers
-* OPTIM: (deals better with difference in density)
-* HDBSCAN: 
+* OPTICS: (deals better with difference in density)
+* HDBSCAN: refinement on DBSCAN
 With custom projection (unrolled helix, partitioned), has gotten 0.4x score (top3 as of May 22),
 https://www.kaggle.com/c/trackml-particle-identification/discussion/57180
 
@@ -52,6 +52,13 @@ Probabilistic Global Distance Metric Learning / PGDM / MMC. Eric P. Xing, Andrew
 Learns an ensemble of local distance metrics, to deal with non-uniform distances in the sample space.
 * [Distance Metric Learning: A Comprehensive Survey](https://www.cs.cmu.edu/~liuy/frame_survey_v2.pdf). 2006
 * LDA or PLSR as transformation. Limitation: linear only? Alt: Kernel SVM, Random Forests
+* [A Survey on Metric Learning for Feature Vectors and Structured Data](https://arxiv.org/abs/1306.6709).
+From 2014. Very comprehensive, 50 approaches, 60 pages.
+* Random Forest Distance (Xiong et al., 2012). Using a pairwise classification approach, |a-b|, 0.5(a+b).
+[Paper](https://arxiv.org/pdf/1201.0610.pdf). States that the pseudometric not respecting triangle equality not a problem in practice.
+* C-DBSCAN, Density-Based Clustering with Constraints. [](https://link.springer.com/chapter/10.1007%2F978-3-540-72530-5_25)
+* [umap](https://github.com/lmcinnes/umap) suggested by HDBSCAN author to do dimensionality reduction of custom metric to use Euclidian from custom distance metric.
+* [Tutorial on Metric Learning](http://researchers.lille.inria.fr/abellet/talks/metric_learning_tutorial_CIL.pdf), Aurélien Bellet, USC. 122 pages/slides.
 
 Metric learning, single hit with triple loss.
 https://www.kaggle.com/c/trackml-particle-identification/discussion/57354

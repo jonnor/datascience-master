@@ -16,6 +16,9 @@ The limits can then be applied to original hits using numpy
 * Maybe use emtrees RandomForest to calculate distance.
 Need predict_proba() support.
 Add OpenMP multithreading?
+* Maybe use mlpack DBSCAN, which allows to use a custom C++ Metric.
+[DBSCAN example](https://github.com/mlpack/mlpack/blob/master/src/mlpack/methods/dbscan/dbscan_main.cpp#L154)
+[MetricType examples](https://github.com/mlpack/mlpack/blob/master/src/mlpack/core/metrics/lmetric_impl.hpp)
 * Fix/investigate discrepancy in validation accuracy drop compared to test
 * Do test/validation including DBSCAN clustering
 * Add RFD position vector also

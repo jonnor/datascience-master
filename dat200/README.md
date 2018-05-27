@@ -237,18 +237,99 @@ RGF kernel
 127-167
 
 sklearn Pipelines
+
+Training: fit_transform() ... fit()
+Test/use: transform() ... predict()
+
+holdout cross-validation
+single validation set
+disadvantage: sensitive to just how this split was done
+
 k-fold cross-validation
-Learning and validation curves
+k-1 folds used for training,
+1 fold for validation
+repeat k times
+averate performance metric
+leave-one-out (LOO). k=n samples in set
+Used when working with very small datasets
+
+sklearn.cross_validation.cross_val_score(est, X, Y, cv=10)
+
+Learning curve
+evaluate variance/bias balance, over/underfit
+x-axis: number of training samples
+high variance: large distance between train/test-set
+high bias: both train/set-set have low accuracy
+good balance: distance between test/train set approaches 0, at high accuracy
+
+validation curve
+x-axis: value of hyperparameter
+
 Grid search hyperparamters
+used to find best hyperparameters using cross-validation
+
+nested cross-validation
+used to evaluate different models against eachother
+2 levels of cross-validation
+
 Performance evaluation metrics
+confusion matrix
+true positive   false negative
+false positive  true negative
+
+err=false/total
+acc=1-err
+True positive rate (recall)
+Useful for imbalanced sets
+tpr=TP/(FN+TP)
+False positive rate
+fpr=FP/(FP+TN)
+Precision
+pre=true_positive/(true_positive+false_positive)
+
+F1 combines precision and recall
+
+ROC curve
+diagonal: random
+left/top-side: perfect
+AUC - area under curve. Perfect=1.0, random=0.5
+
+multiclass metrics with One-vs-All
+two averaging approaches
+micro: average individual TP,TN,FP,FN
+weight each instance equally
+macro: average each system metric
+overall performance wrt most frequent label
+in sklearn, macro weigthed by number of instances in class
 
 ## Ch 7. Ensemble Learning
 199-233
 
+Combine multiple estimators into one meta-estimator with better perf
+Assuming uncorrelated errors, and better-than-random invididual perf
+different FP/FN mistakes can give better overall ROC AUC
+
 Majority vote
+multiclass: plurality voting, class with most votes win
 Weighted majority vote
+each classifier is weighted
+
 Bagging
-Boosting, Adaboost
+each classifier in ensemble trained on different bootstrapped samples
+aka "bootstrap aggregation"
+effective in reducing variance (overfit)
+ineffective in reducing bias
+used typically with high variance bases, ie unpruned decision trees
+
+Boosting
+weak learners=very simple, slightly better than random guess
+ex: decision tree stump (one decision node)
+focuses on misclassified results
+simple form: add 50% of misclassified samples from last round into new training round
+
+Adaboost, adaptive boosting
+...
+TODO: research better
 
 ## Ch 10. Regression
 277-311

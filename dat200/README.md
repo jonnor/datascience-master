@@ -82,7 +82,7 @@ All weights updated simultaniously (batch gradient descent)
 Can still fail to converge with large learning rates
 
 Stocastic Gradient Descent
-iterative , update weights individually for each training sample
+iterative, update weights individually for each training sample
 Typically converges faster.
 Error surface noisier, can allow to escape local minima
 Input data must not have order, random shuffle each epoch
@@ -264,6 +264,8 @@ good balance: distance between test/train set approaches 0, at high accuracy
 
 validation curve
 x-axis: value of hyperparameter
+see influence of hyperparameter choice
+choose optimal value, underfit/overfit balance
 
 Grid search hyperparamters
 used to find best hyperparameters using cross-validation
@@ -328,24 +330,158 @@ focuses on misclassified results
 simple form: add 50% of misclassified samples from last round into new training round
 
 Adaboost, adaptive boosting
-...
-TODO: research better
+1. Start with uniform weights
+for each of M boosting round
+2. train a weak learner C, predict class labels
+3. compute weighted error rate
+4. calculate coefficient and update weights
+5. re-normalize weights
+6. compute
 
 ## Ch 10. Regression
 277-311
 
+Supervised learning of continious response
+
+EDA
+scatterplot matrix
+correlation matrix, linear correlation between variables
+numpy.corrcoeff
+
 Ordinary Least Squares
+minimize SSE
+in principle can be done with Gradient Decent (on standardized data)
+sklearn solver LIBLINEAR converges better on nonstandardized data
+is impacted a lot by outliers
+
 RANSAC
+linear regression against (estimated) inliers
+1. selects random samples as inliers, fit model
+2. tests all other data with this model, add samples within tolerances as inliners
+3. efit on all inliers, estimate error difference
+4. terminate if redisuals below threshold or max iterations
+challenge: setting inlier threshold
+sklearn: Median Absolute Deviation
+
+Residual plots
+Plots the residuals of (multidimensional) model
+Expect errors randomly distributed around 0
+Patterns means there are non-linearities we cannot explain
+
+MSE, average of SSE
+R2, standardized version of MSE. Fraction of captured response variance 
+R2=1-(SSE/SST)
+SST= total sum of squares
+
+Regression can overfit.
+Evaluate like normally, perf of testset versus training set
+
+Regularization to avoid
+RIDGE. L2 regularization. adds squared sum of weights to cost function
+LASSO. L1 penality. Drives some weights to 0
+ElasticNet. combined L2,L1
+
+
 Polynomial regression
+Models a non-linear relationship
+Still considered a linear model, because of linear weights
+Select degree of polynomial, eg d=3
+
+Alt for non-linear relationshop, transform features/targets
+Ex: log, squareroot
+
+Random forest regression
+split criterion: MSE/within-node variance/variance-reduction
+Downside: not continious decision boundary, prone to overfitting
 
 ## Ch 11. Clustering
 311-340
 
+Unsupervised learning
+find groups of similar objects
+
 k-means
+prototype-based clustering
+have to decide k upfront
+good at finding spherical clusters
+1. start with randomly selected centroids
+2. assign each sample to closest centroid
+3. move centroid to center of samples assigned
+4. continue until less than M samples change, or max iterations
+
+random start can result in bad clustering or slow convergence
+running multiple times with different random state,
+chosing best model based on SSE
+
+
+k-means++
+the default algorithm in sklearn
+different initialization
+1. randomly chose one of input samples as first centroid
+2. for each sample not a centroid, calculate distance to nearest chosen center
+3. chose a new datapoint as center randomly, using weighted probability x**2
+4. repeat 2-3 until k centers are chosen
+then performs k-means normally
+
+hard clustering, sample belongs to one cluster only
+soft/fuzzy clustering, sample can be in one or more clusters
+
+fuzzy C-means. FCM
+aka soft/fuzzy k-means
+similar to k-means, different loss function
+cluster membership probability
+fuzziness coefficient m=1,2,3
+
+
+elbow method
+to find optimal number of clusters (k)
+within-cluster SSE = distortion = inertia
+if k increases, distortion decreases
+plot distortion versus k,
+chose k to where distortion decrease drops off
+
+siluette plots
+measure of how tightly grouped samples in clusters are
+siluette coefficient, `[-1.0 1.0]`
+ideal = 1.0
+siluettes should have roughly same length
+
+a. cohesion = average distance between sample and all other points in cluster
+b. separation = from next closest cluster, average distance between sample and all samples in nearest cluster
+siluette = s = (b-a)/max(a,b)
+
+
 Hierarchical tree clustering
+
+agglomerative: start with each sample in cluster, combine
+divisive: start with one cluster, split
+
+agglomorative most common. Different linkages to decide which clusters to merge 
+
+single linkage: compute distance between most similar members, merge the closest
+complete linkage: "" most dissimilar, merge closest
+average linkage: minimum average distance
+Ward: minimum increase of total within-cluster SSE
+
+dendrograms, visualization of binary hierachical clustring
+heat map, show values associated
+
+
 DBSCAN
+density-based clustering
+number of points within specified radius E
 
+core point: if at least MinPts of neighbouring points are in radius E
+border point: fewer neighbours within E, but lies within E of core point
+noise point: neither core nor border
 
+1. form a cluster per core point or connected group of core points (if closer than E)
+2. assign each border point to the cluster of its core point
+
+does not assume clusters are spherical
+can remove noise
+
+challenging to chose E,minpts with varying density in dataset
 
 # References
 

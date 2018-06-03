@@ -54,7 +54,6 @@ Perceptron, Adaline and Logistic Regression, main similarities and differences?
 
 Draw activation functions, write threshold functions based on z or ϕ(z)
 
-    !
     linear/identity
     logit
     sigmoid

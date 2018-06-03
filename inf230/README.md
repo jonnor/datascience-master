@@ -47,11 +47,25 @@ Chapter 8. From model to database
 Chapter 12. Web applications
 
 #### Mysql Workbench
-?
+
+Used for modelling ER graphically, can then export SQL for creating the database.
+Can also 'reverse engineer' SQL to get ER diagrams. 
 
 #### Python and SQL
 
-?
+    import pymysql
+    db = pymysql.connect(host=, user=, password=, db=)
+
+    cursor = db.cursor()
+    query = 'SELECT * FROM foo'
+
+    # with Pandas
+    df = pandas.read_sql(query, cursor)
+
+    # without
+    cursor.execute(query)
+    for row in cursor.fetchall():
+        print row[0]
 
 ### Data Mining
 
@@ -133,7 +147,7 @@ Finds a low-dimensional hyper-plane that best summarizes variation in X,
 using Ordinary Least Squares
 
 
-Scores: New variables in the constructed PC space.
+Scores: Samples in the constructed PC space.
 C components x N samples 
 How different samples related to eachother
 
@@ -177,19 +191,13 @@ Can be plotted as the cumulative values. Useful for deciding where to cutoff
 
 
 
-#### Davis weather stations analysis
-
-
 ## TODO
 
-Exam prep
-
-* Complete unfinished SQL queries in CA2
-* Try run queries from book notes, ch.2
-* Read up on Python and SQL
-* Do 2 previous exam
 * Do the book quiz, http://www.dbsys.info/Databasesystemer/quiz/index.html
+http://www.dbsys.info/Databasesystemer/quiz/kap6.html
+http://www.dbsys.info/Databasesystemer/quiz/kap8.html
+3 6 14 16 17 19 22 23
+* Complete unfinished SQL queries in CA2
 * Do the assingments exercises
-* Read up on, Davis weather stations analysis
 
 

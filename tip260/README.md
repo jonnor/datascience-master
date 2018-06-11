@@ -63,6 +63,8 @@ Sensor tech
 * Millimeter radar
 * Pnenumatic tubes
 * Video analysis
+* Bluetooth detection
+* Cellphone detection
 
 https://www.quora.com/What-type-of-sensor-is-used-in-vehicle-detection
 https://experts.umn.edu/en/publications/portable-roadside-sensors-for-vehicle-counting-classification-and
@@ -78,5 +80,9 @@ Features
 ++ no power infra needed
 + low price
 + also capture other relevant data
+
+
+Audio works rather well for traffic density
+Vehicular Traffic Density State Estimation Based on Cumulative Road Acoustics
 
 

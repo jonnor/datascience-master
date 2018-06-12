@@ -86,3 +86,68 @@ Audio works rather well for traffic density
 Vehicular Traffic Density State Estimation Based on Cumulative Road Acoustics
 
 
+## Topics
+
+Definition. What is it.
+Motivation. What does it help solve
+Representative. A picture
+Example implementations?
+
+Size: Half a page?
+First research and hash out the overall
+
+## Intelligent Traffic System
+
+Traffic estimation/prediction
+Adaptive traffic control
+Traffic optimization
+
+Road weather
+Emergency vehicle notification
+Automatic road enforcement
+Variable speed limits
+Dynamic traffic light sequence
+Collision avoidance systems
+
+## Wireless Sensor Network
+
+Many small sensors
+Geographically distributed
+
+Sensor types
+Connectivity types
+NB-IoT, LoRa, Sigfox, 6LoWPAN, WiFi
+
+Network topology
+Star, cluster, mesh
+Data hub -> Gateway -> nodes
+
+Environmental monitoring
+Traffic monitoring
+Asset tracking
+Machine monitoring
+Process monitoring
+
+Healty and safe environment
+for workers, public
+
+
+Energy. Battery, harvesting, fixed
+
+Data all needs to go to a central place
+
+http://www.ni.com/white-paper/7142/en/
+
+## Industry 4.0
+smart logistics
+production quality system
+
+## Asset tracking
+RFID
+GPS
+
+## Simulations
+
+Container flow. Inside the port
+
+

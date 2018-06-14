@@ -26,23 +26,6 @@ Understanding the problem
 * How long are containers stored at the port? Averages,distribution.
 Which factor drives this up/down? How can these be influenced?
 
-### Ideas
-
-EmbeddedML
-
-* Sound-based sensor for (transport) noise level
-* Veichle passing sensor. Inductive coil,
-* Casing for sensor data collector
-* Accelerometer-based sensor for vechile passing
-* Power harvesting module. [Hackaday Challenge](https://hackaday.io/prize/details#two)
-
-Bioplastic
-
-* PreciousPlastic shredder redesign for wood + metal inserts.
-* Flat-filament hotend + extruder. Partially designed already
-* Profile dies for Filastruder. Hollow circle, square tube, 20x20 prof
-* Extruder for profile extrusions.
-Challenging to make the screw? Maybe it can be milled in slices?
 
 #### Traffic impacts
 
@@ -86,7 +69,7 @@ Audio works rather well for traffic density
 Vehicular Traffic Density State Estimation Based on Cumulative Road Acoustics
 
 
-## Topics
+# Key topics
 
 Definition. What is it.
 Motivation. What does it help solve
@@ -150,4 +133,74 @@ GPS
 
 Container flow. Inside the port
 
+
+
+# Dream design
+What would the ideal situation be
+What does it take to get there
+
+Shipping activity can be handled
+with minimal disruptions on traffic
+and local environment
+without needing infrastructure investments
+
+## Aspects
+Webport-dryport
+
+
+## Data needed
+
+Wetport
+
+Typical ship capacity. TEU
+Ships per day
+Unloading time
+Total time docked
+
+Container storage capacity
+
+Dryport
+
+Container storage capacity
+
+Traffic
+
+Transportation time to dryport
+== from dryport to wetport 
+
+Inbound/outbound
+
+Where does containers go/come from
+Ships inbound
+Trucks inbound/available
+
+Environmental
+
+Noise along transportation routes
+Gasses Co2/NOX/ ==
+Particles PM2 ==
+
+Noise in (public areas around) port
+Particles ==
+Gasses ==
+
+
+Passenger ferry
+
+Max capacity
+Typical number of vechiles
+Distribution of types
+Daily/weekly distribution
+
+
+E6
+
+Transportation time to/from Oslo
+
+
+Railway station
+
+Passengers per day
+Daily distribution
+Weekly
 

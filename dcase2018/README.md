@@ -13,10 +13,8 @@ with high enough classification rate to be useful as recording trigger
 
 First model
 
-* Extract classic features for dataset(s). melspectra,MFCC
-* Review literature for promising tree/forest based approaches
-* Setup basic sklearn pipeline/workflow
-* Understand how GMMs work
+* Understand how GMMs work, how to implement at predict time
+* Check baseline results against CASE16
 * Try replicate iitMandi CASE17. GMM+SVM classifier
 
 Hardware constraints
@@ -24,6 +22,16 @@ Hardware constraints
 * Try to run MFCC feature calculation on M4F
 * Try to run Random Forest classifier on M4F with (precalculated) MFCC features
 * What does a GMM require?
+
+## Notes
+
+Feature extraction takes approx 1 second per WAV in ff1010bird.
+Might be doing some resampling that can be avoided??
+
+original wav, 1MB
+melspecra n=128, 1.2MB
+MFCC n=20 160k
+MFCC as .csv compresses to approx 45% with tgz
 
 ## Background
 

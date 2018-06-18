@@ -1,6 +1,7 @@
 
 import os
 import sys
+import time
 
 import pandas
 import numpy
@@ -42,10 +43,13 @@ def extract_features(wavpath):
 
 def main():
     files = sys.argv[1:]
-    total = len(files)
+    last = len(files)-1
     for i, f in enumerate(files):
-        print('{}/{}: {}'.format(i, total, f))
+        before = time.time()
+        print('{}/{}: {}'.format(i, last, f), end=' ')
         extract_features(f)
+        after = time.time()
+        print('{:.2f} seconds'.format(after-before))
 
 if __name__ == '__main__':
     main()

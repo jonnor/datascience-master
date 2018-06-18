@@ -14,14 +14,23 @@ with high enough classification rate to be useful as recording trigger
 First model
 
 * Understand how GMMs work, how to implement at predict time
-* Check baseline results against CASE16
-* Try replicate iitMandi CASE17. GMM+SVM classifier
+* Make baseline results match CASE16. AUC ROC 70%
+* Try to replicate Stowell LifeCLEF 2014.
+Without feature learning. melspec-ms/melspec-maxp, AUC ROC 80-90%
+With OSKmeans feature learning.
+* Try replicate iitMandi BAD2016. AUC ROC 77%
+MFCC+GMM+SVMPSK, with cepstral normalization and short-time feature warping
+http://c4dm.eecs.qmul.ac.uk/events/badchallenge_results/
 
 Hardware constraints
 
 * Try to run MFCC feature calculation on M4F
 * Try to run Random Forest classifier on M4F with (precalculated) MFCC features
 * What does a GMM require?
+
+Improve perf
+
+* Feature normalization. Normalize spectrogram by dividing by RMS 
 
 ## Notes
 

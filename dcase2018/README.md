@@ -47,9 +47,31 @@ MFCC as .csv compresses to approx 45% with tgz
 
 ### Feature representations
 
-* MFCC. Spectrogram. Frames over time
+* Spectrograms. Linear/log
+* MFCC
+* Bag of frames
 * Chroma. 
+* Learned features
+
+Summarization, pooling
+Typically across a set of frames
+
+* Min/max
+* Mean/stdev
+
+Delta-frames, delta-delta frames.
+Change and change-rate. Common with MFCC
+
+### Preprocessing
+
+* A-weighting
+* Log transform
 * Harmonic-percussive-residual source separation. Especially for music.
+
+Normalization
+
+* RMS normalization
+* Gaussianization, mapping to Gaussian distribution
 
 ### Blind source separation
 
@@ -186,6 +208,24 @@ Sinousoidal tracks.
 November 2017.
 
 ### Feature learning
+
+Aka, related
+
+* Representation learning
+* Dictionary learning
+* Codebook learning
+
+Unsupervised
+
+* Restricted Boltzman machine
+* Non-negative factorization
+* Clustering-based
+spherical k-means
+
+Supervised
+
+* Supervised
+
 
 [Automatic large-scale classification of bird sounds is strongly improved by unsupervised feature learning](https://peerj.com/articles/488/).
 D. Stowell, 2014. Classifier got strongest audio-only results in LifeCLEF2014.

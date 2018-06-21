@@ -145,62 +145,68 @@ and local environment
 without needing infrastructure investments
 
 ## Aspects
-Webport-dryport
+Wetport-dryport
 
 
-## Data needed
-
-Wetport
-
-Typical ship capacity. TEU
-Ships per day
-Unloading time
-Total time docked
-
-Container storage capacity
-
-Dryport
-
-Container storage capacity
-
-Traffic
-
-Transportation time to dryport
-== from dryport to wetport 
-
-Inbound/outbound
-
-Where does containers go/come from
-Ships inbound
-Trucks inbound/available
-
-Environmental
-
-Noise along transportation routes
-Gasses Co2/NOX/ ==
-Particles PM2 ==
-
-Noise in (public areas around) port
-Particles ==
-Gasses ==
+## Questions
+Thats needs to be answered,
+either in daily opertions
+or in planning
 
 
-Passenger ferry
+When should we move containers from/to wetport?
+How many trucks/drivers do we need for internal transport?
 
-Max capacity
-Typical number of vechiles
-Distribution of types
-Daily/weekly distribution
+How much area is needed in wetport?
 
+What are our impacts on traffic,pollution? How to minimize?
 
-E6
+## Understanding the problem
+Where does containers go/come from?
+Are there fixed lines between harbours
 
+When does customer pick up the container to get it out of port?
+Same day, same week?
+
+## Maybe useful
+
+### E6
 Transportation time to/from Oslo
 
-
-Railway station
-
+### Railway station
 Passengers per day
 Daily distribution
 Weekly
 
+## Simulation
+Ships
+    To port. From port.
+    Has containers.
+Cars.
+    From ferry. To ferry. From outside sources.
+Trucks.
+    From port. To port. From ferry. To Ferry. From outside sources.
+Containers.
+    From ship. To ship.
+    
+
+### Simulation howto
+Methods, tools
+
+Discrete Event Simulation. SimPy
+https://simpy.readthedocs.io/en/latest/examples/carwash.html
+
+Traffic Simulation
+https://en.wikipedia.org/wiki/Traffic_simulation
+Microscopic. Individual car decisions simulated. Car-following model
+Mesoscopic. Considers small homogenous groups
+Macroscopic. Aggregated relationships like density/flow/mean speed.
+
+SUMO. Interactive Java program. Microscopic sim. Open source. https://github.com/eclipse/sumo
+TRANSIM. Open source. Old? Macroscopic? https://sourceforge.net/projects/transims/
+Siemens VISSIM. Microscopic simulator. Commercial. Limited trial available. 
+
+Streets4MPI. Python script. Takes Openstreetmap are and number of residents as input. http://jfietkau.github.io/Streets4MPI/
+
+How to validate simulation model using data?
+How to adapt model for real-time usage and decision support?

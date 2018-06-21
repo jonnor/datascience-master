@@ -13,24 +13,30 @@ with high enough classification rate to be useful as recording trigger
 
 First model
 
-* Understand how GMMs work, how to implement at predict time
 * Make baseline results match CASE16. AUC ROC 70%
+* Use BirdCLEF-Baseline feature extraction?
 * Try to replicate Stowell LifeCLEF 2014.
 Without feature learning. melspec-ms/melspec-maxp, AUC ROC 80-90%
-With OSKmeans feature learning.
 * Try replicate iitMandi BAD2016. AUC ROC 77%
 MFCC+GMM+SVMPSK, with cepstral normalization and short-time feature warping
 http://c4dm.eecs.qmul.ac.uk/events/badchallenge_results/
 
 Hardware constraints
 
+* Setup Nordic NRF52 dev environment
 * Try to run MFCC feature calculation on M4F
 * Try to run Random Forest classifier on M4F with (precalculated) MFCC features
-* What does a GMM require?
 
 Improve perf
 
-* Feature normalization. Normalize spectrogram by dividing by RMS 
+* Feature normalization. Normalize spectrogram by dividing by RMS?
+* Try to use per-channel energy normalization (PCEN)
+* Try OSKmeans feature learning.
+* Try low/high-pass. Ex cut-off frequencies of 300 Hz and 15 kHz
+
+Gaussian Mixture Models
+
+* Understand how GMMs work, how to implement at predict time
 
 ## Notes
 
@@ -44,6 +50,7 @@ MFCC as .csv compresses to approx 45% with tgz
 
 ## Background
 
+Weak labeling. Entire clip of audio containing event is labeled, not the precise event.
 
 ### Feature representations
 
@@ -67,6 +74,11 @@ Change and change-rate. Common with MFCC
 * A-weighting
 * Log transform
 * Harmonic-percussive-residual source separation. Especially for music.
+* Per-channel energy normalization (PCEN).
+Static version exists as [librosa.pen](https://librosa.github.io/librosa/generated/librosa.core.pcen.html).
+Can also be learned as a neural network layer, see arXiv:1607.05666v1
+* Whitening. Eg PCA.
+Removes redundancies in spectrogram. For each frame in spectogram
 
 Normalization
 
@@ -145,8 +157,14 @@ An ideal impulse generates a horizontal line in the power spectrum because these
 Time domain
 Frequency domain
 Spectrogram domain
+Cepstrum domain
 
 Spectral median filtering
+
+RASTA-filtering.
+
+Uses bandpass filtering in the log spectral domain, removes slow channel variations.
+It has also been applied to cepstrum feature-based preprocessing with both log spectral and cepstral domain filtering.
 
 ## Birdcalls
 Wide range of characteristics
@@ -207,6 +225,14 @@ Sinousoidal tracks.
 [Detection and Classification of Acoustic Scenes and Events: Outcome of the DCASE 2016 Challenge](https://ieeexplore.ieee.org/document/8123864/).
 November 2017.
 
+2018 BirdCLEF Baseline System. [Paper](https://arxiv.org/pdf/1804.07177.pdf).
+[Github](https://github.com/kahst/BirdCLEF-Baseline)
+Feature extraction: https://github.com/kahst/BirdCLEF-Baseline/blob/master/utils/audio.py#L115
+Use a high-pass and a low-pass filter with cut-off frequencies of 300 Hz and 15 kHz a
+Uses a simple SNR estimation to not train on samples with bad signal2noise ratio.
+Based on median filtering and morphological operations on spectogram.
+Very low score => unlikely to contain any birds.
+
 ### Feature learning
 
 Aka, related
@@ -220,11 +246,11 @@ Unsupervised
 * Restricted Boltzman machine
 * Non-negative factorization
 * Clustering-based
-spherical k-means
+Spherical k-means.
 
 Supervised
 
-* Supervised
+* Supervised Non-negative factorization
 
 
 [Automatic large-scale classification of bird sounds is strongly improved by unsupervised feature learning](https://peerj.com/articles/488/).
@@ -333,6 +359,69 @@ Classified with Support Vector Machine.
 ICA that uses wavelet representation. Uses a sliding-window ICA, assuming that mixing process changes slowly enough wrt window size.
 "however seen that despite the best efforts of our proposed algorithm there are still difficulties with the permutation problem.
 The choice of window size is also arbitrary". Proposes a Baysian framework as further work
+
+[Trainable Frontend For Robust and Far-Field Keyword Spotting](https://arxiv.org/pdf/1607.05666.pdf). Yuxuan Wang, 2016.
+Introduces Per-Channel Energy Normalization (PCEN).
+Several issues with the log function.
+1. First, a log has a singularity at 0.
+Common methods to deal with the singularity are to use either
+a clipped log (i.e. log(max(offset, x))) or a stabilized log (i.e. log(x+offset)).
+However, the choice of the offset in both methods is ad hoc and may have different performance impacts on different signals.
+2. Second, the log function uses a lot of its dynamic range on low level, such as silence,
+which is likely the least informative part of the signal.
+3. Third, the log function is loudness dependent.
+With different loudness, the log function can produce different feature values even when the underlying
+signal content (e.g. keywords) is the same,
+which introduces another factor of variation into training and inference.
+Although techniques such as mean–variance normalization and cepstral mean normalization can be used to alleviate this issue
+to some extent, it is nontrivial to deal with time-varying loudness in an online fashion.
+
+Simple feed-forward automatic gain control (AGC), which dynamically stabilizes signal levels.
+Further propose to implement PCEN as neural network operations/layers and jointly optimize various PCEN.
+Operation is causal and is done for each channel independently, making it suitable for real-time implementation.
+The AGC emphasizes changes relative to recent spectral history and adapts to channel effects including loudness.
+Following the AGC, we perform a stabilized root compression to further reduce the dynamic range using offset δ and exponentr.
+We note that the offset δ introduces a flat start to the stabilized root compression curve,
+which resembles an optimized spectral subtraction curve.
+It is worth noting that the main parameters in PCEN are the AGC strength α and smoothing coefficient s,
+whose choices depend on the loudness distribution of data.
+In addition, PCEN tends to enhance speech onsets, which are important for noise and reverberation robustness.
+
+To improve noise robustness, we perform multi-condition
+training by artificially corrupting each utterance with various interfering
+background noises and reverberations, where the noise
+sources contain sounds sampled from daily-life environments
+and YouTube videos. To further improve loudness robustness,
+we also perform multi-loudness training by scaling the loudness
+of each training utterance to a randomly selected level ranging
+from −45 dBFS to −15 dBFS.
+
+## Audio Event Recognition
+
+[Audio Event Recognition in the Smart Home](https://link.springer.com/chapter/10.1007/978-3-319-63450-0_12)
+Very nice background to the Smart Home topic and role of Audio.
+"AI applied in the audio domain has become a key driver of the smart home market",
+due to home assistant devices such as Amazon Alexa and Google Home.
+Contains a number of example applications.
+
+[Machine learning in low-power devices brings sound recognition to the smart home market](https://community.arm.com/processors/b/blog/posts/machine-learning-in-low-power-devices-brings-sound-recognition-to-the-smart-home-market). Whitepaper. ARM, Audio Analytic. 2017.
+"Amazon Echo, Google Home and most mobile phones are using microphone arrays to “target” people’s speech through a technique called beamforming,
+the vast majority of Consumer Electronics and Smart Home devices are still natively using mono audio capture"
+On-edge Audio Event Detection. A clip of the sound is sent along with event (if 512 KB RAM available).
+Can support 3 event profiles on Cortex M4, 6 on Cortex M7.
+
+[Sound Event Recognition in Unstructured Environments using Spectrogram Image Processing](http://www.ntu.edu.sg/home/aseschng/Thesis/JohnDennis_PhDThesis2014.pdf). PhD thesis, Jonathan William Dennis, 2014. 200 pages.
+
+## Commercial available solutions
+
+Audio Analytic.
+https://www.silicon.co.uk/software/audio-analytic-startup-224583
+"we started looking at the professional security arena.
+This caught the attention of companies in the smart home marketplace which were creating domestic security applications"
+40 people in 2017.
+
+IDC executive brief. [Needs registration](https://www.audioanalytic.com/idc-executive-brief-sound-recognition/)
+
 
 ## Interesting software
 

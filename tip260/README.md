@@ -81,43 +81,41 @@ First research and hash out the overall
 
 ## Intelligent Traffic System
 
-Traffic estimation/prediction
-Adaptive traffic control
-Traffic optimization
+An Intelligent Traffic System (ITS) is an integrated
+digital system that allows to monitor and manage traffic.
+Such systems are most often applied for road-based transport,
+but can in principle apply to any mode of transportation.
 
-Road weather
-Emergency vehicle notification
-Automatic road enforcement
-Variable speed limits
-Dynamic traffic light sequence
-Collision avoidance systems
+Common applications include automatic toll road payments,
+variable speed limits depending on road conditions,
+and dynamic traffic light sequences to reduce congestion.
+
+A central part of the ITS system is the collection of relevant traffic data,
+such as vehicles numbers by type and the time taken to cover a distance.
+This data makes it possible to build realistic traffic models
+that perform traffic predictions and simulations.
+Such models can help optimize traffic flow based using adaptive traffic control,
+evaluate effectiveness of policy changes and estimate robustness to external factors.
+
+
 
 ## Wireless Sensor Network
 
-Many small sensors
-Geographically distributed
+In a Sensor Network many individual sensors continiously record data 
+and transmits it to a central location for storage and analysis.
+They are used across industries for applications such as
+Asset tracking, predictive maintenance, process and environmental monitoring.
 
-Sensor types
-Connectivity types
-NB-IoT, LoRa, Sigfox, 6LoWPAN, WiFi
+Wireless Sensor Networks are based on wireless radio communication
+and frequently use battery power or energy harvesting to be independent from a electricity grid.
+This independence lowers cost, simplifies installation of fixed location sensors,
+and opens up new possibilities using portable sensors.
 
-Network topology
-Star, cluster, mesh
-Data hub -> Gateway -> nodes
+Usecases that require when geographically distributed to give good data coverage
+like traffic and environmental monitoring benefit especially from wireless sensors. 
 
-Environmental monitoring
-Traffic monitoring
-Asset tracking
-Machine monitoring
-Process monitoring
-
-Healty and safe environment
-for workers, public
-
-
-Energy. Battery, harvesting, fixed
-
-Data all needs to go to a central place
+Wireless Sensor Network can be based on a network operated by telecom vendor (GSM,NB-IoT),
+dedicated on-site networks (LoRa,6LoWPAN) or off-the-shelf consumer technology (WiFi, Bluetooth Low Energy).
 
 http://www.ni.com/white-paper/7142/en/
 
@@ -129,10 +127,22 @@ production quality system
 RFID
 GPS
 
-## Simulations
+## Simu
+
 
 Container flow. Inside the port
+Traffic
 
+Operational research
+Scheduling. When to transport from wet-dry
+Warehouse management. Storage,manpower,loading/unloading
+
+Supply chain management
+Product Lifecycle Management
+
+
+Material flow analysis. Tracks individual materials through processes. Mass balance.
+Siemens PLM Plant Simulation
 
 
 # Dream design

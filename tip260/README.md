@@ -2,14 +2,7 @@
 # TIP260: Digital fabrication 2
 
 ## Project
-
-Should ideally be related to an ongoing efforts:
-
-* Embedded Machine Learning (master thesis)
-* TapeCore fabricatable machines
-* Bioplastic production & recycling
-
-Should be designed, manufactured, tested and documented within 3 weeks.
+Feasibility study on how Moss port can
 
 ## Background
 Modernization of commercial cargo port in Moss,
@@ -26,6 +19,13 @@ Understanding the problem
 * How long are containers stored at the port? Averages,distribution.
 Which factor drives this up/down? How can these be influenced?
 
+## TODO
+
+
+* Write technical review of traffic sensors. Traffic sensors, GPS in truck
+* Write technical review of environment senors
+* IMAGE: Map of sensors. Traffic,environment
+* IMAGE: Dashboard frontpage mockup
 
 #### Traffic impacts
 
@@ -106,7 +106,7 @@ and transmits it to a central location for storage and analysis.
 They are used across industries for applications such as
 Asset tracking, predictive maintenance, process and environmental monitoring.
 
-Wireless Sensor Networks are based on wireless radio communication
+Wireless Sensor Networks (WSN) are based on wireless radio communication
 and frequently use battery power or energy harvesting to be independent from a electricity grid.
 This independence lowers cost, simplifies installation of fixed location sensors,
 and opens up new possibilities using portable sensors.
@@ -127,8 +127,7 @@ production quality system
 RFID
 GPS
 
-## Simu
-
+## Simulation types
 
 Container flow. Inside the port
 Traffic
@@ -139,7 +138,6 @@ Warehouse management. Storage,manpower,loading/unloading
 
 Supply chain management
 Product Lifecycle Management
-
 
 Material flow analysis. Tracks individual materials through processes. Mass balance.
 Siemens PLM Plant Simulation
@@ -153,6 +151,29 @@ Shipping activity can be handled
 with minimal disruptions on traffic
 and local environment
 without needing infrastructure investments
+
+## Dashboard
+
+Frontpage
+
+    Expected TEUs. Incoming/outgoing
+    Utilization/capacity in wetport,dryport. TEUs
+    TEU transported last hour
+
+    Timeperiod: today
+
+Details
+
+    Internal transport
+
+    Ships incoming/outgoing.
+
+Where are the containers.
+
+    Time to dryport
+    Time to wetport
+    Loading/unloading times
+
 
 ## Aspects
 Wetport-dryport
@@ -192,13 +213,17 @@ Weekly
 Ships
     To port. From port.
     Has containers.
-Cars.
-    From ferry. To ferry. From outside sources.
+Crane
+    Takes containers off boat
+Lifttrucks
+    Organizes containers
 Trucks.
     From port. To port. From ferry. To Ferry. From outside sources.
 Containers.
     From ship. To ship.
-    
+Cars.
+    From ferry. To ferry. From outside sources.
+
 
 ### Simulation howto
 Methods, tools
@@ -220,3 +245,40 @@ Streets4MPI. Python script. Takes Openstreetmap are and number of residents as i
 
 How to validate simulation model using data?
 How to adapt model for real-time usage and decision support?
+
+
+## Notes Jun 25
+
+### Solution package
+Solution
+
+* Internal transport solution
+  * Electrics trucks
+  * Fit into existing traffic pattern
+  * Traffic monitoring
+* (maybe) crane,stackers
+* shore electricity for ships
+* asset tracking for containers. Solution
+* Logistic management solution
+
+Not needed?
+
+* autonomous vechiles
+* special truck loading solution
+* knowing BastoFosen ferry traffic?
+
+Ideas
+
+* Use a service/API for traffic predictions? HERE, GoogleMaps
+
+## Internal transporation
+Do we need to run also at night? Looks like no
+How much does electric trucks improve noise?
+What are regulations for running at night?
+
+-> google doc
+
+## Container stacking
+Container transport prioritized by when they will be picked up by customer
+Priority queue
+

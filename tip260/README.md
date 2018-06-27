@@ -21,14 +21,15 @@ Which factor drives this up/down? How can these be influenced?
 
 ## TODO
 
-* Write definition for Terminal Operating System
+* Finish technical review of truck sensors
 
-* Write technical review of traffic sensors.
-Traffic sensors, GPS in truck
-* Write technical review of environment senors
+* Write technical review of sound noise sensors
+* Write technical review of pollution sensors
+
+* Add technical review of automated gates 
 
 * IMAGE: Map of sensors. Traffic,environment
-* IMAGE: Dashboard frontpage mockup
+
 
 
 ## Management system
@@ -234,7 +235,53 @@ https://github.com/traccar/traccar
 
 ## Environmental sensors
 
-* Noise. Sound level
+## Noise sensors
+
+Noise Monitoring is traditionally done by a sound technician using a handheld device
+or stationary device for some hours. Afterwards a written report is delivered.
+The labour intensive nature means it is costly to perform each measurement.
+As a consequence noise measurements are done seldom and covering only few locations. 
+
+Noise Monitoring Terminals are stationary sensors that continiously measure noise
+and report to a central system over a wireless connection (WiFi,3G).
+Products suitable for monitoring of outdoor environment include
+CESVA TA120, Urbiotica U-Sound and Norsonic Nor1531.
+Event triggers can be set up to warn when sound levels exceed a defined threshold.
+This enables proactive stance to noise pollution, which
+makes it easier to respond to complaints and verify compliance with regulations.
+
+### Research
+
+Keywords:
+
+* Noise Monitoring Terminal
+* Ambient Noise Monitoring
+* personal noise dosemeter
+
+Noise
+
+IEC61672
+Class 2, Class 1
+
+CESVA TA120.
+https://www.cesva.com/en/products/sensors-terminals/TA120/
+
+Norsonic Nor1531
+https://web2.norsonic.com/product/noise-monitoring-terminal-nor1531/
+
+Urbiotica U-Sound 
+https://www.urbiotica.com/en/producto/u-sound-3/
+
+Reporting
+
+http://www.miljostatus.no/kart/
+Moss havn ikke kartlagt
+
+https://www.vegvesen.no/fag/fokusomrader/Miljo+og+omgivelser/Stoy/Stoykart/Akershus
+
+## Pollution
+
+
 * Pollution. Dust, CO2
 * Oilspill detection
 

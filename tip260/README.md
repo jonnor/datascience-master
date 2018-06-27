@@ -21,14 +21,22 @@ Which factor drives this up/down? How can these be influenced?
 
 ## TODO
 
-* Finish technical review of truck sensors
+* Finish technical review of truck tracking
+* Finish technical review of pollution sensors
+* IMAGE: Map of sensors. Air Quality, Noise
 
-* Write technical review of sound noise sensors
-* Write technical review of pollution sensors
+Motivation. Public concerns, health&safety for workers.
+
+* IMAGE: show how data flows to.
+Alternative: Table with datapoints
+* Write recommendation about sensors
+
+* IMAGE: how a terminal operating system can look
+
+MAYBE
 
 * Add technical review of automated gates 
 
-* IMAGE: Map of sensors. Traffic,environment
 
 
 
@@ -232,7 +240,6 @@ Open Source
 Apache License, Version 2.0
 https://github.com/traccar/traccar
 
-
 ## Environmental sensors
 
 ## Noise sensors
@@ -279,7 +286,108 @@ Moss havn ikke kartlagt
 
 https://www.vegvesen.no/fag/fokusomrader/Miljo+og+omgivelser/Stoy/Stoykart/Akershus
 
-## Pollution
+## Air Quality
+
+Keywords:
+
+* Air Quality Monitor
+* Air Quality Station
+
+
+http://www.mdpi.com/journal/sensors/special_issues/air_pollution_sensors
+MDPI Special Issue, August 2017
+In the last five years, the emergence of small-scale air quality sensors has led to a significant paradigm shift in the approach to measuring air quality beyond those afforded by traditional methods that use large, stationary, and expensive analyzers.  These sensors are, not only small, but also can be portable, providing data in near-real time at relatively low costs and using low amounts of power. As a result, sensors allow air quality to be measured with unprecedented temporal and spatial resolution, transforming the way we understand our environment.
+
+Sensors are currently available or being developed to measure ambient concentrations of air pollutants found in air,
+e.g., NO, NO2, O3, CO2, CO, CH4, VOC, organic species,
+as well as particulate matter (PM) mass in one or more size ranges and components of PM, e.g., black carbon. 
+
+Measuring air pollution with low-cost sensors
+https://ec.europa.eu/jrc/en/publication/brochures-leaflets/measuring-air-pollution-low-cost-sensors
+
+Low-cost air quality sensors are attracting more and more attention
+They offer air pollution monitoring at a lower cost than conventional methods,
+making air quality monitoring possible in many more locations.
+"Too good to be true? At the current stage of development, unfortunately yes."
+! without quantifying how
+
+Informational brocure summarizing types
+http://publications.jrc.ec.europa.eu/repository/bitstream/JRC107461/low_cost_sensors_web.pdf
+
+Electrochemical sensors 
+photo ionization detector 
+Optical particle counters
+Optical sensors
+Metal oxide sensors
+
+
+Evaluation of low-cost sensors for air pollution monitoring: Effect of gaseous interfering compounds and meteorological conditions
+https://ec.europa.eu/jrc/en/publication/evaluation-low-cost-sensors-air-pollution-monitoring-effect-gaseous-interfering-compounds-and
+
+Tested electrochemical
+for ozone, nitrogen dioxide, carbon monoxide and nitrogen monoxide
+
+"By using calibration coefficient equal to the averages of the effects given in this report, reasonable calibration function could be established.
+This result is promising, allowing for future increase of the use of sensors for low cost for air pollution monitoring both by expert institutes and citizen science projects"
+
+Heart disease, Chronic Obstructive Pulmonary Disease (COPD),
+stroke and lung cancer are highly related to air pollution.
+People breathing in air of poor quality could suffer from difficulty in breathing, coughing, wheezing and asthma.
+
+
+https://www.aeroqual.com/outdoor-air-quality/particulate-dust-monitors
+
+Benefits of continuous real-time monitoring
+Traditional sampling methods like high volume samplers are great for accurate measurement of dust and particulate matter at a fixed point in time or over a 24 hour period, but they cannot indicate exactly when an emissions event occurred. An industrial site needs to know immediately when a problem has occurred so they can put into practice control measures.
+
+https://www.epa.gov/sites/production/files/2015-08/documents/ron_williams-presentation_4_21.pdf
+
+Value of Continuous Measures
+• Provides greater understanding of time and location changes
+of environmental conditions
+• Has the potential of defining critical episodic events that
+would otherwise not be discovered
+• Helps to define the validity of the data measurement itself
+• Needed anytime a mobile measurement is required
+
+!Benzene
+VOC. From Gasoline
+
+https://www.sciencedirect.com/science/article/pii/S0160412016309989
+Environment International, February 2017
+
+Evaluation of low cost AQMesh units.
+In Oslo, between April - September, 2015 
+
+The European Air Quality Directive (EU, 2008) defines the Data Quality Objective (DQO) that monitoring methods need to comply with to be used as indicative measurements for regulative purposes. The DQO is a measure of the acceptable uncertainty for indicative measurements. According to the Directive, allowed uncertainties are 50% for PM10 and PM2.5, 30% for O3 and 25% for CO, NOx, NO2 and SO2.
+
+necessary to perform a field calibration for each sensor individually
+NO, PM10 and PM2.5, the expanded uncertainty meets the DQO criteria as defined in the Air Quality Directive
+However, other pollutants, e.g., CO, NO2 and O3, show a highly expanded uncertainty that exceeded the DQO for indicative methods
+recent studies show that the application of field calibrations based on machine learning techniques can reduce the expanded uncertainty
+
+Good indicator of trends in time
+
+NOT READ YET
+http://www.mdpi.com/1424-8220/17/10/2263
+
+
+Review of Portable and Low-Cost Sensors for the Ambient Air Monitoring of Benzene and Other Volatile Organic Compounds
+https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5539520/
+2017 Jun 
+
+In Europe, the European Air Quality Directive (AQD [3]) defines as mandatory the monitoring of benzene in ambient air. The AQD states that the reference method for the measurement of BTEX consists of active or on-line sampling followed by desorption and gas chromatography [4]. This method is time consuming, expensive to implement and it needs skilled personnel to perform complex operations.
+
+limit had to be increased up to 5000 € because of the lack of commercial instruments within the 1000 € range.
+
+### Products
+
+Both particle matter and Gas sensors 
+
+Aeroqual Dust Profiler
+Aqmesh
+
+## Water Quality
 
 
 * Pollution. Dust, CO2
@@ -290,41 +398,6 @@ Health & Safety
 
 Workers
 Public
-
-#### Vehicle detection
-
-Sensor tech
-
-* Ultrasound
-* Piezoelectric
-* Inductive loop
-* Magnetic
-* Infrared, active
-* Millimeter radar
-* Pnenumatic tubes
-* Video analysis
-* Bluetooth detection
-* Cellphone detection
-
-https://www.quora.com/What-type-of-sensor-is-used-in-vehicle-detection
-https://experts.umn.edu/en/publications/portable-roadside-sensors-for-vehicle-counting-classification-and
-
-Features
-
-* vehicle number
-* vehicle type
-* vehicle speed
-+ lane position
-++ no changes to road needed 
-++ no data infra needed
-++ no power infra needed
-+ low price
-+ also capture other relevant data
-
-
-Audio works rather well for traffic density
-Vehicular Traffic Density State Estimation Based on Cumulative Road Acoustics
-
 
 ## Simulation types
 

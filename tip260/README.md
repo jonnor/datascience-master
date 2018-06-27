@@ -21,18 +21,228 @@ Which factor drives this up/down? How can these be influenced?
 
 ## TODO
 
+* Write definition for Terminal Operating System
 
-* Write technical review of traffic sensors. Traffic sensors, GPS in truck
+* Write technical review of traffic sensors.
+Traffic sensors, GPS in truck
 * Write technical review of environment senors
+
 * IMAGE: Map of sensors. Traffic,environment
 * IMAGE: Dashboard frontpage mockup
 
-#### Traffic impacts
 
-* Pollution. Dust, CO2
+## Management system
+
+Keywords
+
+* Container Terminal Operations
+* terminal operating system (TOS)
+* container terminal operating system
+* terminal automation
+
+## Key term
+Terminal Operating System
+
+A Terminal Operating Sytem (TOS) is a software application tailored for managing shipping terminal operations.
+Its primary purpose is to track the movement of cargo in the port.
+A real-time TOS can use data from asset tracking systems to 
+automatically keep an updated location of goods and machines.
+Common added functionality include gate control and billing.
+
+Using reports from data collected in the TOS, terminal operators can
+analyze effectivity and plan improvements. 
+
+Using Electronic Data Exchange (EDI) shipment information can be automatically communicated 
+between Terminal Operator, Freight Forwarder and Shipping Line.
+
+
+### Aspects
+
+* Inventory tracking. Containers, location
+* vessel operation
+* loading or unloading operations
+* Yard Planning
+* Yard management. Tracking machines moving around. Warehouse levels
+Container stacking, localization
+* gate operations
+Inland port transportation
+Truck management 
+* Communication with external actors.
+Electronic data interchange (EDI)
+EDIFACT,
+ANSI X12
+Shipping Schedule X12 862 or EDIFACT DELJIT
+* billing
+
+
+## External actors
+
+    Terminal Operators
+    Freight forwarder
+    Shipping line or shipping agent
+    Container Operators
+    Port Authority
+    Customs Office
+
+### Benefits
+
+Data-driven decision making
+
+## Available
+
+Master Terminal by Jade Logistics
+
+iPortman TOS by Envision.
+List of features, https://www.envisionesl.com/products/iportman/solutions/container-terminal-operations/
+
+Navis N4.
+http://navis.com/get-more-n4
+
+Octopi.
+For small and medium ports. Hosted webservice. https://octopi.co/
+
+Autostore TOS.
+https://www.tba.group/autostoretos/
+
+TGI OSCAR.
+Small to medium terminals. https://www.tgims.com/en/oscar/
+
+Intermodal Pro by Tideworks.
+
+SaaS based. Intermodal terminal operating system
+
+TOPS EXPERT by RBS EMEA.
+
+### Related
+
+
+TGIBox. 3D container positioning
+
+https://www.camco.be/solutions/container-terminals/
+
+Micro Location Technology
+measures the position of any container
+or container handling equipment on your terminal and
+can be applied to improve operational efficiency.
+It’s based on a combination of UWB distance ranging, DGPS and INS
+
+Crane OCR
+Self-service Gate Kiosks with Truck Driver ID card
+
+### References
+
+https://www.porttechnology.org/news/how_to_choose_a_terminal_operating_system
+Document the Requirements
+Business Process Mapping (BPM)
+Turn the Vision and Requirements documents into a Request for Proposal (RFP)
+
+https://www.rbs-emea.com/glossary/container-terminal-operating-system-tos/
+Nice overview/definition.
+
+## Datapoints
+
+Average time for container pickup. 4.1 days. Source
+
+In our analysis 100% of containers go to the inland port
+
+## Optimization approach
+
+If wanting to optimize the port operation using machine learning,
+what data would be needed.
+
+## GPS tracking
+
+### Keywords
+
+Fleet management
+GPS tracking
+GPS logging
+Elektronisk kjorebok
+
+
+
+Internal transport time tracking
+How long each transport run takes
+Can be collected by ID, for instance in automated gates
+
+Where time was spent
+Useful for
+GPS tracker on truck
+
+Requirements
+
+Recording interval, 1 minute or more often
+Real-time update preferred
+API to get data. Realtime and/or historical export
+
+
+Containers
+
+
+Trucks
+
+Allowed in Norway for fleet management if there is need
+must be discussed with worker representatives
+need must be regularly reevaluated
+cannot be used for checking on employees
+notification must be sent to Datatilsynet
+
+https://www.datatilsynet.no/samfunnsomrader/personvern-pa-arbeidsplassen/gps-sporing_yrkesbiler/
+https://lastebil.no/Aktuelt/Nyhetsarkiv/2010-og-eldre/2010/GPS-og-sporing-i-yrkesbiler
+GPS OG SPORING I YRKESBILER Veileder, 2017
+https://www.datatilsynet.no/globalassets/global/regelverk-skjema/veiledere/gps-og-sporing-2017-030317.pdf
+
+TrackYourTruck
+https://www.trackyourtruck.com/fleet-tracking-systems/truck-tracking/
+
+
+https://ecofleet.no/
+
+Fastpris
+https://unitracker.no/flatestyring/
+
+https://itracker.no/gps-tracker/elektronisk-kjorebok
+
+SAGAsystem
+Vehco
+
+Dedicated tracking unit
+
+Integrated with navigation system
+
+Integrated with truck
+Volvo Dynafleet
+Scania Fleet Management
+MAN Telematics
+Iveco Blue&Me
+
+ODB devices
+
+Independent software for standard GPS devices
+
+https://trackme.lk/devices.php
+supports over 50 different device, many protocols
+Rest API for. Can be integrated with own software
+
+
+https://www.traccar.org/devices/
+
+Open Source
+Apache License, Version 2.0
+https://github.com/traccar/traccar
+
+
+## Environmental sensors
+
 * Noise. Sound level
-* Road wear. Weight of car, Number of cars
-* Accidents. Speed of cars, road/weather conditions, temperature,humidity
+* Pollution. Dust, CO2
+* Oilspill detection
+
+Early warning
+Health & Safety
+
+Workers
+Public
 
 #### Vehicle detection
 
@@ -69,64 +279,6 @@ Audio works rather well for traffic density
 Vehicular Traffic Density State Estimation Based on Cumulative Road Acoustics
 
 
-# Key topics
-
-Definition. What is it.
-Motivation. What does it help solve
-Representative. A picture
-Example implementations?
-
-Size: Half a page?
-First research and hash out the overall
-
-## Intelligent Traffic System
-
-An Intelligent Traffic System (ITS) is an integrated
-digital system that allows to monitor and manage traffic.
-Such systems are most often applied for road-based transport,
-but can in principle apply to any mode of transportation.
-
-Common applications include automatic toll road payments,
-variable speed limits depending on road conditions,
-and dynamic traffic light sequences to reduce congestion.
-
-A central part of the ITS system is the collection of relevant traffic data,
-such as vehicles numbers by type and the time taken to cover a distance.
-This data makes it possible to build realistic traffic models
-that perform traffic predictions and simulations.
-Such models can help optimize traffic flow based using adaptive traffic control,
-evaluate effectiveness of policy changes and estimate robustness to external factors.
-
-
-
-## Wireless Sensor Network
-
-In a Sensor Network many individual sensors continiously record data 
-and transmits it to a central location for storage and analysis.
-They are used across industries for applications such as
-Asset tracking, predictive maintenance, process and environmental monitoring.
-
-Wireless Sensor Networks (WSN) are based on wireless radio communication
-and frequently use battery power or energy harvesting to be independent from a electricity grid.
-This independence lowers cost, simplifies installation of fixed location sensors,
-and opens up new possibilities using portable sensors.
-
-Usecases that require when geographically distributed to give good data coverage
-like traffic and environmental monitoring benefit especially from wireless sensors. 
-
-Wireless Sensor Network can be based on a network operated by telecom vendor (GSM,NB-IoT),
-dedicated on-site networks (LoRa,6LoWPAN) or off-the-shelf consumer technology (WiFi, Bluetooth Low Energy).
-
-http://www.ni.com/white-paper/7142/en/
-
-## Industry 4.0
-smart logistics
-production quality system
-
-## Asset tracking
-RFID
-GPS
-
 ## Simulation types
 
 Container flow. Inside the port
@@ -141,7 +293,6 @@ Product Lifecycle Management
 
 Material flow analysis. Tracks individual materials through processes. Mass balance.
 Siemens PLM Plant Simulation
-
 
 # Dream design
 What would the ideal situation be
@@ -158,7 +309,9 @@ Frontpage
 
     Expected TEUs. Incoming/outgoing
     Utilization/capacity in wetport,dryport. TEUs
+    TEU loaded/unloaded last hour
     TEU transported last hour
+    Waiting time for truck unloading/loading
 
     Timeperiod: today
 
@@ -173,7 +326,6 @@ Where are the containers.
     Time to dryport
     Time to wetport
     Loading/unloading times
-
 
 ## Aspects
 Wetport-dryport
@@ -210,20 +362,30 @@ Daily distribution
 Weekly
 
 ## Simulation
+
 Ships
     To port. From port.
     Has containers.
 Crane
-    Takes containers off boat
-Lifttrucks
-    Organizes containers
-Trucks.
-    From port. To port. From ferry. To Ferry. From outside sources.
-Containers.
-    From ship. To ship.
+    Loads/unloads containers from boat
+Forklift
+    Organizes containers inside the port
+    Can carry 1 container
+Transporter.
+    Truck that moves containers between ports.
+    Can carry N=(1,2) container
+Container.
+    Unit of cargo that is transported.
+Depot
+    Stores containers.
+    Has N containers
+
 Cars.
     From ferry. To ferry. From outside sources.
+    
 
+Ship -> Crane -> Forklift -> Seaport depot -> Forklift -> Transporter -> Forklift -> Inlandport depot
+    unload               stack           unstack       load    unload      stack
 
 ### Simulation howto
 Methods, tools
@@ -246,6 +408,31 @@ Streets4MPI. Python script. Takes Openstreetmap are and number of residents as i
 How to validate simulation model using data?
 How to adapt model for real-time usage and decision support?
 
+## Notes Jun 26
+
+
+Inland port first
+Minimize seaport
+Technological solutions to make this possible
+
+Traffic looks doable from capacity
+How small can the port become.
+What benefits does this have
+! economic. Depends on ability to charge customers more
+
+Picking service. Move to inland
+
+Faster pickup time
+Communicate ideal pickup time to Forwarder.
+
+
+## RTG versus forkflift comparison
+
+Space utilization. Smaller space. Could calculate based on the type Oslo has
+Taller than forklifts
+Might not be able to stack so high. Is it a regulatory limit?
+Investment costs
+
 
 ## Notes Jun 25
 
@@ -263,13 +450,14 @@ Solution
 
 Not needed?
 
-* autonomous vechiles
+* autonomous vehicles
 * special truck loading solution
 * knowing BastoFosen ferry traffic?
 
 Ideas
 
-* Use a service/API for traffic predictions? HERE, GoogleMaps
+* Use a service/API for traffic predictions?
+HERE, GoogleMaps
 
 ## Internal transporation
 Do we need to run also at night? Looks like no

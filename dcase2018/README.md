@@ -48,6 +48,31 @@ melspecra n=128, 1.2MB
 MFCC n=20 160k
 MFCC as .csv compresses to approx 45% with tgz
 
+NRF52832 has 64KB (or 32KB) RAM.
+A lot of it will be used for BT stack.
+App should be max 16KB 
+
+1 sec 44.1kHz @ 16bit ìs 90KB.
+1 frame is 2048 or 512 samples?? TODO find out 12/50ms
+4kB/1kB
+
+Training samples are 10 seconds long!
+Can fit 1-10 frames of audio
+
+128 mel spectrogram 32bit float 512bytes
+
+Classifier can operate on up to 10 frames
+
+With 
+
+Would probably sample at 22050Hz in prod
+
+ADC buffer
+Frame
+
+
+
+
 ## Background
 
 Weak labeling. Entire clip of audio containing event is labeled, not the precise event.
@@ -176,6 +201,7 @@ https://www.xeno-canto.org/
 
 ## Literature review
 
+### Topics
 
 Birdsong denoising
 Birdsong source separation
@@ -184,6 +210,11 @@ bioacoustic denoising
 Passive acoustic monitoring.
 
 Time-frequency (TF) analysis of non-stationary signals.
+
+### Books
+
+* Computational Analysis of Sound Scenes and Events. Tuomas Virtanen, Mark D. Plumbley, Dan Ellis. 2018.
+* Human and Machine Hearing - Extracting Meaning from Sound. Richard F. Lyon. 2017, revised 2018.
 
 ### Bioacoustics
 

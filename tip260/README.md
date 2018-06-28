@@ -40,7 +40,7 @@ MAYBE
 
 
 
-## Management system
+## Terminal Operating System
 
 Keywords
 
@@ -49,8 +49,7 @@ Keywords
 * container terminal operating system
 * terminal automation
 
-## Key term
-Terminal Operating System
+
 
 A Terminal Operating Sytem (TOS) is a software application tailored for managing shipping terminal operations.
 Its primary purpose is to track the movement of cargo in the port.
@@ -135,8 +134,9 @@ or container handling equipment on your terminal and
 can be applied to improve operational efficiency.
 It’s based on a combination of UWB distance ranging, DGPS and INS
 
-Crane OCR
 Self-service Gate Kiosks with Truck Driver ID card
+
+Crane OCR
 
 ### References
 
@@ -288,11 +288,39 @@ https://www.vegvesen.no/fag/fokusomrader/Miljo+og+omgivelser/Stoy/Stoykart/Akers
 
 ## Air Quality
 
+Pollution in the air is produced by a range of sources, including transportation vechiles and industrial processes.
+A number of health problems like heart disease, stroke and lung cancer are highly related to air pollution.
+People breathing in air of poor quality could suffer from difficulty in breathing, coughing, wheezing and asthma.
+This can affect both workers of a site, and other people frequenting in the surrounding area.
+
+Because of this the EU has introduces target and limit values for a number of harmful pollutants.
+
+TABLE
+
+Low-cost sensors that can detect many of these pollutants have become available over the last years.
+Either designed as a portable device for personal use, or for autonomous stationary operation in a Wireless Sensor Network.
+These supplement official measuring stations which give very high quality measurements,
+but very limited resolution in time and space due to their costs.
+While data quality of low-cost sensors remains a challenge, the higher resolution can give
+useful insights in the variation of pollution and possible patterns.
+The data can be used for early warning systems, or be analyzed to determine root causes.
+
+Example of low-cost Air Quality Monitors for real-time continious monitoring include
+Aeroqual Dust Profiler and AQMesh.
+
+http://ec.europa.eu/environment/air/quality/standards.htm
+
+https://ec.europa.eu/jrc/en/publication/evaluation-low-cost-sensors-air-pollution-monitoring-effect-gaseous-interfering-compounds-and
+
 Keywords:
 
 * Air Quality Monitor
 * Air Quality Station
 
+References
+
+Pollutants and treshold values
+http://ec.europa.eu/environment/air/quality/standards.htm
 
 http://www.mdpi.com/journal/sensors/special_issues/air_pollution_sensors
 MDPI Special Issue, August 2017
@@ -385,7 +413,7 @@ limit had to be increased up to 5000 € because of the lack of commercial instr
 Both particle matter and Gas sensors 
 
 Aeroqual Dust Profiler
-Aqmesh
+AQMesh
 
 ## Water Quality
 

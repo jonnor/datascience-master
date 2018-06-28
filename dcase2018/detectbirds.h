@@ -1,20 +1,34 @@
 
+#include <stdint.h>
+#include <stddef.h>
+#include <stdbool.h>
+#include <stdlib.h>
+
+// FIXME: actually include emtrees
+//#include <emtrees.h>
+typedef struct {} EmtreesModel;
+int32_t
+emtrees_predict(EmtreesModel *m, float *f, int32_t l) {
+    return 0;
+}
+EmtreesModel *birddetect_model = NULL;
+
 // emaudio.h
-struct EmVector {
+typedef struct {
     float *data;
     size_t length;
-};
+} EmVector;
 
 // Double buffering
-struct EmAudioBufferer {
-    const int buffer_length;
+typedef struct _EmAudioBufferer {
+    int buffer_length;
     float *buffer1;
     float *buffer2;
 
     float *write_buffer;
     float *read_buffer;
     int write_offset;
-}
+} EmAudioBufferer;
 
 void
 emaudio_bufferer_reset(EmAudioBufferer *self) {
@@ -39,12 +53,45 @@ emaudio_bufferer_add(EmAudioBufferer *self, int16_t s) {
     }
 }
 
-void
-emaudio_shift_features(EmVector features, EmVector frame)
+int
+emvector_shift(EmVector a, int amount)
 {
-    // FIXME: implement
-    // drop oldest frame by move existing features down
-    // add new frame
+    if (abs(amount) >= a.length) {
+        return -2; // non-sensical
+    }
+
+    if (amount == 0) {
+        return 0;
+    } else if (amount > 0) {
+        return -1; // TODO: implement
+    } else {
+        for (int i=a.length+amount; i<a.length; i++) {  
+            a.data[i+amount] = a.data[i];
+        }
+        return 0;
+    }
+}
+
+int
+emvector_set(EmVector dest, EmVector source, int location) {
+    const int final_dest = source.length+location;
+    if (final_dest > dest.length) {
+        return -1;
+    }
+    if (location < 0) {
+        return -2;
+    }
+
+    for (int i=location; i<final_dest; i++) {
+        dest.data[i] = source.data[i-location]; 
+    }
+    return 0;
+}
+
+
+void
+emaudio_sft(EmVector audio, EmVector bins) {
+
 }
 
 void
@@ -58,60 +105,30 @@ emaudio_pcen(EmVector vector) {
 }
 
 // birddetector.h
-struct BirdDetector {
+typedef struct _BirdDetector {
     int n_frames;
     EmVector features;
     EmtreesModel *model;
-};
+} BirdDetector;
 
 bool birddetector_classify_frame(BirdDetector *self, EmVector audio) {
     const int mels_length = 128;
     float mels_data[mels_length];
     EmVector mels = { mels_data, mels_length };
 
-    emaudio_melspec(audio, mels);
+    // FIXME: need to consider SFT and the overlapping windows
+    // for instance use 2 consecutive audio frames and use midpoint as center of window
+
+    //emaudio_sft(audio, bins);
+    //emaudio_melspec(bins, mels);
     emaudio_pcen(mels);
 
-    // features is from multiple frames, probably summarized?
-    // TODO: calculate features for this frame
+    // FIXME: calculate new features. Are they aggregated across frames?
 
-    emaudio_shift_features(features, frame_features);
+    //emaudio_shift_features(features, frame_features);
 
-    const int32_t cl = emtrees_predict(model, features.data, features.length);
+    const int32_t cl = emtrees_predict(self->model, self->features.data, self->features.length);
     return cl == 1;
 }
 
-// main
 
-const int AUDIO_FRAME_LENGTH = 2048;
-float audio1[AUDIO_FRAME_LENGTH];
-float audio2[AUDIO_FRAME_LENGTH];
-
-const int N_FRAMES = 5;
-const int FRAME_FEATURES = 2; // mean,std
-
-EmAudioBufferer bufferer;
-
-
-void adc_interrupt() {
-    emaudio_bufferer_add(bufferer, sample);
-}
-
-void main(void) {
-    bufferer = { AUDIO_FRAME_LENGTH, audio1, audio2, NULL, NULL, 0 };
-    emaudio_bufferer_reset(&bufferer);
-
-    const int features_length = N_FRAMES*FRAME_FEATURES;
-    float features_data[features_length];
-    EmVector features = { features_data, features_length };
-    BirdDetector detector = { N_FRAMES, features, birddetect_model };
-
-    for (;;;) {
-
-        if (bufferer->read_buffer) {
-            EmVector frame = { ready_audio, AUDIO_SIZE };
-            const bool has_bird = classify_frame(features, frame)
-            bufferer->read_buffer = NULL; // done processing
-        }
-    }
-}

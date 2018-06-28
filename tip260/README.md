@@ -21,28 +21,25 @@ Which factor drives this up/down? How can these be influenced?
 
 ## TODO
 
-* IMAGE: Map of sensors. Air Quality, Noise
 
 Environmental sensors
 
 Introduction
 Motivation. Public concerns, health&safety for workers.
 
-Put into own section
-IMAGE: monitoring station
-
 * Add section on Water Quality Monitoring
 
-* Write recommendation about sensors
+Results
+* IMAGE: Map of sensors. Air Quality, Noise
+
+* Recommendations
+
+
 
 DATA STRATEGY
 
 * IMAGE: show how data flows to central point
 Alternative: Table with datapoints
-
-
-* Finish technical review of truck tracking
-
 * IMAGE: how a terminal operating system can look
 
 
@@ -174,6 +171,33 @@ what data would be needed.
 
 ## GPS tracking
 
+
+GPS truck tracking
+
+Tracking the position of transport trucks over time with a Global Positioning System (GPS) unit
+can be used to know exactly where the trucks travel. In a real-time GPS systems with wireless connectivity
+this data is available immediately to the logistics operator.
+When used by a logistic organisation, such tracking often go under the umbrella term Fleet Management.
+
+The historical data can be used to calculate the typical
+and maximum expected transport time from location A to B,
+to be used when planning.
+Using machine learning, a prediction model can be built,
+giving predictions for a specific day and time of day.
+The data can be further used to pinpoint problematic areas along the road,
+suggesting alternative routes.
+Data can then be provided to road authorities when discussing need for improvements.
+
+Due to privacy of the truck drivers GPS tracking use in Norwegian industry
+is regulated by Datatilsynet. However usage is allowed for Fleet Management provided that certain conditions are met.
+https://www.datatilsynet.no/samfunnsomrader/personvern-pa-arbeidsplassen/gps-sporing_yrkesbiler/
+
+GPS systems are available in many new trucks (Volvo Dynafleet, Scania Fleet Management, MAN Telematics),
+or can be installed on existing trucks via a third-party addon (iTracker, Ecofleet).
+To facilitate data integration with Terminal Operation System, a real-time GPS
+with an Application Programming Interface (API) is preferred.
+
+
 ### Keywords
 
 Fleet management
@@ -181,15 +205,6 @@ GPS tracking
 GPS logging
 Elektronisk kjorebok
 
-
-
-Internal transport time tracking
-How long each transport run takes
-Can be collected by ID, for instance in automated gates
-
-Where time was spent
-Useful for
-GPS tracker on truck
 
 Requirements
 

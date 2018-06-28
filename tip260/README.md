@@ -21,21 +21,34 @@ Which factor drives this up/down? How can these be influenced?
 
 ## TODO
 
-* Finish technical review of truck tracking
-* Finish technical review of pollution sensors
 * IMAGE: Map of sensors. Air Quality, Noise
 
+Environmental sensors
+
+Introduction
 Motivation. Public concerns, health&safety for workers.
 
-* IMAGE: show how data flows to.
-Alternative: Table with datapoints
+Put into own section
+IMAGE: monitoring station
+
+* Add section on Water Quality Monitoring
+
 * Write recommendation about sensors
+
+DATA STRATEGY
+
+* IMAGE: show how data flows to central point
+Alternative: Table with datapoints
+
+
+* Finish technical review of truck tracking
 
 * IMAGE: how a terminal operating system can look
 
+
 MAYBE
 
-* Add technical review of automated gates 
+* Mention automated gates in technical review 
 
 
 
@@ -617,4 +630,124 @@ What are regulations for running at night?
 ## Container stacking
 Container transport prioritized by when they will be picked up by customer
 Priority queue
+
+
+## Review notes
+
+Frontpage 
+
+    Full-page
+    image
+
+Executive Summary
+
+    missing conclusion/recommendation
+
+Introduction
+    High level, global -> Regional/Moss -> This report
+    Global shipping 
+    Economically sustainable
+
+Stakeholders
+
+    Add
+    Construction companies
+    BaneNOR
+    Vegvesnet
+    Suppliers
+
+Problem statement
+
+    2 sentences summary of
+    Highlight problem statement BIG
+    End result is ... understanding of digital technologies relevant to
+
+Goals/objective
+
+    Optimize logistics
+        Quantify traffic situation
+        Quantify
+    
+    Finding->Identify
+    Drop first bullets level
+    Drop indents in financial/economic, own sections
+    Rename to sustinability
+
+Project Scope
+
+Key concepts
+
+    Split out self-driving trucks from robotics
+
+Rotterdam
+    Quantify size
+    Number of TEUs/year, area used
+
+    Add what information is shared
+
+Larvik
+    Mention that Greencarrier
+    Add figure text
+
+Moss port current sitatution
+    Add picture
+
+Terminal operating system
+    
+
+Environmental monitoring
+    Put into own section
+
+Shore power
+    IMAGE: going into ship
+
+Technology/solutions -> rename Available technology
+
+Results
+    Total price in mill NOKs
+
+    Sentence about conclusion truck driving
+
+Define that we are planning to move most of the containers
+    In results?
+
+Technical Review
+    Maybe add a Summary
+    Can we move some Results in there?
+
+Added business value
+    Predictability
+    Guaranteed times
+    
+    Avoiding peak times
+
+Sustainability
+    Environmental impact
+
+
+Discussion
+    Pro/cons
+
+    Feasability of moving all containers to inland port
+
+    Night time transport
+    BaneNOR influence
+
+    Financial analysis
+
+    RTG vs stackers
+
+    Environmental. Ref
+
+    Barriers/Challenges for implementing proposed solution
+
+    Our numbers are estimates
+
+Recommendation
+    Short term mainly
+    One paragraph
+
+
+Target: Moss Port
+
 

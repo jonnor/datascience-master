@@ -60,7 +60,6 @@ public:
     {
         for (unsigned int i=0; i<coefficients.size(); i++) {
             coefficients[i] = emgoertzel_coefficients(freqs[i], n_samples, sample_rate);
-            printf("c %d %f %f %f\n", i, freqs[i], coefficients[i].sine, coefficients[i].cosine);
         }
     }
 

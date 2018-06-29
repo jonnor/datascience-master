@@ -1,15 +1,31 @@
 
 #include <stdio.h>
 
+#include <vector>
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
 #include <pybind11/numpy.h>
 
+typedef struct _EmGoertzel {
+    float sine;
+    float cosine;
+} EmGoertzel;
+
+EmGoertzel
+emgoertzel_coefficients(int frequency, int n_samples, int sr)
+{
+    const float samples = (float)n_samples;
+    const float k = (int)(0.5 + ((samples * frequency) / sr));
+    const float omega = (2.0 * M_PI * k) / samples;
+    const EmGoertzel c  = { sin(omega), cos(omega) }; 
+    return c;
+}
+
 
 float
-goertzel_apply(float* data, int n_samples, float sine, float cosine)
+emgoertzel_run(EmGoertzel c, float* data, int n_samples)
 {
-    const float coeff = 2.0 * cosine;
+    const float coeff = 2.0 * c.cosine;
     float q0=0;
     float q1=0;
     float q2=0;
@@ -21,35 +37,59 @@ goertzel_apply(float* data, int n_samples, float sine, float cosine)
     }
  
     const float scale = n_samples / 2.0;
-    const float real = (q1 - q2 * cosine) / scale;
-    const float imag = (q2 * sine) / scale;
+    const float real = (q1 - q2 * c.cosine) / scale;
+    const float imag = (q2 * c.sine) / scale;
 
-    float magnitude = sqrtf(real*real + imag*imag);
+    const float magnitude = sqrtf(real*real + imag*imag);
     return magnitude;
 }
 
-// TODO: speedup by precalculating coefficients: sine,cosine
-float
-goertzel(float* data, int n_samples, int frequency, int sr)
-{
-    float samples = (float)n_samples;
-    float k = (int)(0.5 + ((samples * frequency) / sr));
-    float omega = (2.0 * M_PI * k) / samples;
-    float sine = sin(omega);
-    float cosine = cos(omega);
 
-    return goertzel_apply(data, n_samples, sine, cosine);
-}
 
-float goertzel_py(std::vector<float> samples, int frequency, int sr) {
-    return goertzel(&samples[0], samples.size(), frequency, sr);
-}
+// TODO: implement numpy in/out
+class GoertzelBank {
+    float sample_rate;
+    int n_samples;
+    std::vector<EmGoertzel> coefficients;
+
+public:
+    GoertzelBank(std::vector<float> freqs, int _n_samples, float _sample_rate)
+        : sample_rate(_sample_rate)
+        , n_samples(_n_samples)
+        , coefficients(freqs.size())
+    {
+        for (unsigned int i=0; i<coefficients.size(); i++) {
+            coefficients[i] = emgoertzel_coefficients(freqs[i], n_samples, sample_rate);
+            printf("c %d %f %f %f\n", i, freqs[i], coefficients[i].sine, coefficients[i].cosine);
+        }
+    }
+
+    std::vector<float> process(std::vector<float> samples) {
+
+        if ((int)samples.size() != n_samples) {
+            throw std::runtime_error("Wrong number of samples");
+        }
+
+        std::vector<float> results(coefficients.size());
+
+        for (unsigned int i=0; i<coefficients.size(); i++) {
+            const float r = emgoertzel_run(coefficients[i], &samples[0], samples.size());
+            results[i] = r;
+        }
+     
+        return results;   
+    }
+};
 
 namespace py = pybind11;
 
 PYBIND11_MODULE(detectbirds, m) {
     m.doc() = "Detect birdsong in audio";
 
-    m.def("goertzel", goertzel_py);
+    py::class_<GoertzelBank>(m, "GoertzelBank")
+        .def(py::init< std::vector<float>, int, float>())
+        .def("process", &GoertzelBank::process);
+
+   // m.def("goertzel", goertzel_py);
 }
 

@@ -23,7 +23,7 @@ emgoertzel_coefficients(int frequency, int n_samples, int sr)
 
 
 float
-emgoertzel_run(EmGoertzel c, float* data, int n_samples)
+emgoertzel_run(EmGoertzel c, const float* data, int n_samples)
 {
     const float coeff = 2.0 * c.cosine;
     float q0=0;
@@ -46,7 +46,9 @@ emgoertzel_run(EmGoertzel c, float* data, int n_samples)
 
 
 
-// TODO: implement numpy in/out
+namespace py = pybind11;
+
+
 class GoertzelBank {
     float sample_rate;
     int n_samples;
@@ -63,24 +65,33 @@ public:
         }
     }
 
-    std::vector<float> process(std::vector<float> samples) {
+    py::array_t<float>
+    process(py::array_t<float, py::array::c_style | py::array::forcecast> in) {
+        if (in.ndim() != 1) {
+            throw std::runtime_error("process input must have dimensions 1");
+        }
 
-        if ((int)samples.size() != n_samples) {
+        const int in_samples_n = in.shape()[0];
+        if (in_samples_n != n_samples) {
             throw std::runtime_error("Wrong number of samples");
         }
 
-        std::vector<float> results(coefficients.size());
+        const float *samples = in.data();
+
+        auto ret = py::array_t<float>(coefficients.size());
+        auto r = ret.mutable_unchecked<1>();
 
         for (unsigned int i=0; i<coefficients.size(); i++) {
-            const float r = emgoertzel_run(coefficients[i], &samples[0], samples.size());
-            results[i] = r;
+            const float s = emgoertzel_run(coefficients[i], samples, in_samples_n);
+            r(i) = s;
         }
      
-        return results;   
+        return ret;
     }
+
 };
 
-namespace py = pybind11;
+
 
 PYBIND11_MODULE(detectbirds, m) {
     m.doc() = "Detect birdsong in audio";

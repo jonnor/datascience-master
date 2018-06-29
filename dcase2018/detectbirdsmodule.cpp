@@ -5,18 +5,11 @@
 #include <pybind11/stl.h>
 #include <pybind11/numpy.h>
 
-// TODO: speedup by precalculating coefficients: sine,cosine,
-float goertzel(float* data, int n_samples, int frequency, int sr)
+
+float
+goertzel_apply(float* data, int n_samples, float sine, float cosine)
 {
-    const float scale = n_samples / 2.0;
-
-    float samples = (float) n_samples;
-    float k = (int) (0.5 + ((samples * frequency) / sr));
-    float omega = (2.0 * M_PI * k) / samples;
-    float sine = sin(omega);
-    float cosine = cos(omega);
-
-    float coeff = 2.0 * cosine;
+    const float coeff = 2.0 * cosine;
     float q0=0;
     float q1=0;
     float q2=0;
@@ -27,11 +20,25 @@ float goertzel(float* data, int n_samples, int frequency, int sr)
         q1 = q0;
     }
  
+    const float scale = n_samples / 2.0;
     const float real = (q1 - q2 * cosine) / scale;
     const float imag = (q2 * sine) / scale;
 
     float magnitude = sqrtf(real*real + imag*imag);
     return magnitude;
+}
+
+// TODO: speedup by precalculating coefficients: sine,cosine
+float
+goertzel(float* data, int n_samples, int frequency, int sr)
+{
+    float samples = (float)n_samples;
+    float k = (int)(0.5 + ((samples * frequency) / sr));
+    float omega = (2.0 * M_PI * k) / samples;
+    float sine = sin(omega);
+    float cosine = cos(omega);
+
+    return goertzel_apply(data, n_samples, sine, cosine);
 }
 
 float goertzel_py(std::vector<float> samples, int frequency, int sr) {

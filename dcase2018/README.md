@@ -13,8 +13,8 @@ with high enough classification rate to be useful as recording trigger
 
 First model
 
-* Implement cut-offs frequencies of 300 Hz and 15 kHz
 * Do exploratory analysis of features across a large range of files
+* Integrate meansub,medianfilt into classifier
 * Make baseline results match CASE16. AUC ROC 70%
 * Use BirdCLEF-Baseline feature extraction?
 * Try to replicate Stowell LifeCLEF 2014.
@@ -25,16 +25,17 @@ http://c4dm.eecs.qmul.ac.uk/events/badchallenge_results/
 
 Hardware constraints
 
+* Add tests/benchmark for Goertzel, see if possible to optimize
 * Setup Nordic NRF52 dev environment
 * Try to run ARM MFCC feature calculation on M4F
 * Try to run Random Forest classifier on M4F with (precalculated) MFCC features
 * Try to run Goertzel melspectrogram on M4F
 
-Improve perf
+Improve model perf
 
-* Feature normalization. Normalize spectrogram by removing mean, or dividing by RMS
+* Normalize spectrogram by dividing by RMS?
 * Try a pre-emphasis filter?
-* Try to use per-channel energy normalization (PCEN)
+* Try to use per-channel energy normalization (PCEN) after mean subtraction
 * Try OSKmeans feature learning.
 
 Gaussian Mixture Models

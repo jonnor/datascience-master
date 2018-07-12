@@ -1,2 +1,4 @@
 data/
 detectbirds
+build/
+tmp/

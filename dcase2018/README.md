@@ -11,15 +11,6 @@ with high enough classification rate to be useful as recording trigger
 
 ## TODO
 
-ML model
-
-* Try to use mels as input instead of MFCC
-* Store summarized features. MFCC/mel. mean,std,min,max.
-* Do exploratory analysis of features across a large range of files
-* Test on multiple datasets
-* Setup 3-way cross-validation
-* Make initial submission
-
 Run on hardware
 
 * Run C code classifier on Py features
@@ -27,13 +18,15 @@ Run on hardware
 * Add tests/benchmark for Goertzel, see if possible to optimize
 * Run C code feature extractor on audio frames
 * Setup Nordic NRF52 dev environment
-* Try to run ARM MFCC feature calculation on M4F
-* Try to run Random Forest classifier on M4F with (precalculated) MFCC features
+* Try to run ARM Mel feature calculation on M4F
+* Try to run Random Forest classifier on M4F with (precalculated) Mel features
 * Try to run Goertzel melspectrogram on M4F
 
 Improve model perf
 
+* Setup 3-way cross-validation
 * Make tools for getting misclassified results, visualize/playback
+* Do exploratory analysis of features across a large range of files
 * Try GBM/xgboost instead of RandomForestClassifier
 * Try OSKmeans feature learning.
 * Try to use per-channel energy normalization (PCEN) after mean subtraction

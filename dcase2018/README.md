@@ -11,36 +11,41 @@ with high enough classification rate to be useful as recording trigger
 
 ## TODO
 
-First model
+ML model
 
+* Try to use mels as input instead of MFCC
+* Store summarized features. MFCC/mel. mean,std,min,max.
 * Do exploratory analysis of features across a large range of files
-* Integrate meansub,medianfilt into classifier
-* Make baseline results match CASE16. AUC ROC 70%
-* Use BirdCLEF-Baseline feature extraction?
+* Test on multiple datasets
+* Setup 3-way cross-validation
+* Make initial submission
+
+Improve model perf
+
+* Try OSKmeans feature learning.
+* Try to use per-channel energy normalization (PCEN) after mean subtraction
+* Try a pre-emphasis filter?
+
+Replication
+
+* Try to replicate CASE16 baseline. AUC ROC 70%
 * Try to replicate Stowell LifeCLEF 2014.
 Without feature learning. melspec-ms/melspec-maxp, AUC ROC 80-90%
 * Try replicate iitMandi BAD2016. AUC ROC 77%
 MFCC+GMM+SVMPSK, with cepstral normalization and short-time feature warping
 http://c4dm.eecs.qmul.ac.uk/events/badchallenge_results/
 
-Hardware constraints
+Run on hardware
 
+* Run C code classifier on Py features
+* Run C code feature summarizer on MFCC/mel frames
 * Add tests/benchmark for Goertzel, see if possible to optimize
+* Run C code feature extractor on audio frames
 * Setup Nordic NRF52 dev environment
 * Try to run ARM MFCC feature calculation on M4F
 * Try to run Random Forest classifier on M4F with (precalculated) MFCC features
 * Try to run Goertzel melspectrogram on M4F
 
-Improve model perf
-
-* Normalize spectrogram by dividing by RMS?
-* Try a pre-emphasis filter?
-* Try to use per-channel energy normalization (PCEN) after mean subtraction
-* Try OSKmeans feature learning.
-
-Gaussian Mixture Models
-
-* Understand how GMMs work, how to implement at predict time
 
 ## Notes
 

@@ -75,7 +75,7 @@ def main():
     limit = int(sys.argv[2]) if len(sys.argv) > 2 else None
     offset = int(sys.argv[3]) if len(sys.argv) > 3 else None
 
-    out = inp.replace('.zip', '.melmax.csv.zip')
+    out = inp.replace('.zip', '.melmax.csv')
     
 
     print('opening', inp, out)

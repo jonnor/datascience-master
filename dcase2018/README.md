@@ -20,21 +20,6 @@ ML model
 * Setup 3-way cross-validation
 * Make initial submission
 
-Improve model perf
-
-* Try OSKmeans feature learning.
-* Try to use per-channel energy normalization (PCEN) after mean subtraction
-* Try a pre-emphasis filter?
-
-Replication
-
-* Try to replicate CASE16 baseline. AUC ROC 70%
-* Try to replicate Stowell LifeCLEF 2014.
-Without feature learning. melspec-ms/melspec-maxp, AUC ROC 80-90%
-* Try replicate iitMandi BAD2016. AUC ROC 77%
-MFCC+GMM+SVMPSK, with cepstral normalization and short-time feature warping
-http://c4dm.eecs.qmul.ac.uk/events/badchallenge_results/
-
 Run on hardware
 
 * Run C code classifier on Py features
@@ -45,6 +30,23 @@ Run on hardware
 * Try to run ARM MFCC feature calculation on M4F
 * Try to run Random Forest classifier on M4F with (precalculated) MFCC features
 * Try to run Goertzel melspectrogram on M4F
+
+Improve model perf
+
+* Make tools for getting misclassified results, visualize/playback
+* Try GBM/xgboost instead of RandomForestClassifier
+* Try OSKmeans feature learning.
+* Try to use per-channel energy normalization (PCEN) after mean subtraction
+* Try a pre-emphasis filter?
+
+Replication
+
+* Try to replicate CASE16 baseline. AUC ROC 70%
+* Try to replicate Stowell LifeCLEF 2014.
+Without feature learning. melspec-maxp, AUC ROC above 80-90% (some datasets)
+* Try replicate iitMandi BAD2016. AUC ROC 77%
+MFCC+GMM+SVMPSK, with cepstral normalization and short-time feature warping
+http://c4dm.eecs.qmul.ac.uk/events/badchallenge_results/
 
 
 ## Notes

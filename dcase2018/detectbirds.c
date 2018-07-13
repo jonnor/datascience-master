@@ -1,10 +1,16 @@
 
+#include <stdio.h>
+
 #include "detectbirds.h"
 
 #include <assert.h>
-#include <stdio.h>
+
 
 #define ASSERT_EQUAL(a, b) if (a != b) { fprintf(stderr, "FAIL: %f != %f\n", a, b); assert(a == b); }
+
+#define ASSERT_ALMOST_EQUAL(a, b) \
+    const bool _a_cmp = fabs(a - b) < 0.0001; \
+    if (!_a_cmp) { fprintf(stderr, "FAIL: %f != %f\n", a, b); assert(_a_cmp); }
 
 #define ASSERT_NOERROR(x) if (x != 0) { fprintf(stderr, "ERROR: %d\n", x); } assert(x == 0);
 
@@ -41,8 +47,29 @@ test_emvector_set_mid() {
 }
 
 void
+test_emaudio_mel_hz_roundtrip() {
+
+    const float in = 133.0; 
+    const float m = emaudio_mels_from_hz(in);
+    const float out = emaudio_mels_to_hz(m);
+
+    ASSERT_ALMOST_EQUAL(in, out);
+}
+
+void
+test_emaudio_mel_bin() {
+    const EmAudioMel params = { n_mels:32, fmin:0, fmax:10025, n_fft:1024, samplerate:20050 };
+
+    const int low = mel_bin(params, 0);
+    const int high = mel_bin(params, params.n_mels+1);
+
+    ASSERT_EQUAL(low, 0);
+    ASSERT_EQUAL(high, params.n_fft/2);
+}
+
+void
 test_emaudio_mels() {
-    const EmAudioMel params = { n_mels:32, fmin:500, fmax:800, n_fft:1024, samplerate:20050 };
+    const EmAudioMel params = { n_mels:32, fmin:0, fmax:20050/2, n_fft:1024, samplerate:20050 };
     float mels_data[params.n_mels];
     float spec_data[params.n_fft];
 
@@ -63,6 +90,9 @@ test_emvector() {
 
 void
 test_emaudio() {
+    test_emaudio_mel_hz_roundtrip();
+    test_emaudio_mel_bin();
+
     test_emaudio_mels();
     printf("emaudio: PASSED\n");
 }

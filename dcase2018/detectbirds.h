@@ -13,6 +13,10 @@ extern "C" {
 
 #include "fft.h"
 
+#ifndef M_PI
+#define M_PI 3.14159265358979323846
+#endif
+
 // FIXME: actually include emtrees
 //#include <emtrees.h>
 typedef struct {} EmtreesModel;
@@ -174,15 +178,35 @@ emaudio_rfft(EmVector audio, EmVector bins) {
     return 0;
 }
 
+// Power spectrogram
+int
+emaudio_power_spectrogram(EmVector rfft, EmVector out, int n_fft) {
+    const int spec_length = 1+n_fft/2;
+
+    if (rfft.length < spec_length) {
+        return -1;
+    }
+    if (out.length != spec_length) {
+        return -2;
+    }
+
+    const float scale = 1.0f/n_fft;
+    for (int i=0; i<spec_length; i++) {
+        const float a = fabs(rfft.data[i]);
+        out.data[i] = scale * powf(a, 2);
+    }
+    return 0;
+}
+
 // Simple formula, from Hidden Markov Toolkit
 // in librosa have to use htk=True to match
 float
 emaudio_mels_from_hz(float hz) {
-    return 2595.0 * log10(1.0 + hz / 700.0);
+    return 2595.0 * log10(1.0 + (hz / 700.0));
 }
 float
 emaudio_mels_to_hz(float mels) {
-    return 700.0 * powf(10.0, (mels / 2595.0) - 1.0);
+    return 700.0 * (powf(10.0, mels/2595.0) - 1.0);
 }
 
 
@@ -201,11 +225,12 @@ mel_bin(EmAudioMel params, int n) {
     // Filters are spaced evenly in mel space
     const float melmin = emaudio_mels_from_hz(params.fmin);
     const float melmax = emaudio_mels_from_hz(params.fmax);
-    const float melstep = (melmax-melmin)/params.n_mels;
+    const float melstep = (melmax-melmin)/(params.n_mels+1);
 
-    const float mel = melmin + ((n-1)/(float)params.n_mels+2) * melstep;
+    const float mel = melmin + (n * melstep);
     const float hz = emaudio_mels_to_hz(mel);
-    const int bin = floor((params.n_fft+1)*hz/params.samplerate);
+    const int bin = floor((params.n_fft+1)*(hz/params.samplerate));
+    fprintf(stderr, "mel=%f, hz=%f\n", mel, hz, bin);
     return bin;
 }
 
@@ -214,7 +239,8 @@ mel_bin(EmAudioMel params, int n) {
 int
 emaudio_melspec(EmAudioMel mel, EmVector spec, EmVector mels) {
 
-    if (mel.n_fft != spec.length) {
+    const int max_bin = 1+mel.n_fft/2;
+    if (max_bin > spec.length) {
         return -1;
     }
     if (mel.n_mels != mels.length) {
@@ -228,6 +254,16 @@ emaudio_melspec(EmAudioMel mel, EmVector spec, EmVector mels) {
         const int center = mel_bin(mel, m);
         const int right = mel_bin(mel, m+1);
     
+        fprintf(stderr, "m=%d left=%d, center=%d, right=%d \n",
+                        m, left, center, right);
+
+        if (left < 0) {
+            return -3;
+        }
+        if (right > max_bin) {
+            return -4;
+        } 
+
         float val = 0.0f;
         for (int k=left; k<center; k++) {
             const float weight = (float)(k - left)/(center - left);
@@ -241,6 +277,20 @@ emaudio_melspec(EmAudioMel mel, EmVector spec, EmVector mels) {
         mels.data[m-1] = val;
     }
 
+    fprintf(stderr, "n_mels=%d, n_fft=%d, fmin=%f, fmax=%f, sr=%d \n",
+        mel.n_mels, mel.n_fft, mel.fmin, mel.fmax, mel.samplerate);
+
+    return 0;
+}
+
+int
+emaudio_hann_apply(EmVector out) {
+
+    const long len = out.length;
+    for (int i=0; i<len; i++) {
+        float m = 0.5 * (1 - cos(2*M_PI*i/(len-1)));
+        out.data[i] = m * out.data[i];
+    }
     return 0;
 }
 

@@ -174,9 +174,74 @@ emaudio_rfft(EmVector audio, EmVector bins) {
     return 0;
 }
 
-void
-emaudio_melspec(EmVector audio, EmVector mels) {
-    // FIXME: implement triangular filters
+// Simple formula, from Hidden Markov Toolkit
+// in librosa have to use htk=True to match
+float
+emaudio_mels_from_hz(float hz) {
+    return 2595.0 * log10(1.0 + hz / 700.0);
+}
+float
+emaudio_mels_to_hz(float mels) {
+    return 700.0 * powf(10.0, (mels / 2595.0) - 1.0);
+}
+
+
+typedef struct _EmAudioMel {
+    int n_mels;
+    float fmin;
+    float fmax;
+    int n_fft;
+    int samplerate;
+} EmAudioMel;
+
+
+static int
+mel_bin(EmAudioMel params, int n) {
+
+    // Filters are spaced evenly in mel space
+    const float melmin = emaudio_mels_from_hz(params.fmin);
+    const float melmax = emaudio_mels_from_hz(params.fmax);
+    const float melstep = (melmax-melmin)/params.n_mels;
+
+    const float mel = melmin + ((n-1)/(float)params.n_mels+2) * melstep;
+    const float hz = emaudio_mels_to_hz(mel);
+    const int bin = floor((params.n_fft+1)*hz/params.samplerate);
+    return bin;
+}
+
+// http://practicalcryptography.com/miscellaneous/machine-learning/guide-mel-frequency-cepstral-coefficients-mfccs/
+// https://haythamfayek.com/2016/04/21/speech-processing-for-machine-learning.html
+int
+emaudio_melspec(EmAudioMel mel, EmVector spec, EmVector mels) {
+
+    if (mel.n_fft != spec.length) {
+        return -1;
+    }
+    if (mel.n_mels != mels.length) {
+        return -2;
+    }
+
+    // Note: no normalization
+
+    for (int m=1; m<mel.n_mels+1; m++) {
+        const int left = mel_bin(mel, m-1);
+        const int center = mel_bin(mel, m);
+        const int right = mel_bin(mel, m+1);
+    
+        float val = 0.0f;
+        for (int k=left; k<center; k++) {
+            const float weight = (float)(k - left)/(center - left);
+            val += spec.data[k] * weight;
+        }
+        for (int k=center; k<right; k++) {
+            const float weight = (float)(right - k)/(right - center);
+            val += spec.data[k] * weight;
+        }
+
+        mels.data[m-1] = val;
+    }
+
+    return 0;
 }
 
 

@@ -41,11 +41,30 @@ test_emvector_set_mid() {
 }
 
 void
+test_emaudio_mels() {
+    const EmAudioMel params = { n_mels:32, fmin:500, fmax:800, n_fft:1024, samplerate:20050 };
+    float mels_data[params.n_mels];
+    float spec_data[params.n_fft];
+
+    EmVector spec = { spec_data, params.n_fft };
+    EmVector mels = { mels_data, params.n_mels };
+
+    ASSERT_NOERROR(emaudio_melspec(params, spec, mels));
+}
+
+void
 test_emvector() {
 
     test_emvector_nop();
     test_emvector_shift_down();
     test_emvector_set_mid();
+    printf("emvector: PASSED\n");
+}
+
+void
+test_emaudio() {
+    test_emaudio_mels();
+    printf("emaudio: PASSED\n");
 }
 
 // main
@@ -69,6 +88,7 @@ void main(void) {
     emaudio_bufferer_reset(&bufferer);
 
     test_emvector();
+    test_emaudio();
 
     const int features_length = N_FRAMES*FRAME_FEATURES;
     float features_data[features_length];

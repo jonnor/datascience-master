@@ -230,7 +230,6 @@ mel_bin(EmAudioMel params, int n) {
     const float mel = melmin + (n * melstep);
     const float hz = emaudio_mels_to_hz(mel);
     const int bin = floor((params.n_fft+1)*(hz/params.samplerate));
-    fprintf(stderr, "mel=%f, hz=%f\n", mel, hz, bin);
     return bin;
 }
 
@@ -254,9 +253,6 @@ emaudio_melspec(EmAudioMel mel, EmVector spec, EmVector mels) {
         const int center = mel_bin(mel, m);
         const int right = mel_bin(mel, m+1);
     
-        fprintf(stderr, "m=%d left=%d, center=%d, right=%d \n",
-                        m, left, center, right);
-
         if (left < 0) {
             return -3;
         }
@@ -276,9 +272,6 @@ emaudio_melspec(EmAudioMel mel, EmVector spec, EmVector mels) {
 
         mels.data[m-1] = val;
     }
-
-    fprintf(stderr, "n_mels=%d, n_fft=%d, fmin=%f, fmax=%f, sr=%d \n",
-        mel.n_mels, mel.n_fft, mel.fmin, mel.fmax, mel.samplerate);
 
     return 0;
 }

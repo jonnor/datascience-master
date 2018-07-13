@@ -14,21 +14,15 @@ with high enough classification rate to be useful as recording trigger
 Run on hardware
 
 * Run C code classifier on Py features
-* Run C code feature summarizer on MFCC/mel frames
-* Add tests/benchmark for Goertzel, see if possible to optimize
-* Run C code feature extractor on audio frames
-Implement spectogram, probably using Cooley Tukey radix-2 DIT FFT
-https://en.wikipedia.org/wiki/Cooley%E2%80%93Tukey_FFT_algorithm
-https://www.nayuki.io/res/free-small-fft-in-multiple-languages/fft.c
-https://rosettacode.org/wiki/Fast_Fourier_transform#C
+* Implement spectrogram in C. framing, windowing, SFT, abs, pow
+* Implement mel filtering in C. triangular filters
+* Implement feature summarizer in C. Mean subtract, max
 * Setup Nordic NRF52 dev environment
-* Try to run ARM Mel feature calculation on M4F
-* Try to run Random Forest classifier on M4F with (precalculated) Mel features
-* Try to run Goertzel melspectrogram on M4F
+* Try to run emtrees.RandomForestClassifier on M4F. Precalculated melspec-maxp features
+* Try to run feature calculation on M4F
 
 Improve model perf
 
-* Submit GBM results
 * Find why performance drops so much on compete set
 * Setup 3-way cross-validation
 * Make tools for getting misclassified results, visualize/playback
@@ -46,6 +40,9 @@ Without feature learning. melspec-maxp, AUC ROC above 80-90% (some datasets)
 MFCC+GMM+SVMPSK, with cepstral normalization and short-time feature warping
 http://c4dm.eecs.qmul.ac.uk/events/badchallenge_results/
 
+Later
+
+* Add tests/benchmark for Goertzel, see if possible to optimize
 
 ## Notes
 

@@ -17,6 +17,10 @@ Run on hardware
 * Run C code feature summarizer on MFCC/mel frames
 * Add tests/benchmark for Goertzel, see if possible to optimize
 * Run C code feature extractor on audio frames
+Implement spectogram, probably using Cooley Tukey radix-2 DIT FFT
+https://en.wikipedia.org/wiki/Cooley%E2%80%93Tukey_FFT_algorithm
+https://www.nayuki.io/res/free-small-fft-in-multiple-languages/fft.c
+https://rosettacode.org/wiki/Fast_Fourier_transform#C
 * Setup Nordic NRF52 dev environment
 * Try to run ARM Mel feature calculation on M4F
 * Try to run Random Forest classifier on M4F with (precalculated) Mel features
@@ -24,10 +28,11 @@ Run on hardware
 
 Improve model perf
 
+* Submit GBM results
+* Find why performance drops so much on compete set
 * Setup 3-way cross-validation
 * Make tools for getting misclassified results, visualize/playback
 * Do exploratory analysis of features across a large range of files
-* Try GBM/xgboost instead of RandomForestClassifier
 * Try OSKmeans feature learning.
 * Try to use per-channel energy normalization (PCEN) after mean subtraction
 * Try a pre-emphasis filter?
@@ -266,7 +271,7 @@ November 2017.
 2018 BirdCLEF Baseline System. [Paper](https://arxiv.org/pdf/1804.07177.pdf).
 [Github](https://github.com/kahst/BirdCLEF-Baseline)
 Feature extraction: https://github.com/kahst/BirdCLEF-Baseline/blob/master/utils/audio.py#L115
-Use a high-pass and a low-pass filter with cut-off frequencies of 300 Hz and 15 kHz a
+Use a high-pass and a low-pass filter with cut-off frequencies of 300 Hz and 15 kHz
 Uses a simple SNR estimation to not train on samples with bad signal2noise ratio.
 Based on median filtering and morphological operations on spectogram.
 Very low score => unlikely to contain any birds.

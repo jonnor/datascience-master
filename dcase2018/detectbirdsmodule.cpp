@@ -56,6 +56,33 @@ public:
 
 
 
+py::array_t<float>
+rfft_py(py::array_t<float, py::array::c_style | py::array::forcecast> in) {
+    if (in.ndim() != 1) {
+        throw std::runtime_error("SFT input must have dimensions 1");
+    }
+
+    if (in.shape(0) != EMAUDIO_FFT_LENGTH) {
+        throw std::runtime_error("SFT must have length EMAUDIO_FFT_LENGTH");
+    }
+
+    auto ret = py::array_t<float>(in.shape(0));
+
+    float *samples = (float *)in.data();
+    float *retdata = (float *)ret.data();
+
+    EmVector inv = { samples, EMAUDIO_FFT_LENGTH };
+    EmVector out = { retdata, EMAUDIO_FFT_LENGTH };
+
+    const int status = emaudio_rfft(inv, out);
+ 
+    if (status != 0) {
+        throw std::runtime_error("SFT returned error");
+    }
+
+    return ret;
+}
+
 PYBIND11_MODULE(detectbirds, m) {
     m.doc() = "Detect birdsong in audio";
 
@@ -63,6 +90,6 @@ PYBIND11_MODULE(detectbirds, m) {
         .def(py::init< std::vector<float>, int, float>())
         .def("process", &GoertzelBank::process);
 
-   // m.def("goertzel", goertzel_py);
+    m.def("rfft", rfft_py);
 }
 

@@ -1,8 +1,17 @@
 
+#ifndef DETECTBIRDS_H
+#define DETECTBIRDS_H
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include <stdint.h>
 #include <stddef.h>
 #include <stdbool.h>
 #include <stdlib.h>
+
+#include "fft.h"
 
 // FIXME: actually include emtrees
 //#include <emtrees.h>
@@ -128,20 +137,39 @@ emvector_set(EmVector dest, EmVector source, int location) {
 }
 
 
-void
-emaudio_sft(EmVector audio, EmVector bins) {
+#define EMAUDIO_FFT_LENGTH 1024
+int
+emaudio_rfft(EmVector audio, EmVector bins) {  
+    double real[EMAUDIO_FFT_LENGTH];
+    double imag[EMAUDIO_FFT_LENGTH];
 
+    if (audio.length != EMAUDIO_FFT_LENGTH) {
+        return -1;
+    }
+    if (bins.length != EMAUDIO_FFT_LENGTH) {
+        return -2;
+    }
+
+    for (int i=0; i<EMAUDIO_FFT_LENGTH; i++) {
+        real[i] = audio.data[i];
+        imag[i] = 0.0;
+    }
+
+    Fft_transformRadix2(real, imag, EMAUDIO_FFT_LENGTH);
+
+    for (int i=0; i<EMAUDIO_FFT_LENGTH; i++) {
+        bins.data[i] = real[i];
+    }
+
+    return 0;
 }
 
 void
 emaudio_melspec(EmVector audio, EmVector mels) {
-    // FIXME: implement
+    // FIXME: implement triangular filters
 }
 
-void
-emaudio_pcen(EmVector vector) {
-    // FIXME: implement
-}
+
 
 // birddetector.h
 typedef struct _BirdDetector {
@@ -160,9 +188,8 @@ bool birddetector_classify_frame(BirdDetector *self, EmVector audio) {
 
     //emaudio_sft(audio, bins);
     //emaudio_melspec(bins, mels);
-    emaudio_pcen(mels);
 
-    // FIXME: calculate new features. Are they aggregated across frames?
+    // FIXME: summarize frames into features
 
     //emaudio_shift_features(features, frame_features);
 
@@ -170,4 +197,9 @@ bool birddetector_classify_frame(BirdDetector *self, EmVector audio) {
     return cl == 1;
 }
 
+#ifdef __cplusplus
+} // extern "C"
+#endif
+
+#endif // DETECTBIRDS_H
 

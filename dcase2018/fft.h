@@ -27,6 +27,10 @@
 #include <stdlib.h>
 #include <string.h>
 
+#ifndef M_PI
+#define M_PI 3.14159265358979323846
+#endif
+
 static size_t reverse_bits(size_t x, int n) {
 	size_t result = 0;
 	for (int i = 0; i < n; i++, x >>= 1)
@@ -34,7 +38,28 @@ static size_t reverse_bits(size_t x, int n) {
 	return result;
 }
 
-bool Fft_transformRadix2(double real[], double imag[], size_t n) {
+typedef struct _FFTTable {
+    size_t length; // (n/2)
+    double *sin;    
+    double *cos;
+} FFTTable;
+
+
+bool
+fft_table_fill(FFTTable table, size_t n) {
+    if (table.length != n/2) {
+        return false;
+    }
+
+	// Trignometric tables
+	for (size_t i = 0; i < n / 2; i++) {
+		table.cos[i] = cos(2 * M_PI * i / n);
+		table.sin[i] = sin(2 * M_PI * i / n);
+	}
+    return true;
+}
+
+bool fft_table_transform(FFTTable table, double real[], double imag[], size_t n) {
 	// Length variables
 	bool status = false;
 	int levels = 0;  // Compute levels = floor(log2(n))
@@ -42,20 +67,11 @@ bool Fft_transformRadix2(double real[], double imag[], size_t n) {
 		levels++;
 	if ((size_t)1U << levels != n)
 		return false;  // n is not a power of 2
-	
-	// Trignometric tables
-	if (SIZE_MAX / sizeof(double) < n / 2)
-		return false;
-	size_t size = (n / 2) * sizeof(double);
-	double *cos_table = (double *)malloc(size);
-	double *sin_table = (double *)malloc(size);
-	if (cos_table == NULL || sin_table == NULL)
-		goto cleanup;
-	for (size_t i = 0; i < n / 2; i++) {
-		cos_table[i] = cos(2 * M_PI * i / n);
-		sin_table[i] = sin(2 * M_PI * i / n);
-	}
-	
+
+    if (table.length != n/2) {
+        return false; // precomputed table has wrong length
+    }
+
 	// Bit-reversed addressing permutation
 	for (size_t i = 0; i < n; i++) {
 		size_t j = reverse_bits(i, levels);
@@ -76,8 +92,8 @@ bool Fft_transformRadix2(double real[], double imag[], size_t n) {
 		for (size_t i = 0; i < n; i += size) {
 			for (size_t j = i, k = 0; j < i + halfsize; j++, k += tablestep) {
 				size_t l = j + halfsize;
-				double tpre =  real[l] * cos_table[k] + imag[l] * sin_table[k];
-				double tpim = -real[l] * sin_table[k] + imag[l] * cos_table[k];
+				double tpre =  real[l] * table.cos[k] + imag[l] * table.sin[k];
+				double tpim = -real[l] * table.sin[k] + imag[l] * table.cos[k];
 				real[l] = real[j] - tpre;
 				imag[l] = imag[j] - tpim;
 				real[j] += tpre;
@@ -86,13 +102,8 @@ bool Fft_transformRadix2(double real[], double imag[], size_t n) {
 		}
 		if (size == n)  // Prevent overflow in 'size *= 2'
 			break;
-	}
-	status = true;
-	
-cleanup:
-	free(cos_table);
-	free(sin_table);
-	return status;
+	}	
+	return true;
 }
 
 

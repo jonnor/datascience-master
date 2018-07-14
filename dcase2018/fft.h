@@ -107,4 +107,49 @@ bool fft_table_transform(FFTTable table, double real[], double imag[], size_t n)
 	return true;
 }
 
+// Without precomputed table
+bool fft_transform(double real[], double imag[], size_t n) {
+	// Length variables
+	int levels = 0;  // Compute levels = floor(log2(n))
+	for (size_t temp = n; temp > 1U; temp >>= 1)
+		levels++;
+	if ((size_t)1U << levels != n)
+		return false;  // n is not a power of 2
+
+	// Bit-reversed addressing permutation
+	for (size_t i = 0; i < n; i++) {
+		size_t j = reverse_bits(i, levels);
+		if (j > i) {
+			double temp = real[i];
+			real[i] = real[j];
+			real[j] = temp;
+			temp = imag[i];
+			imag[i] = imag[j];
+			imag[j] = temp;
+		}
+	}
+	
+	// Cooley-Tukey decimation-in-time radix-2 FFT
+	for (size_t size = 2; size <= n; size *= 2) {
+		size_t halfsize = size / 2;
+		size_t tablestep = n / size;
+		for (size_t i = 0; i < n; i += size) {
+			for (size_t j = i, k = 0; j < i + halfsize; j++, k += tablestep) {
+				size_t l = j + halfsize;
+                double c = cos(2 * M_PI * k / n);
+                double s = sin(2 * M_PI * k / n);
+				double tpre =  real[l] * c + imag[l] * s;
+				double tpim = -real[l] * s + imag[l] * c;
+				real[l] = real[j] - tpre;
+				imag[l] = imag[j] - tpim;
+				real[j] += tpre;
+				imag[j] += tpim;
+			}
+		}
+		if (size == n)  // Prevent overflow in 'size *= 2'
+			break;
+	}	
+	return true;
+}
+
 

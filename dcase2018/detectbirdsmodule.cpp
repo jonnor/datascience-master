@@ -68,7 +68,6 @@ rfft_py(py::array_t<float, py::array::c_style | py::array::forcecast> in) {
     float *samples = (float *)in.data();
     float *retdata = (float *)ret.data();
 
-    // FIXME: change to floats, pass in from outside
 	float fft_cos[FFT_TABLE_SIZE];
 	float fft_sin[FFT_TABLE_SIZE];
     FFTTable fft = { FFT_TABLE_SIZE, fft_cos, fft_sin };
@@ -127,14 +126,19 @@ spectrogram_frame(py::array_t<float, py::array::c_style | py::array::forcecast> 
     emaudio_hann_apply(frame); // XXX: modifies input
 
     auto temp_py = py::array_t<float>(EMAUDIO_FFT_LENGTH);
+	float fft_cos[FFT_TABLE_SIZE];
+	float fft_sin[FFT_TABLE_SIZE];
+    FFTTable fft = { FFT_TABLE_SIZE, fft_cos, fft_sin };
+    fft_table_fill(fft, EMAUDIO_FFT_LENGTH);
+
     EmVector fft_out = { (float *)temp_py.data(), EMAUDIO_FFT_LENGTH };
-    //const int rftt_status = emaudio_rfft(frame, fft_out);
+    const int rftt_status = emaudio_rfft(fft, frame, fft_out);
 
-    //if (rftt_status != 0) {
-    //    throw std::runtime_error("FFT returned error");
-    //}
+    if (rftt_status != 0) {
+        throw std::runtime_error("FFT returned error");
+    }
 
-    //emvector_set(frame, fft_out, 0);
+    emvector_set(frame, fft_out, 0);
 
     const int spec_length = 1+n_fft/2;
     auto ret = py::array_t<float>(spec_length);
@@ -148,6 +152,7 @@ spectrogram_frame(py::array_t<float, py::array::c_style | py::array::forcecast> 
 
     return ret;
 }
+
 
 py::array_t<float>
 mel_py(py::array_t<float, py::array::c_style | py::array::forcecast> in,

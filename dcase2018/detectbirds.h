@@ -145,17 +145,11 @@ emvector_set(EmVector dest, EmVector source, int location) {
 #define FFT_TABLE_SIZE EMAUDIO_FFT_LENGTH/2
 
 int
-emaudio_rfft(EmVector audio, EmVector bins) {  
+emaudio_rfft(FFTTable fft, EmVector audio, EmVector bins) {  
 
     // FIXME: change to floats
     double real[EMAUDIO_FFT_LENGTH];
     double imag[EMAUDIO_FFT_LENGTH];
-
-    // FIXME: change to floats, pass in from outside
-	double fft_cos[FFT_TABLE_SIZE];
-	double fft_sin[FFT_TABLE_SIZE];
-    FFTTable fft = { FFT_TABLE_SIZE, fft_cos, fft_sin };
-    fft_table_fill(fft, EMAUDIO_FFT_LENGTH);
 
     if (audio.length != EMAUDIO_FFT_LENGTH) {
         return -1;

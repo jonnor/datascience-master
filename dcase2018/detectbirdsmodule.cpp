@@ -53,7 +53,6 @@ public:
 };
 
 
-
 py::array_t<float>
 rfft_py(py::array_t<float, py::array::c_style | py::array::forcecast> in) {
     if (in.ndim() != 1) {
@@ -69,10 +68,16 @@ rfft_py(py::array_t<float, py::array::c_style | py::array::forcecast> in) {
     float *samples = (float *)in.data();
     float *retdata = (float *)ret.data();
 
+    // FIXME: change to floats, pass in from outside
+	float fft_cos[FFT_TABLE_SIZE];
+	float fft_sin[FFT_TABLE_SIZE];
+    FFTTable fft = { FFT_TABLE_SIZE, fft_cos, fft_sin };
+    fft_table_fill(fft, EMAUDIO_FFT_LENGTH);
+
     EmVector inv = { samples, EMAUDIO_FFT_LENGTH };
     EmVector out = { retdata, EMAUDIO_FFT_LENGTH };
 
-    const int status = emaudio_rfft(inv, out);
+    const int status = emaudio_rfft(fft, inv, out);
  
     if (status != 0) {
         throw std::runtime_error("SFT returned error");
@@ -123,11 +128,11 @@ spectrogram_frame(py::array_t<float, py::array::c_style | py::array::forcecast> 
 
     auto temp_py = py::array_t<float>(EMAUDIO_FFT_LENGTH);
     EmVector fft_out = { (float *)temp_py.data(), EMAUDIO_FFT_LENGTH };
-    const int rftt_status = emaudio_rfft(frame, fft_out);
+    //const int rftt_status = emaudio_rfft(frame, fft_out);
 
-    if (rftt_status != 0) {
-        throw std::runtime_error("FFT returned error");
-    }
+    //if (rftt_status != 0) {
+    //    throw std::runtime_error("FFT returned error");
+    //}
 
     //emvector_set(frame, fft_out, 0);
 
@@ -185,4 +190,5 @@ PYBIND11_MODULE(detectbirds, m) {
     m.def("spectrogram_frame", spectrogram_frame);
     m.def("melfilter", mel_py);
 }
+
 

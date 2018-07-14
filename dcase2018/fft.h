@@ -1,6 +1,8 @@
 /* 
+ * Copyright (c) 2018 Jon Nordby (MIT License)
+ * Modified to take precomputed table from outside, eliminating dynamic allocation
+ *
  * Free FFT and convolution (C)
- * 
  * Copyright (c) 2017 Project Nayuki. (MIT License)
  * https://www.nayuki.io/page/free-small-fft-in-multiple-languages
  * 
@@ -40,8 +42,8 @@ static size_t reverse_bits(size_t x, int n) {
 
 typedef struct _FFTTable {
     size_t length; // (n/2)
-    double *sin;    
-    double *cos;
+    float *sin;    
+    float *cos;
 } FFTTable;
 
 
@@ -61,7 +63,6 @@ fft_table_fill(FFTTable table, size_t n) {
 
 bool fft_table_transform(FFTTable table, double real[], double imag[], size_t n) {
 	// Length variables
-	bool status = false;
 	int levels = 0;  // Compute levels = floor(log2(n))
 	for (size_t temp = n; temp > 1U; temp >>= 1)
 		levels++;

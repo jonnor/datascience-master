@@ -99,12 +99,10 @@ test_emaudio() {
 
 // main
 
-#define AUDIO_FRAME_LENGTH 2048
-float audio1[AUDIO_FRAME_LENGTH];
-float audio2[AUDIO_FRAME_LENGTH];
-
-const int N_FRAMES = 5;
-const int FRAME_FEATURES = 2; // mean,std
+// Used by interrupts and main
+#define AUDIO_HOP_LENGTH 512
+float record1[AUDIO_HOP_LENGTH];
+float record2[AUDIO_HOP_LENGTH];
 
 EmAudioBufferer bufferer;
 
@@ -113,23 +111,45 @@ void adc_interrupt() {
     emaudio_bufferer_add(&bufferer, sample);
 }
 
+// Only used by main
+#define AUDIO_WINDOW_LENGTH 1024
+#define AUDIO_SAMPLE_RATE 20050
+float input_data[AUDIO_WINDOW_LENGTH];
+float temp1_data[AUDIO_WINDOW_LENGTH];
+float temp2_data[AUDIO_WINDOW_LENGTH];
+
 void main(void) {
-    bufferer = (EmAudioBufferer){ AUDIO_FRAME_LENGTH, audio1, audio2, NULL, NULL, 0 };
+    bufferer = (EmAudioBufferer){ AUDIO_HOP_LENGTH, record1, record2, NULL, NULL, 0 };
     emaudio_bufferer_reset(&bufferer);
 
     test_emvector();
     test_emaudio();
 
-    const int features_length = N_FRAMES*FRAME_FEATURES;
+    const EmAudioMel params = {
+        n_mels: 64,
+        fmin:0,
+        fmax:8000,
+        n_fft:AUDIO_WINDOW_LENGTH,
+        samplerate:AUDIO_SAMPLE_RATE,
+    };
+
+    const int features_length = params.n_mels; // only 1 feature per mel band right now
     float features_data[features_length];
-    EmVector features = { features_data, features_length };
-    BirdDetector detector = { N_FRAMES, features, birddetect_model };
+
+    BirdDetector detector = {
+        audio: (EmVector){ input_data, AUDIO_WINDOW_LENGTH },
+        temp1: (EmVector){ temp1_data, AUDIO_WINDOW_LENGTH },
+        temp2: (EmVector){ temp2_data, AUDIO_WINDOW_LENGTH },
+        features: (EmVector){ features_data, features_length },
+        mel_filter: params,
+        model: birddetect_model,
+    };
 
     while (true) {
 
         if (bufferer.read_buffer) {
             EmVector frame = { bufferer.read_buffer, bufferer.buffer_length };
-            const bool has_bird = birddetector_classify_frame(&detector, frame);
+            birddetector_push_frame(&detector, frame);
             bufferer.read_buffer = NULL; // done processing
         }
     }

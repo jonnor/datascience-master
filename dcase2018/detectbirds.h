@@ -233,7 +233,7 @@ mel_bin(EmAudioMel params, int n) {
     return bin;
 }
 
-// http://practicalcryptography.com/miscellaneous/machine-learning/guide-mel-frequency-cepstral-coefficients-mfccs/
+
 // https://haythamfayek.com/2016/04/21/speech-processing-for-machine-learning.html
 int
 emaudio_melspec(EmAudioMel mel, EmVector spec, EmVector mels) {
@@ -287,29 +287,86 @@ emaudio_hann_apply(EmVector out) {
     return 0;
 }
 
+#define EM_MAX(a, b) (a > b) ? a : b
 
+int
+emvector_max_into(EmVector a, EmVector b) {
+    if (a.length != b.length) {
+        return -1;
+    }
+
+    for (size_t i=0; i<a.length; i++) {
+        a.data[i] = EM_MAX(a.data[i], b.data[i]);
+    }
+    return -1;
+}
+
+int
+emvector_set_value(EmVector a, float val) {
+    for (size_t i=0; i<a.length; i++) {
+        a.data[i] = val;
+    }
+    return 0;
+}
 
 // birddetector.h
 typedef struct _BirdDetector {
-    int n_frames;
+    EmVector audio;
     EmVector features;
+    EmVector temp1;
+    EmVector temp2;
+    EmAudioMel mel_filter;
     EmtreesModel *model;
 } BirdDetector;
 
-bool birddetector_classify_frame(BirdDetector *self, EmVector audio) {
-    const int mels_length = 128;
-    float mels_data[mels_length];
-    EmVector mels = { mels_data, mels_length };
+int
+process_frame(EmVector in, EmVector temp) {
 
-    // FIXME: need to consider SFT and the overlapping windows
-    // for instance use 2 consecutive audio frames and use midpoint as center of window
+    EmVector input = { };
+    EmVector windowed = { };
+    EmVector rfft = { };
+    EmVector spec = { };
+    EmVector mels = { };
 
-    //emaudio_sft(audio, bins);
+    //emaudio_hann_apply
+
+    // FIXME: implement
+
+    //emaudio_rfft(audio, bins);
+    //emaudio_spectrogram():
     //emaudio_melspec(bins, mels);
 
-    // FIXME: summarize frames into features
+    //
 
-    //emaudio_shift_features(features, frame_features);
+}
+
+void
+birddetector_reset(BirdDetector *self) {
+
+    emvector_set_value(self->audio, 0.0f);
+    emvector_set_value(self->features, 0.0f);
+}
+
+void
+birddetector_push_frame(BirdDetector *self, EmVector frame) {
+
+    // XXX: each frame is hop_length sized
+
+    // insert new frame into our buffer
+    emvector_shift(self->audio, -frame.length);
+    emvector_set(self->audio, frame, self->audio.length-frame.length);
+
+    // process window
+    emvector_set(self->temp1, self->audio, 0);
+
+    process_frame(self->temp1, self->temp2);
+
+    // Feature summarization
+    emvector_max_into(self->features, self->temp2);
+}
+
+bool
+birddetector_predict(BirdDetector *self) {
 
     const int32_t cl = emtrees_predict(self->model, self->features.data, self->features.length);
     return cl == 1;

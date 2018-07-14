@@ -69,11 +69,15 @@ rfft_py(py::array_t<float, py::array::c_style | py::array::forcecast> in) {
     float *samples = (float *)in.data();
     float *retdata = (float *)ret.data();
 
-    EmVector inv = { samples, EMAUDIO_FFT_LENGTH };
-    EmVector out = { retdata, EMAUDIO_FFT_LENGTH };
+    float imag_data[EMAUDIO_FFT_LENGTH];
+    EmVector real = { samples, EMAUDIO_FFT_LENGTH };
+    EmVector imag = { imag_data, EMAUDIO_FFT_LENGTH };
+    emvector_set_value(imag, 0.0f);
 
-    const int status = emaudio_rfft(inv, out);
+    const int status = emaudio_fft(real, imag);
  
+    emvector_set((EmVector){retdata,EMAUDIO_FFT_LENGTH}, real, 0);
+
     if (status != 0) {
         throw std::runtime_error("SFT returned error");
     }
@@ -118,12 +122,18 @@ spectrogram_frame(py::array_t<float, py::array::c_style | py::array::forcecast> 
         throw std::runtime_error("spectrogram must have length EMAUDIO_FFT_LENGTH");
     }
 
-    EmVector frame = { (float *)in.data(), EMAUDIO_FFT_LENGTH };
-    emaudio_hann_apply(frame); // XXX: modifies input
+    // Copy to prevent modifying input
+    float frame_data[EMAUDIO_FFT_LENGTH];
+    EmVector frame = { frame_data, EMAUDIO_FFT_LENGTH };
+    emvector_set(frame, (EmVector){(float *)in.data(), EMAUDIO_FFT_LENGTH }, 0);
 
-    auto temp_py = py::array_t<float>(EMAUDIO_FFT_LENGTH);
-    EmVector fft_out = { (float *)temp_py.data(), EMAUDIO_FFT_LENGTH };
-    const int rftt_status = emaudio_rfft(frame, fft_out);
+    emaudio_hann_apply(frame);
+
+    float imag_data[EMAUDIO_FFT_LENGTH];
+    EmVector imag = { imag_data, EMAUDIO_FFT_LENGTH };
+    emvector_set_value(imag, 0.0f);
+
+    const int rftt_status = emaudio_fft(frame, imag);
 
     if (rftt_status != 0) {
         throw std::runtime_error("FFT returned error");
@@ -134,8 +144,9 @@ spectrogram_frame(py::array_t<float, py::array::c_style | py::array::forcecast> 
     const int spec_length = 1+n_fft/2;
     auto ret = py::array_t<float>(spec_length);
     EmVector spec = { (float *)ret.data(), spec_length };
+    emvector_set_value(spec, 0.0f);
 
-    const int spec_status = emaudio_power_spectrogram(fft_out, spec, n_fft);
+    const int spec_status = emaudio_power_spectrogram(frame, spec, n_fft);
 
     if (spec_status != 0) {
         throw std::runtime_error("spectrum returned error");

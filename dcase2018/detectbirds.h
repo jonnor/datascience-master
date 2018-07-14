@@ -145,34 +145,18 @@ emvector_set(EmVector dest, EmVector source, int location) {
 #define FFT_TABLE_SIZE EMAUDIO_FFT_LENGTH/2
 
 int
-emaudio_rfft(EmVector audio, EmVector bins) {  
+emaudio_fft(EmVector real, EmVector imag) {  
 
-    // FIXME: change to floats
-    double real[EMAUDIO_FFT_LENGTH];
-    double imag[EMAUDIO_FFT_LENGTH];
-
-    // FIXME: change to floats, pass in from outside
-	double fft_cos[FFT_TABLE_SIZE];
-	double fft_sin[FFT_TABLE_SIZE];
-    FFTTable fft = { FFT_TABLE_SIZE, fft_cos, fft_sin };
-    fft_table_fill(fft, EMAUDIO_FFT_LENGTH);
-
-    if (audio.length != EMAUDIO_FFT_LENGTH) {
+    if (real.length != EMAUDIO_FFT_LENGTH) {
         return -1;
     }
-    if (bins.length != EMAUDIO_FFT_LENGTH) {
+    if (imag.length != EMAUDIO_FFT_LENGTH) {
         return -2;
     }
 
-    for (int i=0; i<EMAUDIO_FFT_LENGTH; i++) {
-        real[i] = audio.data[i];
-        imag[i] = 0.0;
-    }
-
-    fft_table_transform(fft, real, imag, EMAUDIO_FFT_LENGTH);
-
-    for (int i=0; i<EMAUDIO_FFT_LENGTH; i++) {
-        bins.data[i] = real[i];
+    const bool success = fft_transform(real.data, imag.data, EMAUDIO_FFT_LENGTH);
+    if (!success) {
+        return -3;
     }
 
     return 0;

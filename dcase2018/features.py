@@ -12,6 +12,33 @@ import numpy
 import librosa 
 import scipy.ndimage
 
+import detectbirds
+
+def melspec(y, sr, n_fft=2048, hop_length=None, win_length=None, n_mels=128, fmin=0, fmax=None):
+    if hop_length is None:
+        hop_length = n_fft//2
+    if win_length is None:
+        win_length = n_fft
+    if fmax is None:
+        fmax = sr//2
+        
+    frames = librosa.util.frame(y, frame_length=n_fft, hop_length=hop_length)
+    spec_frames = []
+    for frame_no in range(frames.shape[1]):
+        frame = frames[:,frame_no]
+        assert frame.shape[0] == n_fft
+
+        s = detectbirds.spectrogram_frame(frame)        
+        s = detectbirds.melfilter(s, n_mels, fmin, fmax, n_fft, sr) 
+        
+        s = s.reshape(-1, 1)
+        spec_frames.append(s)
+        
+    mels = numpy.hstack(spec_frames)
+    assert mels.shape[1] == frames.shape[1], (mels.shape,frames.shape)
+    return mels
+
+
 def extract_from_zip(path, process_func, limit=None, offset=None):
     with zipfile.ZipFile(path) as archive:
         wavs = [ i for i in archive.infolist() if i.filename.endswith('.wav') ]

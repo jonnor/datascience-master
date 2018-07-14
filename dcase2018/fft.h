@@ -107,7 +107,7 @@ bool fft_table_transform(FFTTable table, double real[], double imag[], size_t n)
 }
 
 // Without precomputed table
-bool fft_transform(double real[], double imag[], size_t n) {
+bool fft_transform(float real[], float imag[], size_t n) {
 	// Length variables
 	int levels = 0;  // Compute levels = floor(log2(n))
 	for (size_t temp = n; temp > 1U; temp >>= 1)
@@ -119,7 +119,7 @@ bool fft_transform(double real[], double imag[], size_t n) {
 	for (size_t i = 0; i < n; i++) {
 		size_t j = reverse_bits(i, levels);
 		if (j > i) {
-			double temp = real[i];
+			float temp = real[i];
 			real[i] = real[j];
 			real[j] = temp;
 			temp = imag[i];

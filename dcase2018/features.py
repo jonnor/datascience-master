@@ -73,7 +73,7 @@ def meansub(s):
 
 def melspec_maxp(mel):
     mel = meansub(mel)
-    filt = scipy.ndimage.median_filter(mel, (1, 1))
+    filt = scipy.ndimage.median_filter(mel, (1, 3))
 
     features = numpy.concatenate([
         numpy.max(filt, axis=1),
@@ -85,7 +85,8 @@ def extract_melmax(wav, n, wavs):
     start = time.time()
 
     y, sr = librosa.load(wav, offset=0, sr=None)
-    mel = librosa.feature.melspectrogram(y=y, sr=sr, n_mels=64, fmin=500, fmax=8000)
+    assert sr == 44100
+    mel = librosa.feature.melspectrogram(y=y, sr=sr, n_mels=64, fmin=0, n_fft=2048, fmax=None, htk=True)
     features = melspec_maxp(mel)
 
     end = time.time()

@@ -13,9 +13,8 @@ with high enough classification rate to be useful as recording trigger
 
 Run on hardware
 
+* Verify C feature processing
 * Run C code classifier on Py features
-* Implement framing in C
-* Implement feature summarizer in C. Mean subtract, max
 * Setup Nordic NRF52 dev environment
 * Try to run emtrees.RandomForestClassifier on M4F. Precalculated melspec-maxp features
 * Try to run feature calculation on M4F

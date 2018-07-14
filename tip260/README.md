@@ -21,7 +21,6 @@ Which factor drives this up/down? How can these be influenced?
 
 ## TODO
 
-
 Environmental sensors
 
 Introduction
@@ -35,13 +34,11 @@ Results
 * Recommendations
 
 
-
 DATA STRATEGY
 
 * IMAGE: show how data flows to central point
 Alternative: Table with datapoints
 * IMAGE: how a terminal operating system can look
-
 
 MAYBE
 

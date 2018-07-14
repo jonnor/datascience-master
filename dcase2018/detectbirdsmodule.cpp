@@ -53,7 +53,6 @@ public:
 };
 
 
-
 py::array_t<float>
 rfft_py(py::array_t<float, py::array::c_style | py::array::forcecast> in) {
     if (in.ndim() != 1) {
@@ -85,78 +84,9 @@ rfft_py(py::array_t<float, py::array::c_style | py::array::forcecast> in) {
     return ret;
 }
 
-py::array_t<float>
-spectrogram_py(py::array_t<float, py::array::c_style | py::array::forcecast> in) {
-    if (in.ndim() != 1) {
-        throw std::runtime_error("SFT input must have dimensions 1");
-    }
-
-    const int n_fft = in.shape(0);
-    if (n_fft != EMAUDIO_FFT_LENGTH) {
-        throw std::runtime_error("SFT must have length EMAUDIO_FFT_LENGTH");
-    }
-
-    const int length = 1+n_fft/2;
-    auto ret = py::array_t<float>(length);
-
-    EmVector inv = { (float *)in.data(), EMAUDIO_FFT_LENGTH };
-    EmVector out = { (float *)ret.data(), length };
-
-    const int status = emaudio_power_spectrogram(inv, out, n_fft);
- 
-    if (status != 0) {
-        throw std::runtime_error("SFT returned error");
-    }
-
-    return ret;
-}
 
 py::array_t<float>
-spectrogram_frame(py::array_t<float, py::array::c_style | py::array::forcecast> in) {
-    if (in.ndim() != 1) {
-        throw std::runtime_error("spectrogram input must have dimensions 1");
-    }
-
-    const int n_fft = in.shape(0);
-    if (n_fft != EMAUDIO_FFT_LENGTH) {
-        throw std::runtime_error("spectrogram must have length EMAUDIO_FFT_LENGTH");
-    }
-
-    // Copy to prevent modifying input
-    float frame_data[EMAUDIO_FFT_LENGTH];
-    EmVector frame = { frame_data, EMAUDIO_FFT_LENGTH };
-    emvector_set(frame, (EmVector){(float *)in.data(), EMAUDIO_FFT_LENGTH }, 0);
-
-    emaudio_hann_apply(frame);
-
-    float imag_data[EMAUDIO_FFT_LENGTH];
-    EmVector imag = { imag_data, EMAUDIO_FFT_LENGTH };
-    emvector_set_value(imag, 0.0f);
-
-    const int rftt_status = emaudio_fft(frame, imag);
-
-    if (rftt_status != 0) {
-        throw std::runtime_error("FFT returned error");
-    }
-
-    //emvector_set(frame, fft_out, 0);
-
-    const int spec_length = 1+n_fft/2;
-    auto ret = py::array_t<float>(spec_length);
-    EmVector spec = { (float *)ret.data(), spec_length };
-    emvector_set_value(spec, 0.0f);
-
-    const int spec_status = emaudio_power_spectrogram(frame, spec, n_fft);
-
-    if (spec_status != 0) {
-        throw std::runtime_error("spectrum returned error");
-    }
-
-    return ret;
-}
-
-py::array_t<float>
-mel_py(py::array_t<float, py::array::c_style | py::array::forcecast> in,
+melspectrogram_py(py::array_t<float, py::array::c_style | py::array::forcecast> in,
     int n_mels, float fmin, float fmax, int n_fft, int samplerate
 )
 
@@ -165,24 +95,28 @@ mel_py(py::array_t<float, py::array::c_style | py::array::forcecast> in,
         throw std::runtime_error("spectrogram input must have dimensions 1");
     }
 
-    const int length = in.shape(0);
-    EmVector spec = { (float *)in.data(), length };
-
     const EmAudioMel params = { n_mels, fmin, fmax, n_fft, samplerate };
-    auto ret = py::array_t<float>(params.n_mels);
 
-    EmVector mels = { (float *)ret.data(), params.n_mels };
-    const int status = emaudio_melspec(params, spec, mels);
+    // Copy input to avoid modifying
+    const int length = in.shape(0);
+    float inout_data[length];
+    float temp_data[length];
+    EmVector inout = { inout_data, length };
+    EmVector temp = { temp_data, length };
+    emvector_set(inout, (EmVector){(float *)in.data(), length}, 0);
+
+    const int status = emaudio_melspectrogram(params, inout, temp);
 
     if (status != 0) {
-        throw std::runtime_error("mels returned error: " + std::to_string(status));
+        throw std::runtime_error("melspectrogram returned error: " + std::to_string(status));
     }
+
+    auto ret = py::array_t<float>(params.n_mels);
+    EmVector out = { (float *)ret.data(), params.n_mels };
+    emvector_set(out, emvector_view(inout, 0, params.n_mels), 0);
 
     return ret;
 }
-
-
-
 
 PYBIND11_MODULE(detectbirds, m) {
     m.doc() = "Detect birdsong in audio";
@@ -192,8 +126,6 @@ PYBIND11_MODULE(detectbirds, m) {
         .def("process", &GoertzelBank::process);
 
     m.def("rfft", rfft_py);
-    m.def("spectrogram", spectrogram_py);
-    m.def("spectrogram_frame", spectrogram_frame);
-    m.def("melfilter", mel_py);
+    m.def("melspectrogram", melspectrogram_py);
 }
 

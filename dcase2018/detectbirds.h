@@ -293,6 +293,71 @@ emvector_set_value(EmVector a, float val) {
     return 0;
 }
 
+float
+emvector_mean(EmVector v) {
+    float sum = 0.0f;
+    for (size_t i=0; i<v.length; i++) {
+        sum += v.data[i];
+    }
+    float mean = sum/v.length; 
+    return mean;
+}
+
+int
+emvector_subtract_value(EmVector v, float val) {
+
+    for (size_t i=0; i<v.length; i++) {
+        v.data[i] -= val;
+    }
+    return 0;
+}
+
+#define EM_RETURN_IF_ERROR(expr) \
+    do { \
+        const int _e = (expr); \
+        if (_e != 0) { \
+            return _e; \
+        } \
+    } while(0);
+
+EmVector
+emvector_view(EmVector orig, int start, int end) {
+    const int length = end-start;
+    return (EmVector){ orig.data+start, length };
+}
+
+int
+emaudio_melspectrogram(EmAudioMel mel_params, EmVector inout, EmVector temp) {
+
+    const int n_fft = mel_params.n_fft;
+    const int s_length = 1+n_fft/2;
+    const int n_mels = mel_params.n_mels;
+ 
+    // Apply window
+    EM_RETURN_IF_ERROR(emaudio_hann_apply(inout));
+
+    // Perform (short-time) FFT
+    EM_RETURN_IF_ERROR(emvector_set_value(temp, 0.0f));
+    EM_RETURN_IF_ERROR(emaudio_fft(inout, temp));
+
+    // Compute mel-spectrogram
+    EM_RETURN_IF_ERROR(emaudio_power_spectrogram(inout, emvector_view(temp, 0, s_length), n_fft));
+    EM_RETURN_IF_ERROR(emaudio_melspec(mel_params, temp, emvector_view(inout, 0, n_mels)));
+
+    return 0;
+}
+
+int
+emvector_meansub(EmVector inout) {
+
+    // Mean subtract normalization
+    const float mean = emvector_mean(inout);
+    emvector_subtract_value(inout, mean);
+
+    return 0;
+}
+
+
 // birddetector.h
 typedef struct _BirdDetector {
     EmVector audio;
@@ -303,26 +368,6 @@ typedef struct _BirdDetector {
     EmtreesModel *model;
 } BirdDetector;
 
-int
-process_frame(EmVector in, EmVector temp) {
-
-    EmVector input = { };
-    EmVector windowed = { };
-    EmVector rfft = { };
-    EmVector spec = { };
-    EmVector mels = { };
-
-    //emaudio_hann_apply
-
-    // FIXME: implement
-
-    //emaudio_rfft(audio, bins);
-    //emaudio_spectrogram():
-    //emaudio_melspec(bins, mels);
-
-    //
-
-}
 
 void
 birddetector_reset(BirdDetector *self) {
@@ -334,16 +379,14 @@ birddetector_reset(BirdDetector *self) {
 void
 birddetector_push_frame(BirdDetector *self, EmVector frame) {
 
-    // XXX: each frame is hop_length sized
-
     // insert new frame into our buffer
     emvector_shift(self->audio, -frame.length);
     emvector_set(self->audio, frame, self->audio.length-frame.length);
 
-    // process window
+    // process current window
     emvector_set(self->temp1, self->audio, 0);
-
-    process_frame(self->temp1, self->temp2);
+    emaudio_melspectrogram(self->mel_filter, self->temp1, self->temp2);
+    emvector_meansub(self->temp2);
 
     // Feature summarization
     emvector_max_into(self->features, self->temp2);

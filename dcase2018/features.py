@@ -28,9 +28,8 @@ def melspec(y, sr, n_fft=2048, hop_length=None, win_length=None, n_mels=128, fmi
         frame = frames[:,frame_no]
         assert frame.shape[0] == n_fft
 
-        s = detectbirds.spectrogram_frame(frame)        
-        s = detectbirds.melfilter(s, n_mels, fmin, fmax, n_fft, sr) 
-        
+        s = detectbirds.melspectrogram(frame, n_mels, fmin, fmax, n_fft, sr)                
+
         s = s.reshape(-1, 1)
         spec_frames.append(s)
         

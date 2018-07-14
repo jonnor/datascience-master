@@ -12,9 +12,10 @@ import numpy
 import librosa 
 import scipy.ndimage
 
-import detectbirds
 
 def melspec(y, sr, n_fft=2048, hop_length=None, win_length=None, n_mels=128, fmin=0, fmax=None):
+    import detectbirds
+
     if hop_length is None:
         hop_length = n_fft//2
     if win_length is None:

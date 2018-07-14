@@ -13,8 +13,7 @@ def test_rfft_simple():
     ss = numpy.arange(0, 1024)
     ref = numpy.fft.fft(ss, n=1024).real
     out = detectbirds.rfft(ss)
-    diff = out - ref
-    print(list(diff))
+
     numpy.testing.assert_allclose(out, ref, rtol=1e-5)
 
 def test_rfft_not_power2_length():
@@ -41,3 +40,17 @@ def test_melspectrogram():
 
     print(out-ref)
     numpy.testing.assert_allclose(out, ref, rtol=1e-6);
+
+def test_process():
+
+    y, sr = librosa.load('data/ff1010bird/{}.wav'.format(19037), offset=0)
+    print('max', numpy.max(y), numpy.min(y))
+
+    n_mels = 64
+    p = detectbirds.Processor(n_mels, 0.0, 8000.0, 1024, sr)
+    n_frames = p.add_samples(y)
+    assert n_frames == 430
+
+    f = p.get_features()
+    assert f.shape[0] == n_mels
+    print(f)

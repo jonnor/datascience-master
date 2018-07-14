@@ -61,7 +61,6 @@ fft_table_fill(FFTTable table, size_t n) {
 
 bool fft_table_transform(FFTTable table, double real[], double imag[], size_t n) {
 	// Length variables
-	bool status = false;
 	int levels = 0;  // Compute levels = floor(log2(n))
 	for (size_t temp = n; temp > 1U; temp >>= 1)
 		levels++;

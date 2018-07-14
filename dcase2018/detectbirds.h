@@ -68,7 +68,7 @@ emgoertzel_run(EmGoertzel c, const float* data, int n_samples)
 // emaudio.h
 typedef struct {
     float *data;
-    size_t length;
+    ssize_t length;
 } EmVector;
 
 // Double buffering
@@ -279,15 +279,15 @@ emvector_max_into(EmVector a, EmVector b) {
         return -1;
     }
 
-    for (size_t i=0; i<a.length; i++) {
+    for (ssize_t i=0; i<a.length; i++) {
         a.data[i] = EM_MAX(a.data[i], b.data[i]);
     }
-    return -1;
+    return 0;
 }
 
 int
 emvector_set_value(EmVector a, float val) {
-    for (size_t i=0; i<a.length; i++) {
+    for (ssize_t i=0; i<a.length; i++) {
         a.data[i] = val;
     }
     return 0;
@@ -296,7 +296,7 @@ emvector_set_value(EmVector a, float val) {
 float
 emvector_mean(EmVector v) {
     float sum = 0.0f;
-    for (size_t i=0; i<v.length; i++) {
+    for (ssize_t i=0; i<v.length; i++) {
         sum += v.data[i];
     }
     float mean = sum/v.length; 
@@ -306,7 +306,7 @@ emvector_mean(EmVector v) {
 int
 emvector_subtract_value(EmVector v, float val) {
 
-    for (size_t i=0; i<v.length; i++) {
+    for (ssize_t i=0; i<v.length; i++) {
         v.data[i] -= val;
     }
     return 0;
@@ -374,6 +374,8 @@ birddetector_reset(BirdDetector *self) {
 
     emvector_set_value(self->audio, 0.0f);
     emvector_set_value(self->features, 0.0f);
+    emvector_set_value(self->temp1, 0.0f);
+    emvector_set_value(self->temp2, 0.0f);
 }
 
 void
@@ -386,10 +388,10 @@ birddetector_push_frame(BirdDetector *self, EmVector frame) {
     // process current window
     emvector_set(self->temp1, self->audio, 0);
     emaudio_melspectrogram(self->mel_filter, self->temp1, self->temp2);
-    emvector_meansub(self->temp2);
+    emvector_meansub(self->temp1);
 
     // Feature summarization
-    emvector_max_into(self->features, self->temp2);
+    emvector_max_into(self->features, emvector_view(self->temp1, 0, self->features.length));
 }
 
 bool

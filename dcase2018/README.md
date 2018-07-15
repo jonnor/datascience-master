@@ -22,10 +22,16 @@ Run on hardware
 Improve model perf
 
 * Find why performance drops so much on compete set
+* Try to scale the frames. minmax or stddev
+* Include also birdvox-2k dataset
+* Subsample the datasets to a smaller analysis set. 500 samples, 6 datasets
+* Look at features wrt class. PCA -> per-class histograms?
+* Try some data augmentation to make robust against variations
 * Setup 3-way cross-validation
 * Make tools for getting misclassified results, visualize/playback
 * Do exploratory analysis of features across a large range of files
 * Try OSKmeans feature learning.
+* Try to use Automatic Gain Normalization?
 * Try to use per-channel energy normalization (PCEN) after mean subtraction
 * Try a pre-emphasis filter?
 

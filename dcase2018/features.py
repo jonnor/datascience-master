@@ -72,8 +72,14 @@ def extract_from_zip(path, process_func, limit=None, offset=None):
 def meansub(s):
     return s - (numpy.mean(s, axis=0) + 1e-8)
 
+def minmaxscale(s):
+    mins = numpy.min(s, axis=0) + 1e-8
+    maxs = numpy.max(s, axis=0)
+    return ( s - mins) / ( maxs - mins )
+
 def melspec_maxp(mel):
     mel = meansub(mel)
+    mel = minmaxscale(mel)
     filt = scipy.ndimage.median_filter(mel, (1, 3))
 
     features = numpy.concatenate([

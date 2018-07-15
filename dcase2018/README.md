@@ -23,6 +23,7 @@ Improve model perf
 
 * Find why performance drops so much on compete set
 * Try to scale the frames. minmax or stddev
+* Try to log-scale the spectrogram
 * Include also birdvox-2k dataset
 * Subsample the datasets to a smaller analysis set. 500 samples, 6 datasets
 * Look at features wrt class. PCA -> per-class histograms?
@@ -455,6 +456,10 @@ On-edge Audio Event Detection. A clip of the sound is sent along with event (if 
 Can support 3 event profiles on Cortex M4, 6 on Cortex M7.
 
 [Sound Event Recognition in Unstructured Environments using Spectrogram Image Processing](http://www.ntu.edu.sg/home/aseschng/Thesis/JohnDennis_PhDThesis2014.pdf). PhD thesis, Jonathan William Dennis, 2014. 200 pages.
+
+[Spectrogram Image Feature for Sound Event Classification in Mismatched Conditions](https://www.researchgate.net/publication/224206697_Spectrogram_Image_Feature_for_Sound_Event_Classification_in_Mismatched_Conditions). Jonathan Dennis, 2011.
+Splits spectrogram into 3 bins. 
+Linear spectrogram better than log spectrogram in presence of noise.
 
 ## Commercial available solutions
 

@@ -35,6 +35,9 @@ Improve model perf
 * Try to use Automatic Gain Normalization?
 * Try to use per-channel energy normalization (PCEN) after mean subtraction
 * Try a pre-emphasis filter?
+* Try an SNR estimator as feature
+* Try denoising
+* Augment data by adding noise
 
 Replication
 
@@ -48,6 +51,22 @@ http://c4dm.eecs.qmul.ac.uk/events/badchallenge_results/
 Later
 
 * Add tests/benchmark for Goertzel, see if possible to optimize
+
+## Exploratory analysis
+
+General. Hard to 
+
+In wild birds often occur together with crickets.
+In urban sounds, often together with human voice and activities.
+
+Some bird utterances are very short.
+Sometimes really hard to spot birds in background over ambient white noise.
+
+Chern. Lots white noise. Lots of crickets?
+Poland. Lots of white noise. Birds seems very rate.
+Warblr. Lots of birds. Large variety.
+
+Questions. Can we find crickets,humanvoice etc using clustering?
 
 ## Notes
 
@@ -204,6 +223,8 @@ RASTA-filtering.
 
 Uses bandpass filtering in the log spectral domain, removes slow channel variations.
 It has also been applied to cepstrum feature-based preprocessing with both log spectral and cepstral domain filtering.
+
+
 
 ## Birdcalls
 Wide range of characteristics
@@ -460,6 +481,20 @@ Can support 3 event profiles on Cortex M4, 6 on Cortex M7.
 [Spectrogram Image Feature for Sound Event Classification in Mismatched Conditions](https://www.researchgate.net/publication/224206697_Spectrogram_Image_Feature_for_Sound_Event_Classification_in_Mismatched_Conditions). Jonathan Dennis, 2011.
 Splits spectrogram into 3 bins. 
 Linear spectrogram better than log spectrogram in presence of noise.
+
+
+
+[RNNoise](https://people.xiph.org/~jm/demo/rnnoise/).
+Using deep learning combined with conventional signal processing.
+Tuned for real-time usage, 10ms lookahead.
+GRU type of RNN.
+Split into 22 filterbanks, roughly following Bark scale.
+42 inputs features.
+Computes outputs: (1) Voice Activity Detection, (22) gains for filterbanks
+Training using synthesized data. Adding noise to speech. Adding filters.
+C code available, BSD licensed. 7x realtime on RPi.
+Has 'donate your noise' collection for a noise dataset. Is it available anywhere?
+
 
 ## Commercial available solutions
 

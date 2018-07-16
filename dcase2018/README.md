@@ -6,10 +6,28 @@ DCASE2018 challegne: [Bird audio detection](http://dcase.community/challenge2018
 
 * Online classifier running in real-time on low-power ARM Cortex M4F,
 with high enough classification rate to be useful as recording trigger
-* Submit for DCASE18 challenge. Classification, code, technical paper. 
-* Submit scientific paper for DCASE18. July 31
+* Submit for DCASE18 challenge. July 31. Classification, code, technical paper. 
 
 ## TODO
+
+Improve model generalization on compete set
+
+* Include also birdvox-2k dataset
+* Try to add a highpass filter to reduce noise
+* Try to add a lowpass filter to reduce noise
+* Try to add more features. mean,std,min ?
+* Look at PCAed features, per-class histograms
+* Try longer 
+* Cluster the datasets, look at (dis)similarities of compete vs train
+* Setup 3-way cross-validation
+* Make tools for getting misclassified results, visualize/playback
+* Visualize feature importance on top of feature mean/meadian/std
+* Try some data augmentation to make robust against variations
+* Try an SNR estimator as feature
+* Try denoising
+* Augment data by adding noise
+* Try a pre-emphasis filter?
+* Try to log-scale the spectrograms
 
 Run on hardware
 
@@ -19,38 +37,19 @@ Run on hardware
 * Try to run emtrees.RandomForestClassifier on M4F. Precalculated melspec-maxp features
 * Try to run feature calculation on M4F
 
-Improve model perf
-
-* Find why performance drops so much on compete set
-* Try to scale the frames. minmax or stddev
-* Try to log-scale the spectrogram
-* Include also birdvox-2k dataset
-* Subsample the datasets to a smaller analysis set. 500 samples, 6 datasets
-* Look at features wrt class. PCA -> per-class histograms?
-* Try some data augmentation to make robust against variations
-* Setup 3-way cross-validation
-* Make tools for getting misclassified results, visualize/playback
-* Do exploratory analysis of features across a large range of files
-* Try OSKmeans feature learning.
-* Try to use Automatic Gain Normalization?
-* Try to use per-channel energy normalization (PCEN) after mean subtraction
-* Try a pre-emphasis filter?
-* Try an SNR estimator as feature
-* Try denoising
-* Augment data by adding noise
-
 Replication
 
 * Try to replicate CASE16 baseline. AUC ROC 70%
-* Try to replicate Stowell LifeCLEF 2014.
-Without feature learning. melspec-maxp, AUC ROC above 80-90% (some datasets)
 * Try replicate iitMandi BAD2016. AUC ROC 77%
 MFCC+GMM+SVMPSK, with cepstral normalization and short-time feature warping
 http://c4dm.eecs.qmul.ac.uk/events/badchallenge_results/
 
 Later
 
-* Add tests/benchmark for Goertzel, see if possible to optimize
+* Try OSKmeans feature learning. Ref Stowell LifeCLEF 2014
+* Try HOG dictionary feature learning.
+* Add tests/benchmark for Goertzel, see if possible to optimize.
+Can one use it to only extract bands shown to be important per feature importance (estimated by RF)
 
 ## Exploratory analysis
 

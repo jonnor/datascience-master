@@ -91,10 +91,18 @@ def melspec_maxp(mel):
 def extract_melmax(wav, n, wavs):
     start = time.time()
 
-    y, sr = librosa.load(wav, offset=0, sr=None)
-    assert sr == 44100
-    mel = librosa.feature.melspectrogram(y=y, sr=sr, n_mels=64, fmin=0, n_fft=2048, fmax=None, htk=True)
-    features = melspec_maxp(mel)
+    n_mels = 64
+    features = numpy.empty(n_mels)
+    features.fill(numpy.nan)
+    try:
+        y, sr = librosa.load(wav, offset=0, sr=None)
+        assert sr == 44100
+        mel = librosa.feature.melspectrogram(y=y, sr=sr, n_mels=n_mels, fmin=0, n_fft=2048, fmax=None, htk=True)
+        extracted = melspec_maxp(mel)
+        assert extracted.shape == features.shape, (extracted.shape, features.shape)
+    except Exception as e:
+        print('ERROR', e)
+        # just leveave the NaNs
 
     end = time.time()
     t = end-start

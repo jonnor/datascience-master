@@ -100,6 +100,7 @@ def extract_melmax(wav, n, wavs):
         mel = librosa.feature.melspectrogram(y=y, sr=sr, n_mels=n_mels, fmin=0, n_fft=2048, fmax=None, htk=True)
         extracted = melspec_maxp(mel)
         assert extracted.shape == features.shape, (extracted.shape, features.shape)
+        features = extracted
     except Exception as e:
         print('ERROR', e)
         # just leveave the NaNs

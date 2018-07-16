@@ -17,8 +17,10 @@ Improve model generalization on compete set
 * Try to add a lowpass filter to reduce noise
 * Try to add more features. mean,std,min ?
 * Look at PCAed features, per-class histograms
-* Try longer 
+* Try longer frame size, or median filtering the spectrogram
 * Cluster the datasets, look at (dis)similarities of compete vs train
+* Would it make sense to normalize the summarized features?
+In addition to or instead of the spectrogram?
 * Setup 3-way cross-validation
 * Make tools for getting misclassified results, visualize/playback
 * Visualize feature importance on top of feature mean/meadian/std

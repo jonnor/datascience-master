@@ -31,6 +31,14 @@ In addition to or instead of the spectrogram?
 * Try a pre-emphasis filter?
 * Try to log-scale the spectrograms
 
+Cleanup
+
+* Move to dedicated git repo
+* Move exploratory parts to dedicated notebook
+* Explain basics of challenge, generalization
+* Explain classifier approach in notebook
+* Make precomputed features available
+
 Run on hardware
 
 * Verify C feature processing

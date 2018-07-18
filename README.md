@@ -4,9 +4,7 @@
 Postgraduate studies in machine learning, data mining and applied statistics.
 At Norwegian University of Life Sciences ([NMBU](https://nmbu.no)).
 
-## Research
-
-Research interests
+Interests
 
 * Embedded Systems, microcontrollers, Internet of Things. Wireless Sensor Networks. 
 * Digital fabrication. CAD/CAM. Electronics, EDA.
@@ -17,15 +15,17 @@ Research interests
 * Energy production. Renewable energy
 * Agriculture, food-production
 
+## Research projects
+
 ### [Machine Learning for Embedded Systems](./embeddedml)
 
 ### [Machine Hearing](./machinehearing)
 
 ## Competitions
 
-### [TrackML](./trackml) Particle tracking
-
 ### [DCASE2018](https://github.com/jonnor/birddetect-dcase2018) Bird Audio Detection
+
+### [TrackML](./trackml) Particle tracking
 
 ## Courses
 

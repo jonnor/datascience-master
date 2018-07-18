@@ -1,18 +1,31 @@
 
 # Master of Data Science
 
-Studying machine learning, data mining, applied statistics.
+Postgraduate studies in machine learning, data mining and applied statistics.
 At Norwegian University of Life Sciences ([NMBU](https://nmbu.no)).
 
 ## Research
 
+Research interests
+
+* Embedded Systems, microcontrollers, Internet of Things. Wireless Sensor Networks. 
+* Digital fabrication. CAD/CAM. Electronics, EDA.
+* Manufacturing. Low-scale automation. Cheap robotics and deployment.
+* Model-based development. Simulations.
+* Sustainability
+* Circular economy. Recycling, waste-management
+* Energy production. Renewable energy
+* Agriculture, food-production
+
 ### [Machine Learning for Embedded Systems](./embeddedml)
+
+### [Machine Hearing](./machinehearing)
 
 ## Competitions
 
-## Kaggle [TrackML](./trackml)
+### [TrackML](./trackml) Particle tracking
 
-## [DCASE2018](https://github.com/jonnor/birddetect-dcase2018) Bird Audio Detection
+### [DCASE2018](https://github.com/jonnor/birddetect-dcase2018) Bird Audio Detection
 
 ## Courses
 
@@ -36,9 +49,6 @@ At Norwegian University of Life Sciences ([NMBU](https://nmbu.no)).
 
 
 ## Potential courses
-
-Techniques: Intelligent embedded systems, robotics, computer vision, simulation.
-Applications: Renewable energy, sustainability, automation/processindustry
 
 Construction
 
@@ -85,17 +95,6 @@ Foundations
 ## PhD
 
 [Positions in Norway](https://www.finn.no/job/fulltime/search.html?occupation=0.13&q=data)
-
-Research interests
-
-* Sustainability
-* Circular economy. Recycling, waste-management
-* Understanding and predicting impacts (economic,social,environmental)
-* Energy production. Renewable energy
-* Embedded Systems, microcontrollers, Internet of Things. Wireless Sensor Networks. 
-* Manufacturing. Low-scale automation. Cheap robotics and deployment.
-* CAD/CAM. Digital fabrication.
-* Agriculture, food-production
 
 
 ## Ideas
@@ -344,11 +343,5 @@ Example: [librosa sound augmentation](https://www.kaggle.com/huseinzol05/sound-a
 * Programmatic supervision. Distant supervision. 
 * Weak supervision. [Data Programming](http://dawn.cs.stanford.edu/pubs/snorkel-nips2016.pdf)
 generates labels that are noisy and possibly conflicting, then learns the inaccuracies.
-
-Datasets / data sources
-
-* [libsvm](https://www.csie.ntu.edu.tw/~cjlin/libsvmtools/datasets/).
-Standardized format with some 50 small to medium dataset examples, covering classification, regression.
-* [mldata.org](http://mldata.org/). Some 800 datasets, searchable with tags.
 
 

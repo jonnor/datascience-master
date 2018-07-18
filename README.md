@@ -8,6 +8,12 @@ At Norwegian University of Life Sciences ([NMBU](https://nmbu.no)).
 
 ### [Machine Learning for Embedded Systems](./embeddedml)
 
+## Competitions
+
+## Kaggle [TrackML](./trackml)
+
+## [DCASE2018](https://github.com/jonnor/birddetect-dcase2018) Bird Audio Detection
+
 ## Courses
 
 ### [INF121](https://github.com/jonnor/bike-sharing-oslo)
@@ -24,11 +30,12 @@ At Norwegian University of Life Sciences ([NMBU](https://nmbu.no)).
 
 ### [INF230](./inf230)
 
-### DAT390
+### [DAT300](./dat300)
 
-### DAT300
+### [DAT390](./dat390)
 
-## Interesting specializations
+
+## Potential courses
 
 Techniques: Intelligent embedded systems, robotics, computer vision, simulation.
 Applications: Renewable energy, sustainability, automation/processindustry
@@ -79,15 +86,16 @@ Foundations
 
 [Positions in Norway](https://www.finn.no/job/fulltime/search.html?occupation=0.13&q=data)
 
-Topics
+Research interests
 
-* Robotics
 * Sustainability
-* Renewable energy
-* Internet of Things, Embedded Systems
-* Automation.
-* CAD/CAM
-* Blockchain
+* Circular economy. Recycling, waste-management
+* Understanding and predicting impacts (economic,social,environmental)
+* Energy production. Renewable energy
+* Embedded Systems, microcontrollers, Internet of Things. Wireless Sensor Networks. 
+* Manufacturing. Low-scale automation. Cheap robotics and deployment.
+* CAD/CAM. Digital fabrication.
+* Agriculture, food-production
 
 
 ## Ideas
@@ -111,17 +119,13 @@ Machine learning
 * Assist in reverse engineering of protocols, for example for machine control (Shopbot,Redsail).
 Record input, output pairs. Change input parameters, find corresponding change in output.
 
-Larger projects, potentially novel
-
-* Machine-vision-assisted construction of CAD models. Reverse engineering
-[smart-cad](https://github.com/jonnor/projects/tree/master/smart-cad).
-Bunch of research already done, both planar models.
-Maybe possible to focus on making more practical via smartphone camera
 
 * Automation of CAM paths for maximizing material usage and waste management. Machine-vision
 Automatic part layout of useful parts in remainder of cutsheet for CNC/laser.
 Automatic creation of cutlines to discard pieces smaller than w,h.
 Can a greedy algorithm perform well for part layout, ie does the problem have optimal substructure?
+
+Electronics, EDA
 
 * Component-based PCB autolayout & routing
 Reusable modules with pre-laidout schematic/board snippets for a given functionality.
@@ -161,25 +165,10 @@ Generate from the CAM files the expected load conditions and compare it continio
 * [Tool breakage detection in CNC high-speed milling based in feed-motor current signals](https://link.springer.com/article/10.1007/s00170-010-2907-9). 
 * [Prediction of Cutting Force in 3-Axis CNC Milling Machines Based on Voxelization Framework for Digital Manufacturing](https://ac.els-cdn.com/S2351978915010227/1-s2.0-S2351978915010227-main.pdf?_tid=abd03b3c-bcf8-419f-8e85-6b3b5870b1e8&acdnat=1521660091_5873ea8ff3d1ea396b558157776a4981)
 
-Big themes
-
-Sustainability
-
-* Energy production
-* Recycling, waste-management
-* Manufacturing, low-scale automation. Cheap robotics and deployment. CAD/CAM improvements
-* Agriculture, food-production
-* Understanding and predicting impacts (economic,social,environmental)
-
 
 ## Publishing
 
 [Open Hardware Journal](https://openhardware.metajnl.com/about/#hardware-metapapers)
-
-Is TapeCore/Doverail/fabricatable-machines publishable in Open Hardware Journal?
-Could I do the work as a 5-point self-organized topic (ie in robotics)?
-Can/should I use NMBU as affiliation? Would they sponsor the publishing costs?
-Would/should there be research uses at NMBU for testing practical application?
 
 [Brage @ NMBU](https://www.nmbu.no/en/about-nmbu/library/publishing/brage). Open Access publishing for NMBU affiliates. 
 Note: NMBU operates an internal publishing fund for Open Access publications, up to 15k NOK for publication.
@@ -188,7 +177,26 @@ Note: NMBU operates an internal publishing fund for Open Access publications, up
 
 [Hackaday Journal](https://journal.hackaday.io/submissions). Possiblity of presenting at the Hackaday Superconference.
 
-[Modelling, Identidication and Control](http://www.mic-journal.no/), Nordic journal. Open Access.
+[Modelling, Identification and Control](http://www.mic-journal.no/), Nordic journal. Open Access.
+
+
+Research relevant Journals
+
+* [Journal listing search](https://newcatalog.library.cornell.edu/catalog?utf8=%E2%9C%93&f%5Bformat%5D%5B%5D=Journal%2FPeriodical&q=wireless+sensor+network&search_field=all_fields)
+* MDIP Sensors journal. 15'000 NOK article processing fee.
+[Algorithm and Distributed Computing for the Internet of Things](http://www.wikicfp.com/cfp/servlet/event.showcfp?eventid=74395&copyownerid=54155). Nov 30, 2018
+[ Green, Energy-efficient and Sustainable Networks](http://www.wikicfp.com/cfp/servlet/event.showcfp?eventid=78650&copyownerid=24832). Jan 15, 2019.
+* Wireless Communications and Mobile Computing.
+[The Green Internet of Things (G-IoT)](http://www.wikicfp.com/cfp/servlet/event.showcfp?eventid=67602&copyownerid=5416).
+2 November 2018.
+* IEEE IoTJ.
+* [International Journal of Sensors and Sensor Networks](http://www.sciencepublishinggroup.com/journal/index?journalid=130)
+* [American Journal of Embedded Systems and Applications](http://www.sciencepublishinggroup.com/journal/index?journalid=236)
+* [International Journal of Distributed Sensor Networks](http://journals.sagepub.com/home/dsn/)
+* [IEEE IET Wireless Sensor Systems](https://ieeexplore.ieee.org/xpl/RecentIssue.jsp?punumber=5704589)
+* [InderScience International Journal of Embedded Systems](http://www.inderscience.com/jhome.php?jcode=ijes#topics2).
+Embedded machine learning, deep learning and artificial Intelligence. Bi-monthly.
+* [EURASIP Journal on Embedded Systems](https://jes-eurasipjournals.springeropen.com/)
 
 ## Conferences
 
@@ -196,34 +204,43 @@ Lists
 
 * [WikiCFP](http://www.wikicfp.com/cfp/call?conference=computer%20science). Loots
 
+Research relevant
+
+* [IEEE FRUCT 2018 : 23nd Conference of Open Innovations Association FRUCT](http://www.wikicfp.com/cfp/servlet/event.showcfp?eventid=74534&copyownerid=98795). Sep 14, 2018. Bologna, Italy
+* [IEEE IRC 2019 : Third IEEE International Conference on Robotic Computing](http://www.wikicfp.com/cfp/servlet/event.showcfp?eventid=77145&copyownerid=66527). Oct 5, 2018. Naples, Italy
+* [ISCSAI 2018 : 2018 International Symposium on Computer Science and Artificial Intelligence](http://www.wikicfp.com/cfp/servlet/event.showcfp?eventid=66819&copyownerid=55425). Nov 1, 2018. Hong Kong
+* [ICUIA 2019 : International Conference on Urban Intelligence and Applications](http://www.wikicfp.com/cfp/servlet/event.showcfp?eventid=78038&copyownerid=121110). Nov 15, 2018. Wuhan, China
+* [ICIAE 2019 : The 7th IIAE International Conference on Industrial Application Engineering 2019 ](http://www.wikicfp.com/cfp/servlet/event.showcfp?eventid=74231&copyownerid=58584). Nov 23. Kitakyushu, Japan
+* [ICETI 2018 : 2018 3rd International Conference on Engineering and Technology Innovations](http://www.wikicfp.com/cfp/servlet/event.showcfp?eventid=66872&copyownerid=55425). Nov 5, 2018
+
+Digital fabrication, Open source hardware
+
 * Fablab conference. July. FAB14 in France, http://www.fab14.org/
 * Open Source Hardware conference.
-* FOSDEM. February, Brussels
-* Libre Graphics Meeting. 2018, Seville
-* Linux Audio Conference. 2018, June, Berlin
-* [EuroPython 2018](https://ep2018.europython.eu/), Edinbourgh, July. CFP opens in March/April.
-* EuroSciPy 2018. August 28 - September 1, Trento, Italy. CFP not open as of March
-* Vipimage. 2018 not announced yet
 
-Open source
+Open source software
 
 * Open Source Summit Europe 2018. Oct 22-24, Edinbourgh.
 [CFP until June 30](https://events.linuxfoundation.org/events/open-source-summit-europe-2018/program/cfp/)
+* FOSDEM. February, Brussels
+
+Python
+
+* EuroPython.
+* EuroSciPy. 2018. August 28 - September 1, Trento, Italy.
 
 Embedded
 
 * Embedded Linux Conference Europe. [CFP until June 30](https://events.linuxfoundation.org/events/elce-2018/program/cfp/)
 * [ECDA 2018](https://euads.org/events/ecda-2018/). European Association for Data Science. Paderborn, Germany, 4th – 6th July, 2018.
 
+Audio
 
-Computer vision
-
-* European Conference on Computer Vision. [2018](https://eccv2018.org/dates/), September, Munich
+* Linux Audio Conference.
 
 Signal processing
 
-* DAFX. 2018, September, Aveiro Portugal.
-[CFP March 29](https://www.mail-archive.com/sursound@music.vt.edu/msg09198.html)
+* DAFX. 2018, September, Aveiro Portugal. [CFP March 29](https://www.mail-archive.com/sursound@music.vt.edu/msg09198.html)
 
 
 ## Inbox
@@ -245,24 +262,8 @@ Lectures
 * [Statistical Computing for Scientists and Engineers, U.Notre Dame](https://www.zabaras.com/statisticalcomputing).
 Dense syllabus: from Bayesian Statistics, many Monte Carlo methods, and Uncertainty Quantification.
 
-Web
+Big challenges
 
-* [Relationship between Ridge regression and PCA regression](https://stats.stackexchange.com/questions/81395/relationship-between-ridge-regression-and-pca-regression)
-* [Relationship between SVD and PCA. How to use SVD to perform PCA?](https://stats.stackexchange.com/questions/134282/relationship-between-svd-and-pca-how-to-use-svd-to-perform-pca)
-* [How Are Principal Component Analysis and Singular Value Decomposition Related](https://intoli.com/blog/pca-and-svd/)
-* [pandas](http://pandas.pydata.org/), Python package for analysing large amounts of data
-* [Clever Machines Learn How to Be Curious](https://www.quantamagazine.org/clever-machines-learn-how-to-be-curious-20170919/).
-Rewarding agents for curiosity, exploring their environment and preferring actions which they can least confidently predict.
-In this way being able to learn to perform tasks without predefined goal and associated cost function.
-* [Feature Visualization: How neural networks build up their understanding of images](https://distill.pub/2017/feature-visualization/).
-Starting with feeding in noise, and then optimizing the response for some parameter (neuron, channel, logits.).
-Discusses this approach versus finding representative examples in a dataset.
-Using a 'diversity' term to optimization objective that pushes multiple examples to be different from eachother.
-Optimizing for pairs of neurons, interpolating between them.
-Discussed multiple existing approaches to regularization of the model to give representative results.
-Broadly classified into: Frequency penalization, transformation robustness, learned priors.
-Can also use preconditioning: transformations on the gradient. Can give good results in fewer steps, and reduces high-frequency impact
-Paper presentation: Nice semi-interactive image galleries where one can adjust parameters and it gives results at that combo.
 * [Eliezer Yudkowsky – AI Alignment: Why It's Hard, and Where to Start](https://www.youtube.com/watch?v=EUjc1WuyPT8).
 Utility functions for intelligent agent behavior, challenges and ways to deal with.
 Recent work in progress:
@@ -279,6 +280,9 @@ Recent completed work:
 AXAI. How to create an AGI given unbounded computation. Paper: Universal Algorithmic Intelligence
 Intelligent software agent cooperation. Program Equilibrium in the Prisoners Dilemma via Lobs Theorem.
 Probabilitic game theory. Paper: Reflective oracles.
+
+Robotics
+
 * [Deep reinforcement for robotics](https://www.facebook.com/nipsfoundation/videos/1554594181298482)
 Reinforcement learning is different from supervised methods. The agent observes its environment and performs actions on it.
 It observes the outcome of its actions and compares this with desired outcome.
@@ -302,29 +306,21 @@ Detailed and well explained use of A* for pathfinding in games, including practi
 Chosing heuristics function, its values. Tie breaking, data structures, making behavior interesting
 * [Visual foresight](https://sites.google.com/view/visual-foresight).
 Robots using real-time predictions of the visual/camera stimuly to learn how to perform tasks.
+
+Computer vision
+
 * [Bilateral_Filtering](http://homepages.inf.ed.ac.uk/rbf/CVonline/LOCAL_COPIES/MANDUCHI1/Bilateral_Filtering.html).
 When performed in CIE-Lab gives very natural blurring, not introducing new colors. Also preserves edges and shadows well.
 Can be applied iteratively, which effectively reduces the amount of colors present. Reducing/removing texture.
 Could be used as a pre-processing step to color quantize an image? 
+
+Efficiency
+
 * [Optimizing fixed-point FIR filters](https://se.mathworks.com/help/dsp/examples/optimized-fixed-point-fir-filters.html),
 by quantizing filter coefficients.  
 * [dspguru FIR implementation](https://dspguru.com/dsp/faqs/fir/implementation/), some tricks in C
 * [TIIR filters](https://ccrma.stanford.edu/~jos/tiirts/TIIR_Filters.html), truncated IIRs.
 Using two IIRs to get the response of an FIR filter, but with fewer calculations.
-* Search a problemsolving for fully-observable,deterministic,known environments.
-Solution is a sequence of actions that lead to the goal.
-`SMA*`, simplified memory-limited A* graph search. Optimal with *admissible* heuristic, and a robust solution for many problems.
-Challenge is in defining a good heuristic function (and meaningful path distances).
-Must be non-negative, never overestimate, respect 'triangle equality', and h(goal) = 0.
-The heuristic determines overall performance, and can be evaluated by looking at the effective branching factor on example problems.
-How many nodes are evaluated versus path length to reach a solution. Should be quite small.
-One method for developing heuristic is to transform the problem to a simplified version, by removing restrictions/rules.
-If the problem is defined in a formal language, it is possible to automatically derive such simplified versions.
-One can use a composed heuristic function which takes the max of a family of heuristic functions.
-Heuristics can also be made using a database of solutions to subproblems.
-Heuristics can be learned by creating a prediction model between feature(s) of a state and the distance to the goal.
-When using multiple features, often use linear weighted combinations to get one number. 
-= Chapter 3, AI A Modern Approach. 
 
 Dealing with lack of (labeled) data
 

@@ -47,27 +47,28 @@ Interests
 
 ### [DAT390](./dat390)
 
+### TMPP350C
+
+### TIP360
 
 ## Potential courses
 
-Construction
+Product development
 
-* [TIP360 Digital produksjon og designteknologi 3](https://www.nmbu.no/emne/TIP360) January, 5p, . pass/no, project. !requires TIP260
-* [TIP200 Produktutvikling og produktdesign med 3D](https://www.nmbu.no/emne/tip200). Autumn, 10p. Project-based evaluation
+* [TIP301 Idéutvikling og idéverifisering](https://www.nmbu.no/emne/TIP301). January, 5p. Manual signup. pass/no, project.
+* [IND300 Eksperter i team](https://www.nmbu.no/emne/IND300). Janary, 5p. Project report. Limited slots.
+* [INN355 Maskinlæring for optimalisering av forretningsprosesser](https://www.nmbu.no/emne/INN355). Spring. 5p with DAT200, else 10p. 2 projects, groups of 4.
+* [INN350 Digitalisering og digitale forretningsmodeller](https://www.nmbu.no/emne/INN350). Autumn, 10p. 3 projects, groups of 4.
 
-Robotics
 
+Distributed systems
 
-* [TEL250 Introduction to robotics and automation](https://www.nmbu.no/emne/TEL250). January block. 5p
-* [TMPP350C Prosessregulation](https://www.nmbu.no/emne/TMPP350C). Pass/no, 5p, autumn seminar. !requires TEL240
-* [INF4380 - Introduksjon til robotteknologi](http://www.uio.no/studier/emner/matnat/ifi/INF4380/index.html). Spring, 10p
-* [UNIK4490 - Control of manipulators and mobile robots](http://www.uio.no/studier/emner/matnat/its/UNIK4490/index-eng.html). Autumn, 10p
-* [UNIK4570 - Robust multivariabel regulering](http://www.uio.no/studier/emner/matnat/its/UNIK4570/index.html)
 * [UNIK4950 - Multiagent-systemer](http://www.uio.no/studier/emner/matnat/its/UNIK4950/index.html). Autumn, 10p
 * [INF5040 - Åpen distribuert prosessering](http://www.uio.no/studier/emner/matnat/ifi/INF5040/index.html). Autumn, 10p
 
 Computer vision
 
+* [GMGI300 Geografiske databasesystemer](https://www.nmbu.no/emne/GMGI300). Autumn, 10p. 30% project, 60% exam.
 * [UNIK4690 - Maskinsyn](http://www.uio.no/studier/emner/matnat/its/UNIK4690/index.html). Spring. 10p. Project-based evaluation
 * [INF5860 - Maskinlæring for bildeanalyse](http://www.uio.no/studier/emner/matnat/ifi/INF5860/index.html). Spring. 10p.
 * [UNIK4590 - Pattern Recognition](http://www.uio.no/studier/emner/matnat/its/UNIK4590/index-eng.html). Autumn, 10p
@@ -75,21 +76,16 @@ Computer vision
 Renewable energy
 
 * [FYS375 Energy Technology](https://www.nmbu.no/emne/FYS375), lab-oriented
-* [FORN200 Renewable Energy](https://www.nmbu.no/emne/FORN200). Autumn, 10p
-* [FORN330 Renewable Energy analysis](https://www.nmbu.no/emne/FORN330). Autumn, 10p
 * [UNIK4800 - Renewable Energy: science and technology](http://www.uio.no/studier/emner/matnat/its/UNIK4800/index.html). Autumn, 10p
 * [UNIK4830 - Solenergisystemer](http://www.uio.no/studier/emner/matnat/its/UNIK4830/index.html). Spring, 10p
 * [INF5870 - Energiinformatikk](http://www.uio.no/studier/emner/matnat/ifi/INF5870/index.html). Spring, 10p. Project and oral exam
 * [UNIK4820 - Energisystemanalyse: Modellering, metoder og scenarioer](http://www.uio.no/studier/emner/matnat/its/UNIK4820/index.html). Spring,10p
 
-Foundations
+Scientific
 
 * [MNKOM4000 - Formidling og vitenskapsjournalistikk](http://www.uio.no/studier/emner/matnat/ibv/MNKOM4000/index.html). Pass/not, 10p, weekly tasks. Spring
 * [UNIK4660 - Visualisering av vitenskapelige data](http://www.uio.no/studier/emner/matnat/its/UNIK4660/index.html)
 * [IN5000 - Qualitative Research Methods](http://www.uio.no/studier/emner/matnat/ifi/IN5000/index.html)
-* [TMP261 Varme og strømningssimulering](https://www.nmbu.no/emne/TMP261)
-* [FYS251 Varmeoverføring og energi](https://www.nmbu.no/emne/fys251)
-* [STAT210 Design of Experiments and Analysis of Variance](https://www.nmbu.no/course/STAT210). 5p, August block
 
 
 ## PhD

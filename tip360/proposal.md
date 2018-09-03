@@ -14,22 +14,30 @@ in agricultural, rural and urban environments.
 ## Motivation
 
 Recent advances in Machine Learning, both generally and on audio data specifically,
-means that more information of.
-However such methods require a large amounts of varied data in order to perform well.
+means that more information can be extracted from sound data and acoustic phenomenons.
+However such methods require very large amounts of varied data in order to perform well,
+often missing to support usecases.
+Today most data in agriculture and environmental areas are both collected and analyzed manually.
+The labour-intensive nature means that sensors are only available occationally,
+giving poor data coverage of common events and often missing rare phenomena (like disease) completely.
 
-Once deployed a Wireless Sensor Network will collect and transmit data automatically and regularly.
-This makes it feasible to aquire the data in a cost-effective manner.
-Futhermore the data can be processed and analysed online, to generate information for decision making that is always up to date.
-
+A Wireless Sensor Network will, once deployed, collect and transmit data automatically and regularly.
+This makes it feasible to aquire the large amount and range of data that is needed in a cost-effective manner.
+Futhermore the data can be processed and analysed online, to generate easily available information that is always up to date.
+This way it can assist in everyday decision making.
 
 ## Project Partners
+
+Norwegian University of Life Sciences (NMBU) is Norway leading university
+in food, environmental protection and sustainable use of natural resources.
+NMBU participates in many research project that aims to bring improvements to the agricultural industry.
+One such project is the Future Farm project, where an industry participant has expressed interest
+in using acoustic sensors for monitoring livestock in poultry farming.
 
 Nordby Technology A/S is a technology company that creates and invests in software and electronics to build IoT solutions.
 Current subsidiaries include Flowhub UG, a Software-as-a-Service company that provides software development tools for IoT.
 The company now wishes to evaluate the technical feasibility of wireless acoustic sensors combined with audio analytics based on machine learning. 
 
-NMBU
-Future Farm project
 
 ## Deliverables
 The main deliverable is a Design Document which specifies:
@@ -81,8 +89,8 @@ An additional set of persons are available for advice, but not allocated to the 
 
 | Person | Expertise | Background |
 | ------------------------------ |
-| Koka Nikoladze | Sound perception | PhD candidate,  |
-| Jens Brynhildsen | Device networks | Lecturer machine2machine communication, Westerdalhs |
-| Trygve Laugstol | Electronics | Lead Engineer, Trygvis IO A/S (Engineering services) |
-| | IoT product design | CEO, Plaato A/S (IoT brewing sensors) |
+| Koka Nikoladze | Sound perception | PhD candidate, Norwegian Academy of Music |
+| Jens Brynhildsen | Device networks | Lecturer, machine2machine communication, Westerdals |
+| Trygve Laugstol | Electronics | Lead Engineer, Trygvis IO A/S (IoT engineering services) |
+| Paal Ingebretsen | IoT product design | CEO, Plaato A/S (IoT brewing sensors) |
 

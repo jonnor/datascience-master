@@ -17,36 +17,68 @@ Outputs
 * One or more demonstrations (video, in browser)
 * Report(s) published as HTML
 * Presentation given for Data Science class
-* A set of blogpost covering the topic
+* Couple of blogposts
 
-## Topic ideas
+## Topic
 
-* Machine hearing. Machine learning on audio data. See [DCASE2018 work](../dcase2018).
+[Machine hearing](../machinehearing). Machine learning on audio data.
+
+* Speech recognition
+* Music Information Retrieval
+* Acoustic event detection, natural/everyday sounds
+
+## Scope
+
+Focus on: Acoustic Event Detection. Animals. ecoacoustics/bioacoustics
+
 Focus on: Robust methods, can be used in real-life noisy environments.
 Efficient methods, can be implemented in embedded system.
-* ?
+
+Activities:
+ML model based on existing data (DCASE2018)
+Implement in C for microcontroller
+Demo: detect birdsong live
+NOT? collect own data
+MAYBE? comparative study AED methods, on micro/birdsong
+
 
 ### Machine hearing
 
 Applications/usecases
-Summary of current situation (where is state-of-the-art, wrt where should go)
+
+Summary of current situation.
+What can be done using state-of-the-art?
+Open problems, areas of research 
 
 (skippable) What is sound / how does it work
 (skippable) What is machine learning
 
 Overview of audio features
 Criterias for good features
+Data sources
 Data augmentation
-Example/typicall processing pipelines
+Example/typical processing pipelines
 
 Practical considerations
 
 ## Timeline
 
-    June,July.
-        Literature/background review, ecoaucoustics/bioacoustics, bird detection, DCASE2018
+    June,July,Aug. 120 hours
+        Literature/background review, ecoacoustics/bioacoustics, bird detection, DCASE2018
 
     September
+        Sept15. DCASE2018 results published
+    October
+        ? Presentation
     November
-    December
+        ? Report
 
+Hours budgeting
+
+    20 fixup birddetect model/software
+    20 demo hardware
+    20 prepare presentation
+    20 write report
+
+    20 literature
+    50 compare methods

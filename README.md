@@ -47,11 +47,11 @@ Interests
 
 ### [DAT390](./dat390)
 
-### TMPP350C
-
-### TIP360
+### [TIP360](./tip360)
 
 ## Potential courses
+
+! Still missing 5 sp in 3xx level!
 
 Product development
 

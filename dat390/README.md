@@ -12,11 +12,12 @@ Prepare for master thesis work
 * Build background knowledge
 * Ideas for usecase/case-study in thesis
 
-Outputs
+## Outputs
 
-* One or more demonstrations (video, in browser)
+* Nov15: Presentation given for Data Science class
+* Dec 1: Finished report
+* One or more demonstrations (video/browser)
 * Report(s) published as HTML
-* Presentation given for Data Science class
 * Couple of blogposts
 
 ## Topic
@@ -25,7 +26,7 @@ Outputs
 
 * Speech recognition
 * Music Information Retrieval
-* Acoustic event detection, natural/everyday sounds
+* **Acoustic event detection**
 
 ## Scope
 
@@ -35,14 +36,21 @@ Focus on: Robust methods, can be used in real-life noisy environments.
 Efficient methods, can be implemented in embedded system.
 
 Activities:
-ML model based on existing data (DCASE2018)
-Implement in C for microcontroller
-Demo: detect birdsong live
-NOT? collect own data
-MAYBE? comparative study AED methods, on micro/birdsong
 
+* ML model based on existing data (DCASE2018)
+* Implement ML model in C for microcontroller
+* ?Demo: detect birdsong live
+* MAYBE? comparative study AED methods, on micro/birdsong.
+Spectrogram summarizations.
+Feature learning on spectrogram.
+Shallow neural networks.
+Deep-learning. CNN
 
-### Machine hearing
+Out of scope
+
+* Collect own data
+
+### Machine hearing overview
 
 Applications/usecases
 
@@ -72,6 +80,8 @@ Practical considerations
         ? Presentation
     November
         ? Report
+    December
+        Report delivered
 
 Hours budgeting
 

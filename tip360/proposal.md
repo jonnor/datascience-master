@@ -1,5 +1,6 @@
 
-# Design of a Wireless Sensor Network for acoustic monitoring of animal livestock and wildlife
+# Design of a Wireless Sensor Network for acoustic monitoring
+with applications to animal livestock and wildlife
 
 A Wireless Acoustic Sensor Network (WASN) is a Wireless Sensor Network (WSN)
 where each sensor node captures audio data and transmits the acoustic information

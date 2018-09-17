@@ -27,6 +27,35 @@ This is generaly out-of-scope, but it may be relevant to comment briefly on this
 * Audio coding.
 * Network topology. Mesh,Star. Routing, Flooding
 
+### Requirements for machine learning
+Definition. Care about accurate detection/inference/prediciton
+Raw audio needed for evaluation/verification, and supervised learning. While developing.
+Calibrate/adjust existing classifications. Report probabilities, not just thresholded decison/class?
+
+Capturing other sensor modalities may also benefit. Picture,vibration
+
+Application specific requirements.
+
+How often to collect samples
+How long samples to collect
+Analysis window
+Frame length
+Maximum latency for analysis output
+Transmission/upload period
+How much raw data to persist
+Type of audio detection problem. Event,scene classification. Event detection. Speaker/individual identification.
+Precision of event in time
+Source localization. Direction, distance
+Acoustic challenges. Polyphony,reverberation
+
+
+
+### Data compression
+What is a good compression scheme for specrograms?
+Should they be recorded/transmitted raw, or after applying normalization? 
+Maybe store RMS and median/mean alongside?
+What kind of lossy compressions can be tolerated, if any?
+
 ## Literature
 
 

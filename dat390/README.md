@@ -37,9 +37,8 @@ Efficient methods, can be implemented in embedded system.
 
 Activities:
 
+* Summarizing existing 
 * ML model based on existing data (DCASE2018)
-* Implement ML model in C for microcontroller
-* ?Demo: detect birdsong live
 * MAYBE? comparative study AED methods, on micro/birdsong.
 Spectrogram summarizations.
 Feature learning on spectrogram.
@@ -49,6 +48,7 @@ Deep-learning. CNN
 Out of scope
 
 * Collect own data
+* Implementing on microcontroller
 
 ### Machine hearing overview
 

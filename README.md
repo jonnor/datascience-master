@@ -169,6 +169,10 @@ Generate from the CAM files the expected load conditions and compare it continio
 Note: NMBU operates an internal publishing fund for Open Access publications, up to 15k NOK for publication.
 
 [ArXiv](https://arxiv.org). Pre-print / working paper publishing. Widely used open/free source of papers.
+Interesting subs
+Machin learning: `cs.LG`, `stat.ML`
+Audio, speech processing: `eess.AS`
+Computer vision: `cs.CV`, `eess.IV` 
 
 [Hackaday Journal](https://journal.hackaday.io/submissions). Possiblity of presenting at the Hackaday Superconference.
 
@@ -340,4 +344,9 @@ Example: [librosa sound augmentation](https://www.kaggle.com/huseinzol05/sound-a
 * Weak supervision. [Data Programming](http://dawn.cs.stanford.edu/pubs/snorkel-nips2016.pdf)
 generates labels that are noisy and possibly conflicting, then learns the inaccuracies.
 
+Deep learning
 
+* [Self-normalizing neural network](https://arxiv.org/abs/1706.02515) (SNN). SELU activation function and suitable normalization
+avoid need for batch-normalization. Faster and smoother convergence during training. Weights centered around 0.
+Designed for FNN, but can also be used with CNN. [CIFAR-10 example](https://github.com/bioinf-jku/SNNs/blob/master/Keras-CNN/CIFAR10-Conv-SELU.py)
+* [Dense Convolutional Networks](https://arxiv.org/pdf/1608.06993.pdf). Each layer gets all previous layers as input. Gives SOFA results over ResNet on CIFAR-100.

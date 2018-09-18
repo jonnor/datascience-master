@@ -15,9 +15,9 @@ This is generaly out-of-scope, but it may be relevant to comment briefly on this
 
 ## Terms
 
-* Wireless Sensor Network.
-* Wireless acoustic sensor networks.
-* Wireless multimedia sensor networks.
+* Wireless Sensor Network. WSN
+* Wireless acoustic sensor networks. WASN
+* Wireless multimedia sensor networks. WMSN
 
 ## Topics
 
@@ -26,6 +26,8 @@ This is generaly out-of-scope, but it may be relevant to comment briefly on this
 * On-edge machine learning.
 * Audio coding.
 * Network topology. Mesh,Star. Routing, Flooding
+* Processing power, memory requirements
+* Energy source
 
 ### Requirements for machine learning
 Definition. Care about accurate detection/inference/prediciton
@@ -52,9 +54,37 @@ Acoustic challenges. Polyphony,reverberation
 
 ### Data compression
 What is a good compression scheme for specrograms?
-Should they be recorded/transmitted raw, or after applying normalization? 
+Should they be recorded/transmitted raw, or after applying normalization?
 Maybe store RMS and median/mean alongside?
 What kind of lossy compressions can be tolerated, if any?
+
+Log transform should compress the range a bit. Has also been shown to be beneficial
+A COMPARISON OF AUDIO SIGNAL PREPROCESSING METHODS
+FOR DEEP NEURAL NETWORKS ON MUSIC TAGGING
+
+Robust Features in Deep-Learning-Based Speech Recognition 
+https://www.researchgate.net/publication/320732977_Robust_Features_in_Deep-Learning-Based_Speech_Recognition
+Cepstral mean normalization, mean variance normalization
+
+Comparing Time-Frequency Representations for
+Directional Derivative Features
+https://www.researchgate.net/publication/269097301_Comparing_Time-Frequency_Representations_for_Directional_Derivative_Features
+Found cube-root compression to be good, both on Gammatone and Mels
+Using Directional Derivative Features, from a Steerable Pyramid Filter-bank.
+A generalization of delta-features for arbitrary angles.
+
+
+### Energy source
+Very little sun power in Norway during winter.
+Can a battery last all the winter through?
+At a cost,size where it is still advantageous
+
+Battery temperature range
+Self-discharge rate
+
+Li-ion. Self-discharge rate 5%. Can be operated below 0, but not charged
+https://electronics.stackexchange.com/questions/263036/why-charging-li-ion-batteries-in-cold-temperatures-would-harm-them
+https://en.wikipedia.org/wiki/Lithium-ion_battery#Uses
 
 ## Literature
 
@@ -164,7 +194,29 @@ consumption sharing while causing only minimal degradation of the quantity of th
 [Linear Prediction for data compression and recovery enhancement in Wireless Sensors Networks](https://ieeexplore.ieee.org/document/7577156/).
 Zakia Jellali, 2016. Linear Prediction Coding (LPC) as a sparsifying transform. Orthogonal Matching Pursuit (OMP) CS algorithm is used for original data recovery.
 
+### Compressed sensing
+Aka compressive sensing.
+
+Applications in MRI, 3d-imaging, hyperspectral imaging, ultrasound imaging.
+DiffuserCam, [Lensless single exposure 3d-imager](http://nuit-blanche.blogspot.com/2017/10/diffusercam-lensless-single-exposure-3d.html).
+[3d-ultrasound with single sensor](http://nuit-blanche.blogspot.com/2017/12/compressive-3d-ultrasound-imaging-using.html)
+
 [Introduction to Compressed Sensing](http://www.dfg-spp1324.de/download/preprints/preprint093.pdf). !!
+
+[Compressed Sensing: The big picture](https://sites.google.com/site/igorcarron2/cs).
+Acquiring and recovering a sparse signal in the most efficient way possible (subsampling) with the help of an incoherent projecting basis.
+Buildling sensing hardware that can directly produced such compressed signals.
+Sparse means signal of interest is compressible. Challenge: Need to know with which family of functions it is sparse.
+Fourier,polynomials,wavelets.
+Many approaches to finding sparse representations/sparse dictionaries. Page lists 11.
+Donoho-Tanner phase transition diagram, tool for evaluating whether a signal is compressible with an L1 solver.
+Lists a set of 10 different conditions needed to enable sparse recovery.
+Lists some 40 different solvers, until 2013.
+
+[Convolutional Dictionary Learning: A Comparative Review and New Algorithms](https://arxiv.org/abs/1709.02893). 2018.
+
+[Single-sensor multispeaker listening with acoustic metamaterials](http://people.duke.edu/~yx35/reprints/Cocktail_party_listener_PNAS2015.pdf)
+Hardware approach to multi-source separation. Using 3d-printed waveguides, single sensor.
 
 [Compressive Sensing](https://link.springer.com/referenceworkentry/10.1007%2F978-0-387-92920-0_6). 2011.
 Introduction and overview on both theoretical and numerical aspects of compressive sensing
@@ -192,6 +244,18 @@ Energy-saving audio data compression technique for WMSN combining wavelet liftin
 [Effect of downsampling and compressive sensing on audio-based continuous cough monitoring](https://ieeexplore.ieee.org/abstract/document/7319816/). 2015. 98% at full rate. Undersampling to 400Hz 90%. Sampling with compressive sensing at 100Hz also 90%.
 
 [Compressive Sensing in Acoustic Imaging](https://link.springer.com/chapter/10.1007/978-3-319-16042-9_6). Part of book Compressed Sensing and its Applications. Covers Nearfield acoustic holography (NAH), Active sonar, medical ultrasound imaging.
+
+[A Comparative Study of Audio Compression Based on Compressed Sensing and Sparse Fast Fourier Transform (SFFT): Performance and Challenges](https://arxiv.org/abs/1403.3061).
+References two other papers about compressed sensing in audio compression.
+To obtain exact recovery, the rule of thumb is to apply incoherent sampling and taking measurements 4 times the sparsity level of the signal.
+Orthogonal Matching Pursuit one algorithm for doing recovery.
+Sparse Fast Fourier Transform can transform in sub-linear time.
+Binning Fourier coefficients into a small number of buckets.
+The recovery process reduces to extracting the location of the non-zero (index) elements in the matrix A
+and use them to order the sparse K signal, embed zeros in the other locations and perform inverse FFT.
+Considerably simpler than the general compressed sensing case.
+Propose an innovative way to embed the indices in the extracted largest frequency bins to relax the need for extra coded values.
+! Only tested on a single, unspecified audio file, 15 seconds long.
 
 [A compressive beamforming method](https://ieeexplore.ieee.org/abstract/document/4518185/). Direction of Arrival estimation.
 

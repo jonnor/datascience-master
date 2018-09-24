@@ -1,6 +1,10 @@
 
 # Machine Learning 2
 
+## TODO
+
+* Implement DNN/MLP inference in C for embedded. `emnet`?
+
 
 ## CNN
 

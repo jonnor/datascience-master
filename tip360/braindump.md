@@ -267,3 +267,21 @@ NRF52840 supports BLE5.0 long range at 125kbps. Up to 1km range.
 [bt832x](http://www.fanstel.com/bt832x-bluetooth-5-module) NRF52832 board with 1km range.
 
 https://www.digikey.no/product-detail/en/nordic-semiconductor-asa/NRF6936/1490-1061-ND/7175577
+
+
+GOOUUU TECG IOT-GA6 is not same as AI Thinkerer GA6, but can be reflashed
+https://github.com/vshymanskyy/TinyGSM/issues/164
+Might be better to go for SIM808 or SIM900A module in future.
+Alternatively try to get one of the proper modules.
+https://www.aliexpress.com/item/A6-Mini-GSM-GPRS-Development-Quad-band-Board-SMS-Audio-Board-5V-Replace-SIM800L/32756414108.html
+https://www.aliexpress.com/item/A6-GPRS-GSM-Module-Adapter-Board-Plate-Quad-band-850-900-1800-1900MHZ-Antenna-F/32729084036.html
+
+Note: TinyGSM says only some modules support TLS/HTTPS.
+Test that this works with native TLS stack in ESP32/ESP8266, both for HTTPS and MQTTS.
+Amazon IoT requires TLS1.2 with certificates
+https://github.com/vshymanskyy/TinyGSM/issues/136
+Ublox SARAU201 seems to have such support on device
+
+Other alternative is to use modem in PPP mode. PPPoS = PPP over serial
+Should be possible with ESP32 and esp-idk, https://github.com/loboris/ESP32-PPPOS-EXAMPLE
+

@@ -7,7 +7,8 @@ Independent study in chosen topic in Data Science
 
 Prepare for master thesis work
 
-* Get comfortable executing machine learning research
+* Get comfortable executing machine learning research.
+Comparing model alternatives. Accuracy, training time, inference time, data requirements
 * Setup and test workflow for report writing and publishing
 * Build background knowledge
 * Ideas for usecase/case-study in thesis
@@ -52,25 +53,8 @@ Out of scope
 2. Comparative study AED methods. On birdsong, DCASE2018 dataset
 
 ## Report outline
-[](./report.md)
+[Report](./report.md)
 
-Applications/usecases
-
-Summary of current situation.
-What can be done using state-of-the-art?
-Open problems, areas of research 
-
-(skippable) What is sound / how does it work
-(skippable) What is machine learning
-
-Overview of audio features
-Criterias for good features
-
-Data sources
-Data augmentation
-Example/typical processing pipelines
-
-Practical considerations
 
 ## Timeline
 

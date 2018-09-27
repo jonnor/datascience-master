@@ -24,33 +24,35 @@ Prepare for master thesis work
 
 [Machine hearing](../machinehearing). Machine learning on audio data.
 
-* Speech recognition
-* Music Information Retrieval
 * **Acoustic event detection**
+* (Speech recognition)
+* (Music Information Retrieval)
 
 ## Scope
 
-Focus on: Acoustic Event Detection. Animals. ecoacoustics/bioacoustics
+Focus on
 
-Focus on: Robust methods, can be used in real-life noisy environments.
-Efficient methods, can be implemented in embedded system.
+* Acoustic Event Detection. Animals. Ecoacoustics/bioacoustics
+* Robust methods, can be used in real-life noisy environments
+* Efficient methods, possible to implement in embedded system
 
-Activities:
+Only covered briefly
 
-* Summarizing existing 
-* ML model based on existing data (DCASE2018)
-* MAYBE? comparative study AED methods, on micro/birdsong.
-Spectrogram summarizations.
-Feature learning on spectrogram.
-Shallow neural networks.
-Deep-learning. CNN
+* Psycoacoustics
+* Biological models of sound production
 
 Out of scope
 
 * Collect own data
 * Implementing on microcontroller
 
-### Machine hearing overview
+## Activities:
+
+1. Read literature and summarizing 
+2. Comparative study AED methods. On birdsong, DCASE2018 dataset
+
+## Report outline
+[](./report.md)
 
 Applications/usecases
 
@@ -63,6 +65,7 @@ Open problems, areas of research
 
 Overview of audio features
 Criterias for good features
+
 Data sources
 Data augmentation
 Example/typical processing pipelines
@@ -72,23 +75,34 @@ Practical considerations
 ## Timeline
 
     June,July,Aug. 120 hours
-        Literature/background review, ecoacoustics/bioacoustics, bird detection, DCASE2018
-
+        Literature/background review
+        Ecoacoustics/bioacoustics
+        Introduction DCASE challenge, bird detection 
     September
-        Sept15. DCASE2018 results published
+        Finished book1
     October
-        ? Presentation
+        Finish book2
+        Write summary literature review
+        Build model comparisons
     November
-        ? Report
+        Nov15: Presentation
     December
         Report delivered
 
 Hours budgeting
 
-    20 fixup birddetect model/software
-    20 demo hardware
-    20 prepare presentation
-    20 write report
+    100 literature
+    50 implement methods, compare
 
-    20 literature
-    50 compare methods
+    30 prepare presentation
+    30 write report
+
+## TODO
+
+* Finish book. Human and 
+
+
+
+
+
+

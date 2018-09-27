@@ -64,17 +64,21 @@ Convolutional kernels
 - Source separation
 
 ## Data augmentations
-Respects invariants/properties of features
+Respects invariants/properties of features. Modelling particular challenges.
+
+- noise addition
+- volume change
+- frequency response change
 
 ## Comparative study
-On DCASE2018 bird-detection
+On DCASE2018 bird-detection challenge.
 
 Features
 
 * low-level
 * MFCC
 * melspectrogram (log?)
-* + delta frames
+* add delta frames
 * learned convolution kernels
 * combinations
 
@@ -92,7 +96,7 @@ Evaluation
 
 ## Summary
 What can be done using state-of-the-art?
-Open problems, areas of research
+Open problems, areas of research.
 Summary of current situation.
 
 

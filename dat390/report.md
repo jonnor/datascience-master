@@ -4,8 +4,10 @@
 
 - Digital recording sound
 - Acoustics
-- Psychoacoustics
-- Biological models sound production in animals
+- (Psychoacoustics)
+- (Biological models sound production in animals)
+- audio mixtures
+- tonal, percussive
 
 ## Applications
 of machine learning on sound
@@ -19,12 +21,12 @@ Connected problems and fields:
 
 ## Problems formulations
 
-Classification
-Detection
-Identifying individual
-
-Monophonic,polyphonic
-Multi-label
+- Classification
+- Detection, precise time
+- Segmentation
+- Identifying individual
+- Monophonic vs polyphonic
+- Multi-label
 
 ## Feature representations
 Criterias for good features
@@ -44,14 +46,22 @@ Summarizations on spectrograms
 Coclear models
 
 ### Wavelet based
-Wavelet filterbanks
-Scattering transform
+* Wavelet filterbanks
+* Scattering transform
 
 ### Representation learning
 Convolutional kernels
 
-### Convolutional neural networks
-Shallow, deep.
+## Models
+
+- Linear
+- Tree-based
+- CNN
+- Gaussian Mixtures, Hidden Markov Model
+
+## Pre-processing
+- Noise reduction
+- Source separation
 
 ## Data augmentations
 Respects invariants/properties of features

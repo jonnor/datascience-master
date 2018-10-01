@@ -255,6 +255,8 @@ Books
 
 * [The Elements of Statistical Learning](https://web.stanford.edu/~hastie/Papers/ESLII.pdf).
 Recommended by Kristin T. regarding classification, regression methods.
+* [The Art of Approximation in Science and Engineering](https://www.dropbox.com/s/bmqwzc8qqt5lv9p/9017.pdf?dl=1).
+* [Street-Fighting Mathematics](https://mitpress.mit.edu/books/street-fighting-mathematics)
 
 Lectures
 

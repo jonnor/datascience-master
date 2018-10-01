@@ -83,10 +83,16 @@ Hours budgeting
 
 ## TODO
 
-* Finish book. Human and 
+Literature
 
+* Finish book. Lyon, Human and machine hearing
 
+Study
 
+* Setup framework for comparing different methods
+* Implement 3-4 different methods
 
+Documentation
 
+* Test RepSep for integrating results into report/presentation
 

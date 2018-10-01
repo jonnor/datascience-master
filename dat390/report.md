@@ -1,30 +1,76 @@
 
+Machine hearing.
+focus on audio event detection and a case study in
 
 ## Introduction to sound
 
-- Digital recording sound
 - Acoustics
-- (Psychoacoustics)
-- (Biological models sound production in animals)
+- Digital recordings of sound
+Quantization amplitude
+File formats
+Compression. Lossless, lossy
 - audio mixtures
-- tonal, percussive
+
+### Psychoacoustics
+(Brief)
+Non-linearities.
+Log-ish frequency. notes. mel scale, gammatone
+False pitch
+Shepherds tone. Octave repetition
+Missing fundamental
+Reflection pitch
+
+Log-ish power. desibel. 
+Loudness. Stevens power law.
+sones.
+phones, equal loudness contours
+
+Critical bandwidth. Loudness in mixes dependent on distances in frequency
+Masking. One sound can hide another.
+Simultaneous masking. Loud High tone can mask low tone.
+forward masking. tensof ms
+
+Temporal compression
+
+Binaural hearing.
+
+Function of sound.
+Speech. "point the eyes"
+Audio event. what,where
+
+Cocktail party problem. Source separation, multi-source attention
+
+### Models of sound production
+- Biological models sound production in animals.
+Formants
+- (Acoustic models of instruments)
 
 ## Applications
 of machine learning on sound
+
+- **Speech Recognition**
+- **Music information retrieval**
+
+* Ecoacoustics/bioacoustics. Population estimation. Health monitoring.
+* Predictive maintenance. Anomaly detection.
+* Process control. Do something once audible event happens. Coffe
+* Smart home / home automation.  Children crying, smokealarm
+* Security. Intrusion detection. Aggression detection.
+* Surveillance. Event detection for. Voice
 
 Connected problems and fields:
 
 - vibration data
 - time-series
-- speech recognition
-- music information retrieval
+
 
 ## Problems formulations
 
 - Classification
 - Detection, precise time
 - Segmentation
-- Identifying individual
+- Source/individual identification
+- Diarization 
 - Monophonic vs polyphonic
 - Multi-label
 
@@ -36,6 +82,7 @@ spectral center, spectral slope etc
 
 ### Time-frequency representations
 STFT, windowing
+filter-banks. Constant-Q. Fourier transform
 mel-spectrogram
 MFCC
 

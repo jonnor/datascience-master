@@ -16,7 +16,7 @@ emnet_activation_func(const char *str)
     int32_t ret = -EmNetUnsupported;
 
     for (int i=0; i<EmNetActivationFunctions; i++) {
-        char *func_str = emnet_activation_function_strs[i];
+        const char *func_str = emnet_activation_function_strs[i];
         if (strcmp(str, func_str) == 0) {
             ret = (int32_t)i;
         }
@@ -30,7 +30,7 @@ private:
     std::vector<int32_t> roots;
     std::vector<EmNetLayer> *layers;
     std::vector<float> weights;
-    EmNet model;
+    EmNet model = {0,};
 
 public:
     EmNetClassifier(std::string activation)
@@ -64,7 +64,8 @@ public:
             const float *v = in.data(i);
             const int32_t p = emnet_predict(&model, v, n_features);
             if (p < 0) {
-                throw std::runtime_error("Error code: " + std::to_string(-p));
+                const std::string err = emnet_strerr((EmNetError)-p);
+                throw std::runtime_error("Prediction error: " + err);
             }
             r(i) = p;
         }

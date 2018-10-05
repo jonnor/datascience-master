@@ -11,7 +11,8 @@ typedef enum _EmNetActivationFunction {
     EmNetActivationFunctions,
 } EmNetActivationFunction;
 
-char *emnet_activation_function_strs[EmNetActivationFunctions] = {
+static const char *
+emnet_activation_function_strs[EmNetActivationFunctions] = {
     "identity",
     "relu",
 };
@@ -37,7 +38,32 @@ typedef enum _EmNetError {
     EmNetOk = 0,
     EmNetSizeMismatch,
     EmNetUnsupported,
+    EmNetUnknownError,
+    EmNetErrors,
 } EmNetError;
+
+static const char *
+emnet_error_strs[EmNetErrors] = {
+    "OK",
+    "SizeMismatch",
+    "Unsupported",
+    "Unknown error",
+};
+
+bool
+emnet_error_valid(EmNetError e) {
+    return (e >= EmNetOk && e < EmNetErrors);
+}
+
+const char *
+emnet_strerr(EmNetError e) {
+    if (emnet_error_valid(e)) {
+        return emnet_error_strs[e];
+    } else {
+        return NULL;
+    }
+}
+
 
 static float
 emnet_relu(float in) {
@@ -140,6 +166,16 @@ emnet_find_largest_layer(EmNet *model) {
 EmNetError
 emnet_infer(EmNet *model, const float *features, int32_t features_length)
 {
+    if (!model->layers) {
+        return EmNetUnknownError;
+    }
+    if (!model->activations1) {
+        return EmNetUnknownError;
+    }
+    if (!model->activations2) {
+        return EmNetUnknownError;
+    }
+
     if (model->n_layers < 3) {
         return EmNetUnsupported;
     }

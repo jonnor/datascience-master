@@ -22,6 +22,9 @@ def convert_sklearn_mlp(model):
     if (model.n_outputs_ != 1):
         raise NotImplementedError("Only single-output models are supported")
 
+    if (model.n_layers_ < 3):
+        raise ValueError("Model must have at least one hidden layer")
+
     weights = []
     for layer_no in range(model.n_layers_):
         weights.append([])

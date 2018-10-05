@@ -76,7 +76,7 @@ emnet_argmax(float *values, int32_t values_length) {
 
 EmNetError
 emnet_layer_forward(const EmNetLayer *layer,
-                    float *in, int32_t in_length,
+                    const float *in, int32_t in_length,
                     float *out, int32_t out_length)
 {
     if (layer->n_inputs < in_length) {
@@ -92,7 +92,7 @@ emnet_layer_forward(const EmNetLayer *layer,
     for (int o=0; o<layer->n_outputs; o++) {
         float sum = 0.0f;
         for (int i=0; i<layer->n_inputs; i++) {
-            const float w = layer->weights[o][i];
+            const float w = layer->weights[(o*layer->n_outputs)+i];
             sum += w * in[i];
         }
 
@@ -110,13 +110,15 @@ emnet_layer_forward(const EmNetLayer *layer,
     } else {
         return EmNetUnsupported; // error
     }
+
+    return EmNetOk;
 }
 
 // Calculate size of activation value arrays
 static int32_t
 emnet_find_largest_layer(EmNet *model) {
     int32_t largest = -1;
-    for (int i=i; i<model->n_layers; i++) {
+    for (int i=0; i<model->n_layers; i++) {
         if (model->layers[i].n_inputs > largest) {
             largest = model->layers[i].n_inputs;
         }
@@ -128,7 +130,7 @@ emnet_find_largest_layer(EmNet *model) {
 }
 
 EmNetError
-emnet_infer(EmNet *model, float *features, int32_t features_length)
+emnet_infer(EmNet *model, const float *features, int32_t features_length)
 {
     if (model->n_layers < 3) {
         return EmNetUnsupported;
@@ -166,7 +168,7 @@ emnet_infer(EmNet *model, float *features, int32_t features_length)
 
 // Return the class, or -EmNetError on failure
 int32_t
-emnet_predict(EmNet *model, float *features, int32_t features_length) {
+emnet_predict(EmNet *model, const float *features, int32_t features_length) {
 
     const EmNetError error = emnet_infer(model, features, features_length);
     if (error != EmNetOk) {

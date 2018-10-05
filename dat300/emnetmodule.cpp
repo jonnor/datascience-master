@@ -18,11 +18,10 @@ private:
 
 public:
     EmNetClassifier()
-        :
     {
 
     }
-    ~EmtreesClassifier() {
+    ~EmNetClassifier() {
 
     }
 
@@ -57,7 +56,7 @@ PYBIND11_MODULE(emnetc, m) {
     m.doc() = "Neural networks for embedded devices";
 
     py::class_<EmNetClassifier>(m, "Classifier")
-        .def(py::init<std::vector<EmtreesValue>, std::vector<int32_t>>())
-        .def("predict", &EmtreesClassifier::predict);
+        //.def()
+        .def("predict", &EmNetClassifier::predict);
 }
 

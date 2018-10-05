@@ -16,30 +16,20 @@ from sklearn.preprocessing import StandardScaler
 
 def convert_sklearn_mlp(model):
 
-    if (model.n_outputs_ != 1):
-        raise NotImplementedError("Only single-output models are supported")
+    print('outs', model.n_outputs_)
 
     if (model.n_layers_ < 3):
         raise ValueError("Model must have at least one hidden layer")
 
-    layer_weights = []
-    for layer_no in range(0, model.n_layers_-1):
-        #output_layer = input_layer + 1
+    weights = model.coefs_
+    biases = model.intercepts_
+    activations = [model.activation]*(len(weights)-1) + [ model.out_activation_ ]
 
-        coefs = model.coefs_[layer_no]
-        first = layer_no == 0
-        if first:
-            weights = coefs
-        else:
-            # add bias to weights
-            bias = model.intercepts_[layer_no]
-            weights = numpy.vstack([bias, coefs])
+    print('outa', activations)
+    print('w', len(weights), weights[0].shape, weights[1].shape, '\n', weights)
+    print('b', len(biases), biases[0].shape, biases[1].shape, '\n',biases)
 
-        print('l', layer_no, weights.shape, weights)    
-
-        layer_weights.append(weights)
-
-    cmodel = emnetc.Classifier(model.activation, layer_weights)
+    cmodel = emnetc.Classifier(activations, weights, biases)
     return cmodel
 
 
@@ -69,14 +59,15 @@ MODELS = [
     MLPClassifier(hidden_layer_sizes=(4), max_iter=50),
 ]
 
-
+# TODO: switch to model params. hidden_layers_sizes,activation,features,classes  
 @pytest.mark.parametrize('model', MODELS)
 def test_predict_equals_sklearn(model):
 
     for random in range(0, 5):
         # create dataset
         rng = numpy.random.RandomState(0)
-        X, y = make_classification(n_features=2, n_redundant=0, n_informative=2,
+        X, y = make_classification(n_features=2, n_classes=2,
+                                   n_redundant=0, n_informative=2,
                                    random_state=rng, n_clusters_per_class=1)
         X += 2 * rng.uniform(size=X.shape)
         X = StandardScaler().fit_transform(X)

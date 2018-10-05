@@ -1,6 +1,6 @@
 
 #include <stdint.h>
-
+#include <math.h>
 
 #define EMNET_PRECONDITION(expr, errorcode) \
     do { \
@@ -25,6 +25,7 @@
 typedef enum _EmNetActivationFunction {
     EmNetActivationIdentity = 0,
     EmNetActivationReLu,
+    EmNetActivationLogistic,
     EmNetActivationFunctions,
 } EmNetActivationFunction;
 
@@ -32,12 +33,14 @@ static const char *
 emnet_activation_function_strs[EmNetActivationFunctions] = {
     "identity",
     "relu",
+    "logistic",
 };
 
 typedef struct _EmNetLayer {
     int32_t n_outputs;
     int32_t n_inputs;
     float *weights;
+    float *biases;
     EmNetActivationFunction activation;
 } EmNetLayer;
 
@@ -55,6 +58,7 @@ typedef enum _EmNetError {
     EmNetOk = 0,
     EmNetSizeMismatch,
     EmNetUnsupported,
+    EmNetUninitialized,
     EmNetUnknownError,
     EmNetErrors,
 } EmNetError;
@@ -63,6 +67,7 @@ static const char *
 emnet_error_strs[EmNetErrors] = {
     "OK",
     "SizeMismatch",
+    "Uninitialized",
     "Unsupported",
     "Unknown error",
 };
@@ -85,6 +90,11 @@ emnet_strerr(EmNetError e) {
 static float
 emnet_relu(float in) {
     return (in <= 0.0f) ? 0.0f : in; 
+}
+
+static float
+emnet_expit(float in) {
+    return 1.0f / (1.0f + expf(-in));
 }
 
 int32_t
@@ -166,9 +176,11 @@ emnet_layer_forward(const EmNetLayer *layer,
 
     EMNET_PRECONDITION(in_length >= layer->n_inputs, EmNetSizeMismatch);
     EMNET_PRECONDITION(out_length >= layer->n_outputs, EmNetSizeMismatch);
-    EMNET_PRECONDITION(layer->weights, EmNetUnknownError);
+    EMNET_PRECONDITION(layer->weights, EmNetUninitialized);
+    EMNET_PRECONDITION(layer->biases, EmNetUninitialized);
 
     printf("weights "); print_array(layer->weights, layer->n_inputs*layer->n_outputs);
+    printf("biases "); print_array(layer->biases, layer->n_outputs);
 
     // TODO: matrix multiplication should be done in blocks. Ex 2x4*4x2 = 2x2
     // multiply inputs by weights
@@ -182,20 +194,24 @@ emnet_layer_forward(const EmNetLayer *layer,
                     o,i, w_idx, w, in[i]);
         }
 
+        out[o] = sum + layer->biases[o];
         // PERF: compute activation right here?
-        out[o] = sum;
-        printf("sum=%f\n", sum);
+        printf("sum=%f out=%d\n", sum, out[o]);
     }
 
     // apply activation function
-    if (layer->activation == EmNetActivationReLu) {
+    if (layer->activation == EmNetActivationIdentity) {
+        // no-op
+    } else if (layer->activation == EmNetActivationReLu) {
         for (int i=0; i<out_length; i++) {
             out[i] = emnet_relu(out[i]);
         }
-    } else if (layer->activation == EmNetActivationIdentity) {
-        // no-op
+    } else if (layer->activation == EmNetActivationLogistic) {
+        for (int i=0; i<out_length; i++) {
+            out[i] = emnet_expit(out[i]);
+        }
     } else {
-        return EmNetUnsupported; // error
+        return EmNetUnsupported;
     }
 
     return EmNetOk;
@@ -208,7 +224,7 @@ emnet_infer(EmNet *model, const float *features, int32_t features_length)
     printf("n_inputs: %d\n", model->layers[0].n_inputs);
     printf("activation buffer: %d %d\n", model->activations_length, emnet_find_largest_layer(model));
 
-    EMNET_PRECONDITION(emnet_valid(model), EmNetUnknownError);
+    EMNET_PRECONDITION(emnet_valid(model), EmNetUninitialized);
     EMNET_PRECONDITION(model->n_layers >= 2, EmNetUnsupported);
     EMNET_PRECONDITION(features_length == model->layers[0].n_inputs, EmNetSizeMismatch);
     EMNET_PRECONDITION(model->activations_length >= emnet_find_largest_layer(model), EmNetSizeMismatch);

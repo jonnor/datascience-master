@@ -25,46 +25,48 @@ emnet_activation_func(const char *str)
     return ret;
 }
 
-typedef py::array_t<float, py::array::c_style | py::array::forcecast> LayerWeights;
+typedef py::array_t<float, py::array::c_style | py::array::forcecast> FloatArray;
 
 class EmNetClassifier {
 private:
     std::vector<int32_t> roots;
     std::vector<EmNetLayer> layers;
-    std::vector<LayerWeights> layer_weights;
+    std::vector<FloatArray> weights;
+    std::vector<FloatArray> biases;
     std::vector<float> activations_buffer_1;
     std::vector<float> activations_buffer_2;
     EmNet model = {0,};
 
 public:
-    EmNetClassifier(std::string activation, std::vector<LayerWeights> _layer_weights
-    )
+    EmNetClassifier(std::vector<std::string> activations,
+                std::vector<FloatArray> _weights,
+                std::vector<FloatArray> _biases)
 
     {
-        // Activation function
-        const int32_t a = emnet_activation_func(activation.c_str());
-        if (a < 0) {
-            throw std::runtime_error("Unsupported activation function: " + activation);
-        }
-        const EmNetActivationFunction activation_func = (EmNetActivationFunction)a;
+        // store reference
+        weights = _weights;
+        biases = _biases;
 
-        // Layers and weights
-        if (_layer_weights.size() < 2) {
+        // Layers
+        if (weights.size() < 2) {
             throw std::runtime_error("Must have weights between 3 layers");
         }
 
-        layer_weights = _layer_weights; // store reference
-        model.n_layers = layer_weights.size();
+        model.n_layers = weights.size();
         layers = std::vector<EmNetLayer>(model.n_layers);
         model.layers = layers.data();
-        
+
         for (int i=0; i<model.n_layers; i++) {
-            auto weights = layer_weights[i];
-            fprintf(stderr, "weight shape %d (%d, %d)\n", weights.ndim(), weights.shape(0), weights.shape(1));
-            layers[i].n_inputs = weights.shape(0); 
-            layers[i].n_outputs = weights.shape(1);
-            layers[i].activation = activation_func;
-            layers[i].weights = (float *)weights.data();
+            const int32_t a = emnet_activation_func(activations[i].c_str());
+            if (a < 0) {
+                throw std::runtime_error("Unsupported activation function: " + activations[i]);
+            }
+
+            layers[i].n_inputs = weights[i].shape(0); 
+            layers[i].n_outputs = weights[i].shape(1);
+            layers[i].activation = (EmNetActivationFunction)a;
+            layers[i].weights = (float *)weights[i].data();
+            layers[i].biases = (float *)biases[i].data();
         }
 
         // Buffers for activations
@@ -112,7 +114,7 @@ PYBIND11_MODULE(emnetc, m) {
     m.doc() = "Neural networks for embedded devices";
 
     py::class_<EmNetClassifier>(m, "Classifier")
-        .def(py::init< std::string, std::vector<LayerWeights> >())
+        .def(py::init< std::vector<std::string>, std::vector<FloatArray>, std::vector<FloatArray> >())
         .def("predict", &EmNetClassifier::predict);
 }
 

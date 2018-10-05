@@ -116,9 +116,11 @@ emnet_layer_forward(const EmNetLayer *layer,
     if (layer->n_inputs < in_length) {
         return EmNetSizeMismatch;
     }
-
     if (layer->n_outputs < out_length) {
         return EmNetSizeMismatch;
+    }
+    if (!layer->weights) {
+        return EmNetUnknownError;
     }
 
     // TODO: matrix multiplication should be done in blocks. Ex 2x4*4x2 = 2x2
@@ -176,18 +178,21 @@ emnet_infer(EmNet *model, const float *features, int32_t features_length)
         return EmNetUnknownError;
     }
 
-    if (model->n_layers < 3) {
+    if (model->n_layers < 2) {
         return EmNetUnsupported;
     }
-
-    const size_t buffer_length = model->activations_length; 
-    float *buffer1 = model->activations1;
-    float *buffer2 = model->activations2;
-
-    const int32_t buffer_size_needed = emnet_find_largest_layer(model);
-    if (buffer_length < buffer_size_needed) {
+    if (features_length != model->layers[0].n_inputs) {
         return EmNetSizeMismatch;
     }
+
+    const int32_t buffer_size_needed = emnet_find_largest_layer(model);
+    if (model->activations_length < buffer_size_needed) {
+        return EmNetSizeMismatch;
+    }
+
+    const int32_t buffer_length = model->activations_length; 
+    float *buffer1 = model->activations1;
+    float *buffer2 = model->activations2;
 
     // Input layer
     emnet_layer_forward(&model->layers[0], features, features_length, buffer2, buffer_length);

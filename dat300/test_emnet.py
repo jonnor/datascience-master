@@ -1,8 +1,5 @@
 
 
-# TODO: test MPL against sklearn
-# TODO: test matrix multiplication against numpy
-
 import emnetc
 
 import pytest
@@ -13,23 +10,31 @@ from sklearn.neural_network import MLPClassifier
 
 def convert_sklearn_mlp(model):
 
-    print(len(model.coefs_))
-    print(model.coefs_[0].shape)
-
-    print(len(model.intercepts_))
-    print(model.intercepts_[0].shape)
-
     if (model.n_outputs_ != 1):
         raise NotImplementedError("Only single-output models are supported")
 
     if (model.n_layers_ < 3):
         raise ValueError("Model must have at least one hidden layer")
 
-    weights = []
-    for layer_no in range(model.n_layers_):
-        weights.append([])
+    layer_weights = []
+    for layer_no in range(0, model.n_layers_-1):
+        #output_layer = input_layer + 1
 
-    cmodel = emnetc.Classifier(model.activation)
+        coefs = model.coefs_[layer_no]
+        first = layer_no == 0
+        if first:
+            weights = coefs
+        else:
+            # add bias to weights
+            bias = model.intercepts_[layer_no]
+            weights = numpy.vstack([bias, coefs])
+
+        print('l', layer_no, weights.shape)        
+
+        layer_weights.append(weights)
+
+    # layer_weights = [] # TEMP
+    cmodel = emnetc.Classifier(model.activation, layer_weights)
     return cmodel
 
 
@@ -43,21 +48,31 @@ def convert(model, kind=None):
     else:
         raise NotImplementedError("Unknown model type for " + model)
 
+
+
+
+
 def test_unsupported_activation():
     with pytest.raises(Exception) as ex:
-        emnetc.Classifier("fake22")
+        emnetc.Classifier("fake22", [[[]], [[]]])
     assert 'Unsupported activation' in str(ex.value)
     assert 'fake22' in str(ex.value)
 
-def test_mpl():
-    model = MLPClassifier(hidden_layer_sizes=(8,8,8), max_iter=1)
+MODELS = [
+    MLPClassifier(hidden_layer_sizes=(8,), max_iter=1),
+    MLPClassifier(hidden_layer_sizes=(4,4,4), max_iter=1),
+]
 
-    X = numpy.random.random(size=(2,4))
+@pytest.mark.parametrize('model', MODELS)
+def test_predict_equals_sklearn(model):
+
+    X = numpy.random.random(size=(2,3))
     Y = numpy.zeros(shape=(2,), dtype=numpy.bool)
 
     model.fit(X, Y)
 
     cmodel = convert(model)
-
     cmodel.predict(X)
+
+# TODO: test matrix multiplication against numpy
 

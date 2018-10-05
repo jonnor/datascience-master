@@ -66,7 +66,7 @@ def test_predict_equals_sklearn(model):
     for random in range(0, 5):
         # create dataset
         rng = numpy.random.RandomState(0)
-        X, y = make_classification(n_features=2, n_classes=2,
+        X, y = make_classification(n_features=2, n_classes=3,
                                    n_redundant=0, n_informative=2,
                                    random_state=rng, n_clusters_per_class=1)
         X += 2 * rng.uniform(size=X.shape)

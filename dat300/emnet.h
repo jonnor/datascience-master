@@ -26,6 +26,7 @@ typedef enum _EmNetActivationFunction {
     EmNetActivationIdentity = 0,
     EmNetActivationReLu,
     EmNetActivationLogistic,
+    EmNetActivationSoftMax,
     EmNetActivationFunctions,
 } EmNetActivationFunction;
 
@@ -34,6 +35,7 @@ emnet_activation_function_strs[EmNetActivationFunctions] = {
     "identity",
     "relu",
     "logistic",
+    "softmax",
 };
 
 typedef struct _EmNetLayer {
@@ -97,12 +99,37 @@ emnet_expit(float in) {
     return 1.0f / (1.0f + expf(-in));
 }
 
+static EmNetError
+emnet_softmax(float *input, size_t input_length)
+{
+    EMNET_PRECONDITION(input, EmNetUninitialized);
+
+    float input_max = -INFINITY;
+    for (size_t i = 0; i < input_length; i++) {
+        if (input[i] > input_max) {
+            input_max = input[i];
+        }
+    }
+
+    float sum = 0.0f;
+    for (size_t i = 0; i < input_length; i++) {
+        sum += expf(input[i] - input_max);
+    }
+
+    const float offset = input_max + logf(sum);
+    for (size_t i = 0; i < input_length; i++) {
+        input[i] = expf(input[i] - offset);
+    }
+
+    return EmNetOk;
+}
+
 int32_t
 emnet_argmax(float *values, int32_t values_length) {
     int32_t ret = -1;
     for (int i=0; i<values_length; i++) {
         if (values[i] > ret) {
-            ret = values[i];
+            ret = i;
         }
     }
     return ret;
@@ -171,8 +198,8 @@ emnet_layer_forward(const EmNetLayer *layer,
                     const float *in, int32_t in_length,
                     float *out, int32_t out_length)
 {
-    printf("forward. in=%d out=%d n_in=%d, n_out=%d\n",
-                    in_length, out_length, layer->n_inputs, layer->n_outputs);
+    //printf("forward. in=%d out=%d n_in=%d, n_out=%d\n",
+    //                in_length, out_length, layer->n_inputs, layer->n_outputs);
 
     EMNET_PRECONDITION(in_length >= layer->n_inputs, EmNetSizeMismatch);
     EMNET_PRECONDITION(out_length >= layer->n_outputs, EmNetSizeMismatch);
@@ -190,13 +217,13 @@ emnet_layer_forward(const EmNetLayer *layer,
             const int w_idx = (o*layer->n_inputs)+i;
             const float w = layer->weights[w_idx];
             sum += w * in[i];
-            printf("(%d,%d) idx=%d, w=%f, in=%f\n",
-                    o,i, w_idx, w, in[i]);
+            //printf("(%d,%d) idx=%d, w=%f, in=%f\n",
+            //        o,i, w_idx, w, in[i]);
         }
 
         out[o] = sum + layer->biases[o];
         // PERF: compute activation right here?
-        printf("sum=%f out=%d\n", sum, out[o]);
+        printf("sum=%f out=%f\n", sum, out[o]);
     }
 
     // apply activation function
@@ -210,6 +237,8 @@ emnet_layer_forward(const EmNetLayer *layer,
         for (int i=0; i<out_length; i++) {
             out[i] = emnet_expit(out[i]);
         }
+    } else if (layer->activation == EmNetActivationSoftMax) {
+        emnet_softmax(out, out_length);
     } else {
         return EmNetUnsupported;
     }
@@ -220,10 +249,6 @@ emnet_layer_forward(const EmNetLayer *layer,
 EmNetError
 emnet_infer(EmNet *model, const float *features, int32_t features_length)
 {
-    printf("features: "); print_array(features, features_length);
-    printf("n_inputs: %d\n", model->layers[0].n_inputs);
-    printf("activation buffer: %d %d\n", model->activations_length, emnet_find_largest_layer(model));
-
     EMNET_PRECONDITION(emnet_valid(model), EmNetUninitialized);
     EMNET_PRECONDITION(model->n_layers >= 2, EmNetUnsupported);
     EMNET_PRECONDITION(features_length == model->layers[0].n_inputs, EmNetSizeMismatch);
@@ -269,14 +294,16 @@ emnet_predict(EmNet *model, const float *features, int32_t features_length) {
 
     printf("outputs: "); print_array(model->activations2, n_outputs);
 
+    int32_t _class = -EmNetUnknownError;
     if (n_outputs == 1) {
-        return model->activations2[0] > 0.5;
+        _class = (model->activations2[0] > 0.5f) ? 1 : 0;
     } else if (n_outputs > 1) {
-        return emnet_argmax(model->activations2, n_outputs);
-    } else {
-        return -EmNetUnknownError;
+        _class = emnet_argmax(model->activations2, n_outputs);
     }
 
+    printf("class: %d\n", _class);
+
+    return _class;
 }
 
 

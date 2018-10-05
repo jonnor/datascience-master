@@ -75,7 +75,6 @@ public:
         activations_buffer_2 = std::vector<float>(act_max);
         model.activations1 = activations_buffer_1.data();
         model.activations2 = activations_buffer_2.data();
-        fprintf(stderr, "act=%d a1,a2 = %p,%p\n", act_max, model.activations1, model.activations2);
         model.activations_length = act_max;
     }
 

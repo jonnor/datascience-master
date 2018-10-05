@@ -1,6 +1,23 @@
 
 #include <stdint.h>
 
+
+#define EMNET_PRECONDITION(expr, errorcode) \
+    do { \
+        if (!(expr)) { \
+            return errorcode; \
+        } \
+    } while (0);
+
+#define EMNET_CHECK_ERROR(expr) \
+    do { \
+        const EmNetError _e = (expr); \
+        if (_e != EmNetOk) { \
+            return _e; \
+        } \
+    } while (0);
+
+
 // TODO: implement sigmoid
 // TODO: implement tanh
 // TODO: implement elu
@@ -67,7 +84,7 @@ emnet_strerr(EmNetError e) {
 
 static float
 emnet_relu(float in) {
-    return (in <= 0) ? 0 : in; 
+    return (in <= 0.0f) ? 0.0f : in; 
 }
 
 int32_t
@@ -79,6 +96,37 @@ emnet_argmax(float *values, int32_t values_length) {
         }
     }
     return ret;
+}
+
+void
+print_array(const float *values, int32_t length) {
+    printf("n=%d [", length);
+    for (int i=0; i<length; i++) {
+        printf("%f,", values[i]);
+    }
+    printf("]\n");    
+} 
+
+
+bool
+emnet_valid(EmNet *model) {
+    bool not_null = model->layers && model->activations1 && model->activations2;
+    return not_null;
+}
+
+// Calculate size of activation value arrays
+static int32_t
+emnet_find_largest_layer(EmNet *model) {
+    int32_t largest = -1;
+    for (int i=0; i<model->n_layers; i++) {
+        if (model->layers[i].n_inputs > largest) {
+            largest = model->layers[i].n_inputs;
+        }
+        if (model->layers[i].n_outputs > largest) {
+            largest = model->layers[i].n_outputs;
+        }
+    }
+    return largest;
 }
 
 // CMSIS-NN tricks
@@ -113,27 +161,30 @@ emnet_layer_forward(const EmNetLayer *layer,
                     const float *in, int32_t in_length,
                     float *out, int32_t out_length)
 {
-    if (layer->n_inputs < in_length) {
-        return EmNetSizeMismatch;
-    }
-    if (layer->n_outputs < out_length) {
-        return EmNetSizeMismatch;
-    }
-    if (!layer->weights) {
-        return EmNetUnknownError;
-    }
+    printf("forward. in=%d out=%d n_in=%d, n_out=%d\n",
+                    in_length, out_length, layer->n_inputs, layer->n_outputs);
+
+    EMNET_PRECONDITION(in_length >= layer->n_inputs, EmNetSizeMismatch);
+    EMNET_PRECONDITION(out_length >= layer->n_outputs, EmNetSizeMismatch);
+    EMNET_PRECONDITION(layer->weights, EmNetUnknownError);
+
+    printf("weights "); print_array(layer->weights, layer->n_inputs*layer->n_outputs);
 
     // TODO: matrix multiplication should be done in blocks. Ex 2x4*4x2 = 2x2
     // multiply inputs by weights
     for (int o=0; o<layer->n_outputs; o++) {
         float sum = 0.0f;
         for (int i=0; i<layer->n_inputs; i++) {
-            const float w = layer->weights[(o*layer->n_outputs)+i];
+            const int w_idx = (o*layer->n_inputs)+i;
+            const float w = layer->weights[w_idx];
             sum += w * in[i];
+            printf("(%d,%d) idx=%d, w=%f, in=%f\n",
+                    o,i, w_idx, w, in[i]);
         }
 
         // PERF: compute activation right here?
         out[o] = sum;
+        printf("sum=%f\n", sum);
     }
 
     // apply activation function
@@ -150,65 +201,39 @@ emnet_layer_forward(const EmNetLayer *layer,
     return EmNetOk;
 }
 
-// Calculate size of activation value arrays
-static int32_t
-emnet_find_largest_layer(EmNet *model) {
-    int32_t largest = -1;
-    for (int i=0; i<model->n_layers; i++) {
-        if (model->layers[i].n_inputs > largest) {
-            largest = model->layers[i].n_inputs;
-        }
-        if (model->layers[i].n_outputs > largest) {
-            largest = model->layers[i].n_outputs;
-        }
-    }
-    return largest;
-}
-
 EmNetError
 emnet_infer(EmNet *model, const float *features, int32_t features_length)
 {
-    if (!model->layers) {
-        return EmNetUnknownError;
-    }
-    if (!model->activations1) {
-        return EmNetUnknownError;
-    }
-    if (!model->activations2) {
-        return EmNetUnknownError;
-    }
+    printf("features: "); print_array(features, features_length);
+    printf("n_inputs: %d\n", model->layers[0].n_inputs);
+    printf("activation buffer: %d %d\n", model->activations_length, emnet_find_largest_layer(model));
 
-    if (model->n_layers < 2) {
-        return EmNetUnsupported;
-    }
-    if (features_length != model->layers[0].n_inputs) {
-        return EmNetSizeMismatch;
-    }
-
-    const int32_t buffer_size_needed = emnet_find_largest_layer(model);
-    if (model->activations_length < buffer_size_needed) {
-        return EmNetSizeMismatch;
-    }
+    EMNET_PRECONDITION(emnet_valid(model), EmNetUnknownError);
+    EMNET_PRECONDITION(model->n_layers >= 2, EmNetUnsupported);
+    EMNET_PRECONDITION(features_length == model->layers[0].n_inputs, EmNetSizeMismatch);
+    EMNET_PRECONDITION(model->activations_length >= emnet_find_largest_layer(model), EmNetSizeMismatch);
 
     const int32_t buffer_length = model->activations_length; 
     float *buffer1 = model->activations1;
     float *buffer2 = model->activations2;
 
     // Input layer
-    emnet_layer_forward(&model->layers[0], features, features_length, buffer2, buffer_length);
+    EMNET_CHECK_ERROR(emnet_layer_forward(&model->layers[0], features,
+                        features_length, buffer1, buffer_length));
 
     // Hidden layers
     for (int i=1; i<model->n_layers-1; i++) {
         const EmNetLayer *layer = &model->layers[i];
         // PERF: avoid copying, swap buffers instead
-        emnet_layer_forward(layer, buffer1, buffer_length, buffer2, buffer_length);
+        EMNET_CHECK_ERROR(emnet_layer_forward(layer, buffer1, buffer_length, buffer2, buffer_length));
         for (int i=0; i<buffer_length; i++) {
             buffer1[i] = buffer2[i];
         }
     }
 
     // Output layer
-    emnet_layer_forward(&model->layers[model->n_layers-1], buffer1, buffer_length, buffer2, buffer_length);
+    EMNET_CHECK_ERROR(emnet_layer_forward(&model->layers[model->n_layers-1],
+                        buffer1, buffer_length, buffer2, buffer_length));
 
     // FIXME: do something prettier with output than leaving it in activations2...
 
@@ -225,8 +250,17 @@ emnet_predict(EmNet *model, const float *features, int32_t features_length) {
     }
 
     const int32_t n_outputs = model->layers[model->n_layers-1].n_outputs;
-    const int32_t winner = emnet_argmax(model->activations2, n_outputs);
-    return winner;
+
+    printf("outputs: "); print_array(model->activations2, n_outputs);
+
+    if (n_outputs == 1) {
+        return model->activations2[0] > 0.5;
+    } else if (n_outputs > 1) {
+        return emnet_argmax(model->activations2, n_outputs);
+    } else {
+        return -EmNetUnknownError;
+    }
+
 }
 
 

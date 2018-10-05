@@ -64,7 +64,7 @@ public:
             layers[i].n_inputs = weights.shape(0); 
             layers[i].n_outputs = weights.shape(1);
             layers[i].activation = activation_func;
-            layers[i].weights = NULL; // (float *)weights.data();
+            layers[i].weights = (float *)weights.data();
         }
 
         // Buffers for activations
@@ -76,10 +76,10 @@ public:
         fprintf(stderr, "act=%d a1,a2 = %p,%p\n", act_max, model.activations1, model.activations2);
         model.activations_length = act_max;
     }
+
     ~EmNetClassifier() {
 
     }
-
 
     py::array_t<int32_t>
     predict(py::array_t<float, py::array::c_style | py::array::forcecast> in) {

@@ -9,6 +9,22 @@
 
 namespace py = pybind11;
 
+// Returns an EmNetActivationFunction or -EmNetError
+int32_t
+emnet_activation_func(const char *str)
+{
+    int32_t ret = -EmNetUnsupported;
+
+    for (int i=0; i<EmNetActivationFunctions; i++) {
+        char *func_str = emnet_activation_function_strs[i];
+        if (strcmp(str, func_str) == 0) {
+            ret = (int32_t)i;
+        }
+    }
+
+    return ret;
+}
+
 class EmNetClassifier {
 private:
     std::vector<int32_t> roots;
@@ -17,8 +33,14 @@ private:
     EmNet model;
 
 public:
-    EmNetClassifier()
+    EmNetClassifier(std::string activation)
     {
+
+        const int32_t a = emnet_activation_func(activation.c_str());
+        if (a < 0) {
+            throw std::runtime_error("Unsupported activation function: " + activation);
+        }
+        EmNetActivationFunction activation_func = (EmNetActivationFunction)a;
 
     }
     ~EmNetClassifier() {
@@ -26,7 +48,7 @@ public:
     }
 
 
-    py::array_t<float>
+    py::array_t<int32_t>
     predict(py::array_t<float, py::array::c_style | py::array::forcecast> in) {
         if (in.ndim() != 2) {
             throw std::runtime_error("predict input must have dimensions 2");
@@ -56,7 +78,7 @@ PYBIND11_MODULE(emnetc, m) {
     m.doc() = "Neural networks for embedded devices";
 
     py::class_<EmNetClassifier>(m, "Classifier")
-        //.def()
+        .def(py::init<std::string>())
         .def("predict", &EmNetClassifier::predict);
 }
 

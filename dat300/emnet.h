@@ -1,12 +1,20 @@
 
 #include <stdint.h>
 
+// TODO: implement sigmoid
+// TODO: implement tanh
 // TODO: implement elu
 // TODO: implement SeLu for SNN
 typedef enum _EmNetActivationFunction {
-    EmNetActivationIdentity,
+    EmNetActivationIdentity = 0,
     EmNetActivationReLu,
+    EmNetActivationFunctions,
 } EmNetActivationFunction;
+
+char *emnet_activation_function_strs[EmNetActivationFunctions] = {
+    "identity",
+    "relu",
+};
 
 typedef struct _EmNetLayer {
     int32_t n_outputs;
@@ -179,6 +187,7 @@ emnet_predict(EmNet *model, const float *features, int32_t features_length) {
     const int32_t winner = emnet_argmax(model->activations2, n_outputs);
     return winner;
 }
+
 
 
 

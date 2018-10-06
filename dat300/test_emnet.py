@@ -1,6 +1,5 @@
 
-
-import emnetc
+import emnet
 
 import pytest
 import sklearn
@@ -17,29 +16,6 @@ from sklearn.model_selection import train_test_split, cross_val_score
 from sklearn.preprocessing import StandardScaler
 
 
-def convert_sklearn_mlp(model):
-
-    if (model.n_layers_ < 3):
-        raise ValueError("Model must have at least one hidden layer")
-
-    weights = model.coefs_
-    biases = model.intercepts_
-    activations = [model.activation]*(len(weights)-1) + [ model.out_activation_ ]
-
-    cmodel = emnetc.Classifier(activations, weights, biases)
-    return cmodel
-
-
-def convert(model, kind=None):
-    if kind is None:
-        kind = type(model).__name__ 
-
-    if kind == 'MLPClassifier':
-        return convert_sklearn_mlp(model)
-    else:
-        raise NotImplementedError("Unknown model type for " + model)
-
-
 
 def test_unsupported_activation():
     with warnings.catch_warnings():
@@ -47,7 +23,7 @@ def test_unsupported_activation():
         model = MLPClassifier(activation='tanh', hidden_layer_sizes=(2,), max_iter=10)
         model.fit([[1.0]], [True])
     with pytest.raises(Exception) as ex:
-        convert(model)
+        emnet.convert(model)
     assert 'Unsupported activation' in str(ex.value)
     assert 'tanh' in str(ex.value)
 
@@ -66,7 +42,7 @@ def test_inference_simple():
 
         model = MLPClassifier(hidden_layer_sizes=(3,), max_iter=10, random_state=rng)
         model.fit(X, y)
-        cmodel = convert(model)
+        cmodel = emnet.convert(model)
     
         X_test = X[:1]
         cpred = cmodel.predict_proba(X_test)
@@ -78,6 +54,7 @@ def test_inference_simple():
 PARAMS = [
     ( dict(hidden_layer_sizes=(4,)), {'classes': 3, 'features': 2}),
     ( dict(hidden_layer_sizes=(4,)), {'classes': 2, 'features': 3}),
+    ( dict(hidden_layer_sizes=(4,5,3)), {'classes': 5, 'features': 5}),
 ]
 
 @pytest.mark.parametrize('modelparams,params', PARAMS)
@@ -99,15 +76,13 @@ def test_predict_equals_sklearn(modelparams,params):
             warnings.simplefilter("ignore")
             model.fit(X_train, y_train)
 
-            cmodel = convert(model)
+            cmodel = emnet.convert(model)
 
             X_test = X_test[:3]
             cproba = cmodel.predict_proba(X_test)
             proba = model.predict_proba(X_test)
             cpred = cmodel.predict(X_test)
             pred = model.predict(X_test)
-
-        print(proba, cproba)
 
         assert_almost_equal(proba, cproba)
         assert_equal(pred, cpred)

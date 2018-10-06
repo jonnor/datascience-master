@@ -5,6 +5,7 @@ import emnetc
 import pytest
 import sklearn
 import numpy
+from numpy.testing import assert_almost_equal
 
 import sys
 import warnings
@@ -15,9 +16,8 @@ from sklearn.datasets import make_classification
 from sklearn.model_selection import train_test_split, cross_val_score
 from sklearn.preprocessing import StandardScaler
 
-def convert_sklearn_mlp(model):
 
-    print('outs', model.n_outputs_)
+def convert_sklearn_mlp(model):
 
     if (model.n_layers_ < 3):
         raise ValueError("Model must have at least one hidden layer")
@@ -38,7 +38,6 @@ def convert(model, kind=None):
     if kind is None:
         kind = type(model).__name__ 
 
-    print(kind)
     if kind == 'MLPClassifier':
         return convert_sklearn_mlp(model)
     else:
@@ -46,13 +45,39 @@ def convert(model, kind=None):
 
 
 
-
-
 def test_unsupported_activation():
+    with warnings.catch_warnings():
+        warnings.simplefilter("ignore")
+        model = MLPClassifier(activation='tanh', hidden_layer_sizes=(2,), max_iter=10)
+        model.fit([[1.0]], [True])
     with pytest.raises(Exception) as ex:
-        emnetc.Classifier("fake22", [[[]], [[]]])
+        convert(model)
     assert 'Unsupported activation' in str(ex.value)
-    assert 'fake22' in str(ex.value)
+    assert 'tanh' in str(ex.value)
+
+
+def test_inference_simple():
+    features = 2
+    rng = numpy.random.RandomState(0)
+    X, y = make_classification(n_features=features, n_classes=3,
+                               n_redundant=0, n_informative=features,
+                               random_state=rng, n_clusters_per_class=1)
+    X += 2 * rng.uniform(size=X.shape)
+    X = StandardScaler().fit_transform(X)
+
+    with warnings.catch_warnings():
+        warnings.simplefilter("ignore")
+
+        model = MLPClassifier(hidden_layer_sizes=(3,), max_iter=10, random_state=rng)
+        model.fit(X, y)
+        cmodel = convert(model)
+    
+        X_test = X[:1]
+        cpred = cmodel.predict_proba(X_test)
+        pred = model.predict_proba(X_test)
+
+    assert_almost_equal(cpred, pred, decimal=5)
+
 
 PARAMS = [
     ( dict(hidden_layer_sizes=(4,)), {'classes': 3, 'features': 2}),
@@ -62,14 +87,14 @@ PARAMS = [
 @pytest.mark.parametrize('modelparams,params', PARAMS)
 def test_predict_equals_sklearn(modelparams,params):
 
-    model = MLPClassifier(**modelparams, max_iter=50)
+    model = MLPClassifier(**modelparams, max_iter=20)
 
-    for random in range(0, 5):
+    for random in range(0, 3):
         # create dataset
         rng = numpy.random.RandomState(0)
         X, y = make_classification(n_features=params['features'], n_classes=params['classes'],
                                    n_redundant=0, n_informative=params['features'],
-                                   random_state=rng, n_clusters_per_class=1)
+                                   random_state=rng, n_clusters_per_class=1, n_samples=50)
         X += 2 * rng.uniform(size=X.shape)
         X = StandardScaler().fit_transform(X)
 
@@ -78,18 +103,13 @@ def test_predict_equals_sklearn(modelparams,params):
             warnings.simplefilter("ignore")
             model.fit(X_train, y_train)
 
-            print('train', numpy.mean(cross_val_score(model, X_train, y_train, cv=5)))
-            print('test', numpy.mean(cross_val_score(model, X_test, y_test, cv=5)))
-
             cmodel = convert(model)
 
-            cpred = cmodel.predict_proba(X_test)
-            pred = model.predict_proba(X_test)
+            cpred = cmodel.predict_proba(X_test[:3])
+            pred = model.predict_proba(X_test[:3])
 
-        print(cpred)
-        print(pred)
-        sys.stdout.flush()
-        assert list(cpred) == list(pred)
+        assert_almost_equal(cpred, pred)
+
 
 # TODO: test matrix multiplication against numpy
 

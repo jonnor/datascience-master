@@ -229,33 +229,35 @@ emnet_layer_forward(const EmNetLayer *layer,
                     const float *in, int32_t in_length,
                     float *out, int32_t out_length)
 {
-    printf("forward. in=%d out=%d n_in=%d, n_out=%d\n",
-                    in_length, out_length, layer->n_inputs, layer->n_outputs);
+    //printf("forward. in=%d out=%d n_in=%d, n_out=%d\n",
+    //                in_length, out_length, layer->n_inputs, layer->n_outputs);
 
     EMNET_PRECONDITION(in_length >= layer->n_inputs, EmNetSizeMismatch);
     EMNET_PRECONDITION(out_length >= layer->n_outputs, EmNetSizeMismatch);
     EMNET_PRECONDITION(layer->weights, EmNetUninitialized);
     EMNET_PRECONDITION(layer->biases, EmNetUninitialized);
 
-    printf("weights "); print_array(layer->weights, layer->n_inputs*layer->n_outputs);
-    printf("biases "); print_array(layer->biases, layer->n_outputs);
+    //printf("weights "); print_array(layer->weights, layer->n_inputs*layer->n_outputs);
+    //printf("biases "); print_array(layer->biases, layer->n_outputs);
 
     // TODO: matrix multiplication should be done in blocks. Ex 2x4*4x2 = 2x2
     // multiply inputs by weights
     for (int o=0; o<layer->n_outputs; o++) {
         float sum = 0.0f;
         for (int i=0; i<layer->n_inputs; i++) {
-            const int w_idx = (o*layer->n_inputs)+i;
+            const int w_idx = o+(i*layer->n_outputs); // not stored continious
             const float w = layer->weights[w_idx];
             sum += w * in[i];
-            //printf("(%d,%d) idx=%d, w=%f, in=%f\n",
-            //        o,i, w_idx, w, in[i]);
+            printf("(%d,%d) idx=%d, w=%f, in=%f\n",
+                    o,i, w_idx, w, in[i]);
         }
 
         out[o] = sum + layer->biases[o];
-        // PERF: compute activation right here?
-        printf("sum=%f out=%f\n", sum, out[o]);
+        printf("sum=%f bias=%f out=%f\n", sum, layer->biases[o], out[o]);
+
     }
+
+    //printf("preact "); print_array(out, layer->n_outputs);
 
     // apply activation function
     if (layer->activation == EmNetActivationIdentity) {
@@ -273,6 +275,8 @@ emnet_layer_forward(const EmNetLayer *layer,
     } else {
         return EmNetUnsupported;
     }
+
+    printf("activtions "); print_array(out, layer->n_outputs);
 
     return EmNetOk;
 }
@@ -327,8 +331,8 @@ emnet_predict_proba(EmNet *model, const float *features, int32_t features_length
     float proba_sum = 0.0f;
 
     if (n_outputs == 2) {
-        out[0] = model->activations2[0];
-        out[1] = 1.0f - out[0];
+        out[1] = model->activations2[0];
+        out[0] = 1.0f - out[1];
         proba_sum = out[0] + out[1];
     } else {
         for (int i=0; i<n_outputs; i++) {
@@ -337,8 +341,6 @@ emnet_predict_proba(EmNet *model, const float *features, int32_t features_length
             proba_sum += p; 
         }
     }
-
-    printf("proba_sum=%f rem=%f\n", proba_sum, fabs(proba_sum - 1.0));
 
     EMNET_POSTCONDITION(fabs(proba_sum - 1.0) < 0.001, EmNetPostconditionFailed);
 

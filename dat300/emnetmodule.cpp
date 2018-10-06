@@ -107,6 +107,32 @@ public:
         return classes;
     }
 
+    py::array_t<float>
+    predict_proba(py::array_t<float, py::array::c_style | py::array::forcecast> in) {
+        if (in.ndim() != 2) {
+            throw std::runtime_error("predict input must have dimensions 2");
+        }
+
+        const int64_t n_samples = in.shape()[0];
+        const int32_t n_features = in.shape()[1];
+        const int32_t n_outputs = emnet_outputs_proba(&model);
+
+        const auto out_shape = std::vector<ssize_t>{n_samples, n_outputs};
+
+        auto proba = py::array_t<float>(out_shape);
+
+        for (int i=0; i<n_samples; i++) {
+            const float *v = in.data(i);
+            float *out = (float *)proba.data(i);
+            const EmNetError e = emnet_predict_proba(&model, v, n_features, out, n_outputs);
+            if (e != EmNetOk) {
+                throw std::runtime_error("Prediction error: " + std::string(emnet_strerr(e)));
+            }
+        }
+
+        return proba;
+    }
+
 };
 
 PYBIND11_MODULE(emnetc, m) {
@@ -114,6 +140,7 @@ PYBIND11_MODULE(emnetc, m) {
 
     py::class_<EmNetClassifier>(m, "Classifier")
         .def(py::init< std::vector<std::string>, std::vector<FloatArray>, std::vector<FloatArray> >())
-        .def("predict", &EmNetClassifier::predict);
+        .def("predict", &EmNetClassifier::predict)
+        .def("predict_proba", &EmNetClassifier::predict_proba);
 }
 

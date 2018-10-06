@@ -6,6 +6,7 @@ import pytest
 import sklearn
 import numpy
 
+import sys
 import warnings
 warnings.filterwarnings(action='ignore', category=sklearn.exceptions.ConvergenceWarning)
 
@@ -53,21 +54,21 @@ def test_unsupported_activation():
     assert 'Unsupported activation' in str(ex.value)
     assert 'fake22' in str(ex.value)
 
-MODELS = [
-    #MLPClassifier(hidden_layer_sizes=(100,), max_iter=50),
-    #MLPClassifier(hidden_layer_sizes=(50,50,10), max_iter=50),
-    MLPClassifier(hidden_layer_sizes=(4), max_iter=50),
+PARAMS = [
+    ( dict(hidden_layer_sizes=(4,)), {'classes': 3, 'features': 2}),
+    ( dict(hidden_layer_sizes=(4,)), {'classes': 2, 'features': 3}),
 ]
 
-# TODO: switch to model params. hidden_layers_sizes,activation,features,classes  
-@pytest.mark.parametrize('model', MODELS)
-def test_predict_equals_sklearn(model):
+@pytest.mark.parametrize('modelparams,params', PARAMS)
+def test_predict_equals_sklearn(modelparams,params):
+
+    model = MLPClassifier(**modelparams, max_iter=50)
 
     for random in range(0, 5):
         # create dataset
         rng = numpy.random.RandomState(0)
-        X, y = make_classification(n_features=2, n_classes=3,
-                                   n_redundant=0, n_informative=2,
+        X, y = make_classification(n_features=params['features'], n_classes=params['classes'],
+                                   n_redundant=0, n_informative=params['features'],
                                    random_state=rng, n_clusters_per_class=1)
         X += 2 * rng.uniform(size=X.shape)
         X = StandardScaler().fit_transform(X)
@@ -82,11 +83,12 @@ def test_predict_equals_sklearn(model):
 
             cmodel = convert(model)
 
-            cpred = cmodel.predict(X_test)
-            pred = model.predict(X_test)
+            cpred = cmodel.predict_proba(X_test)
+            pred = model.predict_proba(X_test)
 
         print(cpred)
         print(pred)
+        sys.stdout.flush()
         assert list(cpred) == list(pred)
 
 # TODO: test matrix multiplication against numpy

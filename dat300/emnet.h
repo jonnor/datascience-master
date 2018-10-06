@@ -2,6 +2,7 @@
 #include <stdint.h>
 #include <math.h>
 
+// Return errorcode if expr not satisfied
 #define EMNET_PRECONDITION(expr, errorcode) \
     do { \
         if (!(expr)) { \
@@ -9,6 +10,15 @@
         } \
     } while (0);
 
+// Return errorcode if expr not satisfied
+#define EMNET_POSTCONDITION(expr, errorcode) \
+    do { \
+        if (!(expr)) { \
+            return errorcode; \
+        } \
+    } while (0);
+
+// Return if expr gives error 
 #define EMNET_CHECK_ERROR(expr) \
     do { \
         const EmNetError _e = (expr); \
@@ -61,6 +71,7 @@ typedef enum _EmNetError {
     EmNetSizeMismatch,
     EmNetUnsupported,
     EmNetUninitialized,
+    EmNetPostconditionFailed,
     EmNetUnknownError,
     EmNetErrors,
 } EmNetError;
@@ -71,6 +82,7 @@ emnet_error_strs[EmNetErrors] = {
     "SizeMismatch",
     "Uninitialized",
     "Unsupported",
+    "Postcondition failed",
     "Unknown error",
 };
 
@@ -88,6 +100,15 @@ emnet_strerr(EmNetError e) {
     }
 }
 
+void
+print_array(const float *values, int32_t length) {
+    printf("n=%d [", length);
+    for (int i=0; i<length; i++) {
+        printf("%f,", values[i]);
+    }
+    printf("]\n");    
+} 
+
 
 static float
 emnet_relu(float in) {
@@ -103,6 +124,8 @@ static EmNetError
 emnet_softmax(float *input, size_t input_length)
 {
     EMNET_PRECONDITION(input, EmNetUninitialized);
+
+    printf("pre softmax: "); print_array(input, input_length);
 
     float input_max = -INFINITY;
     for (size_t i = 0; i < input_length; i++) {
@@ -120,6 +143,7 @@ emnet_softmax(float *input, size_t input_length)
     for (size_t i = 0; i < input_length; i++) {
         input[i] = expf(input[i] - offset);
     }
+    printf("post softmax: "); print_array(input, input_length);
 
     return EmNetOk;
 }
@@ -135,20 +159,26 @@ emnet_argmax(float *values, int32_t values_length) {
     return ret;
 }
 
-void
-print_array(const float *values, int32_t length) {
-    printf("n=%d [", length);
-    for (int i=0; i<length; i++) {
-        printf("%f,", values[i]);
-    }
-    printf("]\n");    
-} 
 
-
-bool
+static bool
 emnet_valid(EmNet *model) {
     bool not_null = model->layers && model->activations1 && model->activations2;
     return not_null;
+}
+
+static inline int32_t
+emnet_outputs(EmNet *model) {
+    return model->layers[model->n_layers-1].n_outputs;
+}
+
+// For binary problem, one output, we need to report [ prob(class_0), prob(class_1)]
+static inline int32_t
+emnet_outputs_proba(EmNet *model) {
+    int32_t n_outputs = emnet_outputs(model);
+    if (n_outputs == 1) {
+        n_outputs = 2;
+    }
+    return n_outputs;
 }
 
 // Calculate size of activation value arrays
@@ -165,6 +195,7 @@ emnet_find_largest_layer(EmNet *model) {
     }
     return largest;
 }
+
 
 // CMSIS-NN tricks
 // - fixed-point math
@@ -198,8 +229,8 @@ emnet_layer_forward(const EmNetLayer *layer,
                     const float *in, int32_t in_length,
                     float *out, int32_t out_length)
 {
-    //printf("forward. in=%d out=%d n_in=%d, n_out=%d\n",
-    //                in_length, out_length, layer->n_inputs, layer->n_outputs);
+    printf("forward. in=%d out=%d n_in=%d, n_out=%d\n",
+                    in_length, out_length, layer->n_inputs, layer->n_outputs);
 
     EMNET_PRECONDITION(in_length >= layer->n_inputs, EmNetSizeMismatch);
     EMNET_PRECONDITION(out_length >= layer->n_outputs, EmNetSizeMismatch);
@@ -230,15 +261,15 @@ emnet_layer_forward(const EmNetLayer *layer,
     if (layer->activation == EmNetActivationIdentity) {
         // no-op
     } else if (layer->activation == EmNetActivationReLu) {
-        for (int i=0; i<out_length; i++) {
+        for (int i=0; i<layer->n_outputs; i++) {
             out[i] = emnet_relu(out[i]);
         }
     } else if (layer->activation == EmNetActivationLogistic) {
-        for (int i=0; i<out_length; i++) {
+        for (int i=0; i<layer->n_outputs; i++) {
             out[i] = emnet_expit(out[i]);
         }
     } else if (layer->activation == EmNetActivationSoftMax) {
-        emnet_softmax(out, out_length);
+        emnet_softmax(out, layer->n_outputs);
     } else {
         return EmNetUnsupported;
     }
@@ -246,6 +277,8 @@ emnet_layer_forward(const EmNetLayer *layer,
     return EmNetOk;
 }
 
+
+// Run inferences. Leaves results in activations2
 EmNetError
 emnet_infer(EmNet *model, const float *features, int32_t features_length)
 {
@@ -276,10 +309,42 @@ emnet_infer(EmNet *model, const float *features, int32_t features_length)
     EMNET_CHECK_ERROR(emnet_layer_forward(&model->layers[model->n_layers-1],
                         buffer1, buffer_length, buffer2, buffer_length));
 
-    // FIXME: do something prettier with output than leaving it in activations2...
+    return EmNetOk;
+}
+
+EmNetError
+emnet_predict_proba(EmNet *model, const float *features, int32_t features_length,
+                                  float *out, int32_t out_length)
+{
+    EMNET_PRECONDITION(emnet_valid(model), EmNetUninitialized);
+    EMNET_PRECONDITION(features, EmNetUninitialized);
+    EMNET_PRECONDITION(out, EmNetUninitialized);
+    const int32_t n_outputs = emnet_outputs_proba(model);
+    EMNET_PRECONDITION(out_length == n_outputs, EmNetSizeMismatch);
+
+    EMNET_CHECK_ERROR(emnet_infer(model, features, features_length));
+
+    float proba_sum = 0.0f;
+
+    if (n_outputs == 2) {
+        out[0] = model->activations2[0];
+        out[1] = 1.0f - out[0];
+        proba_sum = out[0] + out[1];
+    } else {
+        for (int i=0; i<n_outputs; i++) {
+            const float p = model->activations2[i];
+            out[i] = p;
+            proba_sum += p; 
+        }
+    }
+
+    printf("proba_sum=%f rem=%f\n", proba_sum, fabs(proba_sum - 1.0));
+
+    EMNET_POSTCONDITION(fabs(proba_sum - 1.0) < 0.001, EmNetPostconditionFailed);
 
     return EmNetOk;
 }
+
 
 // Return the class, or -EmNetError on failure
 int32_t
@@ -290,9 +355,7 @@ emnet_predict(EmNet *model, const float *features, int32_t features_length) {
         return -error;
     }
 
-    const int32_t n_outputs = model->layers[model->n_layers-1].n_outputs;
-
-    printf("outputs: "); print_array(model->activations2, n_outputs);
+    const int32_t n_outputs = emnet_outputs(model);
 
     int32_t _class = -EmNetUnknownError;
     if (n_outputs == 1) {
@@ -300,8 +363,6 @@ emnet_predict(EmNet *model, const float *features, int32_t features_length) {
     } else if (n_outputs > 1) {
         _class = emnet_argmax(model->activations2, n_outputs);
     }
-
-    printf("class: %d\n", _class);
 
     return _class;
 }

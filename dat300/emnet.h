@@ -28,8 +28,6 @@
     } while (0);
 
 
-// TODO: implement sigmoid
-// TODO: implement tanh
 // TODO: implement elu
 // TODO: implement SeLu for SNN
 typedef enum _EmNetActivationFunction {
@@ -37,6 +35,7 @@ typedef enum _EmNetActivationFunction {
     EmNetActivationReLu,
     EmNetActivationLogistic,
     EmNetActivationSoftMax,
+    EmNetActivationTanh,
     EmNetActivationFunctions,
 } EmNetActivationFunction;
 
@@ -46,6 +45,7 @@ emnet_activation_function_strs[EmNetActivationFunctions] = {
     "relu",
     "logistic",
     "softmax",
+    "tanh",
 };
 
 typedef struct _EmNetLayer {
@@ -118,6 +118,11 @@ emnet_relu(float in) {
 static float
 emnet_expit(float in) {
     return 1.0f / (1.0f + expf(-in));
+}
+
+static float
+emnet_tanh(float in) {
+    return tanhf(in); 
 }
 
 static EmNetError
@@ -261,6 +266,10 @@ emnet_layer_forward(const EmNetLayer *layer,
     } else if (layer->activation == EmNetActivationLogistic) {
         for (int i=0; i<layer->n_outputs; i++) {
             out[i] = emnet_expit(out[i]);
+        }
+    } else if (layer->activation == EmNetActivationTanh) {
+        for (int i=0; i<layer->n_outputs; i++) {
+            out[i] = emnet_tanh(out[i]);
         }
     } else if (layer->activation == EmNetActivationSoftMax) {
         emnet_softmax(out, layer->n_outputs);

@@ -20,12 +20,13 @@ from sklearn.preprocessing import StandardScaler
 def test_unsupported_activation():
     with warnings.catch_warnings():
         warnings.simplefilter("ignore")
-        model = MLPClassifier(activation='tanh', hidden_layer_sizes=(2,), max_iter=10)
+        model = MLPClassifier(hidden_layer_sizes=(2,), max_iter=10)
         model.fit([[1.0]], [True])
     with pytest.raises(Exception) as ex:
+        model.activation = 'fake22'
         emnet.convert(model)
     assert 'Unsupported activation' in str(ex.value)
-    assert 'tanh' in str(ex.value)
+    assert 'fake22' in str(ex.value)
 
 
 def test_inference_simple():
@@ -52,8 +53,8 @@ def test_inference_simple():
 
 
 PARAMS = [
-    ( dict(hidden_layer_sizes=(4,)), {'classes': 3, 'features': 2}),
-    ( dict(hidden_layer_sizes=(4,)), {'classes': 2, 'features': 3}),
+    ( dict(hidden_layer_sizes=(4,), activation='relu'), {'classes': 3, 'features': 2}),
+    ( dict(hidden_layer_sizes=(4,), activation='tanh'), {'classes': 2, 'features': 3}),
     ( dict(hidden_layer_sizes=(4,5,3)), {'classes': 5, 'features': 5}),
 ]
 

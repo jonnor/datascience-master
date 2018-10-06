@@ -5,7 +5,7 @@ import emnetc
 import pytest
 import sklearn
 import numpy
-from numpy.testing import assert_almost_equal
+from numpy.testing import assert_equal, assert_almost_equal
 
 import sys
 import warnings
@@ -25,10 +25,6 @@ def convert_sklearn_mlp(model):
     weights = model.coefs_
     biases = model.intercepts_
     activations = [model.activation]*(len(weights)-1) + [ model.out_activation_ ]
-
-    print('outa', activations)
-    print('w', len(weights), weights[0].shape, weights[1].shape, '\n', weights)
-    print('b', len(biases), biases[0].shape, biases[1].shape, '\n',biases)
 
     cmodel = emnetc.Classifier(activations, weights, biases)
     return cmodel
@@ -105,11 +101,16 @@ def test_predict_equals_sklearn(modelparams,params):
 
             cmodel = convert(model)
 
-            cpred = cmodel.predict_proba(X_test[:3])
-            pred = model.predict_proba(X_test[:3])
+            X_test = X_test[:3]
+            cproba = cmodel.predict_proba(X_test)
+            proba = model.predict_proba(X_test)
+            cpred = cmodel.predict(X_test)
+            pred = model.predict(X_test)
 
-        assert_almost_equal(cpred, pred)
+        print(proba, cproba)
 
+        assert_almost_equal(proba, cproba)
+        assert_equal(pred, cpred)
 
 # TODO: test matrix multiplication against numpy
 

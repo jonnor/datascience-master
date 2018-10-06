@@ -125,8 +125,6 @@ emnet_softmax(float *input, size_t input_length)
 {
     EMNET_PRECONDITION(input, EmNetUninitialized);
 
-    printf("pre softmax: "); print_array(input, input_length);
-
     float input_max = -INFINITY;
     for (size_t i = 0; i < input_length; i++) {
         if (input[i] > input_max) {
@@ -143,20 +141,22 @@ emnet_softmax(float *input, size_t input_length)
     for (size_t i = 0; i < input_length; i++) {
         input[i] = expf(input[i] - offset);
     }
-    printf("post softmax: "); print_array(input, input_length);
 
     return EmNetOk;
 }
 
 int32_t
 emnet_argmax(float *values, int32_t values_length) {
-    int32_t ret = -1;
+
+    float vmax = -INFINITY;
+    int32_t argmax = -1;
     for (int i=0; i<values_length; i++) {
-        if (values[i] > ret) {
-            ret = i;
+        if (values[i] > vmax) {
+            vmax = values[i];
+            argmax = i;
         }
     }
-    return ret;
+    return argmax;
 }
 
 
@@ -229,9 +229,6 @@ emnet_layer_forward(const EmNetLayer *layer,
                     const float *in, int32_t in_length,
                     float *out, int32_t out_length)
 {
-    //printf("forward. in=%d out=%d n_in=%d, n_out=%d\n",
-    //                in_length, out_length, layer->n_inputs, layer->n_outputs);
-
     EMNET_PRECONDITION(in_length >= layer->n_inputs, EmNetSizeMismatch);
     EMNET_PRECONDITION(out_length >= layer->n_outputs, EmNetSizeMismatch);
     EMNET_PRECONDITION(layer->weights, EmNetUninitialized);
@@ -248,16 +245,11 @@ emnet_layer_forward(const EmNetLayer *layer,
             const int w_idx = o+(i*layer->n_outputs); // not stored continious
             const float w = layer->weights[w_idx];
             sum += w * in[i];
-            printf("(%d,%d) idx=%d, w=%f, in=%f\n",
-                    o,i, w_idx, w, in[i]);
         }
 
         out[o] = sum + layer->biases[o];
-        printf("sum=%f bias=%f out=%f\n", sum, layer->biases[o], out[o]);
 
     }
-
-    //printf("preact "); print_array(out, layer->n_outputs);
 
     // apply activation function
     if (layer->activation == EmNetActivationIdentity) {
@@ -276,7 +268,7 @@ emnet_layer_forward(const EmNetLayer *layer,
         return EmNetUnsupported;
     }
 
-    printf("activtions "); print_array(out, layer->n_outputs);
+    //printf("activations "); print_array(out, layer->n_outputs);
 
     return EmNetOk;
 }

@@ -29,24 +29,6 @@ Comparing model alternatives. Accuracy, training time, inference time, data requ
 * (Speech recognition)
 * (Music Information Retrieval)
 
-## Scope
-
-Focus on
-
-* Acoustic Event Detection. Animals. Ecoacoustics/bioacoustics
-* Robust methods, can be used in real-life noisy environments
-* Efficient methods, possible to implement in embedded system
-
-Only covered briefly
-
-* Psycoacoustics
-* Biological models of sound production
-
-Out of scope
-
-* Collect own data
-* Implementing on microcontroller
-
 ## Activities:
 
 1. Read literature and summarizing 

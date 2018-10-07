@@ -1,15 +1,71 @@
 
 Machine hearing.
-focus on audio event detection and a case study in
+focus on audio event detection and a review methods applied on birdsong detection.
+
+## Meta
+### Goal
+After reading this report,
+a machine learning practitioner
+without prior knowledge about sound or digital signal processing
+shall be able to solve basic audio event detection problems.
+
+### Scope
+Focus on
+
+* Acoustic Event Detection. Animals. Ecoacoustics/bioacoustics
+* Robust methods, can be used in real-life noisy environments
+* Efficient methods, possible to implement in embedded system
+
+Only mentioned briefly
+
+* Psycoacoustics
+* Biological models of sound production
+
+Prerequisite knowledge required
+
+* Basics machine learning concepts
+Supervised vs unsupervised learning.
+Classification,clustering,regression.
+* Familiarity with common methods
+Support Vector Machine, Random Forests, Convolutional Neural Networks
+
+Knowledge not required
+
+* Audio, acoustics
+
+Recommended
+
+* Familiarity with Python
+* Familiarity with scikit-learn
+* Basic digital signal processing.
+Linear-time-invariant systems, Causality, Fourier Transform.
 
 ## Introduction to sound
 
+- Sound processing systems.
+Aquisition. Storage. Processing. Output.
+Online versus offline.
+
 - Acoustics
 - Digital recordings of sound
-Quantization amplitude
+Discretization in amplitude
+Discretization in time
 File formats
 Compression. Lossless, lossy
 - audio mixtures
+
+- Receiver characteristics.
+Frequency response.
+Noise.
+
+- Environment characteristics
+Noise. Stationary, quasi-stationary
+Non-class sounds.
+Distance to source(s). Changing level of target sound.
+Reverberation.
+Microphonics,vibrations.
+
+- Source characteristics
 
 ### Psychoacoustics
 (Brief)
@@ -72,10 +128,17 @@ Connected problems and fields:
 - Source/individual identification
 - Diarization 
 - Monophonic vs polyphonic
-- Multi-label
+- Multi-class
+- Open ended
+- Anomaly/novelity detection
 
 ## Feature representations
 Criterias for good features
+Keep relevant info, remove irrelevant.
+Robust against variations
+
+
+Normalization
 
 ### Low-level features
 spectral center, spectral slope etc
@@ -87,10 +150,12 @@ mel-spectrogram
 MFCC
 
 delta, lag/lead frames
-Summarizations on spectrograms
+Summarizations
+first-order, second-order statistics
 
 ### Biologically based
 Coclear models
+CARFAC
 
 ### Wavelet based
 * Wavelet filterbanks

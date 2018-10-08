@@ -3,8 +3,9 @@
 
 ## TODO
 
-* Implement DNN/MLP inference in C for embedded. `emnet`?
-
+* emnet: Implement `convert()` for (simple) Keras models
+* emnet: Add support for convolutional layers (Keras)
+* Try to pre-seed convolution kernel parameters. Etc from spherical k-means, or random, or know (Gabor?)
 
 ## CNN
 

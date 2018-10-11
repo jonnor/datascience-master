@@ -29,3 +29,9 @@ Visualizing feature map activations, weights, showing inputs that maximally acti
 t-SNE embedding to show similarity in learned model space, occluding patches of input to find which parts of input are critical
 
 LocallyConnected is a convolution type layers where weights are not shared.
+
+## Keras
+Sparse input matrices. Can either densify in `fit_generator()`, or use `Input(..., sparse=True)` layer
+
+https://www.kaggle.com/luisgarcia/keras-nn-with-parallelized-batch-training
+

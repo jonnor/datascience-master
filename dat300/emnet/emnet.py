@@ -13,6 +13,12 @@ def convert_sklearn_mlp(model):
     cmodel = emnetc.Classifier(activations, weights, biases)
     return cmodel
 
+def convert_keras_sequential(model):
+    print('ll', model.layers)
+    print('c', model.get_config()['layers'])
+    print('w', model.get_weights())
+    for l in model.layers:
+        print('l', model.layers)
 
 def convert(model, kind=None):
     if kind is None:
@@ -20,5 +26,7 @@ def convert(model, kind=None):
 
     if kind == 'MLPClassifier':
         return convert_sklearn_mlp(model)
+    if kind == 'Sequential':
+        return convert_keras_sequential(model)
     else:
-        raise NotImplementedError("Unknown model type for " + model)
+        raise NotImplementedError("Unknown model type for " + str(model))

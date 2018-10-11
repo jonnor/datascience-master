@@ -90,3 +90,54 @@ def test_predict_equals_sklearn(modelparams,params):
 
 # TODO: test matrix multiplication against numpy
 
+import keras
+from keras.datasets import mnist
+from keras.models import Sequential
+from keras.layers import Dense, Dropout
+from keras.optimizers import RMSprop
+
+# TODO: avoid all the repetition with above tests
+def test_keras_mlp():
+    n_features = 3
+    n_classes = 3
+    
+    for random_seed in range(0, 3):
+        # Dataset
+        rng = numpy.random.RandomState(random_seed)
+        X, y = make_classification(n_features=n_features, n_classes=n_classes,
+                                   n_redundant=0, n_informative=n_features,
+                                   random_state=rng, n_clusters_per_class=1, n_samples=50)
+        X += 2 * rng.uniform(size=X.shape)
+        x_train, x_test, y_train, y_test = train_test_split(X, y, test_size=.2)
+
+        # Model
+        batch_size = 10
+        epochs = 3
+
+        # convert class vectors to binary class matrices
+        y_train = keras.utils.to_categorical(y_train, n_classes)
+        y_test = keras.utils.to_categorical(y_test, n_classes)
+
+        model = Sequential()
+        model.add(Dense(10, activation='relu', input_shape=(n_features,)))
+        model.add(Dense(10, activation='relu'))
+        model.add(Dense(n_classes, activation='softmax'))
+
+        model.summary()
+
+        model.compile(loss='categorical_crossentropy',
+                      optimizer=RMSprop(),
+                      metrics=['accuracy'])
+
+        history = model.fit(x_train, y_train,
+                            batch_size=batch_size,
+                            epochs=epochs,
+                            verbose=1,
+                            validation_data=(x_test, y_test))
+        score = model.evaluate(x_test, y_test, verbose=0)
+        print('Test loss:', score[0])
+        print('Test accuracy:', score[1])
+
+        cmodel = emnet.convert(model)
+
+        assert False

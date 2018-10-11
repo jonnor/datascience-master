@@ -30,6 +30,7 @@
 
 // TODO: implement elu
 // TODO: implement SeLu for SNN
+// TODO: implement HardSigmoid
 typedef enum _EmNetActivationFunction {
     EmNetActivationIdentity = 0,
     EmNetActivationReLu,

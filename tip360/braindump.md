@@ -12,6 +12,9 @@ Several aspects of the design may be transferrable to other medium-bandwidth sen
 such as vibration/accelerometer data or low-resolution imaging (visible,infrared).
 This is generaly out-of-scope, but it may be relevant to comment briefly on this in the report.
 
+## Questions
+Can one do machine learning directly on compressed sensing data?
+And then transmit the compression data for reconstruction later.
 
 ## Terms
 
@@ -197,6 +200,22 @@ Zakia Jellali, 2016. Linear Prediction Coding (LPC) as a sparsifying transform. 
 ### Compressed sensing
 Aka compressive sensing.
 
+[A Systematic Review of Compressive Sensing: Concepts, Implementations and Applications](). 2018, IEEE Access. MEENU RANI.
+Accessible intro, good diagrams. Table over Number of Required Compressive Measurements with different random methods.
+Including structured random and determenistic, which does not have to be sent along with signal.
+Acquisition strategies: RANDOM DEMODULATOR, MODULATED WIDEBAND CONVERTER (MWC), RANDOM MODULATION PRE-INTEGRATOR (RMPI), RANDOM FILTERING,
+COMPRESSIVE MULTIPLEXER, RANDOM EQUIVALENT SAMPLING (RES), RANDOM CONVOLUTION, QUADRATURE ANALOG-TO-INFORMATION
+CONVERTER (QAIC), RANDOM TRIGGERING-BASED MODULATED WIDEBAND COMPRESSIVE SAMPLING (RT-MWCS).
+! Random Filtering seems easy and applicable to streaming data.
+Recovery methods.
+Basis Pursuit, Basis Pursuit Denoising (BPDN), Dantzig Selector, Total Variation Denoising (TV).
+Convex optimization: BP simplex, BP interior...
+Greedy algorithms. Faster but requires knowledge of signal sparsity.
+Matching Pursiot, Orthongonal Matching Pursuit.
+Compressive sampling matching pursuit (CoSaMP) and subspace pursuit (SP).
+Iterative hard thresholding (IHT), Iterative soft thresholding (IST), approximate message passing (AMP).
+Fourier sampling, heavy hitters on steroids (HHS), chaining pursuits and sparse sequential matching pursuit. 
+
 Applications in MRI, 3d-imaging, hyperspectral imaging, ultrasound imaging.
 DiffuserCam, [Lensless single exposure 3d-imager](http://nuit-blanche.blogspot.com/2017/10/diffusercam-lensless-single-exposure-3d.html).
 [3d-ultrasound with single sensor](http://nuit-blanche.blogspot.com/2017/12/compressive-3d-ultrasound-imaging-using.html)
@@ -231,7 +250,22 @@ Demonstrates that convolution with random waveform followed by random time-domai
 Compressive Sensing (CS), Sparse Representation (SR) and Dictionary Learning (DL). 
 Recent works in SR and CS have shown that if sparsity in the recognition problem is properly harnessed then the choice of features is less critical. What becomes critical, however, is the number of features and the sparsity of representation
 
+Practical Compressed Sensing: modern data acquisition and signal processing. 2011. Becker.
+One of the world’s first compressed sensing hardware devices, the random modulation pre-integrator (RMPI). The RMPI
+
 ### Audio compression 
+
+[A novel audio signal acquisition method for wireless sensor networks](https://ieeexplore.ieee.org/document/6199486). 2011. Han,Zheng.
+Two signal acquisition methods based on compressive sensing.
+
+[Random Sampling for Analog-to-Information Conversion of Wideband Signals](http://dept.math.lsa.umich.edu/~annacg/papers/DCAS2006.sparsogram.pdf).
+Analog-to-information conversion. Sub-Nyquist acquisition and processing of wideband signals that are sparse in a local Fourier representation.
+1. Random sampling system that can be implemented in practical hardware.
+2. Information recovery algorithm to compute the spectrogram of the signal, which we dub the sparsogram.
+
+[COMPRESSED SENSING OF AUDIO SIGNALS USING MULTIPLE SENSORS](https://www.researchgate.net/publication/257304755_Compressed_sensing_of_audio_signals_using_multiple_sensors). 2008. Anthony Griffin and Panagiotis Tsakalides.
+Compares Signal Distortion Ratio (SDR) of Speech,Music,Birdcall,Impulsive type audio with DCT/DWT and basis/orthononal matching pursuit.
+! Birdcall shows very high SDR, when using DCT. Good for denoising? 
 
 [The undersampled wireless acoustic sensor network scenario: Some preliminary results and open research issues](https://ieeexplore.ieee.org/abstract/document/5291252/). Sommer, 2009. Sampling at under the Nyquist rate. Transparent Acoustic Communication (TAC).
 Ad-hoc network of microphones, called Distributed Portable Acoustic Sensor (DPAS) network.

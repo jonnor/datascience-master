@@ -65,6 +65,40 @@ Log transform should compress the range a bit. Has also been shown to be benefic
 A COMPARISON OF AUDIO SIGNAL PREPROCESSING METHODS
 FOR DEEP NEURAL NETWORKS ON MUSIC TAGGING
 
+#### Image compression on spectograms
+
+First tests in Compression.ipynb in jonnor/birddetect
+
+    birdsong in noisy environment
+    10 sec, 64 mels, 12ms frameshift (800 frames)
+    8bit log melspec. 55k original
+
+    with PNG
+    30k, approx 50% of original
+    8bit log melspec, with JPEG
+    70% quality. => 8k, approx 15% of original.
+    10% quality. => 2k, 4% of original.
+    Visibly very degraded, but seems to have preserved the bird calls OK
+
+Looks like 1/10th the size _might_ be realistic!
+
+TODO: test classification with compressed spectograms
+Both mismatched (train on originals, test on compressed)
+and reduced (train+test on compressed)
+
+"have tried running a JPEG encoder on ESP32, and got about 20 fps at 320×240 when compiling with -Os"
+https://hackaday.com/2016/10/31/whats-new-esp-32-testing-the-arduino-esp32-library/#comment-3250015
+
+OpenMV has an MIT licensed software JPEG encoder, optimized for microcontrollers.
+Mostly integer math, using precomputed DCT etc.
+https://github.com/openmv/openmv/blob/master/src/omv/img/jpeg.c
+
+Ideas:
+- 
+
+
+#### References
+
 Robust Features in Deep-Learning-Based Speech Recognition 
 https://www.researchgate.net/publication/320732977_Robust_Features_in_Deep-Learning-Based_Speech_Recognition
 Cepstral mean normalization, mean variance normalization
@@ -258,6 +292,17 @@ One of the world’s first compressed sensing hardware devices, the random modul
 [A novel audio signal acquisition method for wireless sensor networks](https://ieeexplore.ieee.org/document/6199486). 2011. Han,Zheng.
 Two signal acquisition methods based on compressive sensing.
 
+[Very low bitrate spatial audio coding with dimensionality reduction](https://ieeexplore.ieee.org/document/7952254). 2017.
+Using tensor compression based on randomization and partial observations.
+A common strategy is to transmit only the downmix of the objects along some small information permitting reconstruction at the decoder. In practice, this is done by transmitting compressed versions of the objects spectrograms and separating the mix with Wiener filters.
+Previous research used nonnegative tensor factorizations in this context, with bitrates as low as 1 kbps per object.
+Building on recent advances on tensor compression, we show that the computation time for encoding can be extremely reduced. Then, we demonstrate how the mixture can be exploited at the decoder to avoid the transmission of many parameters, permitting bitrates as low as 0.1 kbps per object.
+
+[Reduced dimension image compression and its applications](https://ieeexplore.ieee.org/document/537681).
+Reduced dimension image compression (ReDIC) algorithm.
+Discuss its application to sonar spectrograms for low-latency, low-cost transmission.
+Compare original and reconstructed spectrograms derived from real data at a 52:1 compression ratio.
+
 [Random Sampling for Analog-to-Information Conversion of Wideband Signals](http://dept.math.lsa.umich.edu/~annacg/papers/DCAS2006.sparsogram.pdf).
 Analog-to-information conversion. Sub-Nyquist acquisition and processing of wideband signals that are sparse in a local Fourier representation.
 1. Random sampling system that can be implemented in practical hardware.
@@ -285,13 +330,14 @@ To obtain exact recovery, the rule of thumb is to apply incoherent sampling and 
 Orthogonal Matching Pursuit one algorithm for doing recovery.
 Sparse Fast Fourier Transform can transform in sub-linear time.
 Binning Fourier coefficients into a small number of buckets.
-The recovery process reduces to extracting the location of the non-zero (index) elements in the matrix A
-and use them to order the sparse K signal, embed zeros in the other locations and perform inverse FFT.
+The recovery process reduces to extracting the location of the non-zero (index) elements in the matrix A and use them to order the sparse K signal, embed zeros in the other locations and perform inverse FFT.
 Considerably simpler than the general compressed sensing case.
 Propose an innovative way to embed the indices in the extracted largest frequency bins to relax the need for extra coded values.
 ! Only tested on a single, unspecified audio file, 15 seconds long.
 
 [A compressive beamforming method](https://ieeexplore.ieee.org/abstract/document/4518185/). Direction of Arrival estimation.
+
+[Avisoft Bioacoustics: Lossy Audio Data Compression Effects](https://www.avisoft.com/compression.htm). Shows some of the effects which can appear in spectrogram from common lossy audio encodings like MP3/AAC.
 
 ## Hardware
 

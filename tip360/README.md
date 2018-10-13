@@ -8,10 +8,8 @@
 
 ### TODO
 
+* Write requirements for machine-learning
 * Setup report skeleton/outline
-* Code for calculating data sizes of different data representations
-* Find power data for GSM/GPRS module
-* Find ESP32/8266 power usage with microphone(s)
-* Code for calculating combined data usage at mixes of power levels
+* Setup ESP32 microphone capture. Verify power consumption under 1mA
 * Determine requirements for power source
 * Code for calculating data transmission costs

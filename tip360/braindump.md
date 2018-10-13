@@ -341,6 +341,8 @@ Propose an innovative way to embed the indices in the extracted largest frequenc
 
 ## Hardware
 
+### Microcontroller
+
 NRF52832 only supports BLE5.0 with 1Mpbs.
 NRF51 supports lower rates on Enhanced ShockBurst.
 NRF52840 supports BLE5.0 long range at 125kbps. Up to 1km range.
@@ -348,6 +350,16 @@ NRF52840 supports BLE5.0 long range at 125kbps. Up to 1km range.
 
 https://www.digikey.no/product-detail/en/nordic-semiconductor-asa/NRF6936/1490-1061-ND/7175577
 
+ESP32 power states.
+
+* Modem-sleep: 20-31mA @ 80Mhz, 30-68MHz @ 240Mhz
+* Light-sleep: 0.8mA
+* Deep-sleep: 10uA - 150uA (ULP co-processor on)
+
+High-speed ADC is not available in deep-sleep.
+It seems that I2S pheripheral is also not?
+
+### GPRS modem
 
 GOOUUU TECG IOT-GA6 is not same as AI Thinkerer GA6, but can be reflashed
 https://github.com/vshymanskyy/TinyGSM/issues/164
@@ -365,3 +377,22 @@ Ublox SARAU201 seems to have such support on device
 Other alternative is to use modem in PPP mode. PPPoS = PPP over serial
 Should be possible with ESP32 and esp-idk, https://github.com/loboris/ESP32-PPPOS-EXAMPLE
 
+Typical supply voltage: 3.7V-4.2V
+SIM800. Sleep-mode: 1.2mA
+SIM800C. Sleep-mode: 0.88mA. 
+SIM800H. Sleep-mode: 0.7mA
+SIM900A. Sleep-mode: 1mA
+SARA-G3. Standby: 0.9mA. Connected: `<250mA`
+
+GSM is 1W or 2W max transmit, depending on class/band.
+Datarate. 9.05kbps-85.6 kbps
+
+### LTE
+
+LTE category NB1:
+Up to 31.25 kb/s UL
+Up to 27.2 kb/s DL
+
+SARA N2.
+Note: 1.8V supply voltage.
+Deep-sleep: 3uA, Active mode: 6mA. RX: 46mA, TX: 70-22mA

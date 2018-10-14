@@ -40,6 +40,13 @@ Recommended
 * Basic digital signal processing.
 Linear-time-invariant systems, Causality, Fourier Transform.
 
+### Format
+* 15-25 pages, A4, 12pt, 1in margins
+* Abstract
+* Table of Contents, List of Figures
+* Bibliography
+
+
 ## Introduction to sound
 
 - Sound processing systems.

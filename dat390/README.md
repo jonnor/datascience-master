@@ -37,6 +37,7 @@ Comparing model alternatives. Accuracy, training time, inference time, data requ
 ## Report outline
 [Report](./report.md)
 
+[Presentation](./presentation.md)
 
 ## Timeline
 
@@ -69,12 +70,19 @@ Literature
 
 * Finish book. Lyon, Human and machine hearing
 
+Documentation
+
+* Test RepSep for integrating results into report/presentation
+* Write initial Introduction
+* Write initial Applications
+* Write initial Feature representations
+* Find/make pictures for Applications,Features
+* Outline of slides for presentation
+
 Study
 
 * Setup framework for comparing different methods
 * Implement 3-4 different methods
 
-Documentation
 
-* Test RepSep for integrating results into report/presentation
 

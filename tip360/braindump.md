@@ -52,10 +52,31 @@ Type of audio detection problem. Event,scene classification. Event detection. Sp
 Precision of event in time
 Source localization. Direction, distance
 Acoustic challenges. Polyphony,reverberation
+Features for machine learning.
+
+### System architectures
+Sensor nodes. Central service.
+
+Sensor nodes. Gateways. Central service(s)
+
+Network topology. Mesh,Star. Routing, Flooding
+Quality of Service.
+
+Data processing. What happens where.
+Increasing amount of computational power, storage, energy.
+Cost of sending data that isn't used/useful
+
+Data thinning
+
+## Applications
 
 
+### Data representations
+Raw audio.
+Features for machine learning.
+Convolutional Neural Networks
+melspectogram
 
-### Data compression
 What is a good compression scheme for specrograms?
 Should they be recorded/transmitted raw, or after applying normalization?
 Maybe store RMS and median/mean alongside?

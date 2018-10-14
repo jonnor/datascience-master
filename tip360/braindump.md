@@ -145,6 +145,22 @@ Li-ion. Self-discharge rate 5%. Can be operated below 0, but not charged
 https://electronics.stackexchange.com/questions/263036/why-charging-li-ion-batteries-in-cold-temperatures-would-harm-them
 https://en.wikipedia.org/wiki/Lithium-ion_battery#Uses
 
+Solar power chargers.
+MPPT. Mean point
+
+
+https://www.digikey.com/products/en/integrated-circuits-ics/pmic-battery-chargers/781?FV=ffe0030d&quantity=0&ColumnSort=1000011&page=1&k=solar&pageSize=25
+
+Solar/MPPT pmICs
+* SPV1040. Boost converter.
+* LT3652
+
+Voltage Proportional Charge Control (VPCC) pmICs:
+* MCP73871. Also has battery temp protect over/under with 10k NTC.
+Note: Linear. Needs solar powers with above 4.5V output voltage
+https://www.digikey.com/product-detail/en/adafruit-industries-llc/390/1528-1400-ND/5638295
+Adafruit design notes of charger board. https://learn.adafruit.com/usb-dc-and-solar-lipoly-charger/design-notes
+
 ## Literature
 
 

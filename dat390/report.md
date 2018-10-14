@@ -74,6 +74,12 @@ Microphonics,vibrations.
 
 - Source characteristics
 
+### Sources of sound
+
+Biotropy
+Anthrophy
+
+
 ### Psychoacoustics
 (Brief)
 Non-linearities.

@@ -14,6 +14,7 @@ shall be able to solve basic audio event detection problems.
 
 ### Outline
 Introduction: Example usecases/applications
+
 Introduction: Scope,focus. Out-of-scope
 Background: Sound
 Background: Problem formulations
@@ -21,6 +22,9 @@ Feature representations
 Case study
 
 ## Slides
+
+AUDIO. How many persons are talking?
+AUDIO. Is this a healthy heart?
 
 audio mixtures.
 

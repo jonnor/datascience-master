@@ -66,7 +66,8 @@ Data processing. What happens where.
 Increasing amount of computational power, storage, energy.
 Cost of sending data that isn't used/useful
 
-Data thinning
+Data thinning.
+Idea: class-balanced sampling for recording. Just use inverse of class probability?
 
 ## Applications
 

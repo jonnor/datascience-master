@@ -66,10 +66,6 @@ Hours budgeting
 
 ## TODO
 
-Literature
-
-* Finish book. Lyon, Human and machine hearing
-
 Documentation
 
 * Test RepSep for integrating results into report/presentation

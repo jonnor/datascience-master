@@ -12,4 +12,4 @@
 * Setup report skeleton/outline
 * Setup ESP32 microphone capture. Verify power consumption under 1mA
 * Determine requirements for power source
-* Code for calculating data transmission costs
+* Verify melspec JPEG compression idea. Test on DCASE2018, with classifier.

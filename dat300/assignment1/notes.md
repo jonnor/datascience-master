@@ -1,4 +1,0 @@
-
-. Extratrees
-
-Hyperspectral Spectral

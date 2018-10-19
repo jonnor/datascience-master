@@ -68,7 +68,8 @@ Hours budgeting
 
 Documentation
 
-* Test RepSep for integrating results into report/presentation
+* Setup report generation
+* Setup slide generation
 * Write initial Introduction
 * Write initial Applications
 * Write initial Feature representations

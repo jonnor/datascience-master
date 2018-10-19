@@ -1,8 +1,26 @@
+---
+title: Audio Event Detection and applications to bioacoustics 
+date: 'December 2018'
+author: 'Jon Nordby <jonnord@nmbu.no>'
+abstract: |
+    TODO: write the abstract!
+    Fo
+    Fo
+    Fo
+    Bar
+---
 
-Machine hearing.
+
+
+## Testing
+This is a reference test (@pizza2000identification).
+
 focus on audio event detection and a review methods applied on birdsong detection.
 
-## Meta
+![This is the caption of the figure \label{mylabel}](./plot.png)
+
+This is a referene to \ref{mylabel}.
+
 ### Goal
 After reading this report,
 a machine learning practitioner
@@ -39,12 +57,6 @@ Recommended
 * Familiarity with scikit-learn
 * Basic digital signal processing.
 Linear-time-invariant systems, Causality, Fourier Transform.
-
-### Format
-* 15-25 pages, A4, 12pt, 1in margins
-* Abstract
-* Table of Contents, List of Figures
-* Bibliography
 
 
 ## Introduction to sound
@@ -224,4 +236,6 @@ What can be done using state-of-the-art?
 Open problems, areas of research.
 Summary of current situation.
 
+
+# References
 

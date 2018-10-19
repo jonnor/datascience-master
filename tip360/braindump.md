@@ -294,6 +294,29 @@ https://soundear.com/soundear-3/
 Easy visual representation of level. Instant-feedback
 
 
+How many sensors are needed?
+
+For poaching detection,
+
+[Optimization of sensor deployment for acoustic detection and localization in terrestrial environments](https://zslpublications.onlinelibrary.wiley.com/doi/full/10.1002/rse2.97).
+We developed probabilistic algorithms for near‐optimal placement of sensors,
+and for localization of the sound source as a function of spatial variation in sound pressure.
+We employed a principled‐GIS tool for mapping soundscapes to test the methods on a tropical‐forest case study using gunshot sensors.
+On hilly terrain, near‐optimal placement halved the required number of sensors compared to a square grid.
+Using a Greedy heuristic for near‐optimal placement of detectors.
+
+TMNR is a 25‐km2 area of mature tropical moist forest on undulating topography of 100–400 m elevation.
+Detection frequently possible up to 500 m distance from a gun, but much rarer above 1000 m.
+Predicted 79 devices within TMNR when applied to the soundscape from 829 gunshots on a 200‐m grid.
+50 devices within TMNR (on a 750‐m grid) would achieve a residual detection‐failure probability of 0.237,
+which is just bettered by near‐optimal placement of only 26 devices. 
+
+onitoring in the Korup National Park in Cameroon using 12 passive acoustic devices
+continuously recording for 2 years detected a high level of shooting within a 54‐km2 grid.
+
+ew advances in radio communication promise the future capability for real‐time detection and localization of exploitation activity,
+by linking networked devices to a base station. And are undergoing development for open‐source AudioMoth sensors (Hill et al. 2018)
+
 
 ## Literature
 

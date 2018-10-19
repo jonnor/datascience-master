@@ -40,6 +40,12 @@ onecall = {
 def transmit_costs(bytes, pricebreaks):
     pass
 
+
+# TODO: model RAM needed
+# TODO: model temp storage needed between transmission intervals
+# TODO: model data needs for noise measurement
+# TODO: allow hybrid mixture of raw,features,classification-summary
+
 def main():
     frame_shift = 512/44100
 

@@ -34,7 +34,7 @@ And then transmit the compression data for reconstruction later.
 
 ### Requirements for machine learning
 Definition. Care about accurate detection/inference/prediciton
-Raw audio needed for evaluation/verification, and supervised learning. While developing.
+Raw data needed for evaluation/verification, and supervised learning. While developing.
 Calibrate/adjust existing classifications. Report probabilities, not just thresholded decison/class?
 
 Capturing other sensor modalities may also benefit. Picture,vibration
@@ -69,6 +69,10 @@ Cost of sending data that isn't used/useful
 Data thinning.
 Idea: class-balanced sampling for recording. Just use inverse of class probability?
 
+Idea: prioritize storing or sending feature data for hard-to-classify cases.
+How many percent of samples would this be? 
+Small distance from class boundary.
+
 ## Applications
 
 
@@ -77,6 +81,18 @@ Raw audio.
 Features for machine learning.
 Convolutional Neural Networks
 melspectogram
+
+Can mel-scaled spectrograms be used as 'raw' data format?
+Requirements: 
+- Learn-able. Can be used to train strong methods.
+- Annotate-able. Can be labeled by humans to establish ground truth.
+Transform back to audio for listening?
+- Adaptable, can be used for other purposes than originally intended.
+Ex. From birdsong presence detection to bird species classification
+Can be used to develop stronger systems as state of art improves, or constraints are relaxed.
+- General-purpose. Can be used across a wide range of problems.
+Bioacoustics, ecoacoustics, industrial monitoring, security
+
 
 What is a good compression scheme for specrograms?
 Should they be recorded/transmitted raw, or after applying normalization?
@@ -107,6 +123,8 @@ Looks like 1/10th the size _might_ be realistic!
 TODO: test classification with compressed spectograms
 Both mismatched (train on originals, test on compressed)
 and reduced (train+test on compressed)
+
+TODO: consider other scaling methods. sqrt/cubic, 
 
 "have tried running a JPEG encoder on ESP32, and got about 20 fps at 320×240 when compiling with -Os"
 https://hackaday.com/2016/10/31/whats-new-esp-32-testing-the-arduino-esp32-library/#comment-3250015
@@ -160,6 +178,122 @@ Voltage Proportional Charge Control (VPCC) pmICs:
 Note: Linear. Needs solar powers with above 4.5V output voltage
 https://www.digikey.com/product-detail/en/adafruit-industries-llc/390/1528-1400-ND/5638295
 Adafruit design notes of charger board. https://learn.adafruit.com/usb-dc-and-solar-lipoly-charger/design-notes
+
+## Environmental noise applicatin
+
+
+EU directive 2002/49/EC.
+http://ec.europa.eu/environment/noise/directive_en.htm
+
+* the determination of exposure to environmental noise
+* ensuring that information on environmental noise and its effects is made available to the public
+* preventing and reducing environmental noise where necessary
+and preserving environmental noise quality where it is good
+
+The Directive requires Member States to prepare and publish, every 5 years, noise maps and noise management action plans for:
+
+* agglomerations with more than 100,000 inhabitants
+* major roads (more than 3 million vehicles a year)
+* major railways (more than 30.000 trains a year)
+* major airports (more than 50.000 movements a year, including small aircrafts and helicopters)
+
+When developing noise management action plans, Member States' authorities are required to consult the concerned public.
+
+It is important to note, however, that the Directive does not set limit or target values, nor does it prescribe the measures to be included in the action plans, thus leaving those issues at the discretion of the competent Member State authorities.
+
+http://noise.eea.europa.eu/
+Interactive maps. Road,rail,airport,industry
+
+EU indicators for noise pollution
+Lden: day-evening-night, 55dB
+Lnight: night, 50dB
+
+http://ec.europa.eu/environment/noise/sources_en.htm
+The various directives for common noise sources:
+Road traffic noise, Aircraft noise, Railway noise, Noise from Equipment for Use Outdoors
+
+
+Population exposure to environmental noise
+https://www.eea.europa.eu/data-and-maps/indicators/exposure-to-and-annoyance-by-2/assessment-2
+Published 19 Jul 2018.
+Based on country submissions and redeliveries of the 2012 round of reporting,
+eceived by the EEA at the end of March 2017.
+
+* Noise pollution is a major environmental health problem in Europe.
+* Road traffic is the most widespread source of environmental noise,
+with more than 100 million people affected by harmful levels in the EEA-33 member countries.
+Noise from railways, air traffic and industry are also important sources of noise.
+* The European Union's Seventh Environment Action Programme (7th EAP) sets the objective that by 2020
+noise pollution in the EU will have significantly decreased,
+moving closer to World Health Organization (WHO) recommended levels. 
+
+Lden: Long-term average indicator designed to assess annoyance and defined by the Environmental Noise Directive (END).
+It refers to an annual average day, evening and night period of exposure with an evening weighting of 5 dB(A) and a night weighting of 10 dB(A). 
+Lnight: Long-term average indicator defined by the END and designed to assess sleep disturbance.
+It refers to an annual average night period of exposure.
+
+Environmental noise causes approximately 16 600 premature deaths in Europe each year,
+with almost 32 million adults suffering from annoyance and over 13 million suffering sleep disturbance.
+The WHO has identified noise as the second most significant environmental cause of ill health in western Europe,
+the first being air pollution.
+
+The WHO has set a Night Noise Guideline level for Europe at 40 dB Lnight.
+
+https://www.eea.europa.eu/themes/human/noise/sub-sections/noise-fact-sheets
+Per-country summarizations of noise situation. In 2017
+
+Data is tracked with 5dB bins above indicator (50/55 dbA).
+
+For Norway.
+
+* 100k people too much noise from railway
+* 900k people too much noise from road day-evening-night, 500k at night
+* Half of this in Oslo area
+* 200k are sleep disturbed or highly sleep disturbed 
+* Trends. "Oslo Data not provided or unsuitable for deriving trends" !!
+
+
+Ideas for summary/presentation statistics:
+
+- N/percentage days above threshold (per year,month)
+- Histogram of noise values. Per day obervations
+- Average/median noise over course of a day. Per-hour bins
+
+Measurement standards.
+
+IEC61672. Class 2, Class 1
+
+
+### Questions
+How does Norwegian entities track noise today?
+
+* Road, railroad, airport operators 
+* Government. Municipality,fylke,state. Dedicated environmental agencies?
+
+What are available sensor systems for continious environmental noise monitoring?
+How much do they cost?
+
+CESVA TA120.
+https://www.cesva.com/en/products/sensors-terminals/TA120/
+Norsonic Nor1531
+https://web2.norsonic.com/product/noise-monitoring-terminal-nor1531/
+Urbiotica U-Sound 
+https://www.urbiotica.com/en/producto/u-sound-3/
+Scantek Scanmonitor
+http://scantekinc.com/products/long-term-monitoring/scantek-scanmonitor2
+Rion NA-37A
+https://rion-sv.com/products/10005/NA370009
+SoundEar3-320 X
+https://soundear.com/soundear3-320x/
+Prices starting from € 2,000
+
+Indoor
+Classroom, hospital
+
+https://soundear.com/soundear-3/
+Easy visual representation of level. Instant-feedback
+
+
 
 ## Literature
 
@@ -325,10 +459,7 @@ Recent works in SR and CS have shown that if sparsity in the recognition problem
 Practical Compressed Sensing: modern data acquisition and signal processing. 2011. Becker.
 One of the world’s first compressed sensing hardware devices, the random modulation pre-integrator (RMPI). The RMPI
 
-### Audio compression 
-
-[A novel audio signal acquisition method for wireless sensor networks](https://ieeexplore.ieee.org/document/6199486). 2011. Han,Zheng.
-Two signal acquisition methods based on compressive sensing.
+### Spectrogram compression
 
 [Very low bitrate spatial audio coding with dimensionality reduction](https://ieeexplore.ieee.org/document/7952254). 2017.
 Using tensor compression based on randomization and partial observations.
@@ -340,6 +471,20 @@ Building on recent advances on tensor compression, we show that the computation 
 Reduced dimension image compression (ReDIC) algorithm.
 Discuss its application to sonar spectrograms for low-latency, low-cost transmission.
 Compare original and reconstructed spectrograms derived from real data at a 52:1 compression ratio.
+
+[Speech reconstruction for MFCC-based low bit-rate speech coding](https://ieeexplore.ieee.org/abstract/document/6890586). 2014.
+Speech reconstruction is a key issue in speech coding.
+(LSE-ISTFTM) speech reconstruction algorithm for MFCC-based low bit-rate speech coding.
+
+Audio fingerprinting?
+
+### Audio compression 
+
+[A novel audio signal acquisition method for wireless sensor networks](https://ieeexplore.ieee.org/document/6199486). 2011. Han,Zheng.
+Two signal acquisition methods based on compressive sensing.
+
+
+
 
 [Random Sampling for Analog-to-Information Conversion of Wideband Signals](http://dept.math.lsa.umich.edu/~annacg/papers/DCAS2006.sparsogram.pdf).
 Analog-to-information conversion. Sub-Nyquist acquisition and processing of wideband signals that are sparse in a local Fourier representation.

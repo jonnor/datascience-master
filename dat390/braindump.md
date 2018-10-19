@@ -24,15 +24,18 @@ Or use an integrated thing like:
 
 ## Presentation
 
+Need:
+
+* Audio playback
+* Primary output web, PDF export second
+* Images. Preferably including SVG
+* LaTex formulas
+
 Want:
 
 * Markdown input
-* Primary output web, PDF export second
 * CSS styling
-* Images. Preferably including SVG
-* LaTex formulas
 * Table support
-* Audio playback
 * Video playback
 
 ### Solution

@@ -13,9 +13,32 @@ After reading this report
 
 # Format
 30 minutes presentation. 15 minutes questions.
+1 picture per slide, 30 slides.
 
-* One picture per slide
-* 30 slides
+# Image test
+
+![Some text](./plot.png)
+
+# Audio test
+
+<audio controls src="woodpecker2.wav" type="audio/wav">
+  Your browser does not support the audio tag.
+</audio>
+
+# Formula test
+
+Inline equations like $x=\sin{\phi}$ are great.
+But many things are better presented in a block.
+
+$$\hat{f}(\xi) = \int_{-\infty}^{\infty} f(x)\ e^{-2\pi i x \xi}\,dx,$$
+
+# Table test
+
+| Tables        | Are           | Cool  |
+| ------------- |:-------------:| -----:|
+| col 3 is      | right-aligned | $1600 |
+| col 2 is      | centered      |   $12 |
+| zebra stripes | are neat      |    $1 |
 
 # Outline
 * Introduction: Examples of usecases/applications

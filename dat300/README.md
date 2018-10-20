@@ -10,13 +10,7 @@ Looks like it is only used
 
 ## TODO
 
-* emnet: Implement `convert()` for (simple) Keras models. Sequential
-* emnet: Add support for 2d convolutional layers (Keras).
-Supports N filters.
-Can have activation function (or not).
-Bias is optional, but defaults to on.
-Supports strides.
-Supports dilated convolution.
+
 * Try to pre-seed convolution kernel parameters. Etc from spherical k-means, or random, or know (Gabor?).
 Keras: layers can be frozen by setting `trainable=False`.
 * DAT390: Implement a CNN model from DCASE2018 

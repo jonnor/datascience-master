@@ -181,6 +181,7 @@ Computer vision: `cs.CV`, `eess.IV`
 
 Research relevant Journals
 
+* [Journal of Machine Learning Research](https://jmlr.org/)
 * [Journal listing search](https://newcatalog.library.cornell.edu/catalog?utf8=%E2%9C%93&f%5Bformat%5D%5B%5D=Journal%2FPeriodical&q=wireless+sensor+network&search_field=all_fields)
 * MDIP Sensors journal. 15'000 NOK article processing fee.
 [Algorithm and Distributed Computing for the Internet of Things](http://www.wikicfp.com/cfp/servlet/event.showcfp?eventid=74395&copyownerid=54155). Nov 30, 2018
@@ -205,12 +206,19 @@ Lists
 
 Research relevant
 
-* [IEEE FRUCT 2018 : 23nd Conference of Open Innovations Association FRUCT](http://www.wikicfp.com/cfp/servlet/event.showcfp?eventid=74534&copyownerid=98795). Sep 14, 2018. Bologna, Italy
-* [IEEE IRC 2019 : Third IEEE International Conference on Robotic Computing](http://www.wikicfp.com/cfp/servlet/event.showcfp?eventid=77145&copyownerid=66527). Oct 5, 2018. Naples, Italy
-* [ISCSAI 2018 : 2018 International Symposium on Computer Science and Artificial Intelligence](http://www.wikicfp.com/cfp/servlet/event.showcfp?eventid=66819&copyownerid=55425). Nov 1, 2018. Hong Kong
-* [ICUIA 2019 : International Conference on Urban Intelligence and Applications](http://www.wikicfp.com/cfp/servlet/event.showcfp?eventid=78038&copyownerid=121110). Nov 15, 2018. Wuhan, China
-* [ICIAE 2019 : The 7th IIAE International Conference on Industrial Application Engineering 2019 ](http://www.wikicfp.com/cfp/servlet/event.showcfp?eventid=74231&copyownerid=58584). Nov 23. Kitakyushu, Japan
-* [ICETI 2018 : 2018 3rd International Conference on Engineering and Technology Innovations](http://www.wikicfp.com/cfp/servlet/event.showcfp?eventid=66872&copyownerid=55425). Nov 5, 2018
+* [iDSC 2019 : International Data Science Conference](http://wikicfp.com/cfp/servlet/event.showcfp?eventid=77574&copyownerid=90547).
+Edge/Fog computing. Machine Learning.
+CFP: Jan 11, 2019.
+* [WSOM+ 2019 : 13th International Workshop on Self-Organizing Maps and Learning Vector Quantization, Clustering and Data Visualization ](http://wikicfp.com/cfp/servlet/event.showcfp?eventid=81642&copyownerid=130748).
+Unsupervised feature selection, extraction and data pre-processing. Software and hardware implementations.
+Encourage scientific and application-oriented papers. Pattern recognition. Robotics and intelligent systems.
+CFP: Jan 20, 2019.
+* [SmartSys 2019 : Smart Systems: bringing together computer vision, sensor networks and machine learning](http://wikicfp.com/cfp/servlet/event.showcfp?eventid=80513&copyownerid=127427).
+Sensor networks, IoT - Internet of Things, Smart Cities. 
+CPP: Feb 17, 2019.
+* [CAIP 2019 : Computer Analysis of Images and Patterns](http://wikicfp.com/cfp/servlet/event.showcfp?eventid=79113&copyownerid=102216).
+Feature extraction. Machine learning for image and pattern analysis. Mobile multimedia. 
+CFP: April 1, 2019.
 
 Digital fabrication, Open source hardware
 
@@ -226,7 +234,7 @@ Open source software
 Python
 
 * EuroPython.
-* EuroSciPy. 2018. August 28 - September 1, Trento, Italy.
+* EuroSciPy
 
 Embedded
 

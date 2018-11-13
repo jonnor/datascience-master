@@ -41,40 +41,35 @@ Comparing model alternatives. Accuracy, training time, inference time, data requ
 
 ## Timeline
 
-    June,July,Aug. 120 hours
+    June,July,Aug
         Literature/background review
         Ecoacoustics/bioacoustics
         Introduction DCASE challenge, bird detection 
     September
         Finished book1
     October
-        Finish book2
-        Write summary literature review
-        Build model comparisons
+        Finished book2
     November
         Nov15: Presentation
+        Nov19: DCASE2018 conference
+        Write summary literature review
+        Build model comparisons
     December
         Report delivered
 
-Hours budgeting
-
-    100 literature
-    50 implement methods, compare
-
-    30 prepare presentation
-    30 write report
 
 ## TODO
 
-Documentation
+Presentation
 
-* Setup report generation
-* Setup slide generation
+* Outline of slides for presentation
+* Find/make pictures for Applications,Features
+
+Report
+
 * Write initial Introduction
 * Write initial Applications
 * Write initial Feature representations
-* Find/make pictures for Applications,Features
-* Outline of slides for presentation
 
 Study
 

@@ -157,6 +157,14 @@ Connected problems and fields:
 - Open ended
 - Anomaly/novelity detection
 
+# Localization
+Where in the FOV is the sound coming from.
+Requires multiple microphones.
+Spatial segmentation.
+
+Where did the gunshot come from?
+Detect poachers in a forest.
+
 ## Feature representations
 Criterias for good features
 Keep relevant info, remove irrelevant.

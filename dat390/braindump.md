@@ -67,8 +67,22 @@ After reading this report
 AUDIO. What genre is this?
 
 ## Problem formulations
-Audio search. Find similar
 
+## Audio search
+Find similar
+
+## Open-ended classification
+Classification problems often formulated as a closed-set. 
+But in reality this might be too limiting.
+Previously unseen birds may migrate into an area.
+New musical genres are invented all the time.
+Challenge: Creating a taxonomy, or consistent ontology
+
+## Other filterbanks
+Bark scale
+Constant-Q
+
+In practice does not make much difference compared to mel-spectrogram
 
 ## Code test
 

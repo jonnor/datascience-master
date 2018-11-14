@@ -1,10 +1,12 @@
 ---
-title: Audio Event Detection using Machine Learning
+title: Audio Classification using Machine Learning
 author: Jon Nordby <jonnord@nmbu.no>
 date: November 15, 2018
 ---
 
 # Introduction
+
+1 minute
 
 ## Goal
 
@@ -12,7 +14,21 @@ date: November 15, 2018
 > 
 > without prior knowledge about sound processing
 > 
-> can solve basic Audio Event Detection problems
+> can solve basic Audio Classification problems
+
+## Assumed knowledge
+
+* Machine learning fundamentals
+** Supervised vs unsupervised. Common methods
+* Basic signal processing
+** Sampling, Frequency Response, Fourier Transform
+
+## Study material
+
+* "Computational Analysis of Sound Scenes and Events". Virtanen,Plumbley,Ellis, 2018
+* "Human and Machine Hearing - Extracting Meaning from Sound". Richard F. Lyon, 2018 (rev2)
+* DCASE2018 Bird Audio Detection challenge
+* 50+ papers on Audio Event Detection etc.
 
 # Machine Hearing
 
@@ -150,7 +166,7 @@ Reverberation
 Approx 20Hz - 20kHz.
 Binaural
 
-Very non-linear system
+A non-linear system
 
 * Loudness is not linear with sound pressure
 * Loudness is frequency dependent 
@@ -162,21 +178,100 @@ Very non-linear system
 Microphones
 Analog to digital conversion
 
-## Waveform
+## Time-domain
+Linear, logarithmic. Amplitude versus power.
 
+## Frequency-domain
+Fourier Transform.
 
 ## Spectrograms
-Time-frequency domain
+Time-frequency domain.
+
+Tradeoff. Time vs frequency resolution
 
 
-# Feature representations
+
+# A practical example: Birdsong
+
+
+AUDIO. Is there a bird present in this recording?
+Binary.
+
+AUDIO. What species is this bird?
+Requires trained expert. Memorizing bird species and their sound.
+
+
+# Problem formulations
+
+5 minutes
+
+## Classification
+
+* Binary. Bird? yes/no
+* n-way. Which species is this?
+
+## Event detection
+Return time something occurred.
+
+* "Bird singing started", "Bird singing stopped"
+* Classification-as-detection. Classifier on short time-frames
+* Monophonic: Returns most prominent event
+
+::: notes
+
+Great summary of Sound Event Detection progress, 2010-2017.
+f1 score 8.4% -> 70%. MFCC+HMM+Viterbi -> MFCC+HMM+NMF -> mel+DNN -> mel+CRNN 
+http://www.cs.tut.fi/~heittolt/research-sound-event-detection0
+
+:::
+
+## Audio segmentation
+
+Return sections of audio that contain desired class of audio.
+
+* Ex: based on Event Detection time-stamps
+* Pre-processing to specialized classifiers
+
+## Source separation
+
+Return only the birdsong from the input audio.
+
+* Blind-source separation
+* Model-based separation
+
+## Overlapping events
+
+* Bird singing yes/no, Human talking yes/no
+* Bird A singing y/n, Bird B singing y/n
+
+Multi-label classification, or separate classifiers.
+
+## Tagging
+Multi-label classification problem
+
+## Our case
+
+Data from DCASE2018 Bird Audio Detection challenge.
+
+* 10 second clips
+* Has bird? yes/no (binary)
+*  (weakly annotated)
+
+::: notes
+
+How much or where in clip bird occurs = unknown.
+Weakly annotated.
+
+:::
+
+# Feature extraction
 
 ## Example
 
 ::: notes
 
 10 second clip
-Audio                Features            class
+Audio                Features            bird yes/no
 -> [Feature Extraction] -> [Classifier] -> 
 
 :::
@@ -220,11 +315,15 @@ Calculated from time-domain data.
 overlap, window function
 
 ## Summarizations
-equations 
 
-## Spectrograms
-Time-frequency
-Short-time Fourier Transform (STFT)
+* min,max
+* mean,std
+* Kurtosis,skew
+
+equations
+
+## Texture windows
+
 
 ## mel-spectrogram
 mel-scale filters
@@ -237,64 +336,72 @@ DCT
 Speech
 
 More compact representation.
-Does not perform as well as mel-spectrograms
-
-## Other filterbanks
-Bark scale
-Constant-Q
-
-In practice does not make much difference compared to mel-spectrogram
-
-## Wavelet filterbanks
-
-## Scattering Transform
+De-correlated, important for non-linear methods.
+With strong classifiers, not not as good as mel-spectrograms.
 
 ## Feature learning
 
+## Advanced features
+
+* Wavelet filterbanks
+* Scattering Transform
 
 
-# A practical example: Bird Detection
+# Classifiers
 
+## General purpose
 
-# Bird detection
+* Linear methods. SVM, Logistic Regression
+* Non-linear. Kernel SVM. RandomForest
 
-AUDIO. Is there a bird present in this recording?
-Binary.
+## Un-usual methods
 
-AUDIO. What species is this bird?
-Requires trained expert. Memorizing bird species and their sound.
+* Gaussian Mixture Models (GMM)
+* Hidden Markov Model (HMM)
+* Non-negative Matrix Factorization (NMF)
 
-
-# Problem formulations
-
-## Classification
-
-Weakly annotated. Don't know where in image
-
-## Open-ended classification
-Classification problems often formulated as a closed-set. 
-But in reality this might be too limiting.
-Previously unseen birds may migrate into an area.
-New musical genres are invented all the time.
-Challenge: Creating a taxonomy, or consistent ontology
-
-## Audio segmentation
-
-## Event detection
-
-## Overlapping events
-
-## Tagging
-Multi-label classification problem
-
-## Audio Source Separation
-
-
-# References
-
-## Literature
+## Deep learning
 
 
 
-Bonus slides
+# Results
 
+## Own results 
+
+Preliminary
+
+## DCASE2018 challenge
+
+# Summary
+
+If you have an Audio Classification problem.
+
+## Problem formulation
+
+## Feature representation
+
+Try first **log mel-spectrogram**. MFCC as fallback
+
+## Classifier
+
+Try Convolutional Neural Networks (or RCNN) first.
+
+1) Alternative: Shallow convolutions + RandomForest
+1) Last resort: GMM+HMM+SVM, on MFCC summarizations
+
+
+# Questions?
+
+
+
+# Bonus
+
+Anything that did not fit...
+
+
+## Preprocessing/normalization
+
+## Little data?
+
+Use Transfer Learning or Unsupervised Kernel Learning.
+Use Data Augmentation.

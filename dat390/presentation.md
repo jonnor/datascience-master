@@ -438,7 +438,7 @@ With strong classifiers, not not as good as mel-spectrograms.
 | Name  | Features | Classifier |  AUC ROC  |
 | ------- |:-------------:|:-----:|-----:|
 | Lasseck | melspectrogram | CNN  |  89%  |
-| ..... | melspectrogram  | CNN | 84%-78% |
+| ..... | melspectrogram  | CNN | 78%-84% |
 | skfl | melspec-conv-skmeans | RandomForest | 73.4 % |
 | **jonnor** | melspec-max | RandomForest | 70%[1] |
 | smacpy | MFCC-meanstd | GMM | 51.7 % |
@@ -447,35 +447,75 @@ http://dcase.community/challenge2018/task-bird-audio-detection-results
 
     1. Public leaderboard score, not submitted for challenge
 
+## Best performing models
+
+Data Augmentation
+
+* Random pitch shifting
+* Time-shifting
+* Time reversal
+* Noise additions
+
+Tricks 
+
+* Ensemble. Model averaging
+* Self-adaptation. Pseudo-labelling
+
+::: notes
+
+bulbul. Two Convolutional Neural Networks for Bird Detection in Audio Signals. Thomas Grill, Jan Schlüter.
+
+Bird Audio Detection Challenge 2016–2017
+http://c4dm.eecs.qmul.ac.uk/events/badchallenge_results
+
+:::
+
 # Summary
 
 If you have an Audio Classification problem.
 
-## Problem formulation
 
 ## Feature representation
 
-Try first **log mel-spectrogram**. MFCC as fallback
+Try first **mel-spectrogram** (log or linear)
 
-## Classifier
+MFCC only as fallback
+
+## Machine Learning method
 
 Try Convolutional Neural Networks (or RCNN) first.
+Use data augmentation.
+Little data? Try Transfer Learning from image model.
 
-1) Alternative: Shallow convolutions + RandomForest
-1) Last resort: MFCC + GMM + SVM
+Alternative: Learned convolutional kernels + RandomForest
 
+Probably avoid: MFCC + GaussianMixtureModel
 
 # Questions?
-
 
 
 # Bonus
 
 Anything that did not fit...
 
-## Data Augmentation
+## Remaining work
 
-## DCASE2018 conference
+* Implement kernel learning (spherical k-means)
+* Implement a Convolutional Neural Network
+* Compare the different models, summarize
+* Finish writing report
+
+## DCASE2018 workshop
+
+November 19-21, London.
+
+I am going!
+
+Reports from Bird Audio Detection challenge, and 4 other tasks
+
+## Contidi
+
+Writing a report in TIP360. 
 
 ## Parallell processing with Dask
 
@@ -483,9 +523,6 @@ Anything that did not fit...
 
 ## Preprocessing/normalization
 
-## Little data?
 
-Use Transfer Learning or Unsupervised Kernel Learning.
-Use Data Augmentation.
 
 

@@ -185,11 +185,11 @@ FEATURES FOR AUDIO CLASSIFICATION. Jeroen Breebaart. 2.1.1 Low-level signal para
 Spectral flatness.
 Spectral envelope. N-channel smooth approximation of spectrogram.
 
-
 "Normalizing features across time avoids bias towards high-range features"
 
 http://www.nyu.edu/classes/bello/MIR_files/timbre.pdf
 
+Autocorrelation. Self-similarity
 
 ### Time-frequency representations
 STFT, windowing
@@ -201,7 +201,7 @@ delta, lag/lead frames
 Summarizations
 first-order, second-order statistics
 Texture windows
-Ignores temporal order
+Bag-of-words. Ignores temporal order
 
 ### Biologically based
 Coclear models
@@ -241,6 +241,8 @@ Features
 * MFCC
 * melspectrogram (log?)
 * add delta frames
+* Scale Invariant Feature Transform (SIFT)
+* Histogram of Oriented Gradients (HOG) 
 * learned convolution kernels
 * combinations
 

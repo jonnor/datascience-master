@@ -18,17 +18,28 @@ date: November 15, 2018
 
 ## Assumed knowledge
 
-* Machine learning fundamentals
-** Supervised vs unsupervised. Common methods
-* Basic signal processing
-** Sampling, Frequency Response, Fourier Transform
+Machine learning basics
+
+* Supervised vs unsupervised
+* Common methods
+
+Basic signal processing
+
+* Sampling
+* Frequency vs time-domain, Fourier Transform
+* Convolutions
 
 ## Study material
 
-* "Computational Analysis of Sound Scenes and Events". Virtanen,Plumbley,Ellis, 2018
-* "Human and Machine Hearing - Extracting Meaning from Sound". Richard F. Lyon, 2018 (rev2)
-* DCASE2018 Bird Audio Detection challenge
-* 50+ papers on Audio Event Detection etc.
+*Computational Analysis of Sound Scenes and Events*.
+Virtanen,Plumbley,Ellis (2018)
+
+*Human and Machine Hearing - Extracting Meaning from Sound*, Second Edition.
+Richard F. Lyon (2018)
+
+*DCASE2018 Bird Audio Detection* challenge
+
+50+ papers on *Audio Event Detection* etc.
 
 # Machine Hearing
 
@@ -173,33 +184,42 @@ A non-linear system
 * Compression. Sensitivity lowered when loud
 * Masking. Close sounds can hide eachother
 
+::: notes
+TODO: picture of ear/hearing
+:::
+
 ## Digitizing sound
 
 Microphones
 Analog to digital conversion
+* Quantized in time, and amplitude
+* 44100 Hz, 16 bit
+
+FIXME: picture of digitization process
 
 ## Time-domain
 Linear, logarithmic. Amplitude versus power.
 
+FIXME: picture of linear + logarithmic
+
 ## Frequency-domain
 Fourier Transform.
+
+FIXME: picture of frequency response
 
 ## Spectrograms
 Time-frequency domain.
 
-Tradeoff. Time vs frequency resolution
+Tradeoff. Time vs frequency resolution.
 
+FIXME: picture of spectrogram
 
 
 # A practical example: Birdsong
 
+## 
 
-AUDIO. Is there a bird present in this recording?
-Binary.
-
-AUDIO. What species is this bird?
-Requires trained expert. Memorizing bird species and their sound.
-
+TODO: image of birds + image of spectrogram
 
 # Problem formulations
 
@@ -207,11 +227,17 @@ Requires trained expert. Memorizing bird species and their sound.
 
 ## Classification
 
-* Binary. Bird? yes/no
-* n-way. Which species is this?
+Return: class of this audio sample
+
+* Bird? yes/no (binary)
+* Which species is this? (multi-class)
+
+::: notes
+FIXME: add (background?) image of spectrogram 
+:::
 
 ## Event detection
-Return time something occurred.
+Return: time something occurred.
 
 * "Bird singing started", "Bird singing stopped"
 * Classification-as-detection. Classifier on short time-frames
@@ -225,42 +251,60 @@ http://www.cs.tut.fi/~heittolt/research-sound-event-detection0
 
 :::
 
+## Polyphonic events
+Return: times of all events happening
+
+Examples
+
+* Bird singing, Human talking, Music playing
+* Bird A, Bird B singing.
+
+Approaches
+
+* separate classifiers per 'track'
+* joint model: multi-label classifier
+
+::: notes
+
+:::
+
 ## Audio segmentation
 
-Return sections of audio that contain desired class of audio.
+Return: sections of audio containing desired class
 
 * Ex: based on Event Detection time-stamps
 * Pre-processing to specialized classifiers
 
 ## Source separation
 
-Return only the birdsong from the input audio.
+Return: audio with only the desired source
 
-* Blind-source separation
-* Model-based separation
+* Masking in time-frequency domain
+* Binary masks or continious 
+* Blind-source or Model-based
 
-## Overlapping events
 
-* Bird singing yes/no, Human talking yes/no
-* Bird A singing y/n, Bird B singing y/n
+## Other problem formulations
 
-Multi-label classification, or separate classifiers.
-
-## Tagging
-Multi-label classification problem
+* Tagging
+* Audio fingerprinting.
+* Searching: Audio Information Retrieval
 
 ## Our case
 
 Data from DCASE2018 Bird Audio Detection challenge.
 
-* 10 second clips
-* Has bird? yes/no (binary)
-*  (weakly annotated)
+* 10 second audio clips
+* Has bird? yes/no => **binary classification**
+* One label for entire clip => weakly annotated
+* 3 training sets, 3 test sets. 45'000 samples
+
+2 testsets recorded separately.
+Challenge: Generalize to mismatched conditions
 
 ::: notes
 
 How much or where in clip bird occurs = unknown.
-Weakly annotated.
 
 :::
 
@@ -280,15 +324,18 @@ Audio                Features            bird yes/no
 What is needed for good audio classification?
 
 * Volume independent
-* Robust against mixtures of other sounds
-* Handles (small) variations in frequency
-* Can exploit frequency modulation
+* Robust to mixtures of other sounds
+* Handles intra-class variations. Different birdsong
+* Can exploit frequency patterns
 * Can exploit temporal patterns
-* Compact. Little redundancy
 
 ::: notes
 
 Exact traits wanted is somewhat problem/sound dependent.
+
+* Compact. Little redundancy
+* Easy to learn from
+* Computationally cheap
 
 :::
 
@@ -311,8 +358,12 @@ IMAGE. Waveform
 
 Calculated from time-domain data.
 
+FIXME: add image of equations
+
 ## Framing
 overlap, window function
+
+FIXME: image of low-leve
 
 ## Summarizations
 
@@ -320,10 +371,17 @@ overlap, window function
 * mean,std
 * Kurtosis,skew
 
-equations
+FIXME: add image of resulting vector
+FIXME: add image with equations
 
-## Texture windows
+## Richer summaries
 
+* Texture windows
+* Lag frames
+* Delta frames
+* Delta-delta (acceleration)frames 
+
+Bag-of-Words. Ignores temporal ordering.
 
 ## mel-spectrogram
 mel-scale filters
@@ -339,13 +397,15 @@ More compact representation.
 De-correlated, important for non-linear methods.
 With strong classifiers, not not as good as mel-spectrograms.
 
+## Convolutional kernels on time-frequency data
+
 ## Feature learning
 
 ## Advanced features
 
 * Wavelet filterbanks
 * Scattering Transform
-
+* CARFAC cochlear model
 
 # Classifiers
 
@@ -358,19 +418,34 @@ With strong classifiers, not not as good as mel-spectrograms.
 
 * Gaussian Mixture Models (GMM)
 * Hidden Markov Model (HMM)
+
+::: notes
+
 * Non-negative Matrix Factorization (NMF)
+
+:::
 
 ## Deep learning
 
-
+* Convolutional Neural Network (CNN) + fully-connected layers 
+* Fully Convolutional Neural Network
 
 # Results
 
-## Own results 
-
-Preliminary
-
 ## DCASE2018 challenge
+
+
+| Name  | Features | Classifier |  AUC ROC  |
+| ------- |:-------------:|:-----:|-----:|
+| Lasseck | melspectrogram | CNN  |  89%  |
+| ..... | melspectrogram  | CNN | 84%-78% |
+| skfl | melspec-conv-skmeans | RandomForest | 73.4 % |
+| **jonnor** | melspec-max | RandomForest | 70%[1] |
+| smacpy | MFCC-meanstd | GMM | 51.7 % |
+
+http://dcase.community/challenge2018/task-bird-audio-detection-results
+
+    1. Public leaderboard score, not submitted for challenge
 
 # Summary
 
@@ -387,7 +462,7 @@ Try first **log mel-spectrogram**. MFCC as fallback
 Try Convolutional Neural Networks (or RCNN) first.
 
 1) Alternative: Shallow convolutions + RandomForest
-1) Last resort: GMM+HMM+SVM, on MFCC summarizations
+1) Last resort: MFCC + GMM + SVM
 
 
 # Questions?
@@ -398,6 +473,13 @@ Try Convolutional Neural Networks (or RCNN) first.
 
 Anything that did not fit...
 
+## Data Augmentation
+
+## DCASE2018 conference
+
+## Parallell processing with Dask
+
+## R
 
 ## Preprocessing/normalization
 
@@ -405,3 +487,5 @@ Anything that did not fit...
 
 Use Transfer Learning or Unsupervised Kernel Learning.
 Use Data Augmentation.
+
+

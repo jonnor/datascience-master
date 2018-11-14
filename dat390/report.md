@@ -176,6 +176,21 @@ Normalization
 ### Low-level features
 spectral center, spectral slope etc
 
+Standard low-level (SLL) signal parameters, includes: (1) root-mean-
+square (RMS) level, (2) spectral centroid, (3) bandwidth, (4) zero-crossing rate, (5) spectral roll-off
+frequency, (6) band energy ratio, (7) delta spectrum magnitude, (8) pitch, and (9) pitch strength
+
+FEATURES FOR AUDIO CLASSIFICATION. Jeroen Breebaart. 2.1.1 Low-level signal parameters. 
+
+Spectral flatness.
+Spectral envelope. N-channel smooth approximation of spectrogram.
+
+
+"Normalizing features across time avoids bias towards high-range features"
+
+http://www.nyu.edu/classes/bello/MIR_files/timbre.pdf
+
+
 ### Time-frequency representations
 STFT, windowing
 filter-banks. Constant-Q. Fourier transform
@@ -185,6 +200,8 @@ MFCC
 delta, lag/lead frames
 Summarizations
 first-order, second-order statistics
+Texture windows
+Ignores temporal order
 
 ### Biologically based
 Coclear models

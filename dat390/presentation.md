@@ -14,13 +14,13 @@ date: November 15, 2018
 > 
 > can solve basic Audio Event Detection problems
 
-## Machine Hearing subfields
+# Machine Hearing
 
-- Speech Recognition
-- Music Information Retrieval
-- **Sound Scenes and Events**
+5 minutes
 
-# Examples of Machine Hearing tasks
+## Examples
+
+Various usecases and tasks that Machine Hearing can be applied to.
 
 ## Speech Recognition
 What is this person saying?
@@ -121,46 +121,103 @@ Ecoacoustics. Measuring biodiversity.
 
 :::
 
-# What is sound?
+## Established subfields
 
-## Acoustic waves
- 
+- Speech Recognition
+- Music Information Retrieval
+- **Sound Scenes and Events**
+
+
+# Brief primer on sound
+
+5 minutes
+
+## Acoustic model
+Sources. Channel. Receiver.
+
+## Audio Mixtures
+A sound seldom appears alone.
+Sometimes separable in time-frequency.
+Many sounds have patterns in frequency. Eg voice formants
+
+## Channel effects
+Noise
+Frequency response
+Reverberation
+
+## Human hearing
+
+Approx 20Hz - 20kHz.
+Binaural
+
+Very non-linear system
+
+* Loudness is not linear with sound pressure
+* Loudness is frequency dependent 
+* Compression. Sensitivity lowered when loud
+* Masking. Close sounds can hide eachother
+
 ## Digitizing sound
+
 Microphones
 Analog to digital conversion
 
 ## Waveform
 
-## Loudness
-Logarithmic
 
 ## Spectrograms
 Time-frequency domain
 
 
-## Audio Mixtures
-A sound never appears alone
-
-## Channel effects
-Frequency reponse
-Reverberation
-
-
 # Feature representations
+
+## Example
+
+::: notes
+
+10 second clip
+Audio                Features            class
+-> [Feature Extraction] -> [Classifier] -> 
+
+:::
+
+## Desirable traits
+What is needed for good audio classification?
+
+* Volume independent
+* Robust against mixtures of other sounds
+* Handles (small) variations in frequency
+* Can exploit frequency modulation
+* Can exploit temporal patterns
+* Compact. Little redundancy
+
+::: notes
+
+Exact traits wanted is somewhat problem/sound dependent.
+
+:::
 
 ## Time domain
 
-Interesting signals very sparse in this domain.
-Lots of noise.
-All mixtures are 'on top of eachother'.
+Hard to discriminate sounds in realistic settings:
 
-Open research problem.
-1D Recurrent Neural Networks.
+* Samples are highly correlated
+* Frequency information mixed with temporal
+* Sensitive to noise
+
+Actively researched using very strong models and large datasets.
+
+::: notes
+IMAGE. Waveform
+
+:::
+
+## Low-level features
+
+Calculated from time-domain data.
 
 ## Framing
 overlap, window function
-
-## Low-level features
 
 ## Summarizations
 equations 
@@ -221,27 +278,15 @@ Previously unseen birds may migrate into an area.
 New musical genres are invented all the time.
 Challenge: Creating a taxonomy, or consistent ontology
 
+## Audio segmentation
+
 ## Event detection
 
 ## Overlapping events
-
-## Audio segmentation
 
 ## Tagging
 Multi-label classification problem
 
 ## Audio Source Separation
-
-# Data augmentations
-
-## Examples
-
-Respects invariants/properties of features.
-Modelling particular challenges.
-
-- noise addition
-- volume change
-- frequency response change
-
 
 

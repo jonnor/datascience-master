@@ -1,5 +1,54 @@
 
 
+## Backwards planning
+
+Goal:
+Solve basic Audio Event Detection problem
+
+How to formulate the problem?
+
+- N second sample of digital audio
+- mono
+- single-label, n-ary classification
+- supervised learning. Weakly labelled
+
+What feature representation and classifier to use?
+
+- melspec + CNN
+- melspec + learned kernels + RF
+- melspec + summarizations + RF
+- MFCC+delta + GMM + linear
+- low-level features
+
+'what is information, what is noise'
+Information
+- frequency distribution
+- frequency modulations, volume modulations
+Noise
+- frequency response variation
+
+How to pre-process the data?
+
+- log/power transform spectrograms
+- normalize volume
+- spectral mean subtraction
+
+What particular challenges are there with audio?
+
+- audio mixtures, additive, bounces around
+- many sources, few microphones
+- reverberation
+- signal distance dependent
+- high dynamic range
+- hearing not so well understood as vision?
+- time-series. Has a temporal dimension
+
+Things dont really need to know
+
+- How human hearing works
+- Details on how acoustic works
+- multi-channel,multi-sensor recording
+
 ## Format
 30 minutes presentation. 15 minutes questions.
 1 picture per slide, 30 slides.

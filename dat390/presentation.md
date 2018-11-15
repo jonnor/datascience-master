@@ -613,6 +613,15 @@ Try Transfer Learning. Can be from image model!
 
 Anything that did not fit...
 
+## End2End learning
+
+Using the raw audio input as features with Deep Neural Networks.
+
+Need to learn also the time-frequency decomposition,
+normally performed by the spectrogram. 
+
+Actively researched using advanced models and large datasets.
+
 ## Remaining work
 
 * Implement kernel learning (spherical k-means)
@@ -735,15 +744,8 @@ Exact traits wanted is somewhat problem/sound dependent.
 
 :::
 
-## Time domain
 
-Hard to discriminate sounds in realistic settings:
 
-* Samples are highly correlated
-* Frequency information mixed with temporal
-* Sensitive to noise
-
-Actively researched using very strong models and large datasets.
 
 ::: notes
 IMAGE. Waveform

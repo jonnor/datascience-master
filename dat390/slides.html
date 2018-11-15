@@ -539,12 +539,37 @@ Your browser does not support the audio tag.
 <p>Probably avoid: MFCC + GMM/HMM</p>
 </section><section id="tricks" class="slide level2">
 <h2>Tricks</h2>
-<p>Subtract mel-spectrogram mean. Consider median filtering.</p>
+<p>Subtract mel-spectrogram mean.</p>
+<p>Consider median filtering.</p>
 <p>Use data augmentation.</p>
 <p>Try Transfer Learning. Can be from image model!</p>
 </section></section>
 <section id="questions" class="title-slide slide level1"><h1>Questions?</h1></section>
-<section id="bonus" class="title-slide slide level1"><h1>Bonus</h1></section>
+<section><section id="bonus" class="title-slide slide level1"><h1>Bonus</h1></section><section id="remaining-work" class="slide level2">
+<h2>Remaining work</h2>
+<ul>
+<li>Implement kernel learning (spherical k-means)</li>
+<li>Implement a Convolutional Neural Network</li>
+<li>Compare the different models, summarize</li>
+<li>Finish writing report</li>
+</ul>
+</section><section id="dcase2018-workshop" class="slide level2">
+<h2>DCASE2018 workshop</h2>
+<p>Reports from challenge tasks:</p>
+<ol type="1">
+<li>Acoustic scene classification</li>
+<li>General-purpose audio taggging</li>
+<li><strong>Bird Audio Detection</strong></li>
+<li>semi-supervised: Domestic sound event detection</li>
+<li>multi-channel acoustics: Monitoring of domestic activities</li>
+</ol>
+<p>I am going! November 19-21, London.</p>
+</section><section id="continious-monitoring" class="slide level2">
+<h2>Continious Monitoring</h2>
+<p>Audio Classification often collected periodically, then training and classification done after-the-fact.</p>
+<p>Writing a report in TIP360:</p>
+<p><em>Designing a Wireless Acoustic Sensor Network for machine learning</em></p>
+</section></section>
 <section><section id="problem-formulations" class="title-slide slide level1"><h1>Problem formulations</h1></section><section id="classification" class="slide level2">
 <h2>Classification</h2>
 <p>Return: class of this audio sample</p>
@@ -604,34 +629,6 @@ Your browser does not support the audio tag.
 <li>Audio fingerprinting.</li>
 <li>Searching: Audio Information Retrieval</li>
 </ul>
-</section><section id="remaining-work" class="slide level2">
-<h2>Remaining work</h2>
-<ul>
-<li>Implement kernel learning (spherical k-means)</li>
-<li>Implement a Convolutional Neural Network</li>
-<li>Compare the different models, summarize</li>
-<li>Finish writing report</li>
-</ul>
-</section><section id="dcase2018-workshop" class="slide level2">
-<h2>DCASE2018 workshop</h2>
-<p>Reports from challenge tasks:</p>
-<ol type="1">
-<li>Acoustic scene classification</li>
-<li>General-purpose audio taggging</li>
-<li><strong>Bird Audio Detection</strong></li>
-<li>semi-supervised: Domestic sound event detection</li>
-<li>multi-channel acoustics: Monitoring of domestic activities</li>
-</ol>
-<p>I am going! November 19-21, London.</p>
-</section><section id="continious-monitoring" class="slide level2">
-<h2>Continious Monitoring</h2>
-<p>Audio Classification often collected periodically, then training and classification done after-the-fact.</p>
-<p>Writing a report in TIP360:</p>
-<p><em>Designing a Wireless Acoustic Sensor Network for machine learning</em></p>
-</section><section id="parallell-processing-features-with-dask" class="slide level2">
-<h2>Parallell processing features with Dask</h2>
-<p>TODO: add code samples</p>
-<p>https://github.com/jonnor/birddetect/blob/master/Model.ipynb</p>
 </section><section id="desirable-traits" class="slide level2">
 <h2>Desirable traits</h2>
 <p>What is needed for good audio classification?</p>

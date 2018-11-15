@@ -598,7 +598,9 @@ Probably avoid: MFCC + GMM/HMM
 
 ## Tricks
 
-Subtract mel-spectrogram mean. Consider median filtering.
+Subtract mel-spectrogram mean.
+
+Consider median filtering.
 
 Use data augmentation.
 
@@ -610,6 +612,36 @@ Try Transfer Learning. Can be from image model!
 # Bonus
 
 Anything that did not fit...
+
+## Remaining work
+
+* Implement kernel learning (spherical k-means)
+* Implement a Convolutional Neural Network
+* Compare the different models, summarize
+* Finish writing report
+
+## DCASE2018 workshop
+
+Reports from challenge tasks:
+
+1) Acoustic scene classification
+1) General-purpose audio taggging
+1) **Bird Audio Detection** 
+1) semi-supervised: Domestic sound event detection
+1) multi-channel acoustics: Domestic activities
+
+I am going! November 19-21, London.
+
+## Continious Monitoring
+
+Today: Audio collected and classified periodically
+
+Future: Contious process using Internet-of-Things sensors
+
+Writing a report in TIP360:
+
+*Designing a Wireless Acoustic Sensor Network for machine learning*
+
 
 
 # Problem formulations
@@ -682,42 +714,7 @@ Return: audio with only the desired source
 * Searching: Audio Information Retrieval
 
 
-
-## Remaining work
-
-* Implement kernel learning (spherical k-means)
-* Implement a Convolutional Neural Network
-* Compare the different models, summarize
-* Finish writing report
-
-## DCASE2018 workshop
-
-Reports from challenge tasks:
-
-1) Acoustic scene classification
-1) General-purpose audio taggging
-1) **Bird Audio Detection** 
-1) semi-supervised: Domestic sound event detection
-1) multi-channel acoustics: Monitoring of domestic activities
-
-I am going! November 19-21, London.
-
-## Continious Monitoring
-
-Audio Classification often collected periodically,
-then training and classification done after-the-fact.
-
-Writing a report in TIP360:
-
-*Designing a Wireless Acoustic Sensor Network for machine learning*
-
-## Parallell processing features with Dask
-
-TODO: add code samples
-
-https://github.com/jonnor/birddetect/blob/master/Model.ipynb
-
-
+# Misc
 
 ## Desirable traits
 What is needed for good audio classification?
@@ -750,7 +747,6 @@ Actively researched using very strong models and large datasets.
 
 ::: notes
 IMAGE. Waveform
-
 :::
 
 

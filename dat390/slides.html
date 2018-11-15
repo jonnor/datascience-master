@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="author" content="Jon Nordby jonnord@nmbu.no">
+  <meta name="dcterms.date" content="2018-11-15">
+  <title>Audio Classification using Machine Learning</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="reveal.js/css/reveal.css">
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+  <style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="reveal.js/css/theme/black.css" id="theme">
+  <!-- Printing and PDF exports -->
+  <script>
+    var link = document.createElement( 'link' );
+    link.rel = 'stylesheet';
+    link.type = 'text/css';
+    link.href = window.location.search.match( /print-pdf/gi ) ? 'reveal.js/css/print/pdf.css' : 'reveal.js/css/print/paper.css';
+    document.getElementsByTagName( 'head' )[0].appendChild( link );
+  </script>
+  <!--[if lt IE 9]>
+  <script src="reveal.js/lib/js/html5shiv.js"></script>
+  <![endif]-->
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide">
+  <h1 class="title">Audio Classification using Machine Learning</h1>
+  <p class="author">Jon Nordby <a href="mailto:jonnord@nmbu.no" class="email">jonnord@nmbu.no</a></p>
+  <p class="date">November 15, 2018</p>
+</section>
+
+<section><section id="introduction" class="title-slide slide level1"><h1>Introduction</h1></section><section id="goal" class="slide level2">
+<h2>Goal</h2>
+<blockquote>
+<p>a machine learning practitioner</p>
+<p>without prior knowledge about sound processing</p>
+<p>can solve basic Audio Classification problems</p>
+</blockquote>
+</section><section id="assumed-knowledge" class="slide level2">
+<h2>Assumed knowledge</h2>
+<p>Machine learning basics</p>
+<ul>
+<li>Supervised vs unsupervised learning</li>
+<li>Common methods</li>
+</ul>
+<p>Basic signal processing</p>
+<ul>
+<li>Sampling</li>
+<li>Frequency vs time-domain</li>
+<li>Fourier Transform</li>
+<li>Filter kernels, Convolutions</li>
+</ul>
+</section><section id="study-material" class="slide level2">
+<h2>Study material</h2>
+<p><em>Computational Analysis of Sound Scenes and Events</em>. Virtanen,Plumbley,Ellis (2018)</p>
+<p><em>Human and Machine Hearing - Extracting Meaning from Sound</em>, Second Edition. Richard F. Lyon (2018)</p>
+<p><em>DCASE2018 Bird Audio Detection</em> challenge</p>
+<p>50+ papers on <em>Acoustic Event Detection</em> etc.</p>
+</section></section>
+<section><section id="machine-hearing" class="title-slide slide level1"><h1>Machine Hearing</h1></section><section id="examples" class="slide level2">
+<h2>Examples</h2>
+<p>Various usecases and tasks that Machine Hearing can be applied to.</p>
+</section><section id="speech-recognition" class="slide level2">
+<h2>Speech Recognition</h2>
+<p>What is this person saying?</p>
+<audio controls src="sounds/381533__rprieto1__talking.mp3" type="audio/mp3">
+Your browser does not support the audio tag.
+</audio>
+<aside class="notes">
+<p>“The image I had was a subway station”</p>
+<p>Quite easy. Most people have a very trained ear for speech.</p>
+<p>https://freesound.org/people/rprieto1/sounds/381533/</p>
+</aside>
+</section><section id="musical-key-classification" class="slide level2">
+<h2>Musical key classification</h2>
+<p>What key is this music in?</p>
+<audio controls src="sounds/261324__xinematix__piano-chord-progression-f-120-bpm.mp3" type="audio/mp3">
+Your browser does not support the audio tag.
+</audio>
+<aside class="notes">
+<p>Quite hard, requires musical training.</p>
+<p>Piano Chord Progression (F - 120 BPM).wav https://freesound.org/people/Xinematix/sounds/261324/</p>
+</aside>
+</section><section id="audio-scene" class="slide level2">
+<h2>Audio Scene</h2>
+<p>What kind of place is this from?</p>
+<audio controls src="sounds/169043__miksmusic__school-gym-children-playing-ambiance-1.mp3" type="audio/mp3">
+Your browser does not support the audio tag.
+</audio>
+<aside class="notes">
+<p>Playground outdoors https://freesound.org/people/miksmusic/sounds/169043/</p>
+<p>Restaurant https://freesound.org/people/soundtracvkradio/sounds/394678/</p>
+<p>Context-aware smart devices. In the home, smartphones.</p>
+</aside>
+</section><section id="medical-diagnostics" class="slide level2">
+<h2>Medical diagnostics</h2>
+<p>Is this a healthy heart?</p>
+<audio controls src="sounds/heart-murmur-innocent.mp3" type="audio/mp3">
+Your browser does not support the audio tag.
+</audio>
+<aside class="notes">
+<p>Hard, requires very well trained doctor. Serious, high consequences for wrong prediction.</p>
+<p>Many examples of various innocent and unhealthy heart sounds, explained. https://www.easyauscultation.com/heart-sounds-audio</p>
+<p>Heart Sounds and Heart Murmurs, Animation. https://www.youtube.com/watch?v=dBwr2GZCmQM Very clear explanation of normal and various abnormal heart sounds.</p>
+<p>Heart classification challenge. http://www.peterjbentley.com/heartchallenge/</p>
+</aside>
+</section><section id="industrial-monitoring" class="slide level2">
+<h2>Industrial monitoring</h2>
+<p>Is this machine operating normally?</p>
+<audio controls src="sounds/211087__vumseplutten1709__wornoutballbearing.mp3" type="audio/mp3">
+Your browser does not support the audio tag.
+</audio>
+<aside class="notes">
+<p>wornoutballbearing.wav https://freesound.org/people/vumseplutten1709/sounds/211087/</p>
+</aside>
+</section><section id="ecoacoustics" class="slide level2">
+<h2>Ecoacoustics</h2>
+<p>What kind of animal is this?</p>
+<audio controls src="sounds/67261__benboncan__frog-croaking.mp3" type="audio/mp3">
+Your browser does not support the audio tag.
+</audio>
+<aside class="notes">
+<p>https://freesound.org/people/Benboncan/sounds/67261/ Ecoacoustics. Measuring biodiversity.</p>
+</aside>
+</section><section id="established-subfields" class="slide level2">
+<h2>Established subfields</h2>
+<ul>
+<li>Speech Recognition</li>
+<li>Music Information Retrieval</li>
+<li><strong>Sound Scenes and Events</strong></li>
+</ul>
+</section></section>
+<section><section id="brief-primer-on-sound" class="title-slide slide level1"><h1>Brief primer on sound</h1></section><section id="acoustic-model" class="slide level2">
+<h2>Acoustic model</h2>
+<p>Sources. Channel. Receiver.</p>
+</section><section id="audio-mixtures" class="slide level2">
+<h2>Audio Mixtures</h2>
+<p>A sound seldom appears alone.</p>
+<aside class="notes">
+<p>Sometimes separable in time-frequency. Many sounds have patterns in frequency. Eg voice formants</p>
+</aside>
+</section><section id="channel-effects" class="slide level2">
+<h2>Channel effects</h2>
+<p>Noise Frequency response Reverberation</p>
+</section><section id="human-hearing" class="slide level2">
+<h2>Human hearing</h2>
+<p>Approx 20Hz - 20kHz. Binaural</p>
+<p>A non-linear system</p>
+<ul>
+<li>Loudness is not linear with sound pressure</li>
+<li>Loudness is frequency dependent</li>
+<li>Compression. Sensitivity lowered when loud</li>
+<li>Masking. Close sounds can hide eachother</li>
+</ul>
+<aside class="notes">
+<p>TODO: picture of ear/hearing</p>
+</aside>
+</section><section id="digital-sound" class="slide level2">
+<h2>Digital sound</h2>
+<p>sound -&gt; Microphone -&gt; Analog to Digital Converter</p>
+<ul>
+<li>Quantized in time (ex: 44100 Hz)</li>
+<li>Quantizied in amplitude (ex: 16 bit)</li>
+<li>Uncompressed formats: PCM .WAV</li>
+<li>Lossless compression: .FLAC</li>
+<li>Lossy compression: .MP3</li>
+</ul>
+<p>FIXME: picture of digitization process</p>
+</section></section>
+<section><section id="a-practical-example-bird-detection" class="title-slide slide level1"><h1>A practical example: Bird Detection</h1></section><section id="dcase2018-challenge" class="slide level2">
+<h2>DCASE2018 challenge</h2>
+<ul>
+<li>10 second audio clips</li>
+<li>Has bird? yes/no =&gt; <strong>binary classification</strong></li>
+<li>One label for entire clip =&gt; weakly annotated</li>
+<li>3 training sets, 3 test sets. 45’000 samples</li>
+</ul>
+<p><strong>Mismatched conditions</strong>: 2 testsets with no training samples.</p>
+<aside class="notes">
+<p>How much or where in clip bird occurs = unknown.</p>
+</aside>
+</section><section id="bird-sounds" class="slide level2">
+<h2>Bird sounds</h2>
+<p><img data-src="./images/bird_clear_spectrogram.png" /></p>
+<audio controls src="sounds/4dd5046d-c962-4f02-a820.wav" type="audio/wav">
+Your browser does not support the audio tag.
+</audio>
+</section><section id="more-realistic" class="slide level2">
+<h2>More realistic</h2>
+<p><img data-src="./images/bird_noisy_spectrogram.png" /></p>
+<audio controls src="sounds/00adbc49-77ef-4b7e-a453-cbb4ee011e11.wav" type="audio/wav">
+Your browser does not support the audio tag.
+</audio>
+</section></section>
+<section><section id="feature-extraction" class="title-slide slide level1"><h1>Feature extraction</h1></section><section id="audio-classification-pipeline" class="slide level2">
+<h2>Audio classification pipeline</h2>
+<p>FIXME: find/make a picture of the process</p>
+<aside class="notes">
+<p>10 second clip Audio Features bird yes/no -&gt; <a href="#/feature-extraction-1">Feature Extraction</a> -&gt; <a href="#/classifier">Classifier</a> -&gt;</p>
+</aside>
+</section><section id="frames" class="slide level2">
+<h2>Frames</h2>
+<p><img data-src=",/images/frame-windowing.png" /></p>
+<p>Cut audio into short overlapping segments</p>
+</section><section id="low-level-features" class="slide level2">
+<h2>Low-level features</h2>
+<p><img data-src="./images/bird_clear_lowlevel.png" /></p>
+<p>Basic statistics on spectrogram</p>
+<aside class="notes">
+<p>TODO: add images explaining the summarization</p>
+</aside>
+</section><section id="summarizations" class="slide level2">
+<h2>Summarizations</h2>
+<ul>
+<li>min,max</li>
+<li>mean,std</li>
+<li>Kurtosis,skew</li>
+</ul>
+<p>FIXME: add image of resulting vector</p>
+<aside class="notes">
+<p>Bag-of-Words. Temporal ordering is ignored. Inspired by successes in text analysis / Natural Language Processing.</p>
+</aside>
+</section><section id="delta-frames" class="slide level2">
+<h2>Delta frames</h2>
+<p>Delta frames: Difference between successive frames</p>
+<p>Delta-delta frames: Difference between delta frames</p>
+<p>Summarized independently.</p>
+<aside class="notes">
+<p>FIXME: add image explaining this</p>
+</aside>
+</section><section id="texture-windows" class="slide level2">
+<h2>Texture windows</h2>
+<p><img data-src="./images/texture-windows.png" /></p>
+</section><section id="mel-scale-filters" class="slide level2">
+<h2>mel-scale filters</h2>
+<p><img data-src="./images/mel-filterbanks-20.png" /></p>
+<p>Reduces number of bands in spectrogram. Perceptually motivated.</p>
+<aside class="notes">
+<p>40-64 filters typical.</p>
+<p>Analysis of Accent-Sensitive Words in Multi-Resolution Mel-Frequency Cepstral Coefficients for Classification of Accents in Malaysian English https://www.researchgate.net/figure/Mel-filter-banks-basis-functions-using-20-Mel-filters-in-the-filter-bank_fig1_288632263</p>
+</aside>
+</section><section id="mel-spectrogram" class="slide level2">
+<h2>mel-spectrogram</h2>
+<p><img data-src="./images/bird_clear_melspec.png" /></p>
+<p>Spectrogram filtered by mel-scale triangular filters</p>
+<aside class="notes">
+<p>mel-scale filters Reduces number of banks</p>
+</aside>
+</section><section id="what-about-noise" class="slide level2">
+<h2>What about noise?</h2>
+<p>There are birds in here!</p>
+<p><img data-src="./images/bird_noisy_melspec.png" /></p>
+</section><section id="filtered-mel-spectrogram" class="slide level2">
+<h2>Filtered mel-spectrogram</h2>
+<p><img data-src="./images/bird_noisy_melspec_filtered.png" /></p>
+<p>Subtracted filterbank means, added Median filter (3x3)</p>
+</section><section id="mel-filter-cepstrum-coefficients-mfcc" class="slide level2">
+<h2>Mel-filter Cepstrum Coefficients (MFCC)</h2>
+<p><img data-src="./images/bird_clear_mfcc.png" /></p>
+<p>Discrete Cosine Transform (DCT-2) of mel-spectrogram</p>
+<aside class="notes">
+<p>More compact representation. Easy to compress, cut of higher coefficients. De-correlated, important for non-linear methods. With strong classifiers, not as good as mel-spectrograms.</p>
+</aside>
+</section><section id="feature-learning" class="slide level2">
+<h2>Feature learning</h2>
+<p>Learning a dictionary of small convolutional kernels (ex 3x3)</p>
+<p>Unsupervised, from random patches</p>
+<ul>
+<li>Clustering. Spherical k-means</li>
+<li>Matrix Factorization. Sparse Non-negative MF</li>
+</ul>
+<p>Transfer: Copy from existing models</p>
+<p>Supervised: Back-propagation (Convolutional NN)</p>
+<aside class="notes">
+<p>Local pattern matching. FIXME: add picture of a set of kernels TODO: picture of 2d convolution, input+output</p>
+<p>Feature Learning with Matrix Factorization Applied to Acoustic Scene Classification.</p>
+</aside>
+</section><section id="advanced-feature-representations" class="slide level2">
+<h2>Advanced feature representations</h2>
+<p>Examples</p>
+<ul>
+<li>Wavelet filterbanks</li>
+<li>Scattering Transform</li>
+<li>CARFAC. Perceptual cochlear model</li>
+</ul>
+<p>Not so much used</p>
+</section></section>
+<section><section id="classifiers" class="title-slide slide level1"><h1>Classifiers</h1></section><section id="classic-models" class="slide level2">
+<h2>Classic models</h2>
+<p>The usual suspects</p>
+<ul>
+<li>Logistic Regression</li>
+<li>Support Vector Machine</li>
+<li>Random Forests</li>
+</ul>
+<p>Also popular in Audio Classification</p>
+<ul>
+<li>Gaussian Mixture Models (GMM)</li>
+<li>Hidden Markov Model (HMM)</li>
+</ul>
+<aside class="notes">
+
+</aside>
+</section><section id="deep-learning" class="slide level2">
+<h2>Deep learning</h2>
+<ul>
+<li>Convolutional Neural Network (CNN) + dense layers</li>
+<li>Fully Convolutional Neural Network (FCNN)</li>
+<li>Recurrent Convolutional Neural Networks (RCNN)</li>
+</ul>
+<aside class="notes">
+<p>TODO: add a nice image of deep learning. Neural network</p>
+</aside>
+</section></section>
+<section><section id="comparison-of-different-approaches" class="title-slide slide level1"><h1>Comparison of different approaches</h1></section><section id="workbook" class="slide level2">
+<h2>Workbook</h2>
+<p>https://github.com/jonnor/birddetect</p>
+<p>Important files:</p>
+<ul>
+<li>Model.ipynb</li>
+<li>dcase2018bad.py</li>
+<li>features.py</li>
+</ul>
+</section><section id="classifier" class="slide level2">
+<h2>Classifier</h2>
+<p><img data-src="./images/notebook-train-test.png" /></p>
+</section><section id="feature-extraction-1" class="slide level2">
+<h2>Feature extraction</h2>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb1-1" title="1"><span class="kw">def</span> melspec_maxp(data, sr):</a>
+<a class="sourceLine" id="cb1-2" title="2">    params <span class="op">=</span> <span class="bu">dict</span>(n_mels<span class="op">=</span><span class="dv">64</span>, fmin<span class="op">=</span><span class="dv">500</span>, n_fft<span class="op">=</span><span class="dv">2048</span>, fmax<span class="op">=</span><span class="dv">15000</span>, htk<span class="op">=</span><span class="va">True</span>)</a>
+<a class="sourceLine" id="cb1-3" title="3">    mel <span class="op">=</span> librosa.feature.melspectrogram(y<span class="op">=</span>data, sr<span class="op">=</span>sr, <span class="op">**</span>params)</a>
+<a class="sourceLine" id="cb1-4" title="4"></a>
+<a class="sourceLine" id="cb1-5" title="5">    mel <span class="op">=</span> meansubtract(mel)</a>
+<a class="sourceLine" id="cb1-6" title="6">    mel <span class="op">=</span> minmaxscale(mel)</a>
+<a class="sourceLine" id="cb1-7" title="7">    <span class="co"># mel = medianfilter(mel, (3,3))</span></a>
+<a class="sourceLine" id="cb1-8" title="8"></a>
+<a class="sourceLine" id="cb1-9" title="9">    features <span class="op">=</span> numpy.concatenate([</a>
+<a class="sourceLine" id="cb1-10" title="10">        numpy.<span class="bu">max</span>(mel, axis<span class="op">=</span><span class="dv">1</span>),</a>
+<a class="sourceLine" id="cb1-11" title="11">    ])</a>
+<a class="sourceLine" id="cb1-12" title="12">    <span class="cf">return</span> features</a></code></pre></div>
+</section><section id="parallell-processing-with-dask" class="slide level2">
+<h2>Parallell processing with Dask</h2>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb2-1" title="1">    <span class="co"># Do processing in chunks, to avoid having too many tasks</span></a>
+<a class="sourceLine" id="cb2-2" title="2">    chunk_shape <span class="op">=</span> (chunk_size, feature_length)</a>
+<a class="sourceLine" id="cb2-3" title="3">    <span class="kw">def</span> extract_chunk(urls):</a>
+<a class="sourceLine" id="cb2-4" title="4">        r <span class="op">=</span> numpy.zeros(shape<span class="op">=</span>chunk_shape)</a>
+<a class="sourceLine" id="cb2-5" title="5">        <span class="cf">for</span> i, url <span class="kw">in</span> <span class="bu">enumerate</span>(urls):</a>
+<a class="sourceLine" id="cb2-6" title="6">            r[i,:] <span class="op">=</span> feature_extractor(url)</a>
+<a class="sourceLine" id="cb2-7" title="7">        <span class="cf">return</span> r</a>
+<a class="sourceLine" id="cb2-8" title="8"></a>
+<a class="sourceLine" id="cb2-9" title="9">    extract <span class="op">=</span> dask.delayed(extract_chunk)</a>
+<a class="sourceLine" id="cb2-10" title="10">    <span class="kw">def</span> setup_extraction(urls):</a>
+<a class="sourceLine" id="cb2-11" title="11">        values <span class="op">=</span> extract(urls)</a>
+<a class="sourceLine" id="cb2-12" title="12">        arr <span class="op">=</span> dask.array.from_delayed(values, dtype<span class="op">=</span>numpy.<span class="bu">float</span>, shape<span class="op">=</span>chunk_shape)</a>
+<a class="sourceLine" id="cb2-13" title="13">        <span class="cf">return</span> arr</a>
+<a class="sourceLine" id="cb2-14" title="14"></a>
+<a class="sourceLine" id="cb2-15" title="15">    arrays <span class="op">=</span> [ setup_extraction(c) <span class="cf">for</span> c <span class="kw">in</span> chunk_sequence(wavfiles, chunk_size) ]</a>
+<a class="sourceLine" id="cb2-16" title="16">    features <span class="op">=</span> dask.array.concatenate(arrays, axis<span class="op">=</span><span class="dv">0</span>)</a>
+<a class="sourceLine" id="cb2-17" title="17">    <span class="cf">return</span> features</a></code></pre></div>
+</section><section id="feature-processing-time" class="slide level2">
+<h2>Feature processing time</h2>
+<p>41’000 audio files… 0.2 seconds each</p>
+<p>Laptop: <strong>2 hours</strong></p>
+<p>5 dual-core workers: <strong>10 minutes</strong></p>
+<p>Cost for 10 hours compute. <code>&lt;50 NOK</code></p>
+<p>https://docs.dask.org/en/latest/setup/kubernetes.html</p>
+</section><section id="dcase2018-challenge-1" class="slide level2">
+<h2>DCASE2018 challenge</h2>
+<table>
+<thead>
+<tr class="header">
+<th>Name</th>
+<th style="text-align: center;">Features</th>
+<th style="text-align: center;">Classifier</th>
+<th style="text-align: right;">AUC ROC</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Lasseck</td>
+<td style="text-align: center;">melspectrogram</td>
+<td style="text-align: center;">CNN</td>
+<td style="text-align: right;">89%</td>
+</tr>
+<tr class="even">
+<td>…..</td>
+<td style="text-align: center;">melspectrogram</td>
+<td style="text-align: center;">CNN</td>
+<td style="text-align: right;">78%-84%</td>
+</tr>
+<tr class="odd">
+<td>skfl</td>
+<td style="text-align: center;">melspec-conv-skmeans</td>
+<td style="text-align: center;">RandomForest</td>
+<td style="text-align: right;">73.4 %</td>
+</tr>
+<tr class="even">
+<td><strong>jonnor</strong></td>
+<td style="text-align: center;">melspec-max</td>
+<td style="text-align: center;">RandomForest</td>
+<td style="text-align: right;">70%[1]</td>
+</tr>
+<tr class="odd">
+<td>smacpy</td>
+<td style="text-align: center;">MFCC-meanstd</td>
+<td style="text-align: center;">GMM</td>
+<td style="text-align: right;">51.7 %</td>
+</tr>
+</tbody>
+</table>
+<p>http://dcase.community/challenge2018/task-bird-audio-detection-results</p>
+<pre><code>1. Public leaderboard score, not submitted for challenge</code></pre>
+</section><section id="best-performing-models-also-used" class="slide level2">
+<h2>Best performing models also used</h2>
+<p>Data Augmentation</p>
+<ul>
+<li>Random pitch shifting</li>
+<li>Time-shifting</li>
+<li>Time reversal</li>
+<li>Noise additions</li>
+</ul>
+<p>Tricks</p>
+<ul>
+<li>Ensemble. Model averaging</li>
+<li>Self-adaptation. Pseudo-labelling</li>
+</ul>
+<aside class="notes">
+<p>bulbul/sparrow. Two Convolutional Neural Networks for Bird Detection in Audio Signals. Thomas Grill, Jan Schlüter.</p>
+<p>Bird Audio Detection Challenge 2016–2017 http://c4dm.eecs.qmul.ac.uk/events/badchallenge_results</p>
+</aside>
+</section></section>
+<section><section id="summary" class="title-slide slide level1"><h1>Summary</h1></section><section id="feature-representation" class="slide level2">
+<h2>Feature representation</h2>
+<p>Try first <strong>mel-spectrogram</strong> (log or linear).</p>
+<p>MFCC only as fallback</p>
+</section><section id="machine-learning-method" class="slide level2">
+<h2>Machine Learning method</h2>
+<p>Try Convolutional Neural Networks (or RCNN) first.</p>
+<p>Alternative: Learned convolutional kernels + RandomForest</p>
+<p>Probably avoid: MFCC + GMM/HMM</p>
+</section><section id="tricks" class="slide level2">
+<h2>Tricks</h2>
+<p>Subtract mel-spectrogram mean. Consider median filtering.</p>
+<p>Use data augmentation.</p>
+<p>Try Transfer Learning. Can be from image model!</p>
+</section></section>
+<section id="questions" class="title-slide slide level1"><h1>Questions?</h1></section>
+<section id="bonus" class="title-slide slide level1"><h1>Bonus</h1></section>
+<section><section id="problem-formulations" class="title-slide slide level1"><h1>Problem formulations</h1></section><section id="classification" class="slide level2">
+<h2>Classification</h2>
+<p>Return: class of this audio sample</p>
+<ul>
+<li>Bird? yes/no (binary)</li>
+<li>Which species is this? (multi-class)</li>
+</ul>
+<aside class="notes">
+<p>FIXME: add (background?) image of spectrogram</p>
+</aside>
+</section><section id="event-detection" class="slide level2">
+<h2>Event detection</h2>
+<p>Return: time something occurred.</p>
+<ul>
+<li>“Bird singing started”, “Bird singing stopped”</li>
+<li>Classification-as-detection. Classifier on short time-frames</li>
+<li>Monophonic: Returns most prominent event</li>
+</ul>
+<aside class="notes">
+<p>Great summary of Sound Event Detection progress, 2010-2017. f1 score 8.4% -&gt; 70%. MFCC+HMM+Viterbi -&gt; MFCC+HMM+NMF -&gt; mel+DNN -&gt; mel+CRNN http://www.cs.tut.fi/~heittolt/research-sound-event-detection0</p>
+</aside>
+</section><section id="polyphonic-events" class="slide level2">
+<h2>Polyphonic events</h2>
+<p>Return: times of all events happening</p>
+<p>Examples</p>
+<ul>
+<li>Bird singing, Human talking, Music playing</li>
+<li>Bird A, Bird B singing.</li>
+</ul>
+<p>Approaches</p>
+<ul>
+<li>separate classifiers per ‘track’</li>
+<li>joint model: multi-label classifier</li>
+</ul>
+<aside class="notes">
+
+</aside>
+</section><section id="audio-segmentation" class="slide level2">
+<h2>Audio segmentation</h2>
+<p>Return: sections of audio containing desired class</p>
+<ul>
+<li>Ex: based on Event Detection time-stamps</li>
+<li>Pre-processing to specialized classifiers</li>
+</ul>
+</section><section id="source-separation" class="slide level2">
+<h2>Source separation</h2>
+<p>Return: audio with only the desired source</p>
+<ul>
+<li>Masking in time-frequency domain</li>
+<li>Binary masks or continious</li>
+<li>Blind-source or Model-based</li>
+</ul>
+</section><section id="other-problem-formulations" class="slide level2">
+<h2>Other problem formulations</h2>
+<ul>
+<li>Tagging</li>
+<li>Audio fingerprinting.</li>
+<li>Searching: Audio Information Retrieval</li>
+</ul>
+</section><section id="remaining-work" class="slide level2">
+<h2>Remaining work</h2>
+<ul>
+<li>Implement kernel learning (spherical k-means)</li>
+<li>Implement a Convolutional Neural Network</li>
+<li>Compare the different models, summarize</li>
+<li>Finish writing report</li>
+</ul>
+</section><section id="dcase2018-workshop" class="slide level2">
+<h2>DCASE2018 workshop</h2>
+<p>Reports from challenge tasks:</p>
+<ol type="1">
+<li>Acoustic scene classification</li>
+<li>General-purpose audio taggging</li>
+<li><strong>Bird Audio Detection</strong></li>
+<li>semi-supervised: Domestic sound event detection</li>
+<li>multi-channel acoustics: Monitoring of domestic activities</li>
+</ol>
+<p>I am going! November 19-21, London.</p>
+</section><section id="continious-monitoring" class="slide level2">
+<h2>Continious Monitoring</h2>
+<p>Audio Classification often collected periodically, then training and classification done after-the-fact.</p>
+<p>Writing a report in TIP360:</p>
+<p><em>Designing a Wireless Acoustic Sensor Network for machine learning</em></p>
+</section><section id="parallell-processing-features-with-dask" class="slide level2">
+<h2>Parallell processing features with Dask</h2>
+<p>TODO: add code samples</p>
+<p>https://github.com/jonnor/birddetect/blob/master/Model.ipynb</p>
+</section><section id="desirable-traits" class="slide level2">
+<h2>Desirable traits</h2>
+<p>What is needed for good audio classification?</p>
+<ul>
+<li>Volume independent</li>
+<li>Robust to mixtures of other sounds</li>
+<li>Handles intra-class variations. Different birdsong</li>
+<li>Can exploit frequency patterns</li>
+<li>Can exploit temporal patterns</li>
+</ul>
+<aside class="notes">
+<p>Exact traits wanted is somewhat problem/sound dependent.</p>
+<ul>
+<li>Compact. Little redundancy</li>
+<li>Easy to learn from</li>
+<li>Computationally cheap</li>
+</ul>
+</aside>
+</section><section id="time-domain" class="slide level2">
+<h2>Time domain</h2>
+<p>Hard to discriminate sounds in realistic settings:</p>
+<ul>
+<li>Samples are highly correlated</li>
+<li>Frequency information mixed with temporal</li>
+<li>Sensitive to noise</li>
+</ul>
+<p>Actively researched using very strong models and large datasets.</p>
+<aside class="notes">
+<p>IMAGE. Waveform</p>
+</aside>
+</section><section id="time-domain-1" class="slide level2">
+<h2>Time-domain</h2>
+<p>Linear, logarithmic. Amplitude versus power.</p>
+<p>FIXME: picture of linear + logarithmic</p>
+</section><section id="frequency-domain" class="slide level2">
+<h2>Frequency-domain</h2>
+<p>Fourier Transform.</p>
+<p>FIXME: picture of frequency response</p>
+</section><section id="spectrograms" class="slide level2">
+<h2>Spectrograms</h2>
+<p>Time-frequency domain.</p>
+<p>Tradeoff. Time vs frequency resolution.</p>
+<p>FIXME: picture of spectrogram</p>
+</section></section>
+    </div>
+  </div>
+
+  <script src="reveal.js/lib/js/head.min.js"></script>
+  <script src="reveal.js/js/reveal.js"></script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        // Push each slide change to the browser history
+        history: true,
+
+        // Optional reveal.js plugins
+        dependencies: [
+          { src: 'reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+          { src: 'reveal.js/plugin/zoom-js/zoom.js', async: true },
+          { src: 'reveal.js/plugin/notes/notes.js', async: true }
+        ]
+      });
+    </script>
+    </body>
+</html>

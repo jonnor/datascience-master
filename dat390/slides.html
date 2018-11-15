@@ -293,8 +293,8 @@ Your browser does not support the audio tag.
 </aside>
 </section><section id="frames" class="slide level2">
 <h2>Frames</h2>
-<p><img data-src="./images/frame-windowing.png" /></p>
 <p>Cut audio into short overlapping segments</p>
+<p><img data-src="./images/frame-windowing.png" /></p>
 </section><section id="low-level-features" class="slide level2">
 <h2>Low-level features</h2>
 <p><img data-src="./images/bird_clear_lowlevel.png" /></p>
@@ -302,14 +302,10 @@ Your browser does not support the audio tag.
 <aside class="notes">
 <p>TODO: add images explaining the summarization</p>
 </aside>
-</section><section id="summarizations" class="slide level2">
-<h2>Summarizations</h2>
-<ul>
-<li>min,max</li>
-<li>mean,std</li>
-<li>Kurtosis,skew</li>
-</ul>
-<p>FIXME: add image of resulting vector</p>
+</section><section id="clip-summarization" class="slide level2">
+<h2>Clip summarization</h2>
+<p><img data-src="./summarizing-frames.png" /></p>
+<p>min,max,skew,Kurtosis</p>
 <aside class="notes">
 <p>Bag-of-Words. Temporal ordering is ignored. Inspired by successes in text analysis / Natural Language Processing.</p>
 </aside>
@@ -319,7 +315,7 @@ Your browser does not support the audio tag.
 <p>Delta-delta frames: Difference between delta frames</p>
 <p>Summarized independently.</p>
 <aside class="notes">
-<p>FIXME: add image explaining this</p>
+<p>Shown to have good effect TODO: add image explaining this</p>
 </aside>
 </section><section id="texture-windows" class="slide level2">
 <h2>Texture windows</h2>
@@ -354,18 +350,29 @@ Your browser does not support the audio tag.
 <aside class="notes">
 <p>More compact representation. Easy to compress, cut of higher coefficients. De-correlated, important for non-linear methods. With strong classifiers, not as good as mel-spectrograms.</p>
 </aside>
+</section><section id="convolution" class="slide level2">
+<h2>Convolution</h2>
+<p><img data-src="./images/convolution.png" /></p>
+<p>Local feature detector</p>
+<aside class="notes">
+<p>Generalizes the delta frames</p>
+<p>https://i1.wp.com/timdettmers.com/wp-content/uploads/2015/03/convolution.png?resize=500%2C193</p>
+</aside>
+</section><section id="dictionary-of-kernels" class="slide level2">
+<h2>Dictionary of kernels</h2>
+<p><img data-src="./images/convolutional-kernels.png" /></p>
+<aside class="notes">
+<p>https://www.researchgate.net/profile/Le_Lu/publication/275054846/figure/fig5/AS:294508295147530@1447227657495/The-first-layer-of-learned-convolutional-kernels-of-a-ConvNet-trained-on-superpixels.png</p>
+</aside>
 </section><section id="feature-learning" class="slide level2">
 <h2>Feature learning</h2>
-<p>Learning a dictionary of small convolutional kernels (ex 3x3)</p>
-<p>Unsupervised, from random patches</p>
+<p>Unsupervised, from random spectrogram patches</p>
 <ul>
 <li>Clustering. Spherical k-means</li>
 <li>Matrix Factorization. Sparse Non-negative MF</li>
 </ul>
 <p>Transfer: Copy from existing models</p>
-<p>Supervised: Back-propagation (Convolutional NN)</p>
 <aside class="notes">
-<p>Local pattern matching. FIXME: add picture of a set of kernels TODO: picture of 2d convolution, input+output</p>
 <p>Feature Learning with Matrix Factorization Applied to Acoustic Scene Classification.</p>
 </aside>
 </section><section id="advanced-feature-representations" class="slide level2">

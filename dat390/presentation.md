@@ -303,13 +303,11 @@ TODO: add images explaining the summarization
 :::
 
 
-## Summarizations
+## Clip summarization
 
-* min,max
-* mean,std
-* Kurtosis,skew
+![](./summarizing-frames.png)
 
-FIXME: add image of resulting vector
+min,max,skew,Kurtosis
 
 ::: notes
 
@@ -328,7 +326,8 @@ Summarized independently.
 
 ::: notes
 
-FIXME: add image explaining this
+Shown to have good effect
+TODO: add image explaining this
 
 :::
 
@@ -391,23 +390,38 @@ With strong classifiers, not as good as mel-spectrograms.
 
 :::
 
-## Feature learning
-Learning a dictionary of small convolutional kernels (ex 3x3)
+## Convolution
 
-Unsupervised, from random patches
+Local feature detector
+
+![](./images/convolution.png)
+
+::: notes
+Generalizes the delta frames
+
+https://i1.wp.com/timdettmers.com/wp-content/uploads/2015/03/convolution.png?resize=500%2C193
+:::
+
+## Dictionary of kernels
+
+![](./images/convolutional-kernels.png)
+
+::: notes
+
+https://www.researchgate.net/profile/Le_Lu/publication/275054846/figure/fig5/AS:294508295147530@1447227657495/The-first-layer-of-learned-convolutional-kernels-of-a-ConvNet-trained-on-superpixels.png
+
+:::
+
+## Feature learning
+
+Unsupervised, from random spectrogram patches
 
 * Clustering. Spherical k-means
 * Matrix Factorization. Sparse Non-negative MF
 
 Transfer: Copy from existing models
 
-Supervised: Back-propagation (Convolutional NN)
-
 ::: notes
-
-Local pattern matching.
-FIXME: add picture of a set of kernels
-TODO: picture of 2d convolution, input+output
 
 Feature Learning with Matrix Factorization Applied to Acoustic Scene Classification.
 :::

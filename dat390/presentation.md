@@ -184,8 +184,7 @@ Reverberation
 
 ## Human hearing
 
-Approx 20Hz - 20kHz.
-Binaural
+Two ears (Binaural). Frequencies approx 20Hz - 20kHz. 
 
 A non-linear system
 
@@ -195,12 +194,13 @@ A non-linear system
 * Masking. Close sounds can hide eachother
 
 ::: notes
-TODO: picture of ear/hearing
 :::
 
-## Digital sound
+## Digital sound pipeline
 
-sound -> Microphone -> Analog to Digital Converter
+![](./images/DigitalChain.png)
+
+## Digital sound representation
 
 * Quantized in time (ex: 44100 Hz)
 * Quantizied in amplitude (ex: 16 bit)
@@ -208,7 +208,32 @@ sound -> Microphone -> Analog to Digital Converter
 * Lossless compression: .FLAC
 * Lossy compression: .MP3
 
-FIXME: picture of digitization process
+## Time domain
+
+![](./images/frog_waveform.png)
+
+Normally logarithmic scale
+
+::: notes
+Amplitude versus power.
+:::
+
+## Frequency domain
+
+![](./images/frog_spectrum.png)
+
+Fourier Transform.
+
+## Time-frequency domain
+Short-Time-Fourier-Transform (STFT)
+
+![](./images/frog_spectrogram.png)
+
+Spectrogram
+
+::: notes
+Tradeoff. Time vs frequency resolution.
+:::
 
 # A practical example: Bird Detection
 
@@ -250,7 +275,7 @@ How much or where in clip bird occurs = unknown.
 
 ## Audio classification pipeline
 
-FIXME: find/make a picture of the process
+![](./images/pipeline.png)
 
 ::: notes
 
@@ -263,9 +288,9 @@ Audio                Features            bird yes/no
 
 ## Frames
 
-![](,/images/frame-windowing.png)
-
 Cut audio into short overlapping segments
+
+![](./images/frame-windowing.png)
 
 ## Low-level features
 
@@ -711,20 +736,5 @@ IMAGE. Waveform
 
 :::
 
-## Time-domain
-Linear, logarithmic. Amplitude versus power.
 
-FIXME: picture of linear + logarithmic
-
-## Frequency-domain
-Fourier Transform.
-
-FIXME: picture of frequency response
-
-## Spectrograms
-Time-frequency domain.
-
-Tradeoff. Time vs frequency resolution.
-
-FIXME: picture of spectrogram
 

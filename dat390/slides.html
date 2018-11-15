@@ -217,7 +217,7 @@ Your browser does not support the audio tag.
 <p>Noise Frequency response Reverberation</p>
 </section><section id="human-hearing" class="slide level2">
 <h2>Human hearing</h2>
-<p>Approx 20Hz - 20kHz. Binaural</p>
+<p>Two ears (Binaural). Frequencies approx 20Hz - 20kHz.</p>
 <p>A non-linear system</p>
 <ul>
 <li>Loudness is not linear with sound pressure</li>
@@ -226,11 +226,13 @@ Your browser does not support the audio tag.
 <li>Masking. Close sounds can hide eachother</li>
 </ul>
 <aside class="notes">
-<p>TODO: picture of ear/hearing</p>
+
 </aside>
-</section><section id="digital-sound" class="slide level2">
-<h2>Digital sound</h2>
-<p>sound -&gt; Microphone -&gt; Analog to Digital Converter</p>
+</section><section id="digital-sound-pipeline" class="slide level2">
+<h2>Digital sound pipeline</h2>
+<p><img data-src="./images/DigitalChain.png" /></p>
+</section><section id="digital-sound-representation" class="slide level2">
+<h2>Digital sound representation</h2>
 <ul>
 <li>Quantized in time (ex: 44100 Hz)</li>
 <li>Quantizied in amplitude (ex: 16 bit)</li>
@@ -238,7 +240,25 @@ Your browser does not support the audio tag.
 <li>Lossless compression: .FLAC</li>
 <li>Lossy compression: .MP3</li>
 </ul>
-<p>FIXME: picture of digitization process</p>
+</section><section id="time-domain" class="slide level2">
+<h2>Time domain</h2>
+<p><img data-src="./images/frog_waveform.png" /></p>
+<p>Normally logarithmic scale</p>
+<aside class="notes">
+<p>Amplitude versus power.</p>
+</aside>
+</section><section id="frequency-domain" class="slide level2">
+<h2>Frequency domain</h2>
+<p><img data-src="./images/frog_spectrum.png" /></p>
+<p>Fourier Transform.</p>
+</section><section id="time-frequency-domain" class="slide level2">
+<h2>Time-frequency domain</h2>
+<p>Short-Time-Fourier-Transform (STFT)</p>
+<p><img data-src="./images/frog_spectrogram.png" /></p>
+<p>Spectrogram</p>
+<aside class="notes">
+<p>Tradeoff. Time vs frequency resolution.</p>
+</aside>
 </section></section>
 <section><section id="a-practical-example-bird-detection" class="title-slide slide level1"><h1>A practical example: Bird Detection</h1></section><section id="dcase2018-challenge" class="slide level2">
 <h2>DCASE2018 challenge</h2>
@@ -267,13 +287,13 @@ Your browser does not support the audio tag.
 </section></section>
 <section><section id="feature-extraction" class="title-slide slide level1"><h1>Feature extraction</h1></section><section id="audio-classification-pipeline" class="slide level2">
 <h2>Audio classification pipeline</h2>
-<p>FIXME: find/make a picture of the process</p>
+<p><img data-src="./images/pipeline.png" /></p>
 <aside class="notes">
 <p>10 second clip Audio Features bird yes/no -&gt; <a href="#/feature-extraction-1">Feature Extraction</a> -&gt; <a href="#/classifier">Classifier</a> -&gt;</p>
 </aside>
 </section><section id="frames" class="slide level2">
 <h2>Frames</h2>
-<p><img data-src=",/images/frame-windowing.png" /></p>
+<p><img data-src="./images/frame-windowing.png" /></p>
 <p>Cut audio into short overlapping segments</p>
 </section><section id="low-level-features" class="slide level2">
 <h2>Low-level features</h2>
@@ -625,7 +645,7 @@ Your browser does not support the audio tag.
 <li>Computationally cheap</li>
 </ul>
 </aside>
-</section><section id="time-domain" class="slide level2">
+</section><section id="time-domain-1" class="slide level2">
 <h2>Time domain</h2>
 <p>Hard to discriminate sounds in realistic settings:</p>
 <ul>
@@ -637,19 +657,6 @@ Your browser does not support the audio tag.
 <aside class="notes">
 <p>IMAGE. Waveform</p>
 </aside>
-</section><section id="time-domain-1" class="slide level2">
-<h2>Time-domain</h2>
-<p>Linear, logarithmic. Amplitude versus power.</p>
-<p>FIXME: picture of linear + logarithmic</p>
-</section><section id="frequency-domain" class="slide level2">
-<h2>Frequency-domain</h2>
-<p>Fourier Transform.</p>
-<p>FIXME: picture of frequency response</p>
-</section><section id="spectrograms" class="slide level2">
-<h2>Spectrograms</h2>
-<p>Time-frequency domain.</p>
-<p>Tradeoff. Time vs frequency resolution.</p>
-<p>FIXME: picture of spectrogram</p>
 </section></section>
     </div>
   </div>

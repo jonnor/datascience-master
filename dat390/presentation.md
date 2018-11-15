@@ -20,13 +20,14 @@ date: November 15, 2018
 
 Machine learning basics
 
-* Supervised vs unsupervised
+* Supervised vs unsupervised learning
 * Common methods
 
 Basic signal processing
 
 * Sampling
-* Frequency vs time-domain, Fourier Transform
+* Frequency vs time-domain
+* Fourier Transform
 * Filter kernels, Convolutions
 
 ## Study material
@@ -39,7 +40,7 @@ Richard F. Lyon (2018)
 
 *DCASE2018 Bird Audio Detection* challenge
 
-50+ papers on *Audio Event Detection* etc.
+50+ papers on *Acoustic Event Detection* etc.
 
 # Machine Hearing
 
@@ -52,13 +53,17 @@ Various usecases and tasks that Machine Hearing can be applied to.
 ## Speech Recognition
 What is this person saying?
 
-<audio controls src="woodpecker2.wav" type="audio/wav">
+<audio controls src="sounds/381533__rprieto1__talking.mp3" type="audio/mp3">
   Your browser does not support the audio tag.
 </audio>
 
 ::: notes
 
-Easy, most people have a very trained ear for speech.
+"The image I had was a subway station"
+
+Quite easy. Most people have a very trained ear for speech.
+
+https://freesound.org/people/rprieto1/sounds/381533/
 
 :::
 
@@ -201,7 +206,7 @@ sound -> Microphone -> Analog to Digital Converter
 * Quantizied in amplitude (ex: 16 bit)
 * Uncompressed formats: PCM .WAV
 * Lossless compression: .FLAC
-* Lossy compression: .MP3, 
+* Lossy compression: .MP3
 
 FIXME: picture of digitization process
 
@@ -256,10 +261,11 @@ Audio                Features            bird yes/no
 :::
 
 
-## Framing
-overlap, window function
+## Frames
 
-FIXME: image of cutting into frames
+![](,/images/frame-windowing.png)
+
+Cut audio into short overlapping segments
 
 ## Low-level features
 
@@ -280,24 +286,38 @@ TODO: add images explaining the summarization
 
 FIXME: add image of resulting vector
 
-## Richer summaries
+::: notes
+
+Bag-of-Words. Temporal ordering is ignored.
+Inspired by successes in text analysis / Natural Language Processing.
+
+:::
+
+## Delta frames
+
+Delta frames: Difference between successive frames
+
+Delta-delta frames: Difference between delta frames
+
+Summarized independently.
+
+::: notes
+
+FIXME: add image explaining this
+
+:::
 
 ## Texture windows
 
-* Lag frames
-* Delta frames
-* Delta-delta (acceleration)frames 
+![](./images/texture-windows.png)
 
-Bag-of-Words. Ignores temporal ordering.
-
-FIXME: add image explaining this
 
 ## mel-scale filters
 
 ![](./images/mel-filterbanks-20.png)
 
 Reduces number of bands in spectrogram.
-Perceptually motivated
+Perceptually motivated.
 
 ::: notes
 
@@ -407,9 +427,75 @@ Also popular in Audio Classification
 TODO: add a nice image of deep learning. Neural network
 :::
 
-# Results
+# Comparison of different approaches
 
-## DCASE2018 challenge
+## Workbook
+
+https://github.com/jonnor/birddetect
+
+Important files:
+
+* Model.ipynb
+* dcase2018bad.py
+* features.py
+
+## Classifier
+
+![](./images/notebook-train-test.png)
+
+## Feature extraction
+
+```python
+def melspec_maxp(data, sr):
+    params = dict(n_mels=64, fmin=500, n_fft=2048, fmax=15000, htk=True)
+    mel = librosa.feature.melspectrogram(y=data, sr=sr, **params)
+
+    mel = meansubtract(mel)
+    mel = minmaxscale(mel)
+    # mel = medianfilter(mel, (3,3))
+
+    features = numpy.concatenate([
+        numpy.max(mel, axis=1),
+    ])
+    return features
+```
+
+## Dask parallel processing 
+
+```python
+    chunk_shape = (chunk_size, feature_length)
+    def extract_chunk(urls):
+        r = numpy.zeros(shape=chunk_shape)
+        for i, url in enumerate(urls):
+            r[i,:] = feature_extractor(url)
+        return r
+
+    extract = dask.delayed(extract_chunk)
+    def setup_extraction(urls):
+        values = extract(urls)
+        arr = dask.array.from_delayed(values,
+                            dtype=numpy.float,
+                            shape=chunk_shape)
+        return arr
+
+    arrays = [ setup_extraction(c) for c in chunk_sequence(wavfiles, chunk_size) ]
+    features = dask.array.concatenate(arrays, axis=0)
+    return features
+```
+
+## Feature processing time
+
+41'000 audio files... 0.2 seconds each
+
+Laptop: **2 hours**
+
+5 dual-core workers: **10 minutes**
+
+Cost for 10 hours compute: `<50 NOK`
+
+https://docs.dask.org/en/latest/setup/kubernetes.html
+
+## Results
 
 
 | Name  | Features | Classifier |  AUC ROC  |

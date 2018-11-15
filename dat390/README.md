@@ -65,7 +65,6 @@ Presentation
 * Add back Problem Formulations, with images 
 * Add missing images to pipeline/feature section
 * Fix sound intro section
-* Add some slides from Jupyter notebook
 * Finish initial version. 09:30
 * Put slides online as HTML
 * Test the online slides

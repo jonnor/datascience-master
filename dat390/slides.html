@@ -203,18 +203,15 @@ Your browser does not support the audio tag.
 <li><strong>Sound Scenes and Events</strong></li>
 </ul>
 </section></section>
-<section><section id="brief-primer-on-sound" class="title-slide slide level1"><h1>Brief primer on sound</h1></section><section id="acoustic-model" class="slide level2">
-<h2>Acoustic model</h2>
-<p>Sources. Channel. Receiver.</p>
-</section><section id="audio-mixtures" class="slide level2">
+<section><section id="brief-primer-on-sound" class="title-slide slide level1"><h1>Brief primer on sound</h1></section><section id="audio-mixtures" class="slide level2">
 <h2>Audio Mixtures</h2>
-<p>A sound seldom appears alone.</p>
+<p><img data-src="./images/sound-sources.png" /></p>
 <aside class="notes">
+<p>https://www.researchgate.net/profile/Raimund_Dachselt/publication/228715257/figure/fig1/AS:301960805797899@1449004474993/Reverberant-rooms-with-walls-and-openings-For-overlapping-areas-a-parameter-called.png</p>
 <p>Sometimes separable in time-frequency. Many sounds have patterns in frequency. Eg voice formants</p>
-</aside>
-</section><section id="channel-effects" class="slide level2">
-<h2>Channel effects</h2>
+<p>Channel effects</p>
 <p>Noise Frequency response Reverberation</p>
+</aside>
 </section><section id="human-hearing" class="slide level2">
 <h2>Human hearing</h2>
 <p>Two ears (Binaural). Frequencies approx 20Hz - 20kHz.</p>
@@ -236,6 +233,7 @@ Your browser does not support the audio tag.
 <ul>
 <li>Quantized in time (ex: 44100 Hz)</li>
 <li>Quantizied in amplitude (ex: 16 bit)</li>
+<li>N channels. <strong>Mono</strong>/Stereo</li>
 <li>Uncompressed formats: PCM .WAV</li>
 <li>Lossless compression: .FLAC</li>
 <li>Lossy compression: .MP3</li>
@@ -304,8 +302,8 @@ Your browser does not support the audio tag.
 </aside>
 </section><section id="clip-summarization" class="slide level2">
 <h2>Clip summarization</h2>
-<p><img data-src="./summarizing-frames.png" /></p>
-<p>min,max,skew,Kurtosis</p>
+<p><img data-src="./images/summarizing-frames.png" /></p>
+<p>min,max,skew,Kurtosis,…</p>
 <aside class="notes">
 <p>Bag-of-Words. Temporal ordering is ignored. Inspired by successes in text analysis / Natural Language Processing.</p>
 </aside>
@@ -352,8 +350,8 @@ Your browser does not support the audio tag.
 </aside>
 </section><section id="convolution" class="slide level2">
 <h2>Convolution</h2>
-<p><img data-src="./images/convolution.png" /></p>
 <p>Local feature detector</p>
+<p><img data-src="./images/convolution.png" /></p>
 <aside class="notes">
 <p>Generalizes the delta frames</p>
 <p>https://i1.wp.com/timdettmers.com/wp-content/uploads/2015/03/convolution.png?resize=500%2C193</p>
@@ -511,8 +509,8 @@ Your browser does not support the audio tag.
 </table>
 <p>http://dcase.community/challenge2018/task-bird-audio-detection-results</p>
 <pre><code>1. Public leaderboard score, not submitted for challenge</code></pre>
-</section><section id="best-performing-models-also-used" class="slide level2">
-<h2>Best performing models also used</h2>
+</section><section id="best-models-also" class="slide level2">
+<h2>Best models also</h2>
 <p>Data Augmentation</p>
 <ul>
 <li>Random pitch shifting</li>

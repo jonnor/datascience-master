@@ -164,23 +164,25 @@ Ecoacoustics. Measuring biodiversity.
 
 3 minutes
 
-## Acoustic model
-Sources. Channel. Receiver.
-
 ## Audio Mixtures
-A sound seldom appears alone.
+
+![](./images/sound-sources.png)
 
 ::: notes
+
+https://www.researchgate.net/profile/Raimund_Dachselt/publication/228715257/figure/fig1/AS:301960805797899@1449004474993/Reverberant-rooms-with-walls-and-openings-For-overlapping-areas-a-parameter-called.png
 
 Sometimes separable in time-frequency.
 Many sounds have patterns in frequency. Eg voice formants
 
-:::
+Channel effects
 
-## Channel effects
 Noise
 Frequency response
 Reverberation
+
+:::
+
 
 ## Human hearing
 
@@ -204,6 +206,7 @@ A non-linear system
 
 * Quantized in time (ex: 44100 Hz)
 * Quantizied in amplitude (ex: 16 bit)
+* N channels. **Mono**/Stereo
 * Uncompressed formats: PCM .WAV
 * Lossless compression: .FLAC
 * Lossy compression: .MP3
@@ -305,9 +308,9 @@ TODO: add images explaining the summarization
 
 ## Clip summarization
 
-![](./summarizing-frames.png)
+![](./images/summarizing-frames.png)
 
-min,max,skew,Kurtosis
+min,max,skew,Kurtosis,...
 
 ::: notes
 
@@ -549,7 +552,7 @@ http://dcase.community/challenge2018/task-bird-audio-detection-results
 
     1. Public leaderboard score, not submitted for challenge
 
-## Best performing models also used
+## Best models also
 
 Data Augmentation
 

@@ -62,9 +62,8 @@ Comparing model alternatives. Accuracy, training time, inference time, data requ
 
 Presentation
 
-* Add back Problem Formulations, with images 
-* Add missing images to pipeline/feature section
 * Finish initial version. 11:30
+* ? add back Problem Formulations, with images
 * ? Remove border on images
  
 

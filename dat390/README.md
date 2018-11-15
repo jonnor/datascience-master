@@ -62,8 +62,12 @@ Comparing model alternatives. Accuracy, training time, inference time, data requ
 
 Presentation
 
-* Outline of slides for presentation
+* Finish first version: Add images,sounds. 02.00
+* Put slides online as HTML
+* Test the online slides
+* Test audio/video in the room
 * Find/make pictures for Applications,Features
+* 
 
 Report
 

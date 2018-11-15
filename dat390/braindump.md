@@ -12,13 +12,11 @@ How to formulate the problem?
 - single-label, n-ary classification
 - supervised learning. Weakly labelled
 
-What feature representation and classifier to use?
+Feature extraction
 
-- melspec + CNN
-- melspec + learned kernels + RF
-- melspec + summarizations + RF
-- MFCC+delta + GMM + linear
-- low-level features
+- Frames. Cut up clip into smaller steps of time.
+- On each frame, calculate some features
+- Summarize frame features across entire clip
 
 'what is information, what is noise'
 Information
@@ -32,6 +30,10 @@ How to pre-process the data?
 - log/power transform spectrograms
 - normalize volume
 - spectral mean subtraction
+
+What classifier to use?
+
+- 
 
 What particular challenges are there with audio?
 

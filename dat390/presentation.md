@@ -27,7 +27,7 @@ Basic signal processing
 
 * Sampling
 * Frequency vs time-domain, Fourier Transform
-* Convolutions
+* Filter kernels, Convolutions
 
 ## Study material
 
@@ -65,7 +65,7 @@ Easy, most people have a very trained ear for speech.
 ## Musical key classification
 What key is this music in?
 
-<audio controls src="woodpecker2.wav" type="audio/wav">
+<audio controls src="sounds/261324__xinematix__piano-chord-progression-f-120-bpm.mp3" type="audio/mp3">
   Your browser does not support the audio tag.
 </audio>
 
@@ -80,7 +80,7 @@ https://freesound.org/people/Xinematix/sounds/261324/
 ## Audio Scene
 What kind of place is this from?
 
-<audio controls src="woodpecker2.wav" type="audio/wav">
+<audio controls src="sounds/169043__miksmusic__school-gym-children-playing-ambiance-1.mp3" type="audio/mp3">
   Your browser does not support the audio tag.
 </audio>
 
@@ -99,7 +99,7 @@ Context-aware smart devices. In the home, smartphones.
 ## Medical diagnostics
 Is this a healthy heart?
 
-<audio controls src="woodpecker2.wav" type="audio/wav">
+<audio controls src="sounds/heart-murmur-innocent.mp3" type="audio/mp3">
   Your browser does not support the audio tag.
 </audio>
 
@@ -123,7 +123,7 @@ http://www.peterjbentley.com/heartchallenge/
 ## Industrial monitoring
 Is this machine operating normally?
 
-<audio controls src="woodpecker2.wav" type="audio/wav">
+<audio controls src="sounds/211087__vumseplutten1709__wornoutballbearing.mp3" type="audio/mp3">
   Your browser does not support the audio tag.
 </audio>
 
@@ -137,7 +137,7 @@ https://freesound.org/people/vumseplutten1709/sounds/211087/
 ## Ecoacoustics
 What kind of animal is this?
 
-<audio controls src="woodpecker2.wav" type="audio/wav">
+<audio controls src="sounds/67261__benboncan__frog-croaking.mp3" type="audio/mp3">
   Your browser does not support the audio tag.
 </audio>
 
@@ -157,15 +157,20 @@ Ecoacoustics. Measuring biodiversity.
 
 # Brief primer on sound
 
-5 minutes
+3 minutes
 
 ## Acoustic model
 Sources. Channel. Receiver.
 
 ## Audio Mixtures
 A sound seldom appears alone.
+
+::: notes
+
 Sometimes separable in time-frequency.
 Many sounds have patterns in frequency. Eg voice formants
+
+:::
 
 ## Channel effects
 Noise
@@ -197,22 +202,6 @@ Analog to digital conversion
 
 FIXME: picture of digitization process
 
-## Time-domain
-Linear, logarithmic. Amplitude versus power.
-
-FIXME: picture of linear + logarithmic
-
-## Frequency-domain
-Fourier Transform.
-
-FIXME: picture of frequency response
-
-## Spectrograms
-Time-frequency domain.
-
-Tradeoff. Time vs frequency resolution.
-
-FIXME: picture of spectrogram
 
 
 # A practical example: Birdsong
@@ -221,9 +210,260 @@ FIXME: picture of spectrogram
 
 TODO: image of birds + image of spectrogram
 
+
+## Our case
+
+Data from DCASE2018 Bird Audio Detection challenge.
+
+* 10 second audio clips
+* Has bird? yes/no => **binary classification**
+* One label for entire clip => weakly annotated
+* 3 training sets, 3 test sets. 45'000 samples
+
+2 testsets recorded separately.
+Challenge: Generalize to mismatched conditions
+
+::: notes
+
+How much or where in clip bird occurs = unknown.
+
+:::
+
+## Example sounds
+
+FIXME: add clear bird sound
+FIXME: add noisy bird sound
+
+
+# Feature extraction
+
+10 minutes
+
+## Audio classification pipeline
+
+FIXME: find/make a picture
+
+::: notes
+
+10 second clip
+Audio                Features            bird yes/no
+-> [Feature Extraction] -> [Classifier] -> 
+
+:::
+
+
+## Framing
+overlap, window function
+
+FIXME: image of cutting into frames
+
+## Low-level features
+
+![](./images/bird_clear_lowlevel.png)
+
+Basic statistics on spectrogram 
+
+::: notes
+TODO: add images explaining the summarization
+:::
+
+
+## Summarizations
+
+* min,max
+* mean,std
+* Kurtosis,skew
+
+FIXME: add image of resulting vector
+
+## Richer summaries
+
+* Texture windows
+* Lag frames
+* Delta frames
+* Delta-delta (acceleration)frames 
+
+Bag-of-Words. Ignores temporal ordering.
+
+FIXME: add image explaining
+
+## mel-spectrogram
+
+![](./images/bird_clear_melspec.png)
+
+Spectrogram filtered by mel-scale triangular filters
+
+::: notes
+
+mel-scale filters
+Perceptually motivated
+Reduces number of banks
+
+FIXME: picture of the mel filter banks
+
+:::
+
+## What about noise?
+
+There are birds in here!
+
+![](./images/bird_noisy_melspec.png)
+
+## Filtered mel-spectrogram
+
+![](./images/bird_noisy_melspec_filtered.png)
+
+Subtracted filterbank means, added Median filter (3x3)
+
+## Mel-filter Cepstrum Coefficients (MFCC)
+
+![](./images/bird_clear_mfcc.png)
+
+Discrete Cosine Transform (DCT-2) of mel-spectrogram
+
+::: notes
+
+More compact representation. Easy to compress, cut of higher coefficients.
+De-correlated, important for non-linear methods.
+With strong classifiers, not as good as mel-spectrograms.
+
+:::
+
+## Feature learning
+Learning a dictionary of small convolutional kernels (ex 3x3)
+
+Unsupervised, from random patches
+
+* Clustering. Spherical k-means
+* Matrix Factorization. Sparse Non-negative MF
+
+Transfer: Copy from existing models
+
+Supervised: Back-propagation (Convolutional NN)
+
+::: notes
+
+Local pattern matching.
+FIXME: add picture of a set of kernels
+TODO: picture of 2d convolution, input+output
+
+Feature Learning with Matrix Factorization Applied to Acoustic Scene Classification.
+:::
+
+
+## Advanced feature representations
+
+Examples
+
+* Wavelet filterbanks
+* Scattering Transform
+* CARFAC. Perceptual cochlear model
+
+Not so much used
+
+# Classifiers
+
+## Classic models
+
+The usual suspects
+
+* Logistic Regression
+* Support Vector Machine 
+* Random Forests
+
+Also popular in Audio Classification
+
+* Gaussian Mixture Models (GMM)
+* Hidden Markov Model (HMM)
+
+::: notes
+
+:::
+
+## Deep learning
+
+* Convolutional Neural Network (CNN) + dense layers 
+* Fully Convolutional Neural Network (FCNN)
+* Recurrent Convolutional Neural Networks (RCNN)
+
+::: notes
+TODO: add a nice image of deep learning. Neural network
+:::
+
+# Results
+
+## DCASE2018 challenge
+
+
+| Name  | Features | Classifier |  AUC ROC  |
+| ------- |:-------------:|:-----:|-----:|
+| Lasseck | melspectrogram | CNN  |  89%  |
+| ..... | melspectrogram  | CNN | 78%-84% |
+| skfl | melspec-conv-skmeans | RandomForest | 73.4 % |
+| **jonnor** | melspec-max | RandomForest | 70%[1] |
+| smacpy | MFCC-meanstd | GMM | 51.7 % |
+
+http://dcase.community/challenge2018/task-bird-audio-detection-results
+
+    1. Public leaderboard score, not submitted for challenge
+
+## Best performing models also used
+
+Data Augmentation
+
+* Random pitch shifting
+* Time-shifting
+* Time reversal
+* Noise additions
+
+Tricks 
+
+* Ensemble. Model averaging
+* Self-adaptation. Pseudo-labelling
+
+::: notes
+
+bulbul/sparrow.
+Two Convolutional Neural Networks for Bird Detection in Audio Signals. Thomas Grill, Jan Schlüter.
+
+Bird Audio Detection Challenge 2016–2017
+http://c4dm.eecs.qmul.ac.uk/events/badchallenge_results
+
+:::
+
+# Summary
+
+1 minutes
+If you have an Audio Classification problem...
+
+
+## Feature representation
+
+Try first **mel-spectrogram** (log or linear)
+
+MFCC only as fallback
+
+## Machine Learning method
+
+Try Convolutional Neural Networks (or RCNN) first.
+Use data augmentation.
+Little data? Try Transfer Learning from image model.
+
+Alternative: Learned convolutional kernels + RandomForest
+
+Probably avoid: MFCC + GaussianMixtureModel
+
+# Questions?
+
+
+# Bonus
+
+Anything that did not fit...
+
+
 # Problem formulations
 
-5 minutes
+5minutes
 
 ## Classification
 
@@ -290,35 +530,41 @@ Return: audio with only the desired source
 * Audio fingerprinting.
 * Searching: Audio Information Retrieval
 
-## Our case
 
-Data from DCASE2018 Bird Audio Detection challenge.
 
-* 10 second audio clips
-* Has bird? yes/no => **binary classification**
-* One label for entire clip => weakly annotated
-* 3 training sets, 3 test sets. 45'000 samples
+## Remaining work
 
-2 testsets recorded separately.
-Challenge: Generalize to mismatched conditions
+* Implement kernel learning (spherical k-means)
+* Implement a Convolutional Neural Network
+* Compare the different models, summarize
+* Finish writing report
 
-::: notes
+## DCASE2018 workshop
 
-How much or where in clip bird occurs = unknown.
+Reports from challenge tasks:
 
-:::
+1) Acoustic scene classification
+1) General-purpose audio taggging
+1) **Bird Audio Detection** 
+1) semi-supervised: Domestic sound event detection
+1) multi-channel acoustics: Monitoring of domestic activities
 
-# Feature extraction
+I am going! November 19-21, London.
 
-## Example
+## Continious Monitoring
 
-::: notes
+Audio Classification often collected periodically,
+then training and classification done after-the-fact.
 
-10 second clip
-Audio                Features            bird yes/no
--> [Feature Extraction] -> [Classifier] -> 
+Writing a report in TIP360:
 
-:::
+*Designing a Wireless Acoustic Sensor Network for machine learning*
+
+## Parallell processing with Dask
+
+
+
+
 
 ## Desirable traits
 What is needed for good audio classification?
@@ -354,175 +600,20 @@ IMAGE. Waveform
 
 :::
 
-## Low-level features
+## Time-domain
+Linear, logarithmic. Amplitude versus power.
 
-Calculated from time-domain data.
+FIXME: picture of linear + logarithmic
 
-FIXME: add image of equations
+## Frequency-domain
+Fourier Transform.
 
-## Framing
-overlap, window function
+FIXME: picture of frequency response
 
-FIXME: image of low-leve
+## Spectrograms
+Time-frequency domain.
 
-## Summarizations
+Tradeoff. Time vs frequency resolution.
 
-* min,max
-* mean,std
-* Kurtosis,skew
-
-FIXME: add image of resulting vector
-FIXME: add image with equations
-
-## Richer summaries
-
-* Texture windows
-* Lag frames
-* Delta frames
-* Delta-delta (acceleration)frames 
-
-Bag-of-Words. Ignores temporal ordering.
-
-## mel-spectrogram
-mel-scale filters
-Perceptually motivated
-Reduces number of banks
-
-## Mel-filter Cepstrum Coefficients (MFCC)
-MFCC.
-DCT
-Speech
-
-More compact representation.
-De-correlated, important for non-linear methods.
-With strong classifiers, not not as good as mel-spectrograms.
-
-## Convolutional kernels on time-frequency data
-
-## Feature learning
-
-## Advanced features
-
-* Wavelet filterbanks
-* Scattering Transform
-* CARFAC cochlear model
-
-# Classifiers
-
-## General purpose
-
-* Linear methods. SVM, Logistic Regression
-* Non-linear. Kernel SVM. RandomForest
-
-## Un-usual methods
-
-* Gaussian Mixture Models (GMM)
-* Hidden Markov Model (HMM)
-
-::: notes
-
-* Non-negative Matrix Factorization (NMF)
-
-:::
-
-## Deep learning
-
-* Convolutional Neural Network (CNN) + fully-connected layers 
-* Fully Convolutional Neural Network
-
-# Results
-
-## DCASE2018 challenge
-
-
-| Name  | Features | Classifier |  AUC ROC  |
-| ------- |:-------------:|:-----:|-----:|
-| Lasseck | melspectrogram | CNN  |  89%  |
-| ..... | melspectrogram  | CNN | 78%-84% |
-| skfl | melspec-conv-skmeans | RandomForest | 73.4 % |
-| **jonnor** | melspec-max | RandomForest | 70%[1] |
-| smacpy | MFCC-meanstd | GMM | 51.7 % |
-
-http://dcase.community/challenge2018/task-bird-audio-detection-results
-
-    1. Public leaderboard score, not submitted for challenge
-
-## Best performing models
-
-Data Augmentation
-
-* Random pitch shifting
-* Time-shifting
-* Time reversal
-* Noise additions
-
-Tricks 
-
-* Ensemble. Model averaging
-* Self-adaptation. Pseudo-labelling
-
-::: notes
-
-bulbul. Two Convolutional Neural Networks for Bird Detection in Audio Signals. Thomas Grill, Jan Schlüter.
-
-Bird Audio Detection Challenge 2016–2017
-http://c4dm.eecs.qmul.ac.uk/events/badchallenge_results
-
-:::
-
-# Summary
-
-If you have an Audio Classification problem.
-
-
-## Feature representation
-
-Try first **mel-spectrogram** (log or linear)
-
-MFCC only as fallback
-
-## Machine Learning method
-
-Try Convolutional Neural Networks (or RCNN) first.
-Use data augmentation.
-Little data? Try Transfer Learning from image model.
-
-Alternative: Learned convolutional kernels + RandomForest
-
-Probably avoid: MFCC + GaussianMixtureModel
-
-# Questions?
-
-
-# Bonus
-
-Anything that did not fit...
-
-## Remaining work
-
-* Implement kernel learning (spherical k-means)
-* Implement a Convolutional Neural Network
-* Compare the different models, summarize
-* Finish writing report
-
-## DCASE2018 workshop
-
-November 19-21, London.
-
-I am going!
-
-Reports from Bird Audio Detection challenge, and 4 other tasks
-
-## Contidi
-
-Writing a report in TIP360. 
-
-## Parallell processing with Dask
-
-## R
-
-## Preprocessing/normalization
-
-
-
+FIXME: picture of spectrogram
 

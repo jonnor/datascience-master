@@ -411,34 +411,35 @@ Your browser does not support the audio tag.
 <a class="sourceLine" id="cb1-10" title="10">        numpy.<span class="bu">max</span>(mel, axis<span class="op">=</span><span class="dv">1</span>),</a>
 <a class="sourceLine" id="cb1-11" title="11">    ])</a>
 <a class="sourceLine" id="cb1-12" title="12">    <span class="cf">return</span> features</a></code></pre></div>
-</section><section id="parallell-processing-with-dask" class="slide level2">
-<h2>Parallell processing with Dask</h2>
-<div class="sourceCode" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb2-1" title="1">    <span class="co"># Do processing in chunks, to avoid having too many tasks</span></a>
-<a class="sourceLine" id="cb2-2" title="2">    chunk_shape <span class="op">=</span> (chunk_size, feature_length)</a>
-<a class="sourceLine" id="cb2-3" title="3">    <span class="kw">def</span> extract_chunk(urls):</a>
-<a class="sourceLine" id="cb2-4" title="4">        r <span class="op">=</span> numpy.zeros(shape<span class="op">=</span>chunk_shape)</a>
-<a class="sourceLine" id="cb2-5" title="5">        <span class="cf">for</span> i, url <span class="kw">in</span> <span class="bu">enumerate</span>(urls):</a>
-<a class="sourceLine" id="cb2-6" title="6">            r[i,:] <span class="op">=</span> feature_extractor(url)</a>
-<a class="sourceLine" id="cb2-7" title="7">        <span class="cf">return</span> r</a>
-<a class="sourceLine" id="cb2-8" title="8"></a>
-<a class="sourceLine" id="cb2-9" title="9">    extract <span class="op">=</span> dask.delayed(extract_chunk)</a>
-<a class="sourceLine" id="cb2-10" title="10">    <span class="kw">def</span> setup_extraction(urls):</a>
-<a class="sourceLine" id="cb2-11" title="11">        values <span class="op">=</span> extract(urls)</a>
-<a class="sourceLine" id="cb2-12" title="12">        arr <span class="op">=</span> dask.array.from_delayed(values, dtype<span class="op">=</span>numpy.<span class="bu">float</span>, shape<span class="op">=</span>chunk_shape)</a>
-<a class="sourceLine" id="cb2-13" title="13">        <span class="cf">return</span> arr</a>
-<a class="sourceLine" id="cb2-14" title="14"></a>
-<a class="sourceLine" id="cb2-15" title="15">    arrays <span class="op">=</span> [ setup_extraction(c) <span class="cf">for</span> c <span class="kw">in</span> chunk_sequence(wavfiles, chunk_size) ]</a>
-<a class="sourceLine" id="cb2-16" title="16">    features <span class="op">=</span> dask.array.concatenate(arrays, axis<span class="op">=</span><span class="dv">0</span>)</a>
-<a class="sourceLine" id="cb2-17" title="17">    <span class="cf">return</span> features</a></code></pre></div>
+</section><section id="dask-parallel-processing" class="slide level2">
+<h2>Dask parallel processing</h2>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb2-1" title="1">    chunk_shape <span class="op">=</span> (chunk_size, feature_length)</a>
+<a class="sourceLine" id="cb2-2" title="2">    <span class="kw">def</span> extract_chunk(urls):</a>
+<a class="sourceLine" id="cb2-3" title="3">        r <span class="op">=</span> numpy.zeros(shape<span class="op">=</span>chunk_shape)</a>
+<a class="sourceLine" id="cb2-4" title="4">        <span class="cf">for</span> i, url <span class="kw">in</span> <span class="bu">enumerate</span>(urls):</a>
+<a class="sourceLine" id="cb2-5" title="5">            r[i,:] <span class="op">=</span> feature_extractor(url)</a>
+<a class="sourceLine" id="cb2-6" title="6">        <span class="cf">return</span> r</a>
+<a class="sourceLine" id="cb2-7" title="7"></a>
+<a class="sourceLine" id="cb2-8" title="8">    extract <span class="op">=</span> dask.delayed(extract_chunk)</a>
+<a class="sourceLine" id="cb2-9" title="9">    <span class="kw">def</span> setup_extraction(urls):</a>
+<a class="sourceLine" id="cb2-10" title="10">        values <span class="op">=</span> extract(urls)</a>
+<a class="sourceLine" id="cb2-11" title="11">        arr <span class="op">=</span> dask.array.from_delayed(values,</a>
+<a class="sourceLine" id="cb2-12" title="12">                            dtype<span class="op">=</span>numpy.<span class="bu">float</span>,</a>
+<a class="sourceLine" id="cb2-13" title="13">                            shape<span class="op">=</span>chunk_shape)</a>
+<a class="sourceLine" id="cb2-14" title="14">        <span class="cf">return</span> arr</a>
+<a class="sourceLine" id="cb2-15" title="15"></a>
+<a class="sourceLine" id="cb2-16" title="16">    arrays <span class="op">=</span> [ setup_extraction(c) <span class="cf">for</span> c <span class="kw">in</span> chunk_sequence(wavfiles, chunk_size) ]</a>
+<a class="sourceLine" id="cb2-17" title="17">    features <span class="op">=</span> dask.array.concatenate(arrays, axis<span class="op">=</span><span class="dv">0</span>)</a>
+<a class="sourceLine" id="cb2-18" title="18">    <span class="cf">return</span> features</a></code></pre></div>
 </section><section id="feature-processing-time" class="slide level2">
 <h2>Feature processing time</h2>
 <p>41’000 audio files… 0.2 seconds each</p>
 <p>Laptop: <strong>2 hours</strong></p>
 <p>5 dual-core workers: <strong>10 minutes</strong></p>
-<p>Cost for 10 hours compute. <code>&lt;50 NOK</code></p>
+<p>Cost for 10 hours compute: <code>&lt;50 NOK</code></p>
 <p>https://docs.dask.org/en/latest/setup/kubernetes.html</p>
-</section><section id="dcase2018-challenge-1" class="slide level2">
-<h2>DCASE2018 challenge</h2>
+</section><section id="results" class="slide level2">
+<h2>Results</h2>
 <table>
 <thead>
 <tr class="header">

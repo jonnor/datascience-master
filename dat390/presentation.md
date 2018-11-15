@@ -193,35 +193,29 @@ A non-linear system
 TODO: picture of ear/hearing
 :::
 
-## Digitizing sound
+## Digital sound
 
-Microphones
-Analog to digital conversion
-* Quantized in time, and amplitude
-* 44100 Hz, 16 bit
+sound -> Microphone -> Analog to Digital Converter
+
+* Quantized in time (ex: 44100 Hz)
+* Quantizied in amplitude (ex: 16 bit)
+* Uncompressed formats: PCM .WAV
+* Lossless compression: .FLAC
+* Lossy compression: .MP3, 
 
 FIXME: picture of digitization process
 
+# A practical example: Bird Detection
 
 
-# A practical example: Birdsong
-
-## 
-
-TODO: image of birds + image of spectrogram
-
-
-## Our case
-
-Data from DCASE2018 Bird Audio Detection challenge.
+## DCASE2018 challenge
 
 * 10 second audio clips
 * Has bird? yes/no => **binary classification**
 * One label for entire clip => weakly annotated
 * 3 training sets, 3 test sets. 45'000 samples
 
-2 testsets recorded separately.
-Challenge: Generalize to mismatched conditions
+**Mismatched conditions**: 2 testsets with no training samples. 
 
 ::: notes
 
@@ -229,11 +223,21 @@ How much or where in clip bird occurs = unknown.
 
 :::
 
-## Example sounds
+## Bird sounds
 
-FIXME: add clear bird sound
-FIXME: add noisy bird sound
+![](./images/bird_clear_spectrogram.png)
 
+<audio controls src="sounds/4dd5046d-c962-4f02-a820.wav" type="audio/wav">
+  Your browser does not support the audio tag.
+</audio>
+
+## More realistic
+
+![](./images/bird_noisy_spectrogram.png)
+
+<audio controls src="sounds/00adbc49-77ef-4b7e-a453-cbb4ee011e11.wav" type="audio/wav">
+  Your browser does not support the audio tag.
+</audio>
 
 # Feature extraction
 
@@ -241,7 +245,7 @@ FIXME: add noisy bird sound
 
 ## Audio classification pipeline
 
-FIXME: find/make a picture
+FIXME: find/make a picture of the process
 
 ::: notes
 
@@ -278,14 +282,31 @@ FIXME: add image of resulting vector
 
 ## Richer summaries
 
-* Texture windows
+## Texture windows
+
 * Lag frames
 * Delta frames
 * Delta-delta (acceleration)frames 
 
 Bag-of-Words. Ignores temporal ordering.
 
-FIXME: add image explaining
+FIXME: add image explaining this
+
+## mel-scale filters
+
+![](./images/mel-filterbanks-20.png)
+
+Reduces number of bands in spectrogram.
+Perceptually motivated
+
+::: notes
+
+40-64 filters typical.
+
+Analysis of Accent-Sensitive Words in Multi-Resolution Mel-Frequency Cepstral Coefficients for Classification of Accents in Malaysian English
+https://www.researchgate.net/figure/Mel-filter-banks-basis-functions-using-20-Mel-filters-in-the-filter-bank_fig1_288632263
+
+:::
 
 ## mel-spectrogram
 
@@ -296,11 +317,7 @@ Spectrogram filtered by mel-scale triangular filters
 ::: notes
 
 mel-scale filters
-Perceptually motivated
 Reduces number of banks
-
-FIXME: picture of the mel filter banks
-
 :::
 
 ## What about noise?
@@ -439,19 +456,25 @@ If you have an Audio Classification problem...
 
 ## Feature representation
 
-Try first **mel-spectrogram** (log or linear)
+Try first **mel-spectrogram** (log or linear).
 
 MFCC only as fallback
 
 ## Machine Learning method
 
 Try Convolutional Neural Networks (or RCNN) first.
-Use data augmentation.
-Little data? Try Transfer Learning from image model.
 
 Alternative: Learned convolutional kernels + RandomForest
 
-Probably avoid: MFCC + GaussianMixtureModel
+Probably avoid: MFCC + GMM/HMM
+
+## Tricks
+
+Subtract mel-spectrogram mean. Consider median filtering.
+
+Use data augmentation.
+
+Try Transfer Learning. Can be from image model!
 
 # Questions?
 
@@ -560,9 +583,11 @@ Writing a report in TIP360:
 
 *Designing a Wireless Acoustic Sensor Network for machine learning*
 
-## Parallell processing with Dask
+## Parallell processing features with Dask
 
+TODO: add code samples
 
+https://github.com/jonnor/birddetect/blob/master/Model.ipynb
 
 
 

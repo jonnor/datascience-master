@@ -62,11 +62,15 @@ Comparing model alternatives. Accuracy, training time, inference time, data requ
 
 Presentation
 
-* Finish first version: Add images,sounds. 02.00
+* Add back Problem Formulations, with images 
+* Add missing images to pipeline/feature section
+* Fix sound intro section
+* Add some slides from Jupyter notebook
+* Finish initial version. 09:30
 * Put slides online as HTML
 * Test the online slides
-* Test audio/video in the room
-* Find/make pictures for Applications,Features
+* Test audio/video in the room. 10:00
+* ? Remove border on images
 * 
 
 Report

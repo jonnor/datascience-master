@@ -54,7 +54,7 @@ Various usecases and tasks that Machine Hearing can be applied to.
 What is this person saying?
 
 <audio controls src="sounds/381533__rprieto1__talking.mp3" type="audio/mp3">
-  Your browser does not support the audio tag.
+  ! failed to load audio sample
 </audio>
 
 ::: notes
@@ -71,7 +71,7 @@ https://freesound.org/people/rprieto1/sounds/381533/
 What key is this music in?
 
 <audio controls src="sounds/261324__xinematix__piano-chord-progression-f-120-bpm.mp3" type="audio/mp3">
-  Your browser does not support the audio tag.
+  ! failed to load audio sample
 </audio>
 
 ::: notes
@@ -86,7 +86,7 @@ https://freesound.org/people/Xinematix/sounds/261324/
 What kind of place is this from?
 
 <audio controls src="sounds/169043__miksmusic__school-gym-children-playing-ambiance-1.mp3" type="audio/mp3">
-  Your browser does not support the audio tag.
+  ! failed to load audio sample
 </audio>
 
 ::: notes
@@ -105,7 +105,7 @@ Context-aware smart devices. In the home, smartphones.
 Is this a healthy heart?
 
 <audio controls src="sounds/heart-murmur-innocent.mp3" type="audio/mp3">
-  Your browser does not support the audio tag.
+  ! failed to load audio sample
 </audio>
 
 ::: notes
@@ -129,7 +129,7 @@ http://www.peterjbentley.com/heartchallenge/
 Is this machine operating normally?
 
 <audio controls src="sounds/211087__vumseplutten1709__wornoutballbearing.mp3" type="audio/mp3">
-  Your browser does not support the audio tag.
+  ! failed to load audio sample
 </audio>
 
 ::: notes
@@ -143,7 +143,7 @@ https://freesound.org/people/vumseplutten1709/sounds/211087/
 What kind of animal is this?
 
 <audio controls src="sounds/67261__benboncan__frog-croaking.mp3" type="audio/mp3">
-  Your browser does not support the audio tag.
+  ! failed to load audio sample
 </audio>
 
 ::: notes
@@ -261,7 +261,7 @@ How much or where in clip bird occurs = unknown.
 ![](./images/bird_clear_spectrogram.png)
 
 <audio controls src="sounds/4dd5046d-c962-4f02-a820.wav" type="audio/wav">
-  Your browser does not support the audio tag.
+  ! failed to load audio sample
 </audio>
 
 ## More realistic
@@ -269,7 +269,7 @@ How much or where in clip bird occurs = unknown.
 ![](./images/bird_noisy_spectrogram.png)
 
 <audio controls src="sounds/00adbc49-77ef-4b7e-a453-cbb4ee011e11.wav" type="audio/wav">
-  Your browser does not support the audio tag.
+  ! failed to load audio sample
 </audio>
 
 # Feature extraction

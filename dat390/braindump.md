@@ -1,5 +1,6 @@
 
 
+
 # Backwards planning
 
 Goal:
@@ -54,6 +55,28 @@ Things dont really need to know
 
 
 # Report
+
+### Disposition
+Should be 15-25 pages total.
+
+Part 1: 
+* 1p. Introduction. Purpose,Scope,"who is it for".
+* 2p. Background. Sound. Acoustics. Production. Aquisition. Digital representation.
+* 1p. Applications.
+* 1p. Problem formulations.
+* 2p. Feature extraction.
+* 1p. Preprocessing
+* 1p. Data augmentation
+=9p
+
+Part 2: Case study
+* 1p. The task. Bird audio classification
+* 1p. Evaluation/comparison methodology
+* 2p. Different Methods.
+* 1p. Results
+=5p
+
+
 
 ## Setup
 

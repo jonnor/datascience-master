@@ -723,33 +723,3 @@ Return: audio with only the desired source
 * Searching: Audio Information Retrieval
 
 
-# Misc
-
-## Desirable traits
-What is needed for good audio classification?
-
-* Volume independent
-* Robust to mixtures of other sounds
-* Handles intra-class variations. Different birdsong
-* Can exploit frequency patterns
-* Can exploit temporal patterns
-
-::: notes
-
-Exact traits wanted is somewhat problem/sound dependent.
-
-* Compact. Little redundancy
-* Easy to learn from
-* Computationally cheap
-
-:::
-
-
-
-
-::: notes
-IMAGE. Waveform
-:::
-
-
-

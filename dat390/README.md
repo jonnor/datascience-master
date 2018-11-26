@@ -7,15 +7,13 @@ Independent study in chosen topic in Data Science
 
 Prepare for master thesis work
 
-* Get comfortable executing machine learning research.
-Comparing model alternatives. Accuracy, training time, inference time, data requirements
 * Setup and test workflow for report writing and publishing
 * Build background knowledge
+* Get comfortable executing machine learning research
 * Ideas for usecase/case-study in thesis
 
 ## Outputs
 
-* Nov15: Presentation given for Data Science class
 * Dec 1: Finished report
 * One or more demonstrations (video/browser)
 * Report(s) published as HTML
@@ -60,13 +58,6 @@ Comparing model alternatives. Accuracy, training time, inference time, data requ
 
 ## TODO
 
-Presentation
-
-* Finish initial version. 11:30
-* ? add back Problem Formulations, with images
-* ? Remove border on images
- 
-
 Report
 
 * Write initial Introduction
@@ -77,6 +68,5 @@ Study
 
 * Setup framework for comparing different methods
 * Implement 3-4 different methods
-
 
 

@@ -1,6 +1,6 @@
 
 
-## Backwards planning
+# Backwards planning
 
 Goal:
 Solve basic Audio Event Detection problem
@@ -51,73 +51,6 @@ Things dont really need to know
 - Details on how acoustic works
 - multi-channel,multi-sensor recording
 
-## Format
-30 minutes presentation. 15 minutes questions.
-1 picture per slide, 30 slides.
-
-## Goal
-After reading this report
-
-> a machine learning practitioner
-> 
-> without prior knowledge about sound
-> or digital signal processing
-> 
-> can solve basic Audio Event Detection problems
-
-## Musical genre classification
-AUDIO. What genre is this?
-
-## Problem formulations
-
-## Audio search
-Find similar
-
-## Open-ended classification
-Classification problems often formulated as a closed-set. 
-But in reality this might be too limiting.
-Previously unseen birds may migrate into an area.
-New musical genres are invented all the time.
-Challenge: Creating a taxonomy, or consistent ontology
-
-## Other filterbanks
-Bark scale
-Constant-Q
-
-In practice does not make much difference compared to mel-spectrogram
-
-## Code test
-
-```python
-def read_readme():
-    readme = os.path.join(project_dir, 'README.md')
-    with open(readme, encoding='utf-8') as f:
-        long_description = f.read()
-
-    return long_description
-```
-
-## Image test
-
-![Some text](./plot.png)
-
-
-## Formula test
-
-Inline equations like $x=\sin{\phi}$ are great.
-But many things are better presented in a block.
-
-$$\hat{f}(\xi) = \int_{-\infty}^{\infty} f(x)\ e^{-2\pi i x \xi}\,dx,$$
-
-## Table test
-
-| Tables        | Are           | Cool  |
-| ------------- |:-------------:| -----:|
-| col 3 is      | right-aligned | $1600 |
-| col 2 is      | centered      |   $12 |
-| zebra stripes | are neat      |    $1 |
-
-
 
 
 # Report
@@ -134,42 +67,12 @@ Need
 * Citations
 
 ### Solution
-pandoc?
+pandoc.
 
 Either have a Python script/command which re-generates all plots.
 Or use an integrated thing like:
 
 * https://github.com/LaurentRDC/pandoc-pyplot
 * https://github.com/hertogp/imagine
-
-## Presentation
-
-Need:
-
-* Audio playback
-* Primary output web, PDF export second
-* Images. Preferably including SVG
-* Code. With highlighting. Python
-* LaTex formulas
-
-Want:
-
-* Markdown input
-* CSS styling
-* Table support
-* Video playback
-
-### Solution
-pandoc with reveal-js output?
-
-Might need some adaptation for audio support?
-
-https://github.com/hakimel/reveal.js/issues/810
-https://github.com/rajgoel/reveal.js-plugins/tree/master/audio-slideshow
-
-alternatives:
-
-* https://github.com/webpro/reveal-md
-* pandoc with Beamer output
 
 

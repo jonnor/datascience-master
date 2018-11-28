@@ -1,20 +1,20 @@
 ## Scope
-The application area focus is monitoring of domestic animals in farming,
-and monitoring of wildlife.
 
 Technical focus is primarily Passive Acoustic sensors,
 where each sensor works indepdendently with one or a few microphones.
+No active transducer.
 
- and no active transducer.
-Multichannel audio is within scope, but multi-sensor microphone fusion. 
+Multichannel audio is within scope, but multi-sensor microphone fusion is out-of-scope. 
+Acoustic data can be transmitted in fluids.
+
+
+The application area focus is monitoring of domestic animals in farming,
+and monitoring of wildlife.
 
 Several aspects of the design may be transferrable to other medium-bandwidth sensor technologies,
 such as vibration/accelerometer data or low-resolution imaging (visible,infrared).
 This is generaly out-of-scope, but it may be relevant to comment briefly on this in the report.
 
-## Questions
-Can one do machine learning directly on compressed sensing data?
-And then transmit the compression data for reconstruction later.
 
 ## Terms
 
@@ -32,7 +32,71 @@ And then transmit the compression data for reconstruction later.
 * Processing power, memory requirements
 * Energy source
 
-### Requirements for machine learning
+## Design questions
+What is the area to cover? How close must sensors be for coverage
+What is the environment? Indoor, outdoor. Urban,rural
+What kind of acoustic sensor is needed? Microphone,hydrophone,contact mic. Mono,stereo,many-channel
+
+Can one do periodic sampling, or must sensor listen continiously?
+Where should information/findings be communicated?
+How quickly must it be communicated?
+What communication architecture to use.
+User-operated network or network provider?
+Gateways
+How is data converted to information? Machine learning
+Where is it performed? Node, gateway, cloud
+
+
+### Requirements
+Noise measurements are made continiously. `FIXME` how often?
+Measurements follows standard .... `FIXME` reference standard(s)
+System can identify the noise source (class).
+Designed-for-privacy. Does not record peoples conversations. Compliant with local laws. 
+System can send alert when problematic noise levels occur. Adjustable thresholds
+System allows to view data for a particular area at a given time in the past.
+Any machine learning models can be updated easily.
+Any embedded software can be updated easily.
+System can optionally collect raw data as machine learning training data.
+
+### Desirable
+Large coverage. Entire city blocks
+High density of sensors. At least in 'critical areas'. Residential,Complaints
+Low cost. Manufacturing, installation, operating.
+Easy to deploy. Size,weight,Position,mounting.
+
+### Choices
+Use an provider-operated wireless network.
+Prefer energy harvesting when possible, battery powered. Fallback to low-voltage (9-24V).
+
+#### Physical design
+Position and orientation of microphone is important.
+
+Solar panels on side/top.
+At angle, avoid catching snow/leaves/dust.
+
+
+Example deployment scenarios
+
+Hanging from streetlamp, mics down
+Placed on streetlight pole, mics sideways
+
+
+
+#### Futureproofing.
+Planning for future/auxillary/related usecases.
+- Traffic estimation
+- Human presence detection. Footfall
+- Pollution estimation. From traffic est plus weather data.
+Temperature. Humidity. Wind (ultrasonic anemometer, constant-temperature anemometer, laser doppler).
+- Solar irradiance. Estimated from charge current.
+- Structure born vibration.
+Accelerometer. 
+
+Noise distribution modelling. ?
+Pollution modelling. Simularia. WorldSensing
+
+
+## Requirements for machine learning
 Definition. Care about accurate detection/inference/prediciton
 Raw data needed for evaluation/verification, and supervised learning. While developing.
 Calibrate/adjust existing classifications. Report probabilities, not just thresholded decison/class?
@@ -53,6 +117,10 @@ Precision of event in time
 Source localization. Direction, distance
 Acoustic challenges. Polyphony,reverberation
 Features for machine learning.
+
+### Questions
+Can one do machine learning directly on compressed sensing data?
+And then transmit the compression data for reconstruction later.
 
 ### System architectures
 Sensor nodes. Central service.
@@ -152,6 +220,16 @@ A generalization of delta-features for arbitrary angles.
 
 
 ### Energy source
+Harvest from sun.
+Harvest from existing powergrid. Streetlight.
+Harvest from existing lights.
+
+In best case, only need power for half of a day, or during power outtage cases.
+In worst case, sun not strong enough for several days/weeks.
+
+Want: Ability to monitor external power source. Minimum: battery level. Ideally: charge current.
+
+
 Very little sun power in Norway during winter.
 Can a battery last all the winter through?
 At a cost,size where it is still advantageous
@@ -163,9 +241,11 @@ Li-ion. Self-discharge rate 5%. Can be operated below 0, but not charged
 https://electronics.stackexchange.com/questions/263036/why-charging-li-ion-batteries-in-cold-temperatures-would-harm-them
 https://en.wikipedia.org/wiki/Lithium-ion_battery#Uses
 
+Ready-to-install solar power systems. Ex for pole mount
+https://www.solarelectricsupply.com/remote-industrial-solar/mapps-pole-mount
+
 Solar power chargers.
 MPPT. Mean point
-
 
 https://www.digikey.com/products/en/integrated-circuits-ics/pmic-battery-chargers/781?FV=ffe0030d&quantity=0&ColumnSort=1000011&page=1&k=solar&pageSize=25
 
@@ -179,7 +259,7 @@ Note: Linear. Needs solar powers with above 4.5V output voltage
 https://www.digikey.com/product-detail/en/adafruit-industries-llc/390/1528-1400-ND/5638295
 Adafruit design notes of charger board. https://learn.adafruit.com/usb-dc-and-solar-lipoly-charger/design-notes
 
-## Environmental noise applicatin
+## Environmental noise application
 
 
 EU directive 2002/49/EC.
@@ -317,6 +397,11 @@ continuously recording for 2 years detected a high level of shooting within a 54
 ew advances in radio communication promise the future capability for real‐time detection and localization of exploitation activity,
 by linking networked devices to a base station. And are undergoing development for open‐source AudioMoth sensors (Hill et al. 2018)
 
+## Companies
+
+[Physical Acoustics](https://www.physicalacoustics.com/). Since 1968.
+Supply large range of systems. Portable,wireless,on-line montioring.
+Non-destructive testing.
 
 ## Literature
 
@@ -356,6 +441,21 @@ Propose to use the measurement as side information and thereby form a distribute
 
 
 [Development of high performance wireless sensor node for Acoustic application](www.academia.edu/download/44284004/Development_of_high_.pdf). Arul Prabahar A, 2013. !!
+
+## Applications
+
+### Acoustic Emission monitoring
+Using the emission of acoustic waves from materials under load/stress/failure.
+Alternative to ultrasonic testing in some cases.
+
+Structural health monitoring (SHM),
+Quality control. Non-destructive testing
+System feedback
+Process monitoring
+
+May require capture rates of 100-500kHz.
+
+
 
 ### Applied to environmental monitoring of animals
 

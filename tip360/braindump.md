@@ -59,7 +59,7 @@ Any embedded software can be updated easily.
 System can optionally collect raw data as machine learning training data.
 
 ### Desirable
-Large coverage. Entire city blocks
+Large coverage. Multiple city blocks
 High density of sensors. At least in 'critical areas'. Residential,Complaints
 Low cost. Manufacturing, installation, operating.
 Easy to deploy. Size,weight,Position,mounting.
@@ -68,10 +68,12 @@ Easy to deploy. Size,weight,Position,mounting.
 Use an provider-operated wireless network.
 Prefer energy harvesting when possible, battery powered. Fallback to low-voltage (9-24V).
 
+
 #### Physical design
 Position and orientation of microphone is important.
+Cosistent for all sensors. At head level or higher. Away from reflective sources like walls.
 
-Solar panels on side/top.
+Solar panels towards the sun. In an area away from.
 At angle, avoid catching snow/leaves/dust.
 
 
@@ -343,6 +345,140 @@ Measurement standards.
 
 IEC61672. Class 2, Class 1
 
+TA Lärm. German standard.
+
+
+StadtLärm. 2016 – 2018.
+https://www.imms.de/en/science/research-projects/stadtlaerm-2527.html
+
+https://www.slideshare.net/M2M_Alliance/stadtlrm-a-distributed-urban-noise-monitoring-system
+System architecture. Stakeholders. MQTT/Mosquitto. Grafana.
+Raspberry PI Compute Module hardware.
+Auto-encoder on edge, creates audio fingerprint.
+Later, plan to move event/scene classification to device.
+Plan: 25 sensors, Jena. March
+
+An open platform for distributed urban noise monitoring
+https://ieeexplore.ieee.org/document/8249339
+
+New York
+SONYC research initiative combines sensors,
+big data, and machine learning to understand, model and influence NYC’s acoustic environment.
+
+
+### Oslo
+
+Forskrift om begrensning av forurensning, del 2. Støy
+https://lovdata.no/dokument/SF/forskrift/2004-06-01-931/KAPITTEL_2#KAPITTEL_2
+"Når det gjennomsnittlige støynivået innendørs over døgnet overskrider 42 dB LpAeq,24h i eksisterende bygninger,
+skal det gjennomføres tiltak etter § 5-9. Gjelder rom som er godkjent av bygningsmyndigheten til varig opphold."
+Kartlegge støynivå ned til 35 dB LpAeq,24h. Kartleggingen skal oppdateres hvert femte år. 
+
+Innenfor byområdene er kommunen ansvarlig for å sammenstille kartleggingen fra de ulike støykildene. Der byområdet består av flere kommuner er kommunen med flest innbyggere ansvarlig.
+Utendørs støynivå skal beregnes med de metoder som er beskrevet i direktiv 2002/49/EF annex II, som endret ved direktiv (EU) 2015/996.
+
+Attachments, defines the noise indicators, measuring setups and requirements for plans to remedy.
+
+https://www.oslo.kommune.no/politikk-og-administrasjon/statistikk/miljostatus/trafikkstoy-og-stille-omrader/
+14 designated quiet areas.
+! is this being monitored? Seems only to be checked every 5 years.
+"I midlertid viser støykartleggingen at 12 av 14 områder har fått noe redusert grad av stillhet i perioden fra 2006 til 2016.
+Totalt har andelen av arealet som er stille i disse områdene sunket fra 64 til 57 prosent."
+"Tilgjengelighet og støynivå skal kartlegges hvert femte år i de stille områdene. Neste kartlegging er planlagt i 2021."
+
+Handlingsplan mot Støy 2018-2023, Oslo Kommune.
+https://www.oslo.kommune.no/getfile.php/13300984/Innhold/Politikk%20og%20administrasjon/Milj%C3%B8%20og%20klima/Handlingsplaner%20og%20strategier/Handlingsplan%20mot%20st%C3%B8y%20i%20Oslo%20byomr%C3%A5de.pdf
+
+- Oslo Sporveiene: Utviklet måleprogram for støyovervåking. Årlig siden 2007
+- Som del av kommuneplan 2015 er det i Oslo vedtatt avvikssoner for støy. Dette åpner for boligbygging i støyutsatte områder. Rød støysone. 
+- Mangler prognoser for trafikkøkning og forventet økning i antall støyutsatte, basert på dagens handlingsplan
+- Inspill: For lave ambisjoner mhp. stille områder i Oslo.
+
+
+Forskrift om begrensning av støy i Oslo kommune, Oslo
+https://lovdata.no/dokument/OV/forskrift/1974-10-09-2
+Last changed 2015.
+Table 1: Allowed noise levels for construction work
+
+Oslo Kommune 2013 report
+- 754 skole- og barnehagebygg har støynivåer fra veitrafikk over anbefalt grense på 55 dB,
+hvorav 173 slike bygninger har svært høye støynivåer (over 65 dB).
+- 103 skole- og barnehagebygg har støy fra skinnegående trafikk over 55 dB,
+og 24 bygg har over 65 dB.
+
+Oslo Kommune statistics on noise. Wrt quiet areas, educadtional building
+http://statistikkbanken.oslo.kommune.no/webview/index.jsp?headers=r&Omrdesubset=1+-+15&stubs=Omrde&measure=common&virtualslice=Andel_value&layers=virtual&study=http%3A%2F%2F192.168.101.44%3A80%2Fobj%2FfStudy%2FTL-stille-omrader-prosent-areal&mode=cube&v=2&virtualsubset=Andel_value&Omrdeslice=1&rsubset=2006+-+2016&measuretype=4&rslice=2016&cube=http%3A%2F%2F192.168.101.44%3A80%2Fobj%2FfCube%2FTL-stille-omrader-prosent-areal_C1&top=yes
+
+Oslo Havn støy
+https://www.oslohavn.no/no/miljo/miljo_i_havna/stoy/
+Yearly noise reports. Made by Sweco.
+2 sensor stations. Monthly/week plots available
+! data ends in July 2018?
+http://www.akustikk.info/bekkelagsskraningen/uke_kveld.htm
+http://www.akustikk.info/ormoya/mnd_dag.htm
+
+Norsk forening mot Stoy
+http://stoyforeningen.no
+1200 members, 1.7 employees 2017.
+Over 1000 questions yearly about noise.
+Members can borrow measurement device.
+Or one can buy measurement and report. Costs from 4625 NOK for members. Upto 1.5 hours measurement.
+Personal membership 300NOK/year.
+Has open yearly reports, detailing noise conditions in Norway.
+Has a yearly conference. Nasjonal støykonferanse.
+
+Wireless Sensor Networks for Environmental Noise Monitoring.
+Silvia Santini, Andrea Vitaletti, 2007.
+! equations for L_eq and L_den
+! reference for A weighting
+! references for noise mapping measurements
+
+for noise mapping near to buildings, the assessment points must be 4.0 ± 0.2 m above the ground and at the most exposed façade.
+Other heights may be used but shall never be less than 1,5 m above ground, and corrected with an equivalent height of 4 m.
+
+for noise pollution measurements sampling frequency may be reduced 32 kHz,
+adult humans cannot perceive frequencies above 16 kHz.
+
+Low-Cost Alternatives for Urban Noise Nuisance Monitoring Using Wireless Sensor Networks.
+IEEE Sensors, 2014
+https://www.researchgate.net/publication/265726706_Low-Cost_Alternatives_for_Urban_Noise_Nuisance_Monitoring_Using_Wireless_Sensor_Networks
+
+Measuring the equivalent noise pressure level (called Leq) to acquite an accurate sound map using wireless networks with acoustic sensors. However, even with similar values of Leq, people can feel the noise differently according to its frequency characteristics.
+Thus, indexes which can express people’s feelings by subjective measures are required.
+In this paper we analyze the suitability of using the psycho-acoustic metrics given by the Zwicker’s model, instead of just only considering Leq. The goal is to evaluate the hardware limitations of a low-cost wireless acoustic sensor network that is used to measure the annoyance,
+using two types of commercial and off-the shelf sensor nodes, Tmote-Invent nodes and Raspberry Pi platforms.
+Model measures the Nuisance (N) based on other parameters which are:
+Loudness (L), Sharpness (S), Roughness (R) and Fluctuation Strength (F).
+Propose different simplifications to approximate these parameters
+by taking into account the features of road traffic noise.
+The nodes sample the noise, estimate N (measuring L, S, R and F) and finally send the results.
+References to noise maps for New York [2], London [3], Munich [4], Beijing [5].
+! references for subjective evaluations of road noise
+! equations for noise parameters
+
+
+https://www.scienceandtechnologyresearchnews.com/sensor-networks-monitor-noise-pollution-in-cities/
+ October 12, 2018 
+Road traffic is the most important source of noise emission in urban environments, says Dick Botteldooren, a professor at Ghent University.
+“In recent years, we’ve developed dynamic models for forecasting noise that combine traffic simulation with noise levels and propagation and diffusion models,”
+“Trees are a natural way to control noise in cities since they contribute to reducing sound propagation,”
+“Noise reduction through the planting of vegetation brings cities additional benefits,”
+
+The researchers have already installed sound monitoring stations
+Ghent, Antwerp, Brussels, Rotterdam, Paris.
+“The idea is to monitor sound in those cities so it becomes possible to
+reduce the levels of noise pollution and make the cities smarter in terms of controlling noise emissions,” 
+
+
+SoundCompass: A Distributed MEMS Microphone Array-Based Sensor for Sound Source Localization
+Sensors 2014.
+https://www.mdpi.com/1424-8220/14/2/1918
+Current noise mapping techniques often fail to accurately identify noise pollution sources,
+because they rely on the interpolation of a limited number of scattered sound sensors.
+Aiming to produce accurate noise pollution maps, we developed the SoundCompass,
+a low-cost sound sensor capable of measuring local noise levels and sound field directionality.
+Our first prototype is composed of a sensor array of 52 Microelectromechanical systems (MEMS) microphones,
+an inertial measuring unit and a low-power field-programmable gate array (FPGA).
 
 ### Questions
 How does Norwegian entities track noise today?
@@ -644,6 +780,18 @@ Propose an innovative way to embed the indices in the extracted largest frequenc
 [A compressive beamforming method](https://ieeexplore.ieee.org/abstract/document/4518185/). Direction of Arrival estimation.
 
 [Avisoft Bioacoustics: Lossy Audio Data Compression Effects](https://www.avisoft.com/compression.htm). Shows some of the effects which can appear in spectrogram from common lossy audio encodings like MP3/AAC.
+
+## Misc
+
+M2M Alliance.
+Completely Wireless Realtime Sensor for Smart Factory Applications
+https://www.slideshare.net/M2M_Alliance/completely-wireless-realtime-sensors-for-smart-factory-applications
+Page 9. Table of requirements for Industrial applications. Latency,reliability,data rate,packet size,operating distance
+
+IO Link. IEC standard for sensor communicaton. IO Link Wireless, based on Bluetooth.
+Charge&Go wireless energy transmission. Sensor moves around deterministic path, passed by charging station periodically.
+1 second charge, 200 seconds transmit.
+EN300 330 standard, 125kHz. 45x45x4mm coil. Up to 5mm distance. Up to 15 watt.
 
 ## Hardware
 

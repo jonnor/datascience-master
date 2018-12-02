@@ -15,6 +15,14 @@ def summaries_size(window_length, n_features, bits=4):
     n_summaries = 1.0/window_length
     return n_summaries * n_features * bits
 
+# energy
+# TODO: battery size constraints
+# 
+def battery_life_days(capacity, drain):
+    hours = capacity / drain
+    return hours/24
+
+
 # Maxprice kr 49,- pr døgn opp til 9,5 GB
 # GPRS max should be able to do 7500 MB in 24hours. Making monthly dumps viable (ignoring power concerns...)
 # Ved 5 GB/mnd strupes hastigheten til 128 kb/s ut måneden
@@ -76,6 +84,10 @@ def main():
 
     summ = summaries_size(recording_length, 64*2*2, bits=32)
 
+    drain = 0.2e-3
+    battery_ah = 3000e-3
+    days = battery_life_days(battery_ah, drain)
+    print('days', days)
 
     print(locals())
 

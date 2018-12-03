@@ -10,7 +10,5 @@
 
 * Write requirements for machine-learning
 * Setup report skeleton/outline
-* ESP32. Test performance of mel-spectogram feature extraction
-* Setup ESP32 microphone capture. Verify power consumption under 1mA
 * Determine requirements for power source
-* Verify melspec JPEG compression idea. Test on DCASE2018, with classifier.
+

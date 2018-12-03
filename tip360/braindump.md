@@ -71,7 +71,10 @@ Prefer energy harvesting when possible, battery powered. Fallback to low-voltage
 
 #### Physical design
 Position and orientation of microphone is important.
-Cosistent for all sensors. At head level or higher. Away from reflective sources like walls.
+Should be consistent for all sensors installation.
+
+At head level or higher. Normally away from reflective sources like walls.
+However specify 
 
 Solar panels towards the sun. In an area away from.
 At angle, avoid catching snow/leaves/dust.
@@ -222,6 +225,13 @@ A generalization of delta-features for arbitrary angles.
 
 
 ### Energy source
+
+Is charging periodically acceptable? Daily or weekly a no-go. Monthly or yearly though?
+In industrial setting, may want to perform yearly checkup anyway? Calibration
+
+In a consumer setting, responsibility would be on the consumer.
+Some might charge it dilligently
+
 Harvest from sun.
 Harvest from existing powergrid. Streetlight.
 Harvest from existing lights.
@@ -241,7 +251,13 @@ Self-discharge rate
 
 Li-ion. Self-discharge rate 5%. Can be operated below 0, but not charged
 https://electronics.stackexchange.com/questions/263036/why-charging-li-ion-batteries-in-cold-temperatures-would-harm-them
+https://batteryuniversity.com/learn/article/elevating_self_discharge
 https://en.wikipedia.org/wiki/Lithium-ion_battery#Uses
+
+LiFePo4.
+Safer, lower self-discharge rate.
+3.2V nominal. Maximum charge 3.65, 2.5V minimum.
+https://en.wikipedia.org/wiki/Lithium_iron_phosphate_battery
 
 Ready-to-install solar power systems. Ex for pole mount
 https://www.solarelectricsupply.com/remote-industrial-solar/mapps-pole-mount
@@ -343,10 +359,46 @@ Ideas for summary/presentation statistics:
 
 Measurement standards.
 
-IEC61672. Class 2, Class 1
+IEC61672. Class 2, Class 1.
+IEC61260. Performance requirements for analogue, sampled-data, and digital implementations of band-pass filters.
+ANSI® S1.11-2004. Bandpass filter
+Loudness (Zwicker Method- ISO 532 B).
+ITU-R 468. 
 
 TA Lärm. German standard.
 
+
+A-weighting. Defined in IEC61672-1.
+Can be performed in time-domain using FIR/IIR-filter.
+https://dsp.stackexchange.com/questions/36077/design-of-a-digital-a-weighting-filter-with-arbitrary-sample-rate
+6-tap IIR filter approximation.
+
+Noise meters often report noise in. Octave bands or 1/3 octave bands.
+Bandpass filters defined in IEC61260.
+
+https://github.com/python-acoustics/python-acoustics
+has dBa conversion, octave-band filters, and the time weighting methods.
+Note bug: https://github.com/python-acoustics/python-acoustics/issues/210
+http://siggigue.github.io/pyfilterbank/splweighting.html
+has the dBa weightin-filter, using 2-order Butterworth
+
+An Efficient Audio Coding Scheme for Quantitative and Qualitative Large Scale Acoustic Monitoring Using the Sensor Grid Approach
+https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5751573/
+Bitrate is about 1.4 kbps
+Shows that 1/3 octave filters (31 bands) can classify noises about as well as 20/40 band melspectrogram.
+
+A common way for third-octave analysis is design the highest octave three filters,
+and use them on progressively time-decimated versions of the input signal.
+Davis S. Octave and fractional-octave band digital filtering based on the proposed ANSI standard; Proceedings of the 1986 IEEE International Conference on Acoustics, Speech and Signal Processing; Tokyo, Japan. 7–11 April 1986.
+
+Antoni presents an alternative analysis method based on direct frequency weighting,
+which yields a lower computational complexity as opposed to time filtering.
+https://asa.scitation.org/doi/10.1121/1.3273888
+Orthogonal-like fractional-octave-band filters
+
+https://github.com/felixgontier/cense-coder
+contains reference implementation of proposed approach. Python,MATLAB and STM32
+STM32 code seems to use 32KHz samplerate.
 
 StadtLärm. 2016 – 2018.
 https://www.imms.de/en/science/research-projects/stadtlaerm-2527.html
@@ -802,7 +854,14 @@ NRF51 supports lower rates on Enhanced ShockBurst.
 NRF52840 supports BLE5.0 long range at 125kbps. Up to 1km range.
 [bt832x](http://www.fanstel.com/bt832x-bluetooth-5-module) NRF52832 board with 1km range.
 
+215 EEMBC CoreMark® (3.36 CoreMark/MHz), 58 CoreMark®/mA (Flash)
+
+NRF52 Thingy devkit.
 https://www.digikey.no/product-detail/en/nordic-semiconductor-asa/NRF6936/1490-1061-ND/7175577
+
+Has everything needed for prototyping, incl battery.
+It is possible to measure the current flowing to nRF52832 by cutting the short on SB2 and placing an ampere
+meter between the positive terminal and P1 and positive terminal and P2.
 
 ESP32 power states.
 

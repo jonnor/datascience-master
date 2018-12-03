@@ -32,73 +32,14 @@ This is generaly out-of-scope, but it may be relevant to comment briefly on this
 * Processing power, memory requirements
 * Energy source
 
-## Design questions
-What is the area to cover? How close must sensors be for coverage
-What is the environment? Indoor, outdoor. Urban,rural
-What kind of acoustic sensor is needed? Microphone,hydrophone,contact mic. Mono,stereo,many-channel
 
-Can one do periodic sampling, or must sensor listen continiously?
-Where should information/findings be communicated?
-How quickly must it be communicated?
-What communication architecture to use.
-User-operated network or network provider?
-Gateways
-How is data converted to information? Machine learning
-Where is it performed? Node, gateway, cloud
+## Extensions
 
-
-### Requirements
-Noise measurements are made continiously. `FIXME` how often?
-Measurements follows standard .... `FIXME` reference standard(s)
-System can identify the noise source (class).
-Designed-for-privacy. Does not record peoples conversations. Compliant with local laws. 
-System can send alert when problematic noise levels occur. Adjustable thresholds
-System allows to view data for a particular area at a given time in the past.
-Any machine learning models can be updated easily.
-Any embedded software can be updated easily.
-System can optionally collect raw data as machine learning training data.
-
-### Desirable
-Large coverage. Multiple city blocks
-High density of sensors. At least in 'critical areas'. Residential,Complaints
-Low cost. Manufacturing, installation, operating.
-Easy to deploy. Size,weight,Position,mounting.
-
-### Choices
-Use an provider-operated wireless network.
-Prefer energy harvesting when possible, battery powered. Fallback to low-voltage (9-24V).
-
-
-#### Physical design
-Position and orientation of microphone is important.
-Should be consistent for all sensors installation.
-
-At head level or higher. Normally away from reflective sources like walls.
-However specify 
-
-Solar panels towards the sun. In an area away from.
-At angle, avoid catching snow/leaves/dust.
-
-
-Example deployment scenarios
-
-Hanging from streetlamp, mics down
-Placed on streetlight pole, mics sideways
-
-
-
-#### Futureproofing.
-Planning for future/auxillary/related usecases.
+- Noise modelling
 - Traffic estimation
-- Human presence detection. Footfall
+- Human presence detection. Footfall, voice activity
 - Pollution estimation. From traffic est plus weather data.
-Temperature. Humidity. Wind (ultrasonic anemometer, constant-temperature anemometer, laser doppler).
-- Solar irradiance. Estimated from charge current.
-- Structure born vibration.
-Accelerometer. 
-
-Noise distribution modelling. ?
-Pollution modelling. Simularia. WorldSensing
+- Domotic event detection. Make alarms be available online. Security, Smoke alarm / CO2 detector.
 
 
 ## Requirements for machine learning
@@ -122,31 +63,6 @@ Precision of event in time
 Source localization. Direction, distance
 Acoustic challenges. Polyphony,reverberation
 Features for machine learning.
-
-### Questions
-Can one do machine learning directly on compressed sensing data?
-And then transmit the compression data for reconstruction later.
-
-### System architectures
-Sensor nodes. Central service.
-
-Sensor nodes. Gateways. Central service(s)
-
-Network topology. Mesh,Star. Routing, Flooding
-Quality of Service.
-
-Data processing. What happens where.
-Increasing amount of computational power, storage, energy.
-Cost of sending data that isn't used/useful
-
-Data thinning.
-Idea: class-balanced sampling for recording. Just use inverse of class probability?
-
-Idea: prioritize storing or sending feature data for hard-to-classify cases.
-How many percent of samples would this be? 
-Small distance from class boundary.
-
-## Applications
 
 
 ### Data representations
@@ -277,78 +193,7 @@ Note: Linear. Needs solar powers with above 4.5V output voltage
 https://www.digikey.com/product-detail/en/adafruit-industries-llc/390/1528-1400-ND/5638295
 Adafruit design notes of charger board. https://learn.adafruit.com/usb-dc-and-solar-lipoly-charger/design-notes
 
-## Environmental noise application
 
-
-EU directive 2002/49/EC.
-http://ec.europa.eu/environment/noise/directive_en.htm
-
-* the determination of exposure to environmental noise
-* ensuring that information on environmental noise and its effects is made available to the public
-* preventing and reducing environmental noise where necessary
-and preserving environmental noise quality where it is good
-
-The Directive requires Member States to prepare and publish, every 5 years, noise maps and noise management action plans for:
-
-* agglomerations with more than 100,000 inhabitants
-* major roads (more than 3 million vehicles a year)
-* major railways (more than 30.000 trains a year)
-* major airports (more than 50.000 movements a year, including small aircrafts and helicopters)
-
-When developing noise management action plans, Member States' authorities are required to consult the concerned public.
-
-It is important to note, however, that the Directive does not set limit or target values, nor does it prescribe the measures to be included in the action plans, thus leaving those issues at the discretion of the competent Member State authorities.
-
-http://noise.eea.europa.eu/
-Interactive maps. Road,rail,airport,industry
-
-EU indicators for noise pollution
-Lden: day-evening-night, 55dB
-Lnight: night, 50dB
-
-http://ec.europa.eu/environment/noise/sources_en.htm
-The various directives for common noise sources:
-Road traffic noise, Aircraft noise, Railway noise, Noise from Equipment for Use Outdoors
-
-
-Population exposure to environmental noise
-https://www.eea.europa.eu/data-and-maps/indicators/exposure-to-and-annoyance-by-2/assessment-2
-Published 19 Jul 2018.
-Based on country submissions and redeliveries of the 2012 round of reporting,
-eceived by the EEA at the end of March 2017.
-
-* Noise pollution is a major environmental health problem in Europe.
-* Road traffic is the most widespread source of environmental noise,
-with more than 100 million people affected by harmful levels in the EEA-33 member countries.
-Noise from railways, air traffic and industry are also important sources of noise.
-* The European Union's Seventh Environment Action Programme (7th EAP) sets the objective that by 2020
-noise pollution in the EU will have significantly decreased,
-moving closer to World Health Organization (WHO) recommended levels. 
-
-Lden: Long-term average indicator designed to assess annoyance and defined by the Environmental Noise Directive (END).
-It refers to an annual average day, evening and night period of exposure with an evening weighting of 5 dB(A) and a night weighting of 10 dB(A). 
-Lnight: Long-term average indicator defined by the END and designed to assess sleep disturbance.
-It refers to an annual average night period of exposure.
-
-Environmental noise causes approximately 16 600 premature deaths in Europe each year,
-with almost 32 million adults suffering from annoyance and over 13 million suffering sleep disturbance.
-The WHO has identified noise as the second most significant environmental cause of ill health in western Europe,
-the first being air pollution.
-
-The WHO has set a Night Noise Guideline level for Europe at 40 dB Lnight.
-
-https://www.eea.europa.eu/themes/human/noise/sub-sections/noise-fact-sheets
-Per-country summarizations of noise situation. In 2017
-
-Data is tracked with 5dB bins above indicator (50/55 dbA).
-
-For Norway.
-
-* 100k people too much noise from railway
-* 900k people too much noise from road day-evening-night, 500k at night
-* Half of this in Oslo area
-* 200k are sleep disturbed or highly sleep disturbed 
-* Trends. "Oslo Data not provided or unsuitable for deriving trends" !!
 
 
 Ideas for summary/presentation statistics:
@@ -541,25 +386,6 @@ How does Norwegian entities track noise today?
 What are available sensor systems for continious environmental noise monitoring?
 How much do they cost?
 
-CESVA TA120.
-https://www.cesva.com/en/products/sensors-terminals/TA120/
-Norsonic Nor1531
-https://web2.norsonic.com/product/noise-monitoring-terminal-nor1531/
-Urbiotica U-Sound 
-https://www.urbiotica.com/en/producto/u-sound-3/
-Scantek Scanmonitor
-http://scantekinc.com/products/long-term-monitoring/scantek-scanmonitor2
-Rion NA-37A
-https://rion-sv.com/products/10005/NA370009
-SoundEar3-320 X
-https://soundear.com/soundear3-320x/
-Prices starting from € 2,000
-
-Indoor
-Classroom, hospital
-
-https://soundear.com/soundear-3/
-Easy visual representation of level. Instant-feedback
 
 
 How many sensors are needed?
@@ -793,8 +619,6 @@ Audio fingerprinting?
 
 [A novel audio signal acquisition method for wireless sensor networks](https://ieeexplore.ieee.org/document/6199486). 2011. Han,Zheng.
 Two signal acquisition methods based on compressive sensing.
-
-
 
 
 [Random Sampling for Analog-to-Information Conversion of Wideband Signals](http://dept.math.lsa.umich.edu/~annacg/papers/DCAS2006.sparsogram.pdf).

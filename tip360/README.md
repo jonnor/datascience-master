@@ -8,7 +8,14 @@
 
 ### TODO
 
-* Write requirements for machine-learning
-* Setup report skeleton/outline
-* Determine requirements for power source
+Requirements
+
+* Determine minimum data rate, for noise measurements
+* Determine data rate for noise identification
+* Determine overall power drain.
+
+Writing
+
+* Finish application background
+* Finish requirements
 

@@ -2,25 +2,30 @@
 
 ## Designing a Wireless Acoustic Sensor Network for machine learning
 
-[Proposal](./proposal.md)
+**! Work in Progress !**
+
+[Report](./report.md)
 
 [Notes](./braindump.md)
 
+
 ### TODO
 
-- Use references for all existing URLs
-- Finish background sections
-- Draft problem statement
+Report
+
+- Fix citation style. NMBU Harvard?
+
+Draft
+
 - Add sketches for most pictures
 
-Requirements
+Design criteria
 
 * Determine minimum data rate, for noise measurements
 * Determine data rate for noise identification
 * Determine overall power drain.
 
-Writing
+Choices
 
-* Finish application background
-* Finish requirements
+- Decide microcontroller
 

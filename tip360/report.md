@@ -223,6 +223,7 @@ and log measurements to a centralized system.
 The captured data should include neccesary information to help identify the source noise pollution.
 The system should allow to alert interested parties when sound level exceeds define threshold.
 
+\newpage
 # Specifications
 
 ## Requirements
@@ -279,7 +280,7 @@ Updateable over-the-air
 * Sensor firmware can be updated.
 * Any machine learning models can be updated.
 
-### Desireable
+## Desirable
 
 Extensible
 
@@ -289,6 +290,7 @@ Extensible
 - Can optionally collect raw data, as training data for machine learning.
 - Solar irradiance. Could be used to estimate/plan possible future solar-powered system/extension
 
+\newpage
 # Design
 
 ## System architecture

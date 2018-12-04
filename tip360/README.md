@@ -8,6 +8,11 @@
 
 ### TODO
 
+- Use references for all existing URLs
+- Finish background sections
+- Draft problem statement
+- Add sketches for most pictures
+
 Requirements
 
 * Determine minimum data rate, for noise measurements

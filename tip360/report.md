@@ -6,8 +6,51 @@
 
 ### Environmental noise
 
-EU directive 2002/49/EC.
-http://ec.europa.eu/environment/noise/directive_en.htm
+Noise pollution is a major environmental health problem in Europe.
+
+Environmental noise causes approximately 16 600 premature deaths in Europe each year,
+with almost 32 million adults suffering from annoyance and over 13 million suffering sleep disturbance.
+The WHO has identified noise as the second most significant environmental cause of ill health in western Europe,
+the first being air pollution.
+
+Road traffic is the most widespread source of environmental noise,
+with more than 100 million people affected by harmful levels in the EEA-33 member countries.
+Noise from railways, air traffic and industry are also important sources of noise.
+
+Ref [@EuNoiseSources]
+
+The various directives for common noise sources:
+Road traffic noise, Aircraft noise, Railway noise, Noise from Equipment for Use Outdoors
+
+
+Population exposure to environmental noise
+https://www.eea.europa.eu/data-and-maps/indicators/exposure-to-and-annoyance-by-2/assessment-2
+Published 19 Jul 2018.
+Based on country submissions and redeliveries of the 2012 round of reporting,
+eceived by the EEA at the end of March 2017.
+
+
+The European Union's Seventh Environment Action Programme (7th EAP) sets the objective that by 2020
+noise pollution in the EU will have significantly decreased,
+moving closer to World Health Organization (WHO) recommended levels. 
+
+The WHO has set a Night Noise Guideline level for Europe at 40 dB Lnight.
+
+For Norway.
+
+* 100k people too much noise from railway
+* 900k people too much noise from road day-evening-night, 500k at night
+* Half of this in Oslo area
+* 200k are sleep disturbed or highly sleep disturbed 
+* Trends. "Oslo Data not provided or unsuitable for deriving trends" !!
+
+https://www.eea.europa.eu/themes/human/noise/sub-sections/noise-fact-sheets
+Per-country summarizations of noise situation. In 2017
+
+
+### Regulations
+
+Ref [@EuNoiseDirective]
 
 * the determination of exposure to environmental noise
 * ensuring that information on environmental noise and its effects is made available to the public
@@ -25,77 +68,42 @@ When developing noise management action plans, Member States' authorities are re
 
 It is important to note, however, that the Directive does not set limit or target values, nor does it prescribe the measures to be included in the action plans, thus leaving those issues at the discretion of the competent Member State authorities.
 
-http://noise.eea.europa.eu/
-Interactive maps. Road,rail,airport,industry
 
 EU indicators for noise pollution
 Lden: day-evening-night, 55dB
 Lnight: night, 50dB
-
-http://ec.europa.eu/environment/noise/sources_en.htm
-The various directives for common noise sources:
-Road traffic noise, Aircraft noise, Railway noise, Noise from Equipment for Use Outdoors
-
-
-Population exposure to environmental noise
-https://www.eea.europa.eu/data-and-maps/indicators/exposure-to-and-annoyance-by-2/assessment-2
-Published 19 Jul 2018.
-Based on country submissions and redeliveries of the 2012 round of reporting,
-eceived by the EEA at the end of March 2017.
-
-* Noise pollution is a major environmental health problem in Europe.
-* Road traffic is the most widespread source of environmental noise,
-with more than 100 million people affected by harmful levels in the EEA-33 member countries.
-Noise from railways, air traffic and industry are also important sources of noise.
-* The European Union's Seventh Environment Action Programme (7th EAP) sets the objective that by 2020
-noise pollution in the EU will have significantly decreased,
-moving closer to World Health Organization (WHO) recommended levels. 
 
 Lden: Long-term average indicator designed to assess annoyance and defined by the Environmental Noise Directive (END).
 It refers to an annual average day, evening and night period of exposure with an evening weighting of 5 dB(A) and a night weighting of 10 dB(A). 
 Lnight: Long-term average indicator defined by the END and designed to assess sleep disturbance.
 It refers to an annual average night period of exposure.
 
-Environmental noise causes approximately 16 600 premature deaths in Europe each year,
-with almost 32 million adults suffering from annoyance and over 13 million suffering sleep disturbance.
-The WHO has identified noise as the second most significant environmental cause of ill health in western Europe,
-the first being air pollution.
 
-The WHO has set a Night Noise Guideline level for Europe at 40 dB Lnight.
+In Norway, the coverning legislation for noise pollution is [@Forurensningsloven]
 
-https://www.eea.europa.eu/themes/human/noise/sub-sections/noise-fact-sheets
-Per-country summarizations of noise situation. In 2017
+"Når det gjennomsnittlige støynivået innendørs over døgnet overskrider 42 dB LpAeq,24h i eksisterende bygninger,
+skal det gjennomføres tiltak etter § 5-9. Gjelder rom som er godkjent av bygningsmyndigheten til varig opphold."
+Kartlegge støynivå ned til 35 dB LpAeq,24h. Kartleggingen skal oppdateres hvert femte år. 
 
-Data is tracked with 5dB bins above indicator (50/55 dbA).
+"Utendørs støynivå skal beregnes med de metoder som er beskrevet i
+direktiv 2002/49/EF annex II, som endret ved direktiv (EU) 2015/996."
 
-For Norway.
+Attachments, defines the noise indicators, measuring setups and requirements for plans to remedy.
 
-* 100k people too much noise from railway
-* 900k people too much noise from road day-evening-night, 500k at night
-* Half of this in Oslo area
-* 200k are sleep disturbed or highly sleep disturbed 
-* Trends. "Oslo Data not provided or unsuitable for deriving trends" !!
-
-### Application areas
-
-'anleggseier'
-
-School/kindergarden
-House owners. Consumer. Price sensitive.
-
-Property managers with guests.
 
 ### Noise measurements
 
-Measurement standards.
+Standards
 
-IEC61672. Class 2, Class 1.
-IEC61260. Performance requirements for analogue, sampled-data, and digital implementations of band-pass filters.
-ANSI® S1.11-2004. Bandpass filter
-Loudness (Zwicker Method- ISO 532 B).
-ITU-R 468. 
+    IEC61672-1. Sound Level Meters. Class 2, Class 1.
 
-TA Lärm. German standard.
+    IEC 61252:1993 +AMD1:2000 Personal Sound Exposure Meters
+    IEC 61252 Ed 1.1 (2002-03) Personal Sound Exposure Meters
+    ANSI S1.25:1991 (R2017) Personal Noise Dosimeters
+
+    IEC 61260-1:2014 Class 2 (Octave Bands from 63Hz to 8kHz)
+    ANSI S1.11-2014 Class 2 (Octave Bands from 63Hz to 8kHz)
+
 
 ### Noise monitoring
 Continious
@@ -105,40 +113,69 @@ Wireless Sensor Networks.
 
 ### Noise source identification
 
-Partial Octave bands
+Noise meters often report noise in. Octave bands or 1/3 octave bands.
+Bandpass filters defined in IEC61260.
+
+1/3 Partial Octave bands.
+
 Machine learning.
+
+### Who may want to track noise
+
+Noise pollutants: To ensure compliance with noise regulations, and protect against false accusations.
+
+* Operators of road, railroad, airports and ports
+* Construction and industry companies
+* Hotel and apartment managers. Ensure guests dont cause too much noise.
+* Restaurants, bar and club managers.
+
+Those affected by noise pollution
+
+* House owners
+* Workers
+* Pedestrians and bicyclists
+
+Those that are responsible for services where noise pollution can be an issue.
+
+* Hospitals
+* Schools, kindergarden
+* Municipalities
+* Departments for roads and infrastructure
+
+`TODO: describe to which degree monitoring is done today`
+
+https://www.oslo.kommune.no/politikk-og-administrasjon/statistikk/miljostatus/trafikkstoy-og-stille-omrader/
+14 designated quiet areas.
+
+"Tilgjengelighet og støynivå skal kartlegges hvert femte år i de stille områdene. Neste kartlegging er planlagt i 2021."
+
+Sporveien. Every year. `TODO: import source`
+
+Handlingsplan mot Støy 2018-2023, Oslo Kommune.
+https://www.oslo.kommune.no/getfile.php/13300984/Innhold/Politikk%20og%20administrasjon/Milj%C3%B8%20og%20klima/Handlingsplaner%20og%20strategier/Handlingsplan%20mot%20st%C3%B8y%20i%20Oslo%20byomr%C3%A5de.pdf
+
 
 ### Existing solutions
 
-Commercial products. Outdoor
+There are a number of commercially available products for continious noise monitoring for industrial and smart-city usage.
+For outdoor monitoring, examples include [@CesvaTa120], [@NorsonicNor1531], [@UrbioticaUSound],
+[@ScantekScanmonitor], [@RionNa37a] and [@SoundEar320x].
+Of these only the SoundEar3-320X has pricing available,
+stating that it is the "most affordable external noise monitoring with system prices starting from €2,000".
 
-- CESVA TA120.
-https://www.cesva.com/en/products/sensors-terminals/TA120/
-- Norsonic Nor1531
-https://web2.norsonic.com/product/noise-monitoring-terminal-nor1531/
-- Urbiotica U-Sound 
-https://www.urbiotica.com/en/producto/u-sound-3/
-- Scantek Scanmonitor
-http://scantekinc.com/products/long-term-monitoring/scantek-scanmonitor2
-- Rion NA-37A
-https://rion-sv.com/products/10005/NA370009
-- SoundEar3-320X
-https://soundear.com/soundear3-320x/
-- Cirrus MK427 Noise Sensor
-https://www.aeroqual.com/product/cirrus-noise-sensor
+Fewer products seem to be dediated for continiously indoor noise monitoring alone,
+however some "weather station" devices also support sound level (in addition to temperature, humidity and air quality). 
+Examples include [@NetatmoHomecoach] and [@ArchosWeatherStation].
 
-Prices starting from € 2,000 (SoundEar3-320X)
+One of the few noise sensor companies that explicitly target consumers is [@NoiseAware].
+They provide an indoor sensor which plugs into a mains power socket and communicates over over WiFi,
+and an outdoor unit, which is battery powered and communicates via the indoor unit.
+As of this time, their units are available for preorder in USA, with international launch "planned for 2019".
+The indoor sensors costs 199USD per unit, and the outdoor unit an additional 99USD.
+To utilize the sensor, one must also have a subscription at 99USD/year.
 
-Commercial products. Indoor
-
-https://soundear.com/soundear-3/
-Easy visual representation of level. Instant-feedback
-
-NoiseAware. https://noiseaware.io/  Dec 3rd
-
-Indoor and outdoor sensors available for preorder in USA. International launch in 2019.
-Indoor. 199USD + 99USD/year. Plugs into socket. WiFI based connectivity.
-Outdoor. 99USD per unit. Battery powered, connects to indoor unit. 
+In addition to commercial products, a number of research projects have deployed sensor networks for acoustic noise.
+This includes [@Sonyc] in New York City, [@].
 
 
 ## Problem statement
@@ -181,6 +218,12 @@ Costs
 * Installation. Can be performed by end-user.
 * Maintenance. Not more than once per year.
 
+Monitoring
+
+* Battery level.
+* Wireless reception level.
+* Error log
+
 Updateable
 
 * Sensor parameters can be updated.
@@ -194,6 +237,25 @@ Details
 * Mountable on wall.
 * Size. Under 100x100x30 mm
 * Weight. 500gram. Held by single screw.
+
+Ref [@BarcelonaSoundSensorSpecification]
+
+* IEC 60529: IP65
+* Microphone protection. Windscreen, wind/rain, birds
+* correct acoustic functioning: -10oC to +40oC
+* battery charge and discharge: 0oC to +40oC
+* Independent batteries/without power: the battery life must be a minimum of 3 years
+* Connection to the street lighting network: the device must function correctly
+between 185-230v. Battery capacity minimum of 19 hours, maximum charge time 5 hours
+* Has to send on HTTPS to Sentilo platform. Battery power, 
+* Integration time. Min 1 second - max 1 minute
+* Must send: Continuous sound level weighting A (LAeqT) in dB(A)
+* Frequency weighting: Frequency weighting A, according to 61672-1
+* Tolerance: Maximum allowed variance LAeq±2dB(A) and/or compliance of tolerance
+limits Class 2 according to IEC 61672-1: from 10 to 20,000 Hz
+* Measurement range: Measurement range from 40 to 90 dB(A)
+* Linear range without change of scales: 50dB
+
 
 ## Undecided
 
@@ -259,6 +321,18 @@ Dataprocessing. What happens where.
 Ingestion. In bulk. HTTP. MQTT.
 Storage in time-series database. Ex. InfluxDB
 
+Pre-made.
+
+Sentilo.
+http://www.sentilo.io/
+Open source platform developed and used by city of Barcelona since 2013.
+Have many noise sensors integrated around the city, from multiple manufacturers.
+https://github.com/sentilo/sentilo
+"We expect to release the 1.8 version before the end of the year or the early 19."
+https://groups.google.com/forum/#!topic/sentilo/ZddHIuT9oas
+
+`TODO: evaluate Sentilo API for noise measurements`
+
 `TODO: sanity check data amounts. Devices * daily rate`
 
 ## Power source
@@ -292,20 +366,28 @@ Add-ons for outdoor solar, indoor solar. Off-the-shelf or third-party.
 
 ## Connectivity
 
-* WiFi, cellular. `??`
+`TODO: define date-rate needed`
 
-! WiFi needs a way to insert credentials.
-! cellular costs NNN per month
+WiFi, cellular.
+
+! WiFi needs an existing network. And a way to configure credentials.
+! cellular is zero configuration (for end user). But costs NNN per month
+
+Bluetooth only relevant as an intemediate, for gateways.
+
+`TODO: decide if we can have both`
 
 
-## Firmware
+## Data processing
 
-### Data processing
+In firmware
 
 Adjustable Data thinning. Based on battery / power drain.
 Adaptive sampling. Sample noise details when noise level is high.
 
 Parameters, can be adjusted in field. Per data-processing period.
+
+In cloud
 
 
 ## Physical
@@ -320,7 +402,7 @@ Deployment scenarios.
 * House indoors. Battery only
 * House outdoor wall. Battery only
 * Indoors, fixed power
-* Road-pole. Solar power
+* Road-pole. Solar power, or from streetlight 
 
 `TODO: concept image of unit`
 

@@ -32,7 +32,6 @@ This is generaly out-of-scope, but it may be relevant to comment briefly on this
 * Processing power, memory requirements
 * Energy source
 
-
 ## Extensions
 
 - Noise modelling
@@ -41,6 +40,23 @@ This is generaly out-of-scope, but it may be relevant to comment briefly on this
 - Pollution estimation. From traffic est plus weather data.
 - Domotic event detection. Make alarms be available online. Security, Smoke alarm / CO2 detector.
 
+## Existing products
+Indoor industrial
+
+- https://soundear.com/soundear-3/
+Easy visual representation of level. Instant-feedback
+- Aretas dB Noise Monitor.
+http://aretasworks.com/category/db-noise-monitor
+
+Personal Noise dosimeters
+Cirrus Research doseBadge® 5
+https://www.cirrusresearch.co.uk/products/dosebadge5-noise-dosimeter/
+measure to OSHA HCA, OSHA PEL, ACGIH & ISO
+
+https://www.cirrusresearch.co.uk/blog/2018/11/noise-issues-in-uk-hospitals-need-more-than-a-band-aid-solution/
+The World Health Organisation (WHO) advises that patients shouldn’t be exposed to noise louder than 35 decibels
+Researchers from King’s College London say noise levels in intensive care
+– where the most vulnerable patients are looked after – regularly exceed 100 decibels.
 
 ## Requirements for machine learning
 Definition. Care about accurate detection/inference/prediciton
@@ -140,6 +156,15 @@ Using Directional Derivative Features, from a Steerable Pyramid Filter-bank.
 A generalization of delta-features for arbitrary angles.
 
 
+### Data
+
+Summary/presentation statistics:
+
+- N/percentage days above threshold (per year,month)
+- Histogram of noise values. Per day obervations
+- Average/median noise over course of a day. Per-hour bins
+
+
 ### Energy source
 
 Is charging periodically acceptable? Daily or weekly a no-go. Monthly or yearly though?
@@ -196,22 +221,43 @@ Adafruit design notes of charger board. https://learn.adafruit.com/usb-dc-and-so
 
 
 
-Ideas for summary/presentation statistics:
 
-- N/percentage days above threshold (per year,month)
-- Histogram of noise values. Per day obervations
-- Average/median noise over course of a day. Per-hour bins
 
-Measurement standards.
+## Measurement standards
 
-IEC61672. Class 2, Class 1.
-IEC61260. Performance requirements for analogue, sampled-data, and digital implementations of band-pass filters.
-ANSI® S1.11-2004. Bandpass filter
-Loudness (Zwicker Method- ISO 532 B).
-ITU-R 468. 
+
+    IEC 61252:1993 +AMD1:2000 Personal Sound Exposure Meters
+    IEC 61252 Ed 1.1 (2002-03) Personal Sound Exposure Meters
+    ANSI S1.25:1991 (R2017) Personal Noise Dosimeters
+    IEC 61260-1:2014 Class 2 (Octave Bands from 63Hz to 8kHz)
+    ANSI S1.11-2014 Class 2 (Octave Bands from 63Hz to 8kHz)
+
+    Loudness (Zwicker Method- ISO 532 B).
+    ITU-R 468. 
+
+IEC 61672 – A Standard for Sound Level Meters Explained
+https://www.cirrusresearch.co.uk/blog/2012/07/iec-61672-a-standard-for-sound-level-meters-in-three-parts/
+
+* Part 1, details the performance characteristics that a Class 1 or Class 2 sound level meter should have.
+* Part 2 is used by test laboratories, such as the PTB in Germany,
+to test instruments to ensure that they do indeed meet the manufacturers claims. This is known as Type or Pattern Approval.
+* Part 3 details test that can be carried during a periodic verification.
 
 TA Lärm. German standard.
 
+NEK IEC 61672-1:2013
+https://www.standard.no/no/Nettbutikk/produktkatalogen/Produktpresentasjon/?ProductID=668154
+
+Despite the measurement standard being normalized,
+certifications are issued by national agencies.
+
+    France: LNE (Laboratoire National de métrologie et d’Essais)
+    Germany: PTB (Physikalisch-Technische Bundesanstalt)
+    Switzerland:  METAS (Bundesamt für Metrologie)
+    Portugal. Instituto Português da Qualidade, I.P.
+    Spain: Centro Español de Metrologia (CEM).
+
+### Implementing
 
 A-weighting. Defined in IEC61672-1.
 Can be performed in time-domain using FIR/IIR-filter.
@@ -227,10 +273,6 @@ Note bug: https://github.com/python-acoustics/python-acoustics/issues/210
 http://siggigue.github.io/pyfilterbank/splweighting.html
 has the dBa weightin-filter, using 2-order Butterworth
 
-An Efficient Audio Coding Scheme for Quantitative and Qualitative Large Scale Acoustic Monitoring Using the Sensor Grid Approach
-https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5751573/
-Bitrate is about 1.4 kbps
-Shows that 1/3 octave filters (31 bands) can classify noises about as well as 20/40 band melspectrogram.
 
 A common way for third-octave analysis is design the highest octave three filters,
 and use them on progressively time-decimated versions of the input signal.
@@ -241,11 +283,96 @@ which yields a lower computational complexity as opposed to time filtering.
 https://asa.scitation.org/doi/10.1121/1.3273888
 Orthogonal-like fractional-octave-band filters
 
+
+
+
+
+
+
+
+### Ref
+
+An Efficient Audio Coding Scheme for Quantitative and Qualitative Large Scale Acoustic Monitoring Using the Sensor Grid Approach
+https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5751573/
+Bitrate is about 1.4 kbps
+Shows that 1/3 octave filters (31 bands) can classify noises about as well as 20/40 band melspectrogram.
+
+
 https://github.com/felixgontier/cense-coder
 contains reference implementation of proposed approach. Python,MATLAB and STM32
 STM32 code seems to use 32KHz samplerate.
 
-StadtLärm. 2016 – 2018.
+### Interest organizations and events
+
+European working group on noise.
+Working Group Noise EUROCITIES. Since 2006.
+https://workinggroupnoise.com/
+
+EAA. European Acoustics Association.
+Non-profit entity established in 1992.
+EAA gathers 33 societies of acoustics and serves more than 9000 individual members.
+https://euracoustics.org/
+
+Euronoise is the European Conference and Exhibition on Noise Control
+INTER-NOISE 2019 MADRID, the 48th International Congress and Exhibition on
+Noise Control Engineering to be held on 16 – 19 June 2019 
+
+26th International Congress on Sound and Vibration (ICSV26)
+Montréal 7–11 July 201
+http://www.icsv26.org/
+31.th december. Abstract deadline.
+Huge. Over 700 abstracts so far.
+
+23rd International Congress on Acoustics, Sept. 09-13, 2019
+Aachen
+http://ica2019.org/eaa-euroregio-events/
+
+Urban Sound Symposium
+April 3-5, 2019 in Ghent, Belgium
+https://urban-sound-symposium.org/
+
+27th European Signal Processing Conference, EUSIPCO 2019
+A Coruña, Spain, from September 2 to 6, 2019.
+http://eusipco2019.org/
+
+### Deployments
+
+
+## SONYC
+http://wp.nyu.edu/sonyc
+
+1. Mydlarz C., Salamon J., Bello J. The implementation of low-cost urban acoustic monitoring devices. Appl. Acoust. 2017;117:207–218.
+doi: 10.1016/j.apacoust.2016.06.010. 
+
+## CENSE
+http://cense.ifsttar.fr
+
+Picaut J., Can A., Ardouin J., Crépeaux P., Dhorne T., Écotière D., Lagrange M. Characterization of urban sound environments using a comprehensive approach combining open data, measurements, and modeling. J. Acoust. Soc. Am. 2017;141:3808. doi: 10.1121/1.4988416. [CrossRef]
+
+## Barcelona
+??
+
+http://www.sentilo.io/wordpress/urbiotica-sentilo-ready-noise-sensor-successfully-tested/
+
+## Basel
+Design of a Mobile Low-Cost Sensor Network Using Urban Buses for Real-Time Ubiquitous Noise Monitoring.
+https://www.ncbi.nlm.nih.gov/pubmed/28036065/
+
+## Ghent uni
+https://www.scienceandtechnologyresearchnews.com/sensor-networks-monitor-noise-pollution-in-cities/
+October 12, 2018 
+Road traffic is the most important source of noise emission in urban environments, says Dick Botteldooren, a professor at Ghent University.
+“In recent years, we’ve developed dynamic models for forecasting noise that combine traffic simulation with noise levels and propagation and diffusion models,”
+“Trees are a natural way to control noise in cities since they contribute to reducing sound propagation,”
+“Noise reduction through the planting of vegetation brings cities additional benefits,”
+
+The researchers have already installed sound monitoring stations
+Ghent, Antwerp, Brussels, Rotterdam, Paris.
+“The idea is to monitor sound in those cities so it becomes possible to
+reduce the levels of noise pollution and make the cities smarter in terms of controlling noise emissions,” 
+
+### StadtLärm.
+2016 – 2018.
 https://www.imms.de/en/science/research-projects/stadtlaerm-2527.html
 
 https://www.slideshare.net/M2M_Alliance/stadtlrm-a-distributed-urban-noise-monitoring-system
@@ -257,11 +384,6 @@ Plan: 25 sensors, Jena. March
 
 An open platform for distributed urban noise monitoring
 https://ieeexplore.ieee.org/document/8249339
-
-New York
-SONYC research initiative combines sensors,
-big data, and machine learning to understand, model and influence NYC’s acoustic environment.
-
 
 ### Oslo
 
@@ -354,17 +476,7 @@ References to noise maps for New York [2], London [3], Munich [4], Beijing [5].
 ! equations for noise parameters
 
 
-https://www.scienceandtechnologyresearchnews.com/sensor-networks-monitor-noise-pollution-in-cities/
- October 12, 2018 
-Road traffic is the most important source of noise emission in urban environments, says Dick Botteldooren, a professor at Ghent University.
-“In recent years, we’ve developed dynamic models for forecasting noise that combine traffic simulation with noise levels and propagation and diffusion models,”
-“Trees are a natural way to control noise in cities since they contribute to reducing sound propagation,”
-“Noise reduction through the planting of vegetation brings cities additional benefits,”
 
-The researchers have already installed sound monitoring stations
-Ghent, Antwerp, Brussels, Rotterdam, Paris.
-“The idea is to monitor sound in those cities so it becomes possible to
-reduce the levels of noise pollution and make the cities smarter in terms of controlling noise emissions,” 
 
 
 SoundCompass: A Distributed MEMS Microphone Array-Based Sensor for Sound Source Localization
@@ -383,14 +495,71 @@ How does Norwegian entities track noise today?
 * Road, railroad, airport operators 
 * Government. Municipality,fylke,state. Dedicated environmental agencies?
 
-What are available sensor systems for continious environmental noise monitoring?
-How much do they cost?
 
 
+## Literature
 
-How many sensors are needed?
 
-For poaching detection,
+### Wireless Sensor Networks
+[The Evolution of Wireless Sensor Networks](). Silicon Labs. Whitepaper.
+Shows how using a star/mesh network can decrease the transmission power per device, and total power.
+
+[The Design Space of Wireless Sensor Networks](http://www.vs.inf.ethz.ch/publ/papers/wsn-designspace.pdf). Römer. 2004.
+
+[Wireless sensor network survey](https://www.sciencedirect.com/science/article/pii/S1389128608001254). Yick, 2008. !!
+
+### Energy efficiency in Wireless Sensor Networks
+
+[Energy harvesting in wireless sensor networks: A comprehensive review](https://www.sciencedirect.com/science/article/pii/S1364032115012629). 2015. Comprehensive taxonomy of the various energy harvesting sources. Energy prediction models. Challenges.
+
+[Energy conservation in wireless sensor networks: A survey](https://www.sciencedirect.com/science/article/pii/S1570870508000954). Giuseppe Anastasi, 2009. 
+
+[Energy efficiency in wireless sensor networks: A top-down survey](https://www.sciencedirect.com/science/article/pii/S1389128614001418). TifennRault, 2014. Taxonomy of WSN applications. !!
+
+[Survey of image compression algorithms in wireless sensor networks](https://ieeexplore.ieee.org/abstract/document/4631875/). 2008.
+A review on eight popular image compression algorithms.
+Found that Set-Partitioning in Hierarchical Trees (SPIHT) wavelet-based image compression best.
+High compression efficiency and its simplicity in coding
+
+### Wireless Acoustic Sensor Networks
+
+[MEMS microphones for wireless applications](https://www.sciencedirect.com/science/article/pii/B9780081004494000087).
+
+[Audio coding in wireless acoustic sensor networks](https://dl.acm.org/citation.cfm?id=2802336). Zahedi, 2015. ACM, Signal Processing. !!
+Combining the measurement and received message at each node instead of forwarding the received messages and separate encoding.
+Propose to use the measurement as side information and thereby form a distributed source coding (DSC) problem.
+
+[Development of high performance wireless sensor node for Acoustic application](www.academia.edu/download/44284004/Development_of_high_.pdf). Arul Prabahar A, 2013. !!
+
+## Applications
+
+### Acoustic Emission monitoring
+Using the emission of acoustic waves from materials under load/stress/failure.
+Alternative to ultrasonic testing in some cases.
+
+Structural health monitoring (SHM),
+Quality control. Non-destructive testing
+System feedback
+Process monitoring
+
+May require capture rates of 100-500kHz.
+
+### Environmental monitoring of animals
+
+[Compressive Sensing for Efficiently Collecting Wildlife Sounds with Wireless Sensor Networks](https://ieeexplore.ieee.org/abstract/document/6289298/). 2012. !!
+Determine a sparse base that best represents the audio information used for identifying the target species. As a proof-of-concept, we focus on anuran (frogs and toads). 98% classification rate can be achieved by using as little as 10% of the original data.
+
+[On the effect of compression on the complexity characteristics of wireless acoustic sensor network signals](https://www.sciencedirect.com/science/article/pii/S0165168414003752). Tatlas, 2015. Wireless acoustic sensor network for environmental monitoring is considered.
+
+[Evaluation of MPEG-7-Based Audio Descriptors for Animal Voice Recognition over Wireless Acoustic Sensor Networks](http://www.mdpi.com/1424-8220/16/5/717/htm). Joaquín Luque. Use of generic descriptors based on an MPEG-7 standard. Demonstrate it to be suitable to be used in the recognition of different patterns
+
+[Compressive sensing in wireless sensor network for poultry acoustic monitoring](http://www.ijabe.org/index.php/ijabe/article/view/2148). 2017.
+Zigbee based network.
+
+[Wireless sensor networks for environmental research: A survey on limitations and challenges](https://ieeexplore.ieee.org/abstract/document/6624996/). 2013.
+
+
+### Poaching detection
 
 [Optimization of sensor deployment for acoustic detection and localization in terrestrial environments](https://zslpublications.onlinelibrary.wiley.com/doi/full/10.1002/rse2.97).
 We developed probabilistic algorithms for near‐optimal placement of sensors,
@@ -411,79 +580,87 @@ continuously recording for 2 years detected a high level of shooting within a 54
 ew advances in radio communication promise the future capability for real‐time detection and localization of exploitation activity,
 by linking networked devices to a base station. And are undergoing development for open‐source AudioMoth sensors (Hill et al. 2018)
 
-## Companies
 
-[Physical Acoustics](https://www.physicalacoustics.com/). Since 1968.
-Supply large range of systems. Portable,wireless,on-line montioring.
-Non-destructive testing.
+## Misc
 
-## Literature
+M2M Alliance.
+Completely Wireless Realtime Sensor for Smart Factory Applications
+https://www.slideshare.net/M2M_Alliance/completely-wireless-realtime-sensors-for-smart-factory-applications
+Page 9. Table of requirements for Industrial applications. Latency,reliability,data rate,packet size,operating distance
+
+IO Link. IEC standard for sensor communicaton. IO Link Wireless, based on Bluetooth.
+Charge&Go wireless energy transmission. Sensor moves around deterministic path, passed by charging station periodically.
+1 second charge, 200 seconds transmit.
+EN300 330 standard, 125kHz. 45x45x4mm coil. Up to 5mm distance. Up to 15 watt.
+
+## Hardware
+
+### Microcontroller
+
+NRF52832 only supports BLE5.0 with 1Mpbs.
+NRF51 supports lower rates on Enhanced ShockBurst.
+NRF52840 supports BLE5.0 long range at 125kbps. Up to 1km range.
+[bt832x](http://www.fanstel.com/bt832x-bluetooth-5-module) NRF52832 board with 1km range.
+
+215 EEMBC CoreMark® (3.36 CoreMark/MHz), 58 CoreMark®/mA (Flash)
+
+NRF52 Thingy devkit.
+https://www.digikey.no/product-detail/en/nordic-semiconductor-asa/NRF6936/1490-1061-ND/7175577
+
+Has everything needed for prototyping, incl battery.
+It is possible to measure the current flowing to nRF52832 by cutting the short on SB2 and placing an ampere
+meter between the positive terminal and P1 and positive terminal and P2.
+
+ESP32 power states.
+
+* Modem-sleep: 20-31mA @ 80Mhz, 30-68MHz @ 240Mhz
+* Light-sleep: 0.8mA
+* Deep-sleep: 10uA - 150uA (ULP co-processor on)
+
+High-speed ADC is not available in deep-sleep.
+It seems that I2S pheripheral is also not?
+
+### GPRS modem
+
+GOOUUU TECG IOT-GA6 is not same as AI Thinkerer GA6, but can be reflashed
+https://github.com/vshymanskyy/TinyGSM/issues/164
+Might be better to go for SIM808 or SIM900A module in future.
+Alternatively try to get one of the proper modules.
+https://www.aliexpress.com/item/A6-Mini-GSM-GPRS-Development-Quad-band-Board-SMS-Audio-Board-5V-Replace-SIM800L/32756414108.html
+https://www.aliexpress.com/item/A6-GPRS-GSM-Module-Adapter-Board-Plate-Quad-band-850-900-1800-1900MHZ-Antenna-F/32729084036.html
+
+Note: TinyGSM says only some modules support TLS/HTTPS.
+Test that this works with native TLS stack in ESP32/ESP8266, both for HTTPS and MQTTS.
+Amazon IoT requires TLS1.2 with certificates
+https://github.com/vshymanskyy/TinyGSM/issues/136
+Ublox SARAU201 seems to have such support on device
+
+Other alternative is to use modem in PPP mode. PPPoS = PPP over serial
+Should be possible with ESP32 and esp-idk, https://github.com/loboris/ESP32-PPPOS-EXAMPLE
+
+Typical supply voltage: 3.7V-4.2V
+SIM800. Sleep-mode: 1.2mA
+SIM800C. Sleep-mode: 0.88mA. 
+SIM800H. Sleep-mode: 0.7mA
+SIM900A. Sleep-mode: 1mA
+SARA-G3. Standby: 0.9mA. Connected: `<250mA`
+
+GSM is 1W or 2W max transmit, depending on class/band.
+Datarate. 9.05kbps-85.6 kbps
+
+### LTE
+
+LTE category NB1:
+Up to 31.25 kb/s UL
+Up to 27.2 kb/s DL
+
+SARA N2.
+Note: 1.8V supply voltage.
+Deep-sleep: 3uA, Active mode: 6mA. RX: 46mA, TX: 70-22mA
 
 
-### Wireless Sensor Networks
+# Outdated
 
-[The Evolution of Wireless Sensor Networks](). Silicon Labs. Whitepaper.
-Shows how using a star/mesh network can decrease the transmission power per device, and total power.
-
-
-[The Design Space of Wireless Sensor Networks](http://www.vs.inf.ethz.ch/publ/papers/wsn-designspace.pdf). Römer. 2004.
-
-[Wireless sensor network survey](https://www.sciencedirect.com/science/article/pii/S1389128608001254). Yick, 2008. !!
-
-### Energy efficiency in Wireless Sensor Networks
-
-[Energy harvesting in wireless sensor networks: A comprehensive review](https://www.sciencedirect.com/science/article/pii/S1364032115012629). 2015. Comprehensive taxonomy of the various energy harvesting sources. Energy prediction models. Challenges.
-
-[Energy conservation in wireless sensor networks: A survey](https://www.sciencedirect.com/science/article/pii/S1570870508000954). Giuseppe Anastasi, 2009. 
-
-[Energy efficiency in wireless sensor networks: A top-down survey](https://www.sciencedirect.com/science/article/pii/S1389128614001418). TifennRault, 2014. Taxonomy of WSN applications. !!
-
-[Survey of image compression algorithms in wireless sensor networks](https://ieeexplore.ieee.org/abstract/document/4631875/). 2008.
-A review on eight popular image compression algorithms.
-Found that Set-Partitioning in Hierarchical Trees (SPIHT) wavelet-based image compression best.
-High compression efficiency and its simplicity in coding
-
-
-### Wireless Acoustic Sensor Networks
-
-[MEMS microphones for wireless applications](https://www.sciencedirect.com/science/article/pii/B9780081004494000087).
-
-
-[Audio coding in wireless acoustic sensor networks](https://dl.acm.org/citation.cfm?id=2802336). Zahedi, 2015. ACM, Signal Processing. !!
-Combining the measurement and received message at each node instead of forwarding the received messages and separate encoding.
-Propose to use the measurement as side information and thereby form a distributed source coding (DSC) problem.
-
-
-[Development of high performance wireless sensor node for Acoustic application](www.academia.edu/download/44284004/Development_of_high_.pdf). Arul Prabahar A, 2013. !!
-
-## Applications
-
-### Acoustic Emission monitoring
-Using the emission of acoustic waves from materials under load/stress/failure.
-Alternative to ultrasonic testing in some cases.
-
-Structural health monitoring (SHM),
-Quality control. Non-destructive testing
-System feedback
-Process monitoring
-
-May require capture rates of 100-500kHz.
-
-
-
-### Applied to environmental monitoring of animals
-
-[Compressive Sensing for Efficiently Collecting Wildlife Sounds with Wireless Sensor Networks](https://ieeexplore.ieee.org/abstract/document/6289298/). 2012. !!
-Determine a sparse base that best represents the audio information used for identifying the target species. As a proof-of-concept, we focus on anuran (frogs and toads). 98% classification rate can be achieved by using as little as 10% of the original data.
-
-[On the effect of compression on the complexity characteristics of wireless acoustic sensor network signals](https://www.sciencedirect.com/science/article/pii/S0165168414003752). Tatlas, 2015. Wireless acoustic sensor network for environmental monitoring is considered.
-
-[Evaluation of MPEG-7-Based Audio Descriptors for Animal Voice Recognition over Wireless Acoustic Sensor Networks](http://www.mdpi.com/1424-8220/16/5/717/htm). Joaquín Luque. Use of generic descriptors based on an MPEG-7 standard. Demonstrate it to be suitable to be used in the recognition of different patterns
-
-[Compressive sensing in wireless sensor network for poultry acoustic monitoring](http://www.ijabe.org/index.php/ijabe/article/view/2148). 2017.
-Zigbee based network.
-
-[Wireless sensor networks for environmental research: A survey on limitations and challenges](https://ieeexplore.ieee.org/abstract/document/6624996/). 2013.
 
 ### Machine learning in WSNs
 
@@ -512,7 +689,7 @@ Explores energy consumption tradeoffs associated with data compression, particul
 * Transform-based Coding
 DCT: Discrete Cosine Transform,
 DWT: Discrete Wavelet Transform,
-DKTL: Discrete  Karhunen-Loeve Transform,
+DKTL: Discrete Karhunen-Loeve Transform,
 Distributed Wavelet Transform-based Lifting (DWT-lifting),
 Distributed Wavelet Transform-based Harr (DWT-Harr),
 * Compressed Sensing.
@@ -656,80 +833,3 @@ Propose an innovative way to embed the indices in the extracted largest frequenc
 [A compressive beamforming method](https://ieeexplore.ieee.org/abstract/document/4518185/). Direction of Arrival estimation.
 
 [Avisoft Bioacoustics: Lossy Audio Data Compression Effects](https://www.avisoft.com/compression.htm). Shows some of the effects which can appear in spectrogram from common lossy audio encodings like MP3/AAC.
-
-## Misc
-
-M2M Alliance.
-Completely Wireless Realtime Sensor for Smart Factory Applications
-https://www.slideshare.net/M2M_Alliance/completely-wireless-realtime-sensors-for-smart-factory-applications
-Page 9. Table of requirements for Industrial applications. Latency,reliability,data rate,packet size,operating distance
-
-IO Link. IEC standard for sensor communicaton. IO Link Wireless, based on Bluetooth.
-Charge&Go wireless energy transmission. Sensor moves around deterministic path, passed by charging station periodically.
-1 second charge, 200 seconds transmit.
-EN300 330 standard, 125kHz. 45x45x4mm coil. Up to 5mm distance. Up to 15 watt.
-
-## Hardware
-
-### Microcontroller
-
-NRF52832 only supports BLE5.0 with 1Mpbs.
-NRF51 supports lower rates on Enhanced ShockBurst.
-NRF52840 supports BLE5.0 long range at 125kbps. Up to 1km range.
-[bt832x](http://www.fanstel.com/bt832x-bluetooth-5-module) NRF52832 board with 1km range.
-
-215 EEMBC CoreMark® (3.36 CoreMark/MHz), 58 CoreMark®/mA (Flash)
-
-NRF52 Thingy devkit.
-https://www.digikey.no/product-detail/en/nordic-semiconductor-asa/NRF6936/1490-1061-ND/7175577
-
-Has everything needed for prototyping, incl battery.
-It is possible to measure the current flowing to nRF52832 by cutting the short on SB2 and placing an ampere
-meter between the positive terminal and P1 and positive terminal and P2.
-
-ESP32 power states.
-
-* Modem-sleep: 20-31mA @ 80Mhz, 30-68MHz @ 240Mhz
-* Light-sleep: 0.8mA
-* Deep-sleep: 10uA - 150uA (ULP co-processor on)
-
-High-speed ADC is not available in deep-sleep.
-It seems that I2S pheripheral is also not?
-
-### GPRS modem
-
-GOOUUU TECG IOT-GA6 is not same as AI Thinkerer GA6, but can be reflashed
-https://github.com/vshymanskyy/TinyGSM/issues/164
-Might be better to go for SIM808 or SIM900A module in future.
-Alternatively try to get one of the proper modules.
-https://www.aliexpress.com/item/A6-Mini-GSM-GPRS-Development-Quad-band-Board-SMS-Audio-Board-5V-Replace-SIM800L/32756414108.html
-https://www.aliexpress.com/item/A6-GPRS-GSM-Module-Adapter-Board-Plate-Quad-band-850-900-1800-1900MHZ-Antenna-F/32729084036.html
-
-Note: TinyGSM says only some modules support TLS/HTTPS.
-Test that this works with native TLS stack in ESP32/ESP8266, both for HTTPS and MQTTS.
-Amazon IoT requires TLS1.2 with certificates
-https://github.com/vshymanskyy/TinyGSM/issues/136
-Ublox SARAU201 seems to have such support on device
-
-Other alternative is to use modem in PPP mode. PPPoS = PPP over serial
-Should be possible with ESP32 and esp-idk, https://github.com/loboris/ESP32-PPPOS-EXAMPLE
-
-Typical supply voltage: 3.7V-4.2V
-SIM800. Sleep-mode: 1.2mA
-SIM800C. Sleep-mode: 0.88mA. 
-SIM800H. Sleep-mode: 0.7mA
-SIM900A. Sleep-mode: 1mA
-SARA-G3. Standby: 0.9mA. Connected: `<250mA`
-
-GSM is 1W or 2W max transmit, depending on class/band.
-Datarate. 9.05kbps-85.6 kbps
-
-### LTE
-
-LTE category NB1:
-Up to 31.25 kb/s UL
-Up to 27.2 kb/s DL
-
-SARA N2.
-Note: 1.8V supply voltage.
-Deep-sleep: 3uA, Active mode: 6mA. RX: 46mA, TX: 70-22mA

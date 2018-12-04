@@ -2,7 +2,7 @@
 report: merged.pdf
 
 report.pdf: report.md
-	pandoc --bibliography=references.bib --variable papersize=a4paper -V geometry:margin=1.0in -V fontsize=12pt --toc -Vlof -Vlot  -s report.md -o report.pdf
+	pandoc --bibliography=references.bib --csl styles/ieee.csl --variable papersize=a4paper -V geometry:margin=1.0in -V fontsize=12pt --toc -Vlof -Vlot  -s report.md -o report.pdf
 
 merged.pdf: report.pdf summary.pdf
 	gs -dBATCH -dNOPAUSE -q -sDEVICE=pdfwrite -dPDFSETTINGS=/prepress -sOutputFile=merged.pdf cover.pdf summary.pdf report.pdf end.pdf

@@ -10,8 +10,6 @@ abstract: |
     Bar
 ---
 
-
-
 ## Meta
 
 
@@ -28,43 +26,56 @@ This is a referene to \ref{mylabel}.
 
 # Introduction
 
-### Goal
-After reading this report,
-a machine learning practitioner
-without prior knowledge about sound or digital signal processing
-shall be able to solve basic audio event detection problems.
-
 ### Scope
-Focus on
 
-* Acoustic Event Detection. Animals. Ecoacoustics/bioacoustics
-* Robust methods, can be used in real-life noisy environments
-* Efficient methods, possible to implement in embedded system
+Sound, and machine learning on sound, is a wide topic.
+Some areas have enough interest to be considered their own fields.
+This especially includes machine understanding of human speech (*Speech Recognition*) and
+the computational analysis of music (*Music Information Retrieval*).
 
-Only mentioned briefly
+`TODO: recommend literature on Speech Recognition`
+`TODO: recommend l. on Music Information Retrieval`
 
-* Psycoacoustics
-* Biological models of sound production
+This paper instead focuses on detection and classification of *Acoustic Events*.
+Such events can be any kind of sound, and in contrast to speech and music,
+are often not produced with an intent to communicate.
+Many of the techniques utilized for Acoustic Events can also be
+used within speech and music, and many methods were in fact adopted from these fields.
 
-Prerequisite knowledge required
+While a basic understanding of the human auditory system can be beneficial when developing machine hearing,
+coverage of Psychoacoustics will kept brief. Those interested in a detailed treatise on this subject can read [@].
 
-* Basics machine learning concepts
-Supervised vs unsupervised learning.
-Classification,clustering,regression.
-* Familiarity with common methods
-Support Vector Machine, Random Forests, Convolutional Neural Networks
-* Basic digital signal processing.
-Linear-time-invariant systems, Causality, Fourier Transform.
+`TODO: recommend book. Human and Audio` 
+`TODO: recommend bird vocalization literature`
 
-Knowledge not required
+The paper assumes some prerequisite knowledge on machine learning.
+In particular it is assumed that the reader:
+knows the difference between supervised and unsupervised learning;
+knows task formulations like Classification, Clustering and Regression;
+basic familiarity with common methods like Support Vector Machine, Random Forests and Convolutional Neural Networks.
 
-* Audio, acoustics
+`TODO: recommend ML introduction`
 
-Recommended
+Basic familiarity with Digital Signal Processing is assumed.
+In particular knowledge of the Fourier Transform, digital filters and convolutions.
 
-* Familiarity with Python
-* Familiarity with scikit-learn
+When it comes to acoustics and audio processing, neccesary background information is provided in the first section.
+We will then cover Machine Learning methods for Acoustic Event Detection generally. 
+And at the end, we will look at the task of detecting the presence of birds.
 
+This is an example from the fields of Bioacoustics and Ecoacoustics,
+using acoustics as a tool to study biology and ecology.
+However we will not go into the physical models of how bird vocalize,
+nor the biological or ecological meaning of these.
+
+The case study uses the Python programming language, and the machine learning frameworks
+scikit-learn and Keras. Prior familiarity with these tools will make it easier to
+start applying these to tasks of your own.
+
+In summary, our goal is that after reading this report:
+a machine learning practitioner,
+without prior knowledge about sound and audio processing,
+is be able to solve basic Acoustic Event Detection problems.
 
 # Background 
 
@@ -181,22 +192,20 @@ Cocktail party problem. Source separation, multi-source attention
 # Applications
 of machine learning on sound
 
-- **Speech Recognition**
-- **Music information retrieval**
+`TODO: move to introduction`
 
 * Ecoacoustics/bioacoustics. Population estimation. Health monitoring.
+* Structural monitoring.
 * Predictive maintenance. Anomaly detection.
 * Process control. Do something once audible event happens. Coffe
 * Smart home / home automation.  Children crying, smokealarm
 * Security. Intrusion detection. Aggression detection.
 * Surveillance. Event detection for. Voice
 
-Connected problems and fields:
+Structure-borne sound. Vibrations.
 
-- vibration data.
-- time-series
+Sound in water. Hydrophonics
 
-Structure-borne sound. Sound in water. Hydrophonics
 
 # Problems formulations
 

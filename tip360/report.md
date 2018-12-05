@@ -246,7 +246,7 @@ Sound Level Measurements
 * Must transmit: Continuous sound level weighting A (LAeqT) in dB(A)
 * Frequency weighting: Frequency weighting A, according to 61672-1
 * Integration time. Min 1 second - max 1 minute
-* Tolerance. From 10 to 20kHz, maximum allowed variance LAeq±2dB(A) and/or compliance to
+* Tolerance. From 10Hz to 20kHz, maximum allowed variance LAeq±2dB(A) and/or compliance to
 Class 2 limits according to IEC 61672-1.
 * Measurement range. Minimum from 40 to 90 dB(A)
 

@@ -362,6 +362,9 @@ Charge&Go wireless energy transmission. Sensor moves around deterministic path, 
 1 second charge, 200 seconds transmit.
 EN300 330 standard, 125kHz. 45x45x4mm coil. Up to 5mm distance. Up to 15 watt.
 
+Environmental Noise Monitoring. Most of the standards in use in the UK require you to use at least a Type 1 or Class 1 meter,
+https://www.castlegroup.co.uk/guidance/noise-at-work-assessments/sound-meter-classes/
+
 ## Hardware
 
 ### Microcontroller
@@ -380,7 +383,7 @@ Has everything needed for prototyping, incl battery.
 It is possible to measure the current flowing to nRF52832 by cutting the short on SB2 and placing an ampere
 meter between the positive terminal and P1 and positive terminal and P2.
 
-ESP32 power states.
+ESP32 power states. REFESP32 Series Datasheet
 
 * Modem-sleep: 20-31mA @ 80Mhz, 30-68MHz @ 240Mhz
 * Light-sleep: 0.8mA
@@ -388,6 +391,100 @@ ESP32 power states.
 
 High-speed ADC is not available in deep-sleep.
 It seems that I2S pheripheral is also not?
+But low-speed ADC (RTC controller) can handle 200ksps.
+12bit SAR.
+! +-7LSB differential nonlinearity, +-12 integral nonlinearity.
+! "±6% differences between chips"
+After calibration, +=40mV for 1500mV range, approx 3%.
+
+Cheapest I2S enabled ARM Cortex. EFM32 Zero Gecko.
+I2S availability overview:
+https://www.silabs.com/community/mcu/32-bit/knowledge-base.entry.html/2017/10/02/i2s_availabilityon-7Nox
+
+https://www.silabs.com/products/mcu/32-bit/efm32-energy-modes
+EM0: 180 µA/MHz run. EM1: 45 µA/MHz sleep mode (DMA+pheripherals). EM2. 0.9 µA/Mhz deep sleep. 2uS wakeup.
+Deep sleep retains RAM, 32kHz RTC, and can still have pheripherals??
+
+
+REF. Low Power Microphone Acquisition and Processing for Always-on Applications Based on Microcontrollers. Sensors2017. Luca Spelgatti
+
+STM32. PDMtoPCM library in STM32Cube.
+STM32L4 has hardware PDM filter support. DFSDM = Digital Filter for Sigma Delta Modulators
+Ex. STM32L452. 5 USD. 160KB RAM. 256KB FLASH.
+Supports PDM in sleep mode. Every 16ms the μC wakes up to process the audio
+250uA sleep. 2mA run. With 'low power sound detector', average 360uA.
+With voice deteciton, average 1.2mA.
+
+STM32L431. 3 USD. 64KB RAM. 128KB FLASH.
+STM32L451 and STM32L471 have more memory, up to 160KB/1024KB.
+
+12bit SAR. 1Msampl. x64 oversampling, 83ksamples
+
+
+Multimode PDM microphones can be clocked down. Standard compution 700uA. Low power 250uA.
+
+### Microphone
+
+Understanding Microphone Sensitivity
+https://www.analog.com/en/analog-dialogue/articles/understanding-microphone-sensitivity.html
+
+
+ST. Pre-amplifying the analog output 
+! Figure 1, nice concise description of sense,noisefloor,SPL/pascal
+Equation2. Gain max.
+Equation4. Calculating equivalent whitenoise nV/Hz.
+MP23AB02B with 64dB SNR has 56nV/Hz.
+Noise sources sum as sqrtroot-sum-of-squares
+Recommend opamp with 20nV/Hz or lower, 10nV/Hz ideal.
+Note: resistors generate noise at 4*srqt(R_kohm) nV/Hz. Ex 100k = 40nV/Hz, 10k = 13nV/Hz
+Minimum slew rate must be 0.19 V/us. Should be 1V/us
+
+LMV321L has e_n=31nV/Hz, SR=0.6, Isupply=125uA.
+MCP6001 basically same.
+MCP603 higher slew rate, consumption.
+TLV313 has 26nV/Hz, SR=0.45, 65uA
+
+Reference level. 94dB
+Analog microphone is specified in dbV (rms). V=1volv
+Digital microphones in dBFS (peak). FS=full-scale, max digital value
+
+Physical type. Module, MEMS PCB component.
+Interface type. Analog, PDM, I2S.
+Sensitivity.
+MEMS range (-46dBFS, -18dBFS ).
+Analog mic modules (-100dBA, -25dBA)
+
+Noise floor. `>60dB SNR`, gives noise floor of 94-60=34dB.
+Power draw. `<500uA`
+
+Modules available directly with IP6x rating. https://no.mouser.com/Sensors/Audio-Sensors/Microphones/_/N-98yhe?P=1yzscmpZ1yzscms&Rl=98yheZer5eZ1yvtseyZ1yzxckmSGT&Ns=Current%20Rating|0
+
+Vesper PMM-3738. MEMS bottom port. IP57. Piezo.
+https://www.digikey.it/product-detail/en/pui-audio-inc/PMM-3738-VM1000-R/668-1577-1-ND/7062069
+
+Analog
+
+* CMC-9745-130T. Module.4-10mm dia. IP65. 500uA.  2 USD.
+* Knowles modules available with 50uA rating. 10USD++
+* SPM0687LR5H. 285 uA 
+
+ST AN4598 Application note, Pre-amplifying the analog output of a MEMS microphone
+
+
+Digital
+
+https://no.mouser.com/Sensors/Audio-Sensors/MEMS-Microphones/_/N-98yda?P=1z0yqi5Z1y90qfa&Ns=Operating%20Supply%20Current|0
+
+
+* PDM. MP45DT02. Used on STM32F4 Discovery. Top-port only! 0.6mA. 20Hz, -7dB, 10kHz, +3dB.
+* I2S. ICS-43434. 490uA. Lowest I2S?
+
+
+
+
+
+
+SPH0645
 
 ### GPRS modem
 

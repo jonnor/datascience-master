@@ -1,26 +1,11 @@
 
-## Return bitrates (bits/second) for different data/feature representations
-def audio_size(samplerate, bits=4):
-    return samplerate * bits
+import math
 
-def melspec_size(frame_shift, n_mels, bits=4):
-    n_frames = 1.0/frame_shift
-    return n_frames * n_mels * bits
 
-def mfcc_size(frame_shift, n_mfcc, bits=4):
-    n_frames = 1.0/frame_shift
-    return n_frames * n_mfcc * bits
-
-def summaries_size(window_length, n_features, bits=4):
-    n_summaries = 1.0/window_length
-    return n_summaries * n_features * bits
-
-# energy
-# TODO: battery size constraints
-# 
-def battery_life_days(capacity, drain):
-    hours = capacity / drain
-    return hours/24
+def mic_signal(pascal, mic_db, pref=20e-6):
+    spl = 20*math.log(pascal/pref, 10)
+    gain = 10**(mic_db/20)
+    return 1 * pascal * gain 
 
 
 # Maxprice kr 49,- pr døgn opp til 9,5 GB
@@ -49,7 +34,7 @@ def transmit_costs(bytes, pricebreaks):
     pass
 
 
-def octave_bands_ram(window, samples_second=8, n_bands=31, precision=2):
+def octave_bands_ram(window, samples_second, n_bands=31, precision=2):
     samples = window * samples_second
     bytes = samples * n_bands * precision 
     return bytes
@@ -58,31 +43,23 @@ def radio_time(bytes, rate=50000, setup_time=10):
     transmit_time = bytes / rate
     return setup_time + transmit_time
 
-# Activites
-#  mic-read
-#  noise-calculate
-#  noiseid-calculate
-#  transmit
-#
-# Aspects
-#  RAM use
-#  energy use (cpu usage, data produced)
 
-# TODO: model RAM needed
-# TODO: model temp storage needed between transmission intervals
-# TODO: model data needs for noise measurement
-# TODO: model CPU capacity
-def noise_sensor(ram_kb=40,
-        transmit_period_hours = 24,
+def noise_sensor(ram_kb=32,
+        storage_kb=128,
+        transmit_period_hours = 12,
+        noise_window=60,
         noiseid_window=60,
+        noiseid_samplerate = 4,
+        noiseid_max_percent = 0.01,
+        mic_a = 500e-6,
+        sleep_a = 250e-6,
+        cpu_run_a = 2e-3,
+        modem_a = 50e-3,
         battery_selfdischarge=0.05,
         battery_days=365,
-        battery_mah=3000):
+        battery_mah=1400):
 
     import z3
-
-    cpu_ram = z3.Int('cpu_ram')
-    energy_budget = z3.Int('energy_budget') # microamps/day
 
     # take into account self-discharge
     battery_mah = battery_mah * (1.0-battery_selfdischarge)
@@ -90,56 +67,107 @@ def noise_sensor(ram_kb=40,
     battery_uas = battery_mah * 1000 * 3600
     energy_day = battery_uas / battery_days
 
-    # FIXME: calculate from activities
-    transmit_size = 2048 + 30000
-    transmit_time = radio_time(transmit_size)
-    
     transmit_period = transmit_period_hours / 24*60*60
+
+    assert noiseid_samplerate < 10 # keep unintelligeble
+    assert noiseid_samplerate > 1 # keep useful
+
+    noiseid_data = octave_bands_ram(noiseid_window, noiseid_samplerate)
+    noiseid_max_samples = noiseid_max_percent*(transmit_period_hours*60*60 / noiseid_window)
+
+    noiseid_storage = noiseid_data * noiseid_max_samples
+    noise_storage = transmit_period_hours*60*60 / noise_window
+
+    data_sizes = [
+        noise_storage,
+        noiseid_storage,
+    ]
+    storage_needed = sum(data_sizes)
+    storage_size = storage_kb*1000
+
+    transmit_time = radio_time(sum(data_sizes))
+    # noise sent as one packet, noiseid as N packets
+    transmit_ram = max(noise_storage, noiseid_data)
 
     ram_use = [
         z3.IntVal(256*8), # audio buffers
-        z3.IntVal(2048), # transmit payload. TODO: function of transmit_interval
-        z3.IntVal(octave_bands_ram(noiseid_window)),
+        z3.IntVal(noiseid_data),
+        z3.IntVal(transmit_ram),
     ]
-    
-    cpu_sleep_a = 10e-6
-    cpu_run_a = 1e-3
-    modem_a = 50e-3
+    cpu_ram = z3.Int('cpu_ram')
+
+    cpu_use = [
+        (16e-6, 16e-3), # audio read
+        (160e-6, 16e-3), # noise calc
+        (transmit_time, transmit_period), # transmit
+    ]
+    cpu_use_sum = sum(t/p for t,p in cpu_use)
+
+    assert cpu_use_sum < 1.0, cpu_use
+    assert cpu_use_sum > 0.0, cpu_use
 
     def energy(amp, seconds=1.0, period=1.0):
-        ua = cpu_run_a*1e6
+        ua = amp*1e6
         dutycycle = seconds / period
-        return ua * dutycycle
+        tot = ua * dutycycle
+        print('e', tot, dutycycle)
+        return tot
 
     energy_use = [
-        z3.RealVal(energy(cpu_sleep_a)),
-        z3.RealVal(energy(cpu_run_a, 10e-6, 1/1000)), # audio read
-        z3.RealVal(energy(cpu_run_a, 100e-6, 1/1000)), # noise calc
+        z3.RealVal(energy(mic_a)), # base, microphone
+        z3.RealVal(energy(sleep_a)), # base, sleeping
         z3.RealVal(energy(modem_a, transmit_time, transmit_period)), # transmit
     ]
+    energy_use += [ z3.RealVal(energy(cpu_run_a, *c)) for c in cpu_use ]
+    energy_budget = z3.Int('energy_budget')
+    energy_spend = z3.Real('energy_use')
 
+    ram_left = z3.Int('ram_left')
+    energy_left = z3.Real('energy_left')
+    storage_left = z3.Int('storage_left')
+
+    print('b', (energy_day/(1000*24))*battery_days)
+    
     constraints = [
         cpu_ram == ram_kb*1000,
-        z3.Sum(ram_use) < cpu_ram,
         energy_budget == energy_day,
-        z3.Sum(energy_use) < energy_budget,
-    ] 
+        ram_left == cpu_ram - z3.Sum(ram_use),
+        energy_spend == z3.Sum(energy_use),
+        energy_left == energy_budget - energy_spend,
+        storage_left == z3.IntVal(storage_size) - z3.IntVal(storage_needed),
+        ram_left > 0,
+        energy_left > 0,
+        storage_left > 0,
+    ]
 
     s = z3.Solver()
     for c in constraints:
         s.add(c)
     return s
 
-def test_pass():
-    m = noise_sensor()
-    s = m.check()
-    assert str(s) == 'sat', m
+MODEL_UNSAT = {
+    'not enough ram': noise_sensor(ram_kb=1),
+    'not enough storage': noise_sensor(storage_kb=1),
+}
 
-def test_fails():
-    m = noise_sensor(ram_kb=1)
+def test_pass():
+    n = noise_sensor(battery_mah=1400)
+    s = n.check()
+    assert str(s) == 'sat', n
+
+    m = n.model()    
+    for v in m:
+        print('v', v, m[v])
+
+    assert False
+
+import pytest
+
+@pytest.mark.parametrize('model', MODEL_UNSAT.keys())
+def test_fails(model):
+    m = MODEL_UNSAT.get(model)
     s = m.check()
     assert str(s) == 'unsat', m
-
 
 def temp():
     frame_shift = 512/44100
@@ -180,6 +208,17 @@ def temp():
 
 
 def main():
+
+    low = 2e-3 # 40db SPL
+    high = 634e-3 # 90 db SPL
+    max = 20 # 120 db SPL
+    mic_sensitivity = -42
+
+    l = mic_signal(low, mic_sensitivity)
+    h = mic_signal(high, mic_sensitivity)
+    m = mic_signal(max, mic_sensitivity)
+    print('mic signal (mV): {:.2f} - {:.2f}'.format(l*1000, h*1000, m*1000))
+
     noise_sensor()
  
 

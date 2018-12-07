@@ -1,5 +1,5 @@
 ---
-title: Audio Event Detection and applications to bioacoustics 
+title: Acoustic Event Detection and Classification using Machine Learning 
 date: 'December 2018'
 author: 'Jon Nordby <jonnord@nmbu.no>'
 abstract: |
@@ -56,7 +56,7 @@ nor the biological or ecological meaning of these.
 
 The case study uses the Python programming language, and the machine learning frameworks
 scikit-learn and Keras. Prior familiarity with these tools will make it easier to
-start applying these to tasks of your own.
+start applying the methods to tasks of your own.
 
 In summary, the goal is that after reading this report:
 a machine learning practitioner,
@@ -175,38 +175,12 @@ Using Short-Time-Fourier-Transform (STFT)
 Tradeoff time/frequency resolution.
 Multi-resolution STFT
 
-## Psychoacoustics
-(Brief)
-Non-linearities.
-Log-ish frequency. notes. mel scale, gammatone
-False pitch
-Shepherds tone. Octave repetition
-Missing fundamental
-Reflection pitch
-
-Log-ish power. desibel. 
-Loudness. Stevens power law.
-sones.
-phones, equal loudness contours
-
-Critical bandwidth. Loudness in mixes dependent on distances in frequency
-Masking. One sound can hide another.
-Simultaneous masking. Loud High tone can mask low tone.
-forward masking. tensof ms
-
-Temporal compression
-
-Binaural hearing.
-
-Function of sound.
-Speech. "point the eyes"
-Audio event. what,where
-
-Cocktail party problem. Source separation, multi-source attention
 
 
 \newpage
 # Problems formulations
+
+
 
 - Classification
 - Detection, precise time
@@ -285,71 +259,100 @@ Return: audio with only the desired source
 * Searching: Audio Information Retrieval
 
 
-
-Example: Musical genre classification
-
 Audio search
  Find similar to this.
 
-### Open-ended classification
-Classification problems often formulated as a closed-set. 
-But in reality this might be too limiting.
-Previously unseen birds may migrate into an area.
-New musical genres are invented all the time.
-Challenge: Creating a taxonomy, or consistent ontology
+
 
 
 \newpage
 # Feature representations
 
-Criterias for good features
-Keep relevant info, remove irrelevant.
-Robust against variations
+`TODO: image of machine learning pipeline`
 
-What is needed for good audio classification?
-
-* Volume independent
-* Robust to mixtures of other sounds
-* Handles intra-class variations. Different birdsong
-* Can exploit frequency patterns
-* Can exploit temporal patterns
+The samples of audio in the time-domain are
 
 
-Exact traits wanted is somewhat problem/sound dependent.
+`TODO: sentence on why using raw audio as input is hard`
 
-* Compact. Little redundancy
-* Easy to learn from
-* Computationally cheap
+## Frames
 
+To process and analyze audio data it is often represented as *frames*, small groups of samples across time.
+Frames can be produced in real-time, by aquiring N samples at a time,
+or by splitting up audio files after they have been recorded.
 
-Cut audio into short overlapping segments
+In a frame based approach, a frame is the smallest unit of time processed by the machine learning algorithm.
+Therefore the frame length must be set long enough to contain enough relevant information,
+but not so long that temporal variations disappear.
+
+For speech, a choice of frame length might be 25ms.
+`TODO: double-check`
+`TODO: add number of samples`
+Similar frame lengths are often adopted for acoustic events, unless there are specific concerns.
+
+Frames can be simply groups of consecutive samples. However with this system, 
+an acoustic event that happens partially in one frame and partially in the next,
+will be hard to detect compared to one that happens mid-frame.
+
+Therefore frames often have overlapping samples at the start and end.
+The overlap can be specified as percentage of the frame length (overlap percentage).
+or as a number of samples (hop length). Overlap can for instance be 50%.
+
+A window function is applied to ensure that the signal level stays constant also in overlapping sections.
+
 ![](./images/frame-windowing.png)
+K=frame length, Q=hop length
 
-Normalization
+`TODO: source for image`
+
+By looking at groups of frames at a time, local temporal patterns can be calculated. 
+This is sometimes called an analysis window.
 
 ## Low-level features
-spectral center, spectral slope etc
+
+From the samples in each frame, features can be calculated.
+
+Two of the simplest features are the root-mean-square (RMS) of the samples,
+and the zero-crossing rate (ZCR).
+
+A bit more complicated is to compute the spectrogram of the frame,
+and then summarize the spectrogram by using.
+
+These are called spectral features. Examples include
+
+* spectral centroid
+* spectral bandwidth
+* spectral roll-off frequency
+* delta spectrum magnitude
+* spectral flatness
+
+
+spectral envelope. N-channel smooth approximation of spectrogram
+delta spectrum magnitude
 
 ![](./images/bird_clear_lowlevel.png)
 
 Basic statistics on spectrogram 
 
-Standard low-level (SLL) signal parameters, includes: (1) root-mean-
-square (RMS) level, (2) spectral centroid, (3) bandwidth, (4) zero-crossing rate, (5) spectral roll-off
-frequency, (6) band energy ratio, (7) delta spectrum magnitude, (8) pitch, and (9) pitch strength
+Standard low-level (SLL) signal parameters, includes:
+, (3) bandwidth,
+(4) zero-crossing rate, (5) spectral roll-off frequency,
+(6) band energy ratio, (7) delta spectrum magnitude, (8) pitch, and (9) pitch strength
 
-FEATURES FOR AUDIO CLASSIFICATION. Jeroen Breebaart. 2.1.1 Low-level signal parameters. 
+FEATURES FOR AUDIO CLASSIFICATION. Jeroen Breebaart. 2.1.1
 
-Spectral flatness.
-Spectral envelope. N-channel smooth approximation of spectrogram.
-
-"Normalizing features across time avoids bias towards high-range features"
+REF FEATURES FOR AUDIO CLASSIFICATION. Jeroen Breebaart. 2.1.1 Low-level signal parameters. 
 
 http://www.nyu.edu/classes/bello/MIR_files/timbre.pdf
 
-Autocorrelation. Self-similarity
+## Spectrograms
 
-## Time-frequency representations
+2-dimensional
+
+
+
+There are many choics
+
 STFT, windowing
 filter-banks. Constant-Q. Bark scale
 1/3 octave bands
@@ -400,17 +403,19 @@ Texture windows
 
 ## Convolution
 
-`TODO: examples of non-learned convolutional kernel.`
-Edge detector. Median filter. Close holes.
+`TODO: examples of non-learned convolutional kernel, applied to spectrogram`
+Standard: Vertical edge detector. Median filter. 
+Customized: detect cascade up or down 
 
-Local feature detector
+Generalizes the delta frames
+1D versus 2D. Stacking.
+
+In this way, a convolutional kernel can be seen as a generalized local feature detector.
+
 
 ![](./images/convolution.png)
 https://i1.wp.com/timdettmers.com/wp-content/uploads/2015/03/convolution.png?resize=500%2C193
 
-Generalizes the delta frames
-
-1D versus 2D. Stacking.
 
 ![](./images/convolutional-kernels.png)
 
@@ -418,49 +423,64 @@ https://www.researchgate.net/profile/Le_Lu/publication/275054846/figure/fig5/AS:
 
 
 ## Feature learning
-Convolutional kernels
 
-Unsupervised, from random spectrogram patches
+To avoid having to manually design or chose convolution kernels, they can be learned from data.
 
-* Clustering. Spherical k-means
-* Matrix Factorization. Sparse Non-negative MF
-* Stacked AudioEncoder?
+One simple method is spherical k-means clustering on randomly selected patches.
+`TODO: ref spherical k-means`
+It uses the cosine`????` distance, and the resulting kernel taken as the center of each cluster.
+This has been shown to work well for birdsong classification.
+`TODO: ref Stowell skm`
+An alternative vector quantization method is Sparse Non-negative Matrix Factorization.
+`TODO REF. "Feature Learning with Matrix Factorization Applied to Acoustic Scene Classification"`
 
-Transfer: Copy from existing models
+Other unsupervised methods include and Convolutional AutoEncoders (CAE).
+One can also apply convolution to the outputs of convolutions, to obtain a 'deep' model.
 
+`TODO: ref Stacked Convolutional Auto-Encoders for Hierarchical Feature Extraction`
 
-REF. "Feature Learning with Matrix Factorization Applied to Acoustic Scene Classification"
+If a large amount of labeled data are available, a Convolutional Neural Network (CNN)
+can be used for supervised learning of deep network of convolution operators.
 
-Convolutional Neural Networks
-
+CNN models, with many variations, are currently among the best performing models both in 
+in audio classification (as well as image classification). 
+`TODO: ref for best perf`
 
 ## End2End learning
 
-Using the raw audio input as features with Deep Neural Networks.
+While neural network models are typically applied to spectrogram as input features,
+it is possible to train a deep neural network classifier that takes the raw audio as input.
+This is often called 'end 2 end' learning.
+`TODO ref`
 
-Need to learn also the time-frequency decomposition,
-normally performed by the spectrogram. 
+In this case the network needs learn also learn something resembling the time-frequency decomposition
+normally performed by the spectrogram, which increases the requirements on computation time
+and .
 
-Actively researched using advanced models and large datasets.
+It also brings the models further away from how image classification,
+making it harder to utilize the ever-expanding amount of experience from machine learning on images.
+
 Can be used in fusion. `REF DCASE2018 submission` 
 
-## Biologically based
-Coclear models
-CARFAC
+## Other feature representations
+A large amount of alternative feature representations have been proposed.
+Some have explored wavelet filterbanks and the Scattering transform.
+`TODO: refs`
 
-Wavelet based
-* Wavelet filterbanks
-* Scattering transform
+Prior to efficient convolutional neural networks, features like
+Scale Invariant Feature Transform (SIFT) and Histogram of Oriented Gradients (HOG) 
+were developed for images, and have also been applied to spectrograms.
+`TODO: refs`
 
-Image-features
+Models that more closely mimics the human hearing system include CARFAC.
+`TODO: ref CARFAC paper`
 
-* Scale Invariant Feature Transform (SIFT)
-* Histogram of Oriented Gradients (HOG) 
 
 
 # Pre-processing
-- Noise reduction
-- Source separation
+
+mean subtraction
+
 
 Processing on spectrograms
 
@@ -469,23 +489,6 @@ Processing on spectrograms
 Subtracted filterbank means, added Median filter (3x3)
 
 
-# Data augmentation
-
-Respects invariants/properties of features. Modelling particular challenges.
-
-- noise addition
-- volume change
-- frequency response change
-
-
-* Random pitch shifting
-* Time-shifting
-* Time reversal
-* Noise additions
-
-# Machine Learning models
-
-- Gaussian Mixtures, Hidden Markov Model
 
 
 \newpage

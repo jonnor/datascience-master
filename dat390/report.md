@@ -10,23 +10,9 @@ abstract: |
     Bar
 ---
 
-## Meta
 
-
-### Test
-This is a reference test [@pizza2000identification].
-
-`FIXME: references dont work`
-
-focus on audio event detection and a review methods applied on birdsong detection.
-
-![This is the caption of the figure \label{mylabel}](./images/feature-vectors.png)
-
-This is a referene to \ref{mylabel}.
-
+\newpage
 # Introduction
-
-### Scope
 
 Sound, and machine learning on sound, is a wide topic.
 Some areas have enough interest to be considered their own fields.
@@ -52,15 +38,15 @@ The paper assumes some prerequisite knowledge on machine learning.
 In particular it is assumed that the reader:
 knows the difference between supervised and unsupervised learning;
 knows task formulations like Classification, Clustering and Regression;
-basic familiarity with common methods like Support Vector Machine, Random Forests and Convolutional Neural Networks.
+basic familiarity with common methods like Support Vector Machines, Random Forests and Convolutional Neural Networks.
 
 `TODO: recommend ML introduction`
 
 Basic familiarity with Digital Signal Processing is assumed.
 In particular knowledge of the Fourier Transform, digital filters and convolutions.
 
-When it comes to acoustics and audio processing, neccesary background information is provided in the first section.
-We will then cover Machine Learning methods for Acoustic Event Detection generally. 
+When it comes to acoustics and audio processing, neccesary information is provided in the Background section.
+We will then cover the different aspects of Machine Learning for general Acoustic Event Detection. 
 And at the end, we will look at the task of detecting the presence of birds.
 
 This is an example from the fields of Bioacoustics and Ecoacoustics,
@@ -72,12 +58,44 @@ The case study uses the Python programming language, and the machine learning fr
 scikit-learn and Keras. Prior familiarity with these tools will make it easier to
 start applying these to tasks of your own.
 
-In summary, our goal is that after reading this report:
+In summary, the goal is that after reading this report:
 a machine learning practitioner,
-without prior knowledge about sound and audio processing,
+without prior knowledge about sound and digital audio processing,
 is be able to solve basic Acoustic Event Detection problems.
 
+## Applications
+The application of machine learning to sound and acoustic events
+can be found across many fields of scientific study and
+in many industries.
+
+In security, detection of acoustic events are used to alert security camera operators to potential
+`TODO: ref`
+
+In structural analysis, acoustic emissions is used to detect delamination of concrete on bridges
+
+In ecoacoustics 
+
+Anywhere sound contains useful information
+
+`TODO: move to ?`
+
+`TODO: `
+
+* Ecoacoustics/bioacoustics. Population estimation. Ecosystem Health monitoring.
+* Domestic animal. Livestock. Early 
+* Structural monitoring.
+* Predictive maintenance. Anomaly detection.
+* Process control. Do something once audible event happens. Coffe
+* Smart home / home automation.  Children crying, smokealarm
+
+
+Structure-borne sound. Vibrations.
+Sound in water. Hydrophonics
+
+
+\newpage
 # Background 
+
 
 ## Introduction to sound
 
@@ -96,7 +114,7 @@ Digital sound pipeline
 
 - audio mixtures
 
-### Sources of sound
+## Sources of sound
 
 Biotropy
 Anthrophy
@@ -128,7 +146,7 @@ Noise.
 
 
 
-### Digital sound representation
+## Digital sound representation
 
 * Quantized in time (ex: 44100 Hz)
 * Quantizied in amplitude (ex: 16 bit)
@@ -157,7 +175,7 @@ Using Short-Time-Fourier-Transform (STFT)
 Tradeoff time/frequency resolution.
 Multi-resolution STFT
 
-### Psychoacoustics
+## Psychoacoustics
 (Brief)
 Non-linearities.
 Log-ish frequency. notes. mel scale, gammatone
@@ -187,26 +205,7 @@ Audio event. what,where
 Cocktail party problem. Source separation, multi-source attention
 
 
-
-
-# Applications
-of machine learning on sound
-
-`TODO: move to introduction`
-
-* Ecoacoustics/bioacoustics. Population estimation. Health monitoring.
-* Structural monitoring.
-* Predictive maintenance. Anomaly detection.
-* Process control. Do something once audible event happens. Coffe
-* Smart home / home automation.  Children crying, smokealarm
-* Security. Intrusion detection. Aggression detection.
-* Surveillance. Event detection for. Voice
-
-Structure-borne sound. Vibrations.
-
-Sound in water. Hydrophonics
-
-
+\newpage
 # Problems formulations
 
 - Classification
@@ -300,8 +299,8 @@ New musical genres are invented all the time.
 Challenge: Creating a taxonomy, or consistent ontology
 
 
-
-# Feature extraction
+\newpage
+# Feature representations
 
 Criterias for good features
 Keep relevant info, remove irrelevant.
@@ -328,7 +327,7 @@ Cut audio into short overlapping segments
 
 Normalization
 
-### Low-level features
+## Low-level features
 spectral center, spectral slope etc
 
 ![](./images/bird_clear_lowlevel.png)
@@ -350,11 +349,14 @@ http://www.nyu.edu/classes/bello/MIR_files/timbre.pdf
 
 Autocorrelation. Self-similarity
 
-### Time-frequency representations
+## Time-frequency representations
 STFT, windowing
-filter-banks. Constant-Q. Fourier transform. Bark scale
+filter-banks. Constant-Q. Bark scale
+1/3 octave bands
 
-### mel-spectrogram
+## mel-spectrogram
+
+REF: log mel-spectrogram highest performing and most popular DCASE2018 results
 
 ![](./images/mel-filterbanks-20.png)
 
@@ -366,7 +368,7 @@ Perceptually motivated.
 
 Spectrogram filtered by mel-scale triangular filters.
 
-### MFCC
+## MFCC
 
 ![](./images/bird_clear_mfcc.png)
 
@@ -375,6 +377,8 @@ Discrete Cosine Transform (DCT-2) of mel-spectrogram
 More compact representation. Easy to compress, cut of higher coefficients.
 De-correlated, important for non-linear methods.
 With strong classifiers, not as good as mel-spectrograms.
+
+## Summarizing features
 
 delta, lag/lead frames
 Summarizations
@@ -396,6 +400,9 @@ Texture windows
 
 ## Convolution
 
+`TODO: examples of non-learned convolutional kernel.`
+Edge detector. Median filter. Close holes.
+
 Local feature detector
 
 ![](./images/convolution.png)
@@ -403,33 +410,31 @@ https://i1.wp.com/timdettmers.com/wp-content/uploads/2015/03/convolution.png?res
 
 Generalizes the delta frames
 
+1D versus 2D. Stacking.
+
 ![](./images/convolutional-kernels.png)
 
 https://www.researchgate.net/profile/Le_Lu/publication/275054846/figure/fig5/AS:294508295147530@1447227657495/The-first-layer-of-learned-convolutional-kernels-of-a-ConvNet-trained-on-superpixels.png
 
 
-### Biologically based
-Coclear models
-CARFAC
-
-### Wavelet based
-* Wavelet filterbanks
-* Scattering transform
-
-### Representation learning
+## Feature learning
 Convolutional kernels
 
 Unsupervised, from random spectrogram patches
 
 * Clustering. Spherical k-means
 * Matrix Factorization. Sparse Non-negative MF
+* Stacked AudioEncoder?
 
 Transfer: Copy from existing models
 
-"Feature Learning with Matrix Factorization Applied to Acoustic Scene Classification"
+
+REF. "Feature Learning with Matrix Factorization Applied to Acoustic Scene Classification"
+
+Convolutional Neural Networks
 
 
-### End2End learning
+## End2End learning
 
 Using the raw audio input as features with Deep Neural Networks.
 
@@ -437,6 +442,21 @@ Need to learn also the time-frequency decomposition,
 normally performed by the spectrogram. 
 
 Actively researched using advanced models and large datasets.
+Can be used in fusion. `REF DCASE2018 submission` 
+
+## Biologically based
+Coclear models
+CARFAC
+
+Wavelet based
+* Wavelet filterbanks
+* Scattering transform
+
+Image-features
+
+* Scale Invariant Feature Transform (SIFT)
+* Histogram of Oriented Gradients (HOG) 
+
 
 # Pre-processing
 - Noise reduction
@@ -465,15 +485,17 @@ Respects invariants/properties of features. Modelling particular challenges.
 
 # Machine Learning models
 
-- Linear
-- Tree-based
-- CNN
 - Gaussian Mixtures, Hidden Markov Model
 
 
-
+\newpage
 # Case study
+
+As a concrete task to apply above  
+
 On DCASE2018 bird-detection challenge.
+
+`TODO: link to Github repository`
 
 ## Bird vocalization detection
 
@@ -482,47 +504,60 @@ Problem definition
 * 10 second audio clips
 * Has bird? yes/no => **binary classification**
 * One label for entire clip => weakly annotated
-* 3 training sets, 3 test sets. 45'000 samples
+* 3 training sets, 3 test sets. 48'000 samples
 
 **Mismatched conditions**: 2 testsets with no training samples. 
 
 How much or where in clip bird occurs = unknown.
 
+`TODO: mention library (version) used`
+`TODO: mention OS, hardware used`
 
-## Evaluation
+## Feature representations
 
-Evaluation
+As a basis for feature representations, the log-transformed mel-spectrogram is used.
+The mel-spectrogram is calculated with 64 mel-filter bands, from 500Hz to 15000 Hz.
+Exploration of the dataset showed that many recordings had a lot of static white-noise below approximately 1000Hz,
+and not all recordings had data above approximately 16KHz.
+Especially those from the remote monitoring scenarios (`PolandNFC`, `Chernobyl`) were affected.
+The implicit assumption is that most or all of the bird vocalization is inside the preserved range.
 
-* accuracy
-* training time
-* prediction time (incl feature extration)
+The spectrogram is then preprocessed by removing the median per frequency band,
+and finally it is min-max scaled to a range of 0-255, and converted to an 8 bit-unsigned integer.
+This hopefully reduces variation between the different recording characteristics of the different datasets. 
+
+`TODO: spectrogram image. Before+after 8-bit quantization?`
+
+`TODO: import code for features`
+
+Using 8-bit unsigned integer as a representation allows to store the features compressed losslessly using the standard PNG image format.
+The features are pre-calculated for each of the 48'000 files and stored in Google Cloud Storage, as a public dataset.
+`TODO: link to dataset`
+
+`TODO: say something about compression rate`
+
+For convenient access to the dataset, a small Python module `dcase2018bid.py` was developed.
+
 
 ## Compared methods
 
-![](./images/pipeline.png)
+Based on the preprocessed dataset, a couple of different machine learning pipelines are attempted.
+
+* `melspec-maxp-rf`: Max-summarization along time dimension, RandomForest Classifier.
+* `melspec-skm-rf`: Unsupervised learning of convolution kernels using spherical k-means
+* `melspec-cnn-logreg`: Pretrained Convolutional Neural Network, with then Logistic Regression as classifier
+
+No data augmentation was performed.
 
 
-Features
-
-* low-level
-* MFCC
-* melspectrogram (log?)
-* add delta frames
-* Scale Invariant Feature Transform (SIFT)
-* Histogram of Oriented Gradients (HOG) 
-* learned convolution kernels
-* combinations
-
-Classifiers
-
-* Linear. SVC? LogisticRegression?
-* RandomForest
-* CNN
-
+`TODO: write a bit about each model`
+`TODO: import code for each model`
 
 ## Results
 
+`TODO: accuracy for each model`
 
+`TODO: say something about training time?`
 
 # References
 

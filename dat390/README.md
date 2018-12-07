@@ -3,6 +3,12 @@
 
 Independent study in chosen topic in Data Science
 
+"Audio Classification using Machine Learning"
+[Slides](https://jonnor.github.io/datascience-master/dat390/slides.html) | [source](./presentation.md)
+
+[Report](./report.pdf) | [source](./report.md)
+
+
 ## Goals
 
 Prepare for master thesis work
@@ -14,10 +20,9 @@ Prepare for master thesis work
 
 ## Outputs
 
-* Dec 1: Finished report
-* One or more demonstrations (video/browser)
-* Report(s) published as HTML
-* Couple of blogposts
+* Dec 9: Finished report
+* Report(s) published online
+* Write a blogpost
 
 ## Topic
 
@@ -32,10 +37,7 @@ Prepare for master thesis work
 1. Read literature and summarizing 
 2. Comparative study AED methods. On birdsong, DCASE2018 dataset
 
-## Report outline
-[Report](./report.md)
 
-[Presentation](./presentation.md)
 
 ## Timeline
 
@@ -60,7 +62,6 @@ Prepare for master thesis work
 
 Report
 
-* Write initial Introduction
 * Write initial Applications
 * Write initial Feature representations
 

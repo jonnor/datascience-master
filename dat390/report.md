@@ -1,17 +1,5 @@
----
-title: Detection and Classification of Acoustic Events using Machine Learning 
-date: 'December 2018'
-author: 'Jon Nordby <jonnord@nmbu.no>'
-abstract: |
-    TODO: write the abstract!
-    Fo
-    Fo
-    Fo
-    Bar
----
 
 
-\newpage
 # Introduction
 
 Sound, and machine learning on sound, is a wide topic.
@@ -57,6 +45,11 @@ a machine learning practitioner,
 without prior knowledge about sound and digital audio processing,
 is be able to solve basic Acoustic Event Detection problems.
 
+
+
+\newpage
+# Background 
+
 ## Applications
 The application of machine learning to sound and acoustic events
 can be found across many fields of scientific study and
@@ -84,12 +77,14 @@ However there are fluid-borne sound (hydrophony) and structure-borne sounds and 
 Some sounds are below the audible range for humans (infrasound) and some above (ultrasound).
 The techniques presented here should apply in general across these modalities.
 
+## Acoustic Events
 
-\newpage
-# Background 
+`TODO: definition`
 
+`TODO: couple of Examples`
 
-
+When longer samples it is often called an Acoustic Scene
+instead of Acoustic Event.
 
 ## Digital sound representations
 
@@ -105,8 +100,9 @@ The techniques presented here should apply in general across these modalities.
 * Lossy compression: .MP3
 
 
-In the Time-domain an audio signal is a continiously varying
-signal corresponding to the pressure variation.
+## Time domain
+In the time domain an audio signal is a continiously varying
+signal corresponding to the pressure variation of the acoustic signal.
 
 ![](./images/frog_waveform.png)
 
@@ -114,6 +110,7 @@ Waveform (time domain) of a frog croaking repeatedly.
 Overall changes in signal intensity over time is visible,
 but what pitches are present (if any) is not. 
 
+## Frequency domain
 Using the Fourier Transform, the audio can be losslessly converted to the frequency domain.
 
 ![](./images/frog_spectrum.png)
@@ -121,6 +118,7 @@ Using the Fourier Transform, the audio can be losslessly converted to the freque
 Spectrum (frequency domain) of same frog sample.
 The frequency content can be seen, but
 
+## Time-Frequency domain
 Using Short-Time-Fourier-Transform (STFT), the audio can be mapped to the Time-Frequency domain.
 
 ![](./images/frog_spectrogram.png)
@@ -130,6 +128,7 @@ Both temporal pattern and frequency patterns can be seen.
 
 The STFT has a tradeoff in time/frequency resolution.
 Multi-resolution STFT can be used if high resolution in both time and frequency is needed.
+
 
 
 \newpage

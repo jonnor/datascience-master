@@ -16,6 +16,35 @@ are often not produced with an intent to communicate.
 Many of the techniques utilized for Acoustic Events can also be
 used within speech and music, and many methods were in fact adopted from these fields.
 
+The application of machine learning to sound and acoustic events
+can be found across many fields of scientific study and
+in many industries.
+
+`TODO: add references`
+
+In security, detection of acoustic events are used to alert security camera operators to potential
+
+In ecoacoustics, ...
+
+In structural analysis, acoustic emissions is used to detect delamination of concrete on bridges
+
+In domestic animal care, ...
+
+In predictive maintenance, ...
+
+In the smart home, acoustic sensors can detect and alert about baby crying or smoke alarm.
+
+In natural disaster management, early warning systems for landslides uses acoustic sensors
+
+
+In most application scenarios, sound is transmitted via the air.
+However there are fluid-borne sound (hydrophony) and structure-borne sounds and vibrations. 
+Some sounds are below the audible frequency range for humans (infrasound) and some above (ultrasound).
+The techniques presented here should apply in general across these modalities.
+
+
+\newpage
+
 While a basic understanding of the human auditory system can be beneficial when developing machine hearing,
 coverage of Psychoacoustics will kept brief. Those interested in a detailed treatise on this subject can read [@].
 
@@ -46,47 +75,20 @@ without prior knowledge about sound and digital audio processing,
 is be able to solve basic Acoustic Event Detection problems.
 
 
-
 \newpage
-# Background 
+# Theory
 
-## Applications
-The application of machine learning to sound and acoustic events
-can be found across many fields of scientific study and
-in many industries.
-
-`TODO: add references`
-
-In security, detection of acoustic events are used to alert security camera operators to potential
-
-In ecoacoustics, ...
-
-In structural analysis, acoustic emissions is used to detect delamination of concrete on bridges
-
-In domestic animal care, ...
-
-In predictive maintenance, ...
-
-In the smart home, acoustic sensors can detect and alert about baby crying or smoke alarm.
-
-In natural disaster management, early warning systems for landslides uses acoustic sensors
+## Background 
 
 
-In most application scenarios, sound is transmitted via the air.
-However there are fluid-borne sound (hydrophony) and structure-borne sounds and vibrations. 
-Some sounds are below the audible range for humans (infrasound) and some above (ultrasound).
-The techniques presented here should apply in general across these modalities.
-
-## Acoustic Events
+### Acoustic Events
 
 `TODO: definition`
 
 `TODO: couple of Examples`
 
-When longer samples it is often called an Acoustic Scene
-instead of Acoustic Event.
 
-## Digital sound representations
+### Digital sound representations
 
 ![](./images/DigitalChain.png).
 
@@ -100,7 +102,7 @@ instead of Acoustic Event.
 * Lossy compression: .MP3
 
 
-## Time domain
+#### Time domain
 In the time domain an audio signal is a continiously varying
 signal corresponding to the pressure variation of the acoustic signal.
 
@@ -110,7 +112,7 @@ Waveform (time domain) of a frog croaking repeatedly.
 Overall changes in signal intensity over time is visible,
 but what pitches are present (if any) is not. 
 
-## Frequency domain
+#### Frequency domain
 Using the Fourier Transform, the audio can be losslessly converted to the frequency domain.
 
 ![](./images/frog_spectrum.png)
@@ -118,7 +120,7 @@ Using the Fourier Transform, the audio can be losslessly converted to the freque
 Spectrum (frequency domain) of same frog sample.
 The frequency content can be seen, but
 
-## Time-Frequency domain
+#### Time-Frequency domain
 Using Short-Time-Fourier-Transform (STFT), the audio can be mapped to the Time-Frequency domain.
 
 ![](./images/frog_spectrogram.png)
@@ -132,77 +134,64 @@ Multi-resolution STFT can be used if high resolution in both time and frequency 
 
 
 \newpage
-# Problems formulations
+## Problems formulations
 
-## Classification
+### Classification
 
-Return: class of this audio sample.
-Samples can be short (1 second) or long (1 hour).
-Classification can be binary (is this birdsong?), or multi-class (which species is this?).
+`TODO: ref`
+`TODO: picture`
 
-When the classification is done on longer samples it is often called an Acoustic Scene Classification
-instead of Acoustic Event.
+In classification the goal is to determine the presence of an acoustic event
+in an audio sample. Samples can be short relative to the acoustic event length,
+or long, possibly having many instances of an event. The number of events and their time
+is not returned.
 
-## Event detection
-Return: time something occurred.
+The classification can be binary (is this birdsong?), or multi-class (which species is this?).
 
-* "Bird singing started", "Bird singing stopped"
-* Classification-as-detection. Classifier on short time-frames
-* Monophonic: Returns most prominent event
+When the classification is done on long samples consisting of many different events
+it is called Acoustic Scene Classification. Examples of a 'scene' in urban environments
+could be 'restaurant', 'park', 'concert', each having a (potentially) different
+composition of events.
 
-::: notes
+### Event Detection
 
-Great summary of Sound Event Detection progress, 2010-2017.
-f1 score 8.4% -> 70%. MFCC+HMM+Viterbi -> MFCC+HMM+NMF -> mel+DNN -> mel+CRNN 
-http://www.cs.tut.fi/~heittolt/research-sound-event-detection0
+`TODO: ref`
+`TODO: picture`
 
-:::
+In event detection the goal is to find the time spans where a given acoustic event occurs.
+If the acoustic event is "frog croaking", then for each instance of a frog croak
+the start time and end time of this event should be marked.
 
-Can be extended to allow multiple events to happen at the same time (polyphonic event detection).
-This can be approached using separate classifiers per 'track',
+In monophonic event detection, only the most prominent event is returned.
+A classifier ran on short samples relative to the length of the acoustic event
+can be used a detector.
+
+In polyphonic event detection, multiple events are allowed at the same time.
+This can be approached using separate classifiers per event type,
 or using a multi-label classifier as a joint model.
 
-## Audio segmentation
+Onset Detection is a variation of Event Detection where only the start time
+is marked.
 
-Return: Sections of audio containing desired class
-
-Can cut the audio into pieces based on time-stamps from Event Detection. 
-
-This can often be of interest for pre-processing of data.
-For instance to avoid spending time further analyzing or labelling information
-that is known to not be of interest.
-
-## Weak labeling
+### Weak labeling
 
 Many acoustic events are short in duration, for instance a door slamming.
-Other acoustic events only happen intermittently, like the vocalizations of bird singing.
+Other acoustic events only happen intermittently, like the the frog vocalizations in previous example.
 
-Ideally each and every of these acoustic events would be labeled with a start and end time.
-However due to the costly nature of labelling, often a time-based label is not availble,
-only whether an event occurs at least once inside a clip.
+Under supervised learning, ideally each and every of the acoustic events instances in the training data
+would be labeled with their start and end time. This is called 'strong labels'.
+However aquiring strong labels requires careful attention to detail by the annotator and is costly.
+
+Therefore, often per-event time-based labels are not available.
+Instead fixed-length audio clips are only marked whether an event occurs at least once, or not at all.
 This is called a 'weak label' or 'weakly annotated' data.
 
-For classifications of entire audio clips this is not neccesarily a problem.
-But when performing event detection, which must be done on small sets of frames,
+When performing event detection, with small time windows (compared to annotated audio clips) as input,
 the missing time information means there is not a direct label for this input.
-
-Typically the learning is then formulated as a Multiple Instance Learning (MIL) problem.
-Under MIL features/inputs are grouped into a 'bag', and the label is considered to be on the bag
-and not the individual feature/inputs. MIL formulations exist for many common machine learning algorithms.
-
-
-## Other problem formulations
-
-In Audio Information Retrieval, a database of sounds is queried by providing or selecting an example sound.
-Results should be sounds similar to the provided sound, and preferably ranked by their similarity.
-
-Audio fingerprinting seeks to establish a unique fingerprint that is robust to transformations,
-such that duplicates of an audio clip can be detected. 
-
-Fingerprinting, retrieval and ranking is often based on a similarity metric.
-
-In a Source Separation task, the goal is to output several track of audio,
-each containing only a single source, with the other sources supressed.
+This is known as a Multiple Instance Learning (MIL) problem.
+Under MIL input instances are grouped into a 'bag', and the label exists on the bag
+instead of the individual instances.
+MIL formulations exist for many common machine learning algorithms.
 
 
 \newpage
@@ -315,6 +304,9 @@ However events that are close in frequency are no longer next to each other in a
 making local pattern-matching algorithms less effective.
 The MFCC is also harder for humans to evaluate, as the clear visual mapping to what can be heard is gone.
 
+MFCC are popular in combination with Gaussian Mixture Models and Hidden Markov Models,
+but for Convolutional Neural Networks mel-spectrograms are preferred.
+`TODO: ref`
 
 ## Summarizing features
 
@@ -344,7 +336,7 @@ This is sometimes called *Texture windows*.
 Standard: Vertical edge detector. Median filter. 
 Customized: detect cascade up or down 
 
-In this way, a convolutional kernel can be seen as a generalized local feature detector.
+In this way, a convolutional kernel can be seen as parametric local feature detector.
 
 ![](./images/convolution.png)
 https://i1.wp.com/timdettmers.com/wp-content/uploads/2015/03/convolution.png?resize=500%2C193
@@ -358,7 +350,7 @@ https://www.researchgate.net/profile/Le_Lu/publication/275054846/figure/fig5/AS:
 
 ## Feature learning
 
-To avoid having to manually design or chose convolution kernels, they can be learned from data.
+To avoid having to manually design or choose convolution kernels, they can be learned from data.
 
 One simple method is spherical k-means clustering on randomly selected spectogram patches.
 `TODO: ref spherical k-means`
@@ -411,10 +403,11 @@ Models that more closely mimics the human hearing system include CARFAC.
 
 
 
-# Pre-processing spectrograms
+## Preprocessing of spectrograms
 
 The difference in intensity between faintest sounds that humans can hear,
 and the loudest before permanent damage is .... `TODO ref`.
+and the smaller perceptible difference is..
 
 To bring the values onto a more linear scale,
 it is common to apply compressive transform.
@@ -441,12 +434,11 @@ Bird chirps become more visible (in red), at around 1.4 seconds and 9.0 seconds.
 \newpage
 # Case study
 
-As a concrete task to illustrate some of the above,
+To apply the above theory, we look at the Bird Audio Detection task from the
+DCASE2018 machine-learning challenge.
 
-On DCASE2018 bird-detection challenge.
-
-Some code will be provided inline for illustration.
-The full code as executable Jupyter Notebooks is available at `TODO: link to repo`
+Some code will be provided inline for illustration, while the
+full code is available at https://github.com/jonnor/birddetect as executable Jupyter Notebooks.
 
 ## Bird vocalization detection
 
@@ -463,7 +455,7 @@ Therefore 2 of the test sets are recorded at different locations with different 
 than the training samples (mismatched conditions).
 
 
-## Feature representations
+## Feature representation
 
 As a basis for feature representations, the log-transformed mel-spectrogram is used.
 The mel-spectrogram is calculated with 64 mel-filter bands, from 500Hz to 15000 Hz.
@@ -506,7 +498,7 @@ def quantize_8bit(s):
     return scaled.astype(numpy.uint8)
 ```
 
-For each file, the features can then be computed using
+For each file, the features are computed using these functions:
 
 ```python
 sr, data = read_audio(wav_url)
@@ -517,11 +509,10 @@ mel = quantize_8bit(mel)
 Using 8-bit unsigned integer allows to store the features compressed using standard image formats.
 For lossless storage, the PNG format is used.
 
+`TODO: say something about compression rate`
 
 The features are pre-calculated for each of the 48'000 files and stored in Google Cloud Storage, as a public dataset.
 `TODO: link to dataset`
-
-`TODO: say something about compression rate`
 
 A small Python module `dcase2018bird.py` was developed to have convenient access to the dataset.
 
@@ -545,9 +536,25 @@ No data augmentation was performed.
 
 ## Results
 
+Evaluation method
+
 `TODO: accuracy for each model`
 
 `TODO: say something about training time?`
+
+## Discussion
+
+
+## Conclusion
+
+
+
+# Where to go from here
+???
+
+? Data augmentation
+? More problem formulations
+
 
 # References
 

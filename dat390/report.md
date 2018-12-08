@@ -1,5 +1,5 @@
 ---
-title: Acoustic Event Detection and Classification using Machine Learning 
+title: Detection and Classification of Acoustic Events using Machine Learning 
 date: 'December 2018'
 author: 'Jon Nordby <jonnord@nmbu.no>'
 abstract: |
@@ -32,7 +32,6 @@ While a basic understanding of the human auditory system can be beneficial when 
 coverage of Psychoacoustics will kept brief. Those interested in a detailed treatise on this subject can read [@].
 
 `TODO: recommend book. Human and Audio` 
-`TODO: recommend bird vocalization literature`
 
 The paper assumes some prerequisite knowledge on machine learning.
 In particular it is assumed that the reader:
@@ -47,12 +46,7 @@ In particular knowledge of the Fourier Transform, digital filters and convolutio
 
 When it comes to acoustics and audio processing, neccesary information is provided in the Background section.
 We will then cover the different aspects of Machine Learning for general Acoustic Event Detection. 
-And at the end, we will look at the task of detecting the presence of birds.
-
-This is an example from the fields of Bioacoustics and Ecoacoustics,
-using acoustics as a tool to study biology and ecology.
-However we will not go into the physical models of how bird vocalize,
-nor the biological or ecological meaning of these.
+And at the end, we use the task of detecting the presence of birds as a practical example.
 
 The case study uses the Python programming language, and the machine learning frameworks
 scikit-learn and Keras. Prior familiarity with these tools will make it easier to
@@ -68,85 +62,40 @@ The application of machine learning to sound and acoustic events
 can be found across many fields of scientific study and
 in many industries.
 
+`TODO: add references`
+
 In security, detection of acoustic events are used to alert security camera operators to potential
-`TODO: ref`
+
+In ecoacoustics, ...
 
 In structural analysis, acoustic emissions is used to detect delamination of concrete on bridges
 
-In ecoacoustics 
+In domestic animal care, ...
 
-Anywhere sound contains useful information
+In predictive maintenance, ...
 
-`TODO: move to ?`
+In the smart home, acoustic sensors can detect and alert about baby crying or smoke alarm.
 
-`TODO: `
-
-* Ecoacoustics/bioacoustics. Population estimation. Ecosystem Health monitoring.
-* Domestic animal. Livestock. Early 
-* Structural monitoring.
-* Predictive maintenance. Anomaly detection.
-* Process control. Do something once audible event happens. Coffe
-* Smart home / home automation.  Children crying, smokealarm
+In natural disaster management, early warning systems for landslides uses acoustic sensors
 
 
-Structure-borne sound. Vibrations.
-Sound in water. Hydrophonics
+In most application scenarios, sound is transmitted via the air.
+However there are fluid-borne sound (hydrophony) and structure-borne sounds and vibrations. 
+Some sounds are below the audible range for humans (infrasound) and some above (ultrasound).
+The techniques presented here should apply in general across these modalities.
 
 
 \newpage
 # Background 
 
 
-## Introduction to sound
 
-- Overview. Sound processing systems.
-Aquisition. Storage. Processing. Output.
-Online versus offline.
 
-Digital sound pipeline
+## Digital sound representations
 
 ![](./images/DigitalChain.png).
 
     `FIXME: make/find better picture`
-
-
-- Acoustics
-
-- audio mixtures
-
-## Sources of sound
-
-Biotropy
-Anthrophy
-
-- Source characteristics
-
-Models of sound production
-
-- Biological models sound production in animals.
-Formants
-- (Acoustic models of instruments)
-
-Rotary motor. Very beneficial to know the number of rounds per revolution
-
-Intra-class versus inter-class variation
-
-
-- Environment characteristics
-Noise. Stationary, quasi-stationary
-Non-class sounds.
-Distance to source(s). Changing level of target sound.
-Reverberation.
-Microphonics,vibrations.
-
-
-- Receiver characteristics.
-Frequency response.
-Noise.
-
-
-
-## Digital sound representation
 
 * Quantized in time (ex: 44100 Hz)
 * Quantizied in amplitude (ex: 16 bit)
@@ -156,53 +105,44 @@ Noise.
 * Lossy compression: .MP3
 
 
-Time-domain
+In the Time-domain an audio signal is a continiously varying
+signal corresponding to the pressure variation.
 
 ![](./images/frog_waveform.png)
 
-Frequency-domain
+Waveform (time domain) of a frog croaking repeatedly.
+Overall changes in signal intensity over time is visible,
+but what pitches are present (if any) is not. 
+
+Using the Fourier Transform, the audio can be losslessly converted to the frequency domain.
 
 ![](./images/frog_spectrum.png)
 
-Fourier Transform.
+Spectrum (frequency domain) of same frog sample.
+The frequency content can be seen, but
 
-Time-frequency domain
+Using Short-Time-Fourier-Transform (STFT), the audio can be mapped to the Time-Frequency domain.
 
 ![](./images/frog_spectrogram.png)
 
-Using Short-Time-Fourier-Transform (STFT)
+Spectrogram (time-frequency domain) of same frog sample.
+Both temporal pattern and frequency patterns can be seen.
 
-Tradeoff time/frequency resolution.
-Multi-resolution STFT
-
+The STFT has a tradeoff in time/frequency resolution.
+Multi-resolution STFT can be used if high resolution in both time and frequency is needed.
 
 
 \newpage
 # Problems formulations
 
-
-
-- Classification
-- Detection, precise time
-- Segmentation
-- Source/individual identification
-- Diarization 
-- Monophonic vs polyphonic
-- Multi-class
-- Open ended
-- Anomaly/novelity detection
-
-
 ## Classification
 
-Return: class of this audio sample
+Return: class of this audio sample.
+Samples can be short (1 second) or long (1 hour).
+Classification can be binary (is this birdsong?), or multi-class (which species is this?).
 
-* Bird? yes/no (binary)
-* Which species is this? (multi-class)
-
-::: notes
-FIXME: add (background?) image of spectrogram 
-:::
+When the classification is done on longer samples it is often called an Acoustic Scene Classification
+instead of Acoustic Event.
 
 ## Event detection
 Return: time something occurred.
@@ -219,50 +159,51 @@ http://www.cs.tut.fi/~heittolt/research-sound-event-detection0
 
 :::
 
-## Polyphonic events
-Return: times of all events happening
-
-Examples
-
-* Bird singing, Human talking, Music playing
-* Bird A, Bird B singing.
-
-Approaches
-
-* separate classifiers per 'track'
-* joint model: multi-label classifier
-
-::: notes
-
-:::
+Can be extended to allow multiple events to happen at the same time (polyphonic event detection).
+This can be approached using separate classifiers per 'track',
+or using a multi-label classifier as a joint model.
 
 ## Audio segmentation
 
-Return: sections of audio containing desired class
+Return: Sections of audio containing desired class
 
-* Ex: based on Event Detection time-stamps
-* Pre-processing to specialized classifiers
+Can cut the audio into pieces based on time-stamps from Event Detection. 
 
-## Source separation
+This can often be of interest for pre-processing of data.
+For instance to avoid spending time further analyzing or labelling information
+that is known to not be of interest.
 
-Return: audio with only the desired source
+## Weak labeling
 
-* Masking in time-frequency domain
-* Binary masks or continious 
-* Blind-source or Model-based
+Many acoustic events are short in duration, for instance a door slamming.
+Other acoustic events only happen intermittently, like the vocalizations of bird singing.
+
+Ideally each and every of these acoustic events would be labeled with a start and end time.
+However due to the costly nature of labelling, often a time-based label is not availble,
+only whether an event occurs at least once inside a clip.
+This is called a 'weak label' or 'weakly annotated' data.
+
+For classifications of entire audio clips this is not neccesarily a problem.
+But when performing event detection, which must be done on small sets of frames,
+the missing time information means there is not a direct label for this input.
+
+Typically the learning is then formulated as a Multiple Instance Learning (MIL) problem.
+Under MIL features/inputs are grouped into a 'bag', and the label is considered to be on the bag
+and not the individual feature/inputs. MIL formulations exist for many common machine learning algorithms.
 
 
 ## Other problem formulations
 
-* Tagging
-* Audio fingerprinting.
-* Searching: Audio Information Retrieval
+In Audio Information Retrieval, a database of sounds is queried by providing or selecting an example sound.
+Results should be sounds similar to the provided sound, and preferably ranked by their similarity.
 
+Audio fingerprinting seeks to establish a unique fingerprint that is robust to transformations,
+such that duplicates of an audio clip can be detected. 
 
-Audio search
- Find similar to this.
+Fingerprinting, retrieval and ranking is often based on a similarity metric.
 
-
+In a Source Separation task, the goal is to output several track of audio,
+each containing only a single source, with the other sources supressed.
 
 
 \newpage
@@ -290,114 +231,111 @@ For speech, a choice of frame length might be 25ms.
 `TODO: add number of samples`
 Similar frame lengths are often adopted for acoustic events, unless there are specific concerns.
 
-Frames can be simply groups of consecutive samples. However with this system, 
-an acoustic event that happens partially in one frame and partially in the next,
-will be hard to detect compared to one that happens mid-frame.
-
-Therefore frames often have overlapping samples at the start and end.
-The overlap can be specified as percentage of the frame length (overlap percentage).
-or as a number of samples (hop length). Overlap can for instance be 50%.
-
-A window function is applied to ensure that the signal level stays constant also in overlapping sections.
-
 ![](./images/frame-windowing.png)
 K=frame length, Q=hop length
-
 `TODO: source for image`
 
-By looking at groups of frames at a time, local temporal patterns can be calculated. 
-This is sometimes called an analysis window.
+http://www.nyu.edu/classes/bello/MIR_files/timbre.pdf
+
+
+Frames often have overlapping samples at the start and end.
+Without overlap, acoustic event that happens partially in one frame results in different signals than when appearing in the middle.
+The overlap can be specified as percentage of the frame length (overlap percentage).
+or as a number of samples (hop length). Overlap can for instance be 50%.
+A window function is applied to ensure that the signal level stays constant also in overlapping sections.
+
 
 ## Low-level features
 
 From the samples in each frame, features can be calculated.
 
-Two of the simplest features are the root-mean-square (RMS) of the samples,
-and the zero-crossing rate (ZCR).
+[@Breebaart2004, Ch 2.1.1] defined a Low-Level feature set for audio classification as:
 
-A bit more complicated is to compute the spectrogram of the frame,
-and then summarize the spectrogram by using.
+1. root-mean-square (RMS) level
+2. spectral centroid
+3. spectral bandwidth
+4. zero-crossing rate
+5. spectral roll-off frequency,
+6. band energy ratio,
+7. delta spectrum magnitude,
+8. pitch and (9) pitch strength
 
-These are called spectral features. Examples include
-
-* spectral centroid
-* spectral bandwidth
-* spectral roll-off frequency
-* delta spectrum magnitude
-* spectral flatness
-
-
-spectral envelope. N-channel smooth approximation of spectrogram
-delta spectrum magnitude
 
 ![](./images/bird_clear_lowlevel.png)
+Low-level features of birdsong. There are distinct peaks in the signals,
+but how well they correspond to birdsong events is not immediately clear.
 
-Basic statistics on spectrogram 
+Of these, root-mean-square (RMS) and zero-crossing rate (ZCR)
+are calculated directly on the samples in the time-domain.
 
-Standard low-level (SLL) signal parameters, includes:
-, (3) bandwidth,
-(4) zero-crossing rate, (5) spectral roll-off frequency,
-(6) band energy ratio, (7) delta spectrum magnitude, (8) pitch, and (9) pitch strength
+The spectral features are computed using the Fourier Transform on a frame,
+and then summarizing with standard statistics. See [@DonggeLi2001] for the definitions.
 
-FEATURES FOR AUDIO CLASSIFICATION. Jeroen Breebaart. 2.1.1
-
-REF FEATURES FOR AUDIO CLASSIFICATION. Jeroen Breebaart. 2.1.1 Low-level signal parameters. 
-
-http://www.nyu.edu/classes/bello/MIR_files/timbre.pdf
+Low-level spectral features, being univariate statistics on the spectrogram,
+removes a lot of the information present.
 
 ## Spectrograms
 
-2-dimensional
+A raw Short Time Fourier Transform can contain 1024 or more bins, often with strong correlation across multiple bins.
+To reduce dimensionality, the STFT spectrogram is often processed with a filter-bank of 40-128 frequency bands.
+Some filter-bank alternatives are 1/3 octave bands, the Bark scale, Constant-Q transform and the Mel scale.
+All these have filters spacing that increase with frequency, mimicking the human auditory system.
 
+## Mel-spectrogram
 
+The most popular filter-bank uses triangular filters evenly spaced on the Mel scale.
+A spectrogram processed with such a filterbank is called a Mel-spectrogram. 
 
-There are many choics
+`TODO: add ref for popularity`
+`REF: log mel-spectrogram highest performing and most popular DCASE2018 results`
 
-STFT, windowing
-filter-banks. Constant-Q. Bark scale
-1/3 octave bands
-
-## mel-spectrogram
-
-REF: log mel-spectrogram highest performing and most popular DCASE2018 results
 
 ![](./images/mel-filterbanks-20.png)
+Mel-spaced filters in filterbank. HTK version shown, unity gain center filters.
+Another version exists with unit-area filters.
 
-Reduces number of bands in spectrogram.
-Perceptually motivated.
-40-64 filters typical.
 
 ![](./images/bird_clear_melspec.png)
+Mel-spectrogram of birdsong. The birdsong is clearly visible as up and down chirps at 3kHz and higher.
 
-Spectrogram filtered by mel-scale triangular filters.
+
+A mel-spectrogram can still have significant correlation between bands.
 
 ## MFCC
 
+To reduce correlation one can compute the Discrete Cosine Transform (DCT-2) on the mel-spectrogram.
+The result is known as the Mel Filter Cepstrum Coefficients (MFCC).
+
 ![](./images/bird_clear_mfcc.png)
+MFCC of birdsong.
 
-Discrete Cosine Transform (DCT-2) of mel-spectrogram
+Another advantage of the DCT is that important information in the signal tends to end up in the lower coefficients.
+Therefore it can be compressed efficiently (but lossily) by dropping the higher coefficients. 13-20 coefficients is common.
 
-More compact representation. Easy to compress, cut of higher coefficients.
-De-correlated, important for non-linear methods.
-With strong classifiers, not as good as mel-spectrograms.
+However events that are close in frequency are no longer next to each other in a cepstrum,
+making local pattern-matching algorithms less effective.
+The MFCC is also harder for humans to evaluate, as the clear visual mapping to what can be heard is gone.
+
 
 ## Summarizing features
 
-delta, lag/lead frames
-Summarizations
-first-order, second-order statistics
+For longer segments of audio it is often desirable to
+come up with a summary that represents the entire clip,
+either for similarity metrics or for classification. 
+
+This can be done by computing statistics across the features
+for all frames in the clip.
 
 ![](./images/summarizing-frames.png)
 
-min,max,skew,Kurtosis,...
+`TODO: image reference`
 
-::: notes
+Any statistical aggregate function can be used, such as
+min,max,skew,Kurtosis,etc.
 
-Bag-of-Frames. Temporal ordering is ignored.
-Inspired by Bag-of-Words success in text analysis / Natural Language Processing.
-
-
-Texture windows
+Second-order statistical summarizations by grouping frames, computing statistics per group,
+and then statistics on the groups.
+This is sometimes called *Texture windows*.
 
 ![](./images/texture-windows.png)
 
@@ -407,15 +345,12 @@ Texture windows
 Standard: Vertical edge detector. Median filter. 
 Customized: detect cascade up or down 
 
-Generalizes the delta frames
-1D versus 2D. Stacking.
-
 In this way, a convolutional kernel can be seen as a generalized local feature detector.
-
 
 ![](./images/convolution.png)
 https://i1.wp.com/timdettmers.com/wp-content/uploads/2015/03/convolution.png?resize=500%2C193
 
+Often a set of convolution kernels are used, and in combination they can detect many pattern variations.
 
 ![](./images/convolutional-kernels.png)
 
@@ -426,9 +361,9 @@ https://www.researchgate.net/profile/Le_Lu/publication/275054846/figure/fig5/AS:
 
 To avoid having to manually design or chose convolution kernels, they can be learned from data.
 
-One simple method is spherical k-means clustering on randomly selected patches.
+One simple method is spherical k-means clustering on randomly selected spectogram patches.
 `TODO: ref spherical k-means`
-It uses the cosine`????` distance, and the resulting kernel taken as the center of each cluster.
+It uses the cosine distance `TODO: double check`, and the resulting kernel taken as the center of each cluster.
 This has been shown to work well for birdsong classification.
 `TODO: ref Stowell skm`
 An alternative vector quantization method is Sparse Non-negative Matrix Factorization.
@@ -439,14 +374,14 @@ One can also apply convolution to the outputs of convolutions, to obtain a 'deep
 
 `TODO: ref Stacked Convolutional Auto-Encoders for Hierarchical Feature Extraction`
 
-If a large amount of labeled data are available, a Convolutional Neural Network (CNN)
+If large amount of labeled data are available, a Convolutional Neural Network (CNN)
 can be used for supervised learning of deep network of convolution operators.
 
 CNN models, with many variations, are currently among the best performing models both in 
 in audio classification (as well as image classification). 
 `TODO: ref for best perf`
 
-## End2End learning
+## Learning on raw audio
 
 While neural network models are typically applied to spectrogram as input features,
 it is possible to train a deep neural network classifier that takes the raw audio as input.
@@ -454,13 +389,13 @@ This is often called 'end 2 end' learning.
 `TODO ref`
 
 In this case the network needs learn also learn something resembling the time-frequency decomposition
-normally performed by the spectrogram, which increases the requirements on computation time
-and .
+normally performed by the spectrogram, which increases the training time
+and amount of training data needed.
 
 It also brings the models further away from how image classification,
 making it harder to utilize the ever-expanding amount of experience from machine learning on images.
 
-Can be used in fusion. `REF DCASE2018 submission` 
+Can be used in fusion with spectrogram model. `REF DCASE2018 submission` 
 
 ## Other feature representations
 A large amount of alternative feature representations have been proposed.
@@ -477,16 +412,29 @@ Models that more closely mimics the human hearing system include CARFAC.
 
 
 
-# Pre-processing
+# Pre-processing spectrograms
 
-mean subtraction
+The difference in intensity between faintest sounds that humans can hear,
+and the loudest before permanent damage is .... `TODO ref`.
 
+To bring the values onto a more linear scale,
+it is common to apply compressive transform.
+Most common is log, but square-root and cubic-root can also be used.
 
-Processing on spectrograms
+*Spectral mean subtraction* is also common.
+From each band, remove the mean of that band (along time axis).
+`TODO ref`
+
+The following two images demonstrate the usefulness of pre-processing on Mel-spectrograms.
+
+![](./images/bird_noisy_melspec.png)
+Spectrogram with bird vocalization among other noise.
+Hard to see where the birds appear.
 
 ![](./images/bird_noisy_melspec_filtered.png)
 
-Subtracted filterbank means, added Median filter (3x3)
+Spectrogram after spectral mean subtraction and median filtering (3x3).
+Bird chirps become more visible (in red), at around 1.4 seconds and 9.0 seconds.
 
 
 
@@ -494,27 +442,27 @@ Subtracted filterbank means, added Median filter (3x3)
 \newpage
 # Case study
 
-As a concrete task to apply above  
+As a concrete task to illustrate some of the above,
 
 On DCASE2018 bird-detection challenge.
 
-`TODO: link to Github repository`
+Some code will be provided inline for illustration.
+The full code as executable Jupyter Notebooks is available at `TODO: link to repo`
 
 ## Bird vocalization detection
 
-Problem definition
+The problem formulation is binary classification:
+the system should output whether audio sample has bird(s) or not.
 
 * 10 second audio clips
-* Has bird? yes/no => **binary classification**
-* One label for entire clip => weakly annotated
-* 3 training sets, 3 test sets. 48'000 samples
+* One label for the clip (weakly annotated)
+* 3 training sets, 3 test sets
+* Total 48'000 samples
 
-**Mismatched conditions**: 2 testsets with no training samples. 
+The 2018 edition of this challenge is focused on generalizable performance.
+Therefore 2 of the test sets are recorded at different locations with different equipment
+than the training samples (mismatched conditions).
 
-How much or where in clip bird occurs = unknown.
-
-`TODO: mention library (version) used`
-`TODO: mention OS, hardware used`
 
 ## Feature representations
 
@@ -531,24 +479,64 @@ This hopefully reduces variation between the different recording characteristics
 
 `TODO: spectrogram image. Before+after 8-bit quantization?`
 
-`TODO: import code for features`
+```python
+def read_audio(url):
+    f = urllib.request.urlopen(url)
+    data = io.BytesIO(f.read())
+    samplerate, samples  = scipy.io.wavfile.read(data)
+    assert samplerate == 44100, samplerate
+    data = samples.astype('float')/32768
+    return samplerate, data
 
-Using 8-bit unsigned integer as a representation allows to store the features compressed losslessly using the standard PNG image format.
+def melspec(data, sr, subtract='median', n_mels=64, fmin=500, fmax=15000, htk=True,):
+    from librosa.feature import melspectrogram
+    
+    mel = melspectrogram(y=data, sr=sr,
+                         n_mels=n_mels, fmin=fmin, fmax=fmax, htk=True)
+    mel = librosa.core.amplitude_to_db(mel, ref=1.0)
+    if subtract == 'median':
+        mel = mel - (numpy.median(mel, axis=1, keepdims=True) + 1e-8)
+
+    return mel
+
+def quantize_8bit(s):
+    out_min,out_max  = 0, 255
+    in_min, in_max = s.min(), s.max()
+    std = (s - in_min) / (in_max - in_min)
+    scaled = std * (out_max - out_min) + out_min
+    return scaled.astype(numpy.uint8)
+```
+
+For each file, the features can then be computed using
+
+```python
+sr, data = read_audio(wav_url)
+mel = melspec(data, sr, n_mels=64)
+mel = quantize_8bit(mel)
+```
+
+Using 8-bit unsigned integer allows to store the features compressed using standard image formats.
+For lossless storage, the PNG format is used.
+
+
 The features are pre-calculated for each of the 48'000 files and stored in Google Cloud Storage, as a public dataset.
 `TODO: link to dataset`
 
 `TODO: say something about compression rate`
 
-For convenient access to the dataset, a small Python module `dcase2018bid.py` was developed.
+A small Python module `dcase2018bird.py` was developed to have convenient access to the dataset.
+
+`TODO: code example snippet`
 
 
 ## Compared methods
 
-Based on the preprocessed dataset, a couple of different machine learning pipelines are attempted.
+A couple of different machine learning pipelines was developed.
+All use the same mel-spectrogram input. 
 
-* `melspec-maxp-rf`: Max-summarization along time dimension, RandomForest Classifier.
-* `melspec-skm-rf`: Unsupervised learning of convolution kernels using spherical k-means
-* `melspec-cnn-logreg`: Pretrained Convolutional Neural Network, with then Logistic Regression as classifier
+* `melspec-maxp-rf`: Max-summarization, RandomForestClassifier.
+* `melspec-cnn-logreg`: Pretrained CNN, LogisticRegression classifier
+
 
 No data augmentation was performed.
 

@@ -420,6 +420,9 @@ STM32L451 and STM32L471 have more memory, up to 160KB/1024KB.
 
 12bit SAR. 1Msampl. x64 oversampling, 83ksamples
 
+LWIP has support for PPPoS. Seems to be usable on STM32. Is also what ESP32 uses
+http://git.savannah.nongnu.org/cgit/lwip.git/tree/doc/ppp.txt
+
 
 Multimode PDM microphones can be clocked down. Standard compution 700uA. Low power 250uA.
 

@@ -345,96 +345,72 @@ than the training samples (mismatched conditions).
 
 ## Feature representation
 
-As a basis for feature representations, the log-transformed mel-spectrogram is used.
+As a basis for feature representations, the mel-spectrogram is used.
 The mel-spectrogram is calculated with 64 mel-filter bands, from 500Hz to 15000 Hz.
 Exploration of the dataset showed that many recordings had a lot of static white-noise below approximately 1000Hz,
 and not all recordings had data above approximately 16KHz.
-Especially those from the remote monitoring scenarios (`PolandNFC`, `Chernobyl`) were affected.
 The implicit assumption is that most or all of the bird vocalization is inside the preserved range.
 
-The spectrogram is then preprocessed by removing the median per frequency band,
-and finally it is min-max scaled to a range of 0-255, and converted to an 8 bit-unsigned integer.
-This hopefully reduces variation between the different recording characteristics of the different datasets. 
+## Method
 
-`TODO: spectrogram image. Before+after 8-bit quantization?`
+A baseline method of RandomForest on max-summarized mel-spectrogram was implemented first.
 
-```python
-def read_audio(url):
-    f = urllib.request.urlopen(url)
-    data = io.BytesIO(f.read())
-    samplerate, samples  = scipy.io.wavfile.read(data)
-    assert samplerate == 44100, samplerate
-    data = samples.astype('float')/32768
-    return samplerate, data
+An attempt was also made to use transfer learning of a CNN model trained on ImageNet,
+however this failed to give good results. Even a trivial LogisticRegression on top
+of the max or mean pooled output failed to progress higher than 60% accuracy.
+Problem occurred with or without data augmentation.
+Fine tuning the network also did not improve the results.
+A bug was discovered in the pre-processing of the spectrograms used by this model,
+which may have been the root cause.
 
-def melspec(data, sr, subtract='median', n_mels=64, fmin=500, fmax=15000, htk=True,):
-    from librosa.feature import melspectrogram
-    
-    mel = melspectrogram(y=data, sr=sr,
-                         n_mels=n_mels, fmin=fmin, fmax=fmax, htk=True)
-    mel = librosa.core.amplitude_to_db(mel, ref=1.0)
-    if subtract == 'median':
-        mel = mel - (numpy.median(mel, axis=1, keepdims=True) + 1e-8)
+The RandomForest model with 100 trees was tested on a dataset of 3000 files,
+1000 for each of the 3 labeled datasets, sampled randomly.
+AUC ROC was used as the score metric. 33% of the data was left out as a testing set.
 
-    return mel
-
-def quantize_8bit(s):
-    out_min,out_max  = 0, 255
-    in_min, in_max = s.min(), s.max()
-    std = (s - in_min) / (in_max - in_min)
-    scaled = std * (out_max - out_min) + out_min
-    return scaled.astype(numpy.uint8)
-```
-
-For each file, the features are computed using these functions:
-
-```python
-sr, data = read_audio(wav_url)
-mel = melspec(data, sr, n_mels=64)
-mel = quantize_8bit(mel)
-```
-
-Using 8-bit unsigned integer allows to store the features compressed using standard image formats.
-For lossless storage, the PNG format is used.
-
-`TODO: say something about compression rate`
-
-The features are pre-calculated for each of the 48'000 files and stored in Google Cloud Storage, as a public dataset.
-`TODO: link to dataset`
-
-A small Python module `dcase2018bird.py` was developed to have convenient access to the dataset.
-
-`TODO: code example snippet`
-
-
-## Compared methods
-
-A couple of different machine learning pipelines was developed.
-All use the same mel-spectrogram input. 
-
-* `melspec-maxp-rf`: Max-summarization, RandomForestClassifier.
-* `melspec-cnn-logreg`: Pretrained CNN, LogisticRegression classifier
-
-
-No data augmentation was performed.
-
-
-`TODO: write a bit about each model`
-`TODO: import code for each model`
+The code is available as a Jupyter notebook at https://github.com/jonnor/birddetect/blob/0.1.0/Baseline.ipynb
 
 ## Results
 
-Evaluation method
+A grid-search with 5 cross-validation was performed on the training set to determine appropriate hyperparameters.
+The `min_samples_leaf` parameter was used to limit the depth of the RandomForest trees.
+A range of `1%` to `20%` of trainingset size was tested.
 
-`TODO: accuracy for each model`
+![Results of hyperparameter search](./images/baseline-gridsearch.png)
 
-`TODO: say something about training time?`
+Accepting some variance, a `min_samples_leaf` of `0.04` was chosen.
+
+A learning curve was computed to evaluate whether the model was limited by the dataset size.
+
+![Learning curve of chosen model](./images/baseline-learningcurve.png)
+
+When computing the AUC ROC score on the left-out testing set, it scored `76.9%`.
 
 ## Discussion
 
+By default sklearn RandomForest has no depth limit.
+With the lowest tested limit, `min_sample_leaf=0.01`,
+the model performs 93% on training and 81% on test, suggesting serious overfitting.
+So hyperparameter tuning was critical to avoid overfitting.
+
+The score of `76.9%` on the testing set matches the `76-77%` in validation in (from gridsearch and learning curve).
+This suggests that with the tuned hyperparameters, the final model is not overfitting significantly.
+
+The learning curve is more or less flat from `1400` to `1700` (full set),
+indicating that the model would not improve much with more data,
+at least with these hyperparameters.
+
+The feature representation is a statistical summarization of the entire 10 second clip,
+which is likely to be a limiting factor.
+The results from the DCASE2018 challenge suggest that in the *mismatched* case,
+which is significantly more challenging, Convolutional Neural Networks are able to reach AUC ROC of 89%[@DCASE2018BirdResults],
+albeit with the full 48k dataset and much data augmentation.
 
 ## Conclusion
 
+RandomForest on max-summarized mel-spectrograms is a quick model to develop, train and execute,
+but has performance that falls way short of state-the-art methods.
+Richer feature extraction is likely needed in order to get better results,
+and we hope to explore this in the future.
 
 
 \newpage

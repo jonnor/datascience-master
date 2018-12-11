@@ -1,14 +1,29 @@
 
+## Preprocessing of spectrograms
+
+Sound has a high dynamic range, the energy differences in amplitude between very quiet sounds (20dB SPL)
+and painful (120db SPL) is 10 orders of magnitude. To compress the values onto a smaller scale,
+it is common to apply a power transform. Most common is log, but square-root or cubic-root can also be used.
+
+Mean-normalization can be performed per filter band. Scaling can be performed by the Root-mean-square, per frame.
+
+The following two images demonstrate the usefulness of pre-processing on Mel-spectrograms.
+
+![Spectrogram with bird vocalization among other naturally occurring noise. Hard to see where the birds appear](./images/bird_noisy_melspec.png)
+
+![Spectrogram after spectral mean subtraction and median filtering (3x3). Bird chirps become more visible (in red), at around 1.4 seconds and 9.0 seconds.](./images/bird_noisy_melspec_filtered.png)
+
+
 * `melspec-skm-rf`: Spherical k-means convolution kernels learning 
-
-
 
 
 delta, lag/lead frames
 
-Bag-of-Frames. Temporal ordering is ignored.
-Inspired by Bag-of-Words success in text analysis / Natural Language Processing.
 
+
+![](./images/convolutional-kernels.png)
+
+https://www.researchgate.net/profile/Le_Lu/publication/275054846/figure/fig5/AS:294508295147530@1447227657495/The-first-layer-of-learned-convolutional-kernels-of-a-ConvNet-trained-on-superpixels.png
 
 
 ::: notes
@@ -19,6 +34,11 @@ http://www.cs.tut.fi/~heittolt/research-sound-event-detection0
 
 :::
 
+
+Second-order statistical summarizations by grouping frames, computing statistics per group,
+and then statistics on the groups. This is sometimes called *Texture windows*.
+
+![Texture windows](./images/texture-windows.png)
 
 
 ## Introduction to sound

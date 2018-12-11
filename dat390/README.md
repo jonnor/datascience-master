@@ -62,12 +62,17 @@ Prepare for master thesis work
 
 Report
 
-* Write initial Applications
-* Write initial Feature representations
+* Fix image text on all existing images
+* Add references introduction
+* Add references priority sections
+
+* Run spellcheck
+* Run grammar checker
 
 Study
 
-* Setup framework for comparing different methods
-* Implement 3-4 different methods
+* Clean up RF max notebook
+* Report the RF max classifier
+* Get one detector to work
 
 

@@ -1,5 +1,9 @@
+---
+header-include:
+- \usepackage{float}
+---
 
-
+\newpage
 # Introduction
 
 Sound, and machine learning on sound, is a wide topic.
@@ -17,48 +21,39 @@ While not as popular as computer vision or natural language processing,
 the application of machine learning to acoustic events can be
 found across many fields of scientific study and in many industries.
 
-`TODO: add references`
+[@HeartAscultationPortable] designed a portable unit for assisted with heart ascultation,
+a common acoustic procedure to screen for heart problems.
+In [@AcousticEmissionLandslide] acoustic emission was used to create sensors
+for early warning of landslides.
+[@AcousticEventDetectionSurveillance] explains how detection of acoustic events
+can assist security camera operators in spotting situations of interest.
+In [@AcousticMonitoringBirdMigration] bird migration
+patterns are studied using acoustic monitoring.
+In domestic animal care, [@AcousticMonitoringCattleGrazing] shows
+an acoustic method for monitoring cattle feeding activity.
+Acoustic events are used in industry for non-destructive quality control,
+predictive maintenance of machinery and in structural analysis of buildings.
 
-In predictive maintenance, ...
-
-
-In natural disaster management, early warning systems for landslides uses acoustic sensors
-
-In ecoacoustics, ...
-
-In security, detection of acoustic events are used to alert security camera operators to potential
-
-In structural analysis, acoustic emissions is used to detect delamination of concrete on bridges
-
-In domestic animal care, ...
-
-In the smart home, acoustic sensors can detect and alert about baby crying or smoke alarm.
-
-
-In most application scenarios, sound is transmitted via the air.
-However there are fluid-borne sound (hydrophony) and structure-borne sounds and vibrations. 
-Some sounds are below the audible frequency range for humans (infrasound) and some above (ultrasound).
+In most application scenarios, analysis is done on audible sound transmitted via the air.
+However there are fluid-borne sound (hydrophony) and structure-borne sounds and vibrations,
+and sounds are below the audible frequency range for humans (infrasound) and some above (ultrasound).
 The techniques presented here should apply in general across these modalities.
-
-
-\newpage
 
 While a basic understanding of the human auditory system can be beneficial when developing machine hearing,
 Psychoacoustics will not be covered here. Those interested in a detailed treatise on this subject can read [@HumanMachineHearing].
 
-The paper assumes some prerequisite knowledge on machine learning.
-In particular it is assumed that the reader:
-knows the difference between supervised and unsupervised learning;
-knows task formulations like Classification, Clustering and Regression;
-basic familiarity with common methods like Support Vector Machines, Random Forests and Convolutional Neural Networks.
+The paper assumes some prerequisite knowledge on machine learning, in particular
+difference between supervised and unsupervised learning;
+common task formulations like Classification, Clustering and Regression;
+and common methods like Random Forests and Convolutional Neural Networks.
 A good primer is [@PythonMachineLearning].
 
 Basic familiarity with Digital Signal Processing is assumed.
 In particular knowledge of the Fourier Transform, digital filters and convolutions.
 
 When it comes to sound, a brief background is provided.
-We will then cover the main aspects of Machine Learning for Acoustic Event Detection and Classification. 
-And at the end, we use the task of detecting the presence of birds as a practical example.
+We will then cover the main theoretical aspects of Machine Learning for Acoustic Event Detection and Classification,
+and then use the task of detecting the presence of birds as a practical example.
 
 In summary, the goal is that after reading this report:
 a machine learning practitioner,
@@ -72,42 +67,41 @@ is be able to solve basic Acoustic Event Detection problems.
 ## Background 
 
 
-### Digital sound representations
+### Digital sound
 
 Physically, sound is a variation in pressure over time.
 For machine learning, it must be exist in a digital representation.
-
-![From acoustical sound to digital and back. Source: [@ProcessingTutorial]](./images/digital-sound-processing.png).
-
 The acoustic data is converted to analog electric signals by a microphone and
 then digitized using an Analog-to-Digital-Converter (ADC).
+
+![From acoustical sound to digital and back. Source: [@ProcessingTutorial]](./images/digital-sound-processingorg.png)
+
 
 In the digitization process, the signal is quantized in time at a certain sampling frequency,
 and the amplitude quantized at a certain bitdepth.
 A typical sampling frequency is 44100 Hz, and bitdepth 16 bit. With these parameters,
 the acoustic sound can be reconstructed without perceivable differences by humans.
 
-Recordings can be multi-channel but for acoustic events
-single-channel (mono) data is still the most common.
-
 Digital sound can be stored uncompressed (PCM .wav), using lossless compression (.flac)
 or using lossy compression (.mp3). Lossy compression removes information and may add artifacts,
 and is best avoided for machine learning tasks.
+Recordings can be multi-channel but for acoustic events
+single-channel (mono) data is still the most common.
 
-
-#### Time domain
+\newpage
+### Time domain
 
 In the time domain an audio signal is seen as a continiously varying
 signal corresponding to the pressure variation of the acoustic signal.
 
 ![Waveform (time domain) of a frog croaking repeatedly. Overall changes in signal intensity over time is visible, but what pitches are present (if any) is not.](./images/frog_waveform.png)
 
-#### Frequency domain
+### Frequency domain
 Using the Fourier Transform, the audio can be losslessly converted to the frequency domain.
 
 ![Spectrum (frequency domain) of same frog sample. The frequency content can be seen, but temporal patterns are gone](./images/frog_spectrum.png)
 
-#### Time-Frequency domain
+### Time-Frequency domain
 Using Short-Time-Fourier-Transform (STFT), the audio can be mapped to the Time-Frequency domain.
 
 ![STFT spectrogram of same frog sample. Both temporal pattern and frequency patterns can be seen.](./images/frog_spectrogram.png)
@@ -236,16 +230,9 @@ All these have filters spacing that increase with frequency, mimicking the human
 
 ## Mel-spectrogram
 
-The most popular filter-bank uses triangular filters evenly spaced on the Mel scale.
-A spectrogram processed with such a filterbank is called a Mel-spectrogram. 
+A spectrogram processed with triangular filters evenly spaced on the Mel scale is called a Mel-spectrogram.
 
-`TODO: add ref for popularity`
-`REF: log mel-spectrogram highest performing and most popular DCASE2018 results`
-
-
-![Mel-spaced filterbank. Filters are normalize to be unity-area. Source: [@LowlevelFeaturesTimbre, p.20]](./images/mel-filterbanks.png)
-
-Mel-filters using unit-area filters also exist.
+![Mel-spaced filterbank. Filters are set to to be unity-height. Mel-filters using unit-area filters also exist. Source: [@SpeechProcessingTutorial]](./images/mel-filterbanks-20.png)
 
 ![Mel-spectrogram of birdsong. The birdsong is clearly visible as up and down chirps at 3kHz and higher](./images/bird_clear_melspec.png)
 
@@ -270,28 +257,23 @@ but mostly used with linear models such as Gaussian Mixture Models (GMM) and Hid
 
 ## Summarizing features
 
-When classifying longer segments of labeled audio it can be desirable to
-come up with a summary that represents the entire clip.
+When classifying longer segments of labeled audio it can be desirable to come up with a summary that represents the entire clip.
 This can be done by computing statistics across the per-frame features for all frames in the clip.
 
 ![Clip summarizations of frames. Source: [@LowlevelFeaturesTimbre, p.27]](./images/summarizing-frames.png)
 
-Any statistical aggregate functions can be used, such as `min`,`max`,`median`,`mean`,`skew`, `Kurtosis`.
+Any statistical aggregate functions can be used, such as `min`, `max`, `median`, `mean`, `skew`, `Kurtosis`, etc.
 In a summary the order of frames is ignored, and we have a Bag-of-Frames feature model.
 
 ## Convolution
 
-`TODO: examples of non-learned convolutional kernel, applied to spectrogram`
-Standard: Vertical edge detector. Median filter. 
-Customized: detect cascade up or down 
+A convolution filter (also called kernel) allows to express many common transformations
+on 1d or 2d data, like edge detection (horizontal/vertical) or smoothening filters (median). 
+But kernels kernel can be seen as parametric local feature detector can express more complex problem-specific
+patterns, like a upward or downward diagonal from a bird chirp when applied to a spectrogram.
+Using a set of kernels in combination can detect many pattern variations.
 
-In this way, a convolutional kernel can be seen as parametric local feature detector.
-
-![](./images/convolution.png)
-https://i1.wp.com/timdettmers.com/wp-content/uploads/2015/03/convolution.png?resize=500%2C193
-
-Often a set of convolution kernels are used, and in combination they can detect many pattern variations.
-
+![Convolution kernel as edge detector, applied to image. Source: [@UnderstandingConvolution]](./images/convolution.png)
 
 ## Feature learning
 
@@ -308,10 +290,8 @@ In [@FeatureLearningAutoEncoder], CAEs were stacked to obtain a 'deep' model of 
 
 If large amount of labeled data are available, a Convolutional Neural Network (CNN)
 can be used for supervised learning of deep network of convolution operators.
-
-CNN-based models are currently among the best performing models both in 
-in audio classification. 
-`TODO: ref for best perf`
+CNN-based models using log mel-spectrogram features are the best performing models in many
+audio classification problems, such as those in [@DCASE2018Results].
 
 ## Learning on raw audio waveform
 
@@ -457,12 +437,6 @@ Evaluation method
 
 
 
-# Where to go from here
-???
-
-? Data augmentation
-? More problem formulations
-
-
+\newpage
 # References
 

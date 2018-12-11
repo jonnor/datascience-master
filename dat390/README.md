@@ -75,4 +75,15 @@ Study
 * Report the RF max classifier
 * Get one detector to work
 
+## Learnings
+
+- Collecting references take a long time.
+- Making images take a long time.
+- Writing the text is slow, and needs multiple passes.
+- Keep experiments short and simple. Finish them well in time before needing to write about them
+- Dont know how done experiements are before writing about them.
+Write about them early to uncover weak spots.
+- Images tend to jump around with Latex/Pandoc.
+Best is to scale them down so they are easier to layout. Eg 3inch wide or 6 inch wide.
+Can set Print Size in GIMP. Very manual, would be nice to have script to automate.
 

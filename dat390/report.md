@@ -401,14 +401,14 @@ at least with these hyperparameters.
 
 The feature representation is a statistical summarization of the entire 10 second clip,
 which is likely to be a limiting factor.
-The results from the DCASE2018 challenge suggest that in the *mismatched* case,
-which is significantly more challenging, Convolutional Neural Networks are able to reach AUC ROC of 89%[@DCASE2018BirdResults],
+[@DCASE2018BirdResults] showed that for in the *mismatched* case,
+which is significantly more challenging, Convolutional Neural Networks are able to reach AUC ROC of 89%,
 albeit with the full 48k dataset and much data augmentation.
 
 ## Conclusion
 
-RandomForest on max-summarized mel-spectrograms is a quick model to develop, train and execute,
-but has performance that falls way short of state-the-art methods.
+RandomForest on max-summarized mel-spectrograms was a quick model to develop, train and execute,
+but has performance that falls short of state-the-art methods.
 Richer feature extraction is likely needed in order to get better results,
 and we hope to explore this in the future.
 

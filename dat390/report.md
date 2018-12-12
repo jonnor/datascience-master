@@ -367,7 +367,9 @@ The RandomForest model with 100 trees was tested on a dataset of 3000 files,
 1000 for each of the 3 labeled datasets, sampled randomly.
 AUC ROC was used as the score metric. 33% of the data was left out as a testing set.
 
-The code is available as a Jupyter notebook at https://github.com/jonnor/birddetect/blob/0.1.0/Baseline.ipynb
+The code is available as a Jupyter notebook at
+
+`https://github.com/jonnor/birddetect/blob/0.1.0/Baseline.ipynb`
 
 ## Results
 

@@ -380,6 +380,15 @@ https://dsp.stackexchange.com/questions/10544/exponential-average-with-time-cons
 Has example responses of time integration, good for a testcase
 https://www.nti-audio.com/en/support/know-how/fast-slow-impulse-time-weighting-what-do-they-mean
 
+### Bluetooth
+
+`pyblue`: Python module for BlueZ
+
+Walkthrough of BLE terms, best practices
+https://www.novelbits.io/bluetooth-gatt-services-characteristics/
+
+
+
 
 ## Hardware
 
@@ -408,6 +417,14 @@ https://devzone.nordicsemi.com/f/nordic-q-a/14512/how-to-use-rtt-viewer-or-simil
 
 Segger files fail to compile. Fix: remove _PARAMS
 https://devzone.nordicsemi.com/f/nordic-q-a/38064/gcc-7-3-1-compiler-error-in-segger_rtt_syscalls_gcc-c
+
+Must run as the server
+
+    JLinkExe
+
+`connect`, `enter`, `SWD`, `enter` 
+
+    JLinkGDBServer -if swd -speed 1000 -device nrf51822 -if swd -speed 1000 -port 2331
 
 
 ESP32 power states. REFESP32 Series Datasheet

@@ -365,6 +365,22 @@ EN300 330 standard, 125kHz. 45x45x4mm coil. Up to 5mm distance. Up to 15 watt.
 Environmental Noise Monitoring. Most of the standards in use in the UK require you to use at least a Type 1 or Class 1 meter,
 https://www.castlegroup.co.uk/guidance/noise-at-work-assessments/sound-meter-classes/
 
+## Software
+
+### Sound level calculation
+STM32Cube has SoundLevelMeter library.
+
+Frequency weighting. A-weighting most commonly
+Time-integration. Fast=125ms, Slow=1000ms
+
+Shows the complete steps involved.
+https://dsp.stackexchange.com/questions/42702/how-to-find-leq-for-a-wav-audio-file-like-an-spl-meter-would?rq=1
+Explains relation exponential filter as 1 IIR lowpass
+https://dsp.stackexchange.com/questions/10544/exponential-average-with-time-constant-of-slow-fast-and-impulse?noredirect=1&lq=1
+Has example responses of time integration, good for a testcase
+https://www.nti-audio.com/en/support/know-how/fast-slow-impulse-time-weighting-what-do-they-mean
+
+
 ## Hardware
 
 ### Microcontroller
@@ -382,6 +398,17 @@ https://www.digikey.no/product-detail/en/nordic-semiconductor-asa/NRF6936/1490-1
 Has everything needed for prototyping, incl battery.
 It is possible to measure the current flowing to nRF52832 by cutting the short on SB2 and placing an ampere
 meter between the positive terminal and P1 and positive terminal and P2.
+
+NB. not compatible with all I2S mics. 64 SCK / WS frame, need some hacking:
+https://github.com/gregtomasch/nRF52_24-bit-_I2S_Microphone_Audio_Recording_Utility
+
+How to receive logs over RTT on NRF52-DK,
+plus need #define NRF_LOG_USES_RTT 1
+https://devzone.nordicsemi.com/f/nordic-q-a/14512/how-to-use-rtt-viewer-or-similar-on-gnu-linux
+
+Segger files fail to compile. Fix: remove _PARAMS
+https://devzone.nordicsemi.com/f/nordic-q-a/38064/gcc-7-3-1-compiler-error-in-segger_rtt_syscalls_gcc-c
+
 
 ESP32 power states. REFESP32 Series Datasheet
 
@@ -482,12 +509,13 @@ https://no.mouser.com/Sensors/Audio-Sensors/MEMS-Microphones/_/N-98yda?P=1z0yqi5
 * PDM. MP45DT02. Used on STM32F4 Discovery. Top-port only! 0.6mA. 20Hz, -7dB, 10kHz, +3dB.
 * I2S. ICS-43434. 490uA. Lowest I2S?
 
-
-
-
-
-
 SPH0645
+
+### Connectors
+
+Micro USB waterproof
+https://www.digikey.com/product-detail/en/jst-sales-america-inc/UB-MC5BR3-SDWP604-4S-TF/455-2932-1-ND/5722964
+https://www.digikey.com/product-detail/en/jae-electronics/DX4RNW5HJ3R1000/670-2792-1-ND/5181964
 
 ### GPRS modem
 

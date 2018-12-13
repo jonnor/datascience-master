@@ -1,0 +1,14 @@
+INPORT=input.IN:IN
+OUTPORT=average.OUT:soundlevel
+OUTPORT=analyzer.OUT:noiseevent
+
+input(Split)
+
+input -> level(SoundLevel) -> average(TimeAverage)
+'1000' -> TIME average
+
+level -> detector(DetectNoise)
+'70' -> THRESHOLD detector
+input -> analyzer(AnalyzeNoise)
+detector -> GATE analyzer
+

@@ -125,6 +125,9 @@ Adafruit design notes of charger board. https://learn.adafruit.com/usb-dc-and-so
 
 ## Measurement standards
 
+https://noisemeters.com/help/faq/standards.asp
+
+    IEC 61672. Sound Level Meters
 
     IEC 61252:1993 +AMD1:2000 Personal Sound Exposure Meters
     IEC 61252 Ed 1.1 (2002-03) Personal Sound Exposure Meters
@@ -135,6 +138,12 @@ Adafruit design notes of charger board. https://learn.adafruit.com/usb-dc-and-so
     Loudness (Zwicker Method- ISO 532 B).
     ITU-R 468. 
 
+    IEC 61094-4:1995 Measurement microphones - Part 4: Specifications for working standard microphone
+
+Outdated.
+
+    IEC 651. IEC 60651.
+
 IEC 61672 – A Standard for Sound Level Meters Explained
 https://www.cirrusresearch.co.uk/blog/2012/07/iec-61672-a-standard-for-sound-level-meters-in-three-parts/
 
@@ -142,6 +151,20 @@ https://www.cirrusresearch.co.uk/blog/2012/07/iec-61672-a-standard-for-sound-lev
 * Part 2 is used by test laboratories, such as the PTB in Germany,
 to test instruments to ensure that they do indeed meet the manufacturers claims. This is known as Type or Pattern Approval.
 * Part 3 details test that can be carried during a periodic verification.
+
+Electroacoustics - Sound level meters, Part 1: Specification
+www.proviento.com.co/IEC61672.pd
+Table 1. Directional response limits,
+including maximum expanded uncertainty of measurement
+Given for phi=30,90,150 degrees.
+Table 2: Frequency weightings and tolerance limits,
+including maximum expanded uncertainty of measurement
+Given in 1/3 octaves
+Table A.1. Maximum expanded uncertainty of measurement
+given for directivity, frequency weighting, linearity, influence
+by humidity,temperature,static pressure.
+Lots of provisions on what exactly a user manual should include.
+
 
 TA Lärm. German standard.
 
@@ -157,12 +180,110 @@ certifications are issued by national agencies.
     Portugal. Instituto Português da Qualidade, I.P.
     Spain: Centro Español de Metrologia (CEM).
 
+
+`Leq` is the equivalent sound level. Same as `LAT` (term defined in ISO but less commonly used).
+A-weighting is implied if not specified. `LAeq`
+http://www.acoustic-glossary.co.uk/leq.htm
+`Leq` detailed explanation. 
+http://www.gracey.co.uk/basics/leq-b1.htm
+
+`Short Leq`. Captures and stores 1/8 or 1/16 second samples. Can then derive Leq,T from this
+
+Short L_eq: A new acoustic measuring technique (1989)
+https://www.sciencedirect.com/science/article/abs/pii/0003682X89900820
+
+`Daily Personal Noise Exposure (LEP,d)`,
+the average, A-weighted noise exposure level for a nominal 8-hour working day, also known as LEX,8h.
+http://www.acoustic-glossary.co.uk/definitions-d.htm#daily-personal-noise-exposure
+
+`Sound Exposure Level (SEL)` is numerically equivalent to the total sound energy.
+For example a noise level of 90 dBA lasting 1 second would have a SEL of 90 dBA.
+But if the event lasted 2 seconds the SEL would be 93 dBA.
+Put another way if a second event of 80 dBA occurred it would have to last 10 seconds to register a 90 dBA SEL.
+
+Ln values (Statistical Noise Levels)
+
+"The L10 has been found over the years to be a useful descriptor of road traffic noise as it correlates quite well with the disturbance people feel when close to busy roads as well as more rural situations.
+By definition the L10 value is the level just exceeded for 10% of the time and takes account of any annoying peaks of noise.
+L10 calculated levels are widely used when planning new traffic schemes
+and the L10 measured over an 18-hour week day period is also used when compensation or grants for double glazing are being considered."
+
+"he L90 or the L95 have been widely adopted to quantify background noise levels"
+
+http://www.gracey.co.uk/basics/statistics-b1.htm
+
+
+https://www.cirrusresearch.co.uk/blog/2011/10/whats-the-difference-between-a-class-1-and-class-2-sound-level-meter/
+
+Class 2/1 microphones
+
+48V phantom-power. Outdoor available
+https://www.nti-audio.com/en/products/measurement-microphones
+
+PCB Piezotronics. Model 130A24. 1/2" prepolarized. IP55
+http://www.pcb.com/microphones_preamplifiers_acoustic_accessories/specialty/water-dust-resistant-array
+
+Norsonic Nor 1229. 1/2" prepolarized
+https://www.norsonic.asia/product/nor1229-2/
+
+3.5mm jack. For use with mobile phones. Calibrated. Class 2 compliant. €95.
+https://www.thomann.de/gb/micw_i436.htm?sid=b63726dc61996894d805aea13fb3e6f8
+
+Pulsar Instruments PM2. 1/2" prepolarized. £86.00 
+https://pulsarinstruments.com/en/product/microphone-capsules
+
+Class1/2 sensitivity tolerances vs frequency 
+http://www.10eazy.us/class-1-vs-class-2/
+"For class 2 sound level meters, the data shall be stated in tabular form at
+nominal one- third-octave intervals for frequencies from 63 Hz to at least 8 kHz."
+
+Unattended noise monitoring: how to to fulfill IEC 61672
+sound level meter standard for 0 degree and 90 degree
+reference directions with the same device
+Proceedings of Acoustics 2012 - Fremantle.
+Using an acoustic cone to allow same device/microphone
+record sound within standard tolerances for multiple directions.
+
+Group X sound level meters: self-contained instruments which operate, in normal mode, with internal battery power, requiring no external connections to other apparatus.
+https://www.calibrate.co.uk/calibration/sound/about-sound-meters/
+
+Externaly polarized: Easier to make, cheaper.
+Prepolarized: Convenient integration.
+The smallest (1/8" and 1/4") measuring microphones have the
+best omnidirectional characteristics at audio frequencies
+1/2" microphones have good general-purpose characteristics.
+Smaller for high-frequency,
+Larger for low sound pressure levels.
+A highly 'sensitive' measuring microphone might have
+open-circuit sensitivity of up to 100mV/Pa at 250 Hz, whereas
+the least sensitive microphones might have open-circuit sensi-
+tivity of 0.2 mV/Pa at 250 Hz
+
+*Free-field-response microphones* are used for measuring sound coming mainly from one direction.
+*Pressure-response microphones* do not compensate for the pressure build-up at the microphone diaphragm.
+Uses include measuring sound-pressure levels at a surface (if the microphone is flush-mounted),
+or in a closed cavity (where the microphone is part of the cavity wall).
+*Pressure-response microphones* can be used as free-field microphones if they are
+oriented at right-angles to the direction of sound propagation — but their effective frequency range is then reduced.
+*Random-response microphones* have a flat frequency response
+in diffuse sound-fields where sound arrives from all angles.
+
+Sources of variation. Time,humidity,temperature,atmospheric pressure,vibration.
+
+Primers: Measurement Microphones. BR0567-12
+
+
+
+
+
 ### Implementing
 
 A-weighting. Defined in IEC61672-1.
 Can be performed in time-domain using FIR/IIR-filter.
 https://dsp.stackexchange.com/questions/36077/design-of-a-digital-a-weighting-filter-with-arbitrary-sample-rate
 6-tap IIR filter approximation.
+
+> R_A (f) = \frac{12200^2 f^4}{(f^2+20.6^2)(f^2+12200^2)\sqrt{(f^2+107.7.5)^2}\sqrt{(f^2+737.9^2)}}
 
 Noise meters often report noise in. Octave bands or 1/3 octave bands.
 Bandpass filters defined in IEC61260.
@@ -172,6 +293,8 @@ has dBa conversion, octave-band filters, and the time weighting methods.
 Note bug: https://github.com/python-acoustics/python-acoustics/issues/210
 http://siggigue.github.io/pyfilterbank/splweighting.html
 has the dBa weightin-filter, using 2-order Butterworth
+
+
 
 
 A common way for third-octave analysis is design the highest octave three filters,
@@ -391,6 +514,16 @@ https://www.novelbits.io/bluetooth-gatt-services-characteristics/
 
 
 ## Hardware
+
+### Casing
+Plastic.
+Prototypes CNC milled.
+
+ABS. 100NOK/kg. 1x2m=2000kr. Astrup/Vink. 
+
+HDPE små kvanta.
+450mm x 300mm x 12,7mm, 139 NOK
+https://www.bestkjokken.no/shop/skjaerebrett/skjaerebrett-i-haccp/
 
 ### Microcontroller
 

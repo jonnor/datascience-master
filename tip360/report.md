@@ -373,6 +373,7 @@ In firmware
 * Adjustable data thinning. Parameter. Based on battery / power drain. 
 * Adaptive sampling. Sample noise details when noise level is high.
 
+![Audio processing pipeline for sensor firmware](./images/processing-blocks.png)
 
 ### Noise source identification using machine learning
 
@@ -402,7 +403,11 @@ Indicator LEDs
 
 `TODO: image of PCB`
 
+![Prototype electronics, based on the Nordic Thingy52 devkit](./images/proto1-inside.jpg)
+
 ## Physical
+
+![Prototype viewed from front. Custom enclosure CNC machined from acrylic plastic](./images/proto1-front.jpg)
 
 Sensor unit. Integrated battery.
 Optional. External power source.
@@ -420,6 +425,8 @@ Deployment scenarios.
 
 
 ## Installation
+
+![Prototype installed in manufacturing and office space](./images/proto1-installed.jpg)
 
 4 meter +-0.2m specified in some measurements standards.
 Should require users to document their sensor placement.

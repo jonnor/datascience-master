@@ -170,37 +170,9 @@ def test_fails(model):
     assert str(s) == 'unsat', m
 
 def temp():
-    frame_shift = 512/44100
 
-    audio = audio_size(44100, bits=16)
-    mels = melspec_size(frame_shift, 64, bits=8)
-    mfccs = mfcc_size(frame_shift, 20, bits=32)
-
-    transmit_rate = 85.6e3 # gprs
-    price_per_mb = 2.0 # NOK
-    price_per_byte = price_per_mb / 1e6
-
-    recording_length = 10
-    time_between_recordings = 60
-    ratio_recordings_sent = 0.01
-    
-    seconds_timeperiod = 30*24*3600
-    n_recordings = seconds_timeperiod / time_between_recordings
-    recorded_seconds_timeperiod = n_recordings * recording_length
-
-    compression_ratio = 0.1
-    bitrate_avg = ratio_recordings_sent*mels*compression_ratio
-
-    print('sent', ratio_recordings_sent*n_recordings)
-
-    bytes_timeperiod = recorded_seconds_timeperiod * (bitrate_avg/8)
-    price_timeperiod = bytes_timeperiod * price_per_byte
-    print('price', price_timeperiod)
-
-    summ = summaries_size(recording_length, 64*2*2, bits=32)
-
-    drain = 0.2e-3
-    battery_ah = 3000e-3
+    drain = 0.8e-3
+    battery_ah = 9400e-3
     days = battery_life_days(battery_ah, drain)
     print('days', days)
 

@@ -1,0 +1,11 @@
+function,part,price,ref,alt
+microcontroller,STM32L471,6,https://octopart.com/search?q=STM32L471&start=0&sort=median_price_1000&sort-dir=asc&avg_avail=(1__*)
+microphone,CMC-9745-130T,3,https://www.digikey.com/product-detail/en/cui-inc/CMC-9745-130T/102-4474-ND/7784321
+amplifier,,3
+modem,SARA-G350-02 w/SIM,16,https://www.digikey.com/product-detail/en/u-blox-america-inc/SARA-G350-02S/672-1024-1-ND/6150687,cellular
+modem,ESP32-WROOM,8,https://www.digikey.com/product-detail/en/espressif-systems/ESP32-WROOM-32/1904-1010-1-ND/8544305,wifi
+batteries,4x18650,12
+charger,,4
+pcb,PCB incl assembly,10,
+connectors,,10
+enclosure,,20

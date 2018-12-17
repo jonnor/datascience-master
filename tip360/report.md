@@ -118,14 +118,16 @@ Machine learning can be used to classify sounds into classes.
 
 ### Who may want to track noise
 
-Noise pollutants: To ensure compliance with noise regulations, and protect against false accusations.
+Noise pollutants:
+
+To ensure compliance with noise regulations, and protect against false accusations.
 
 * Operators of road, railroad, airports and ports
 * Construction and industry companies
 * Hotel and apartment managers. Ensure guests dont cause too much noise.
-* Restaurants, bar and club managers.
+* Restaurants, bar and club managers
 
-Those affected by noise pollution
+Those affected by noise pollution.
 
 * House owners
 * Workers
@@ -220,8 +222,10 @@ that takes part in a wireless sensor network.
 
 The device must be able to measure sound level continiously
 and log measurements to a centralized system.
-The captured data should include neccesary information to help identify the source noise pollution.
 The system should allow to alert interested parties when sound level exceeds define threshold.
+
+The captured data should include neccesary information to help identify the source noise pollution.
+
 
 \newpage
 # Specifications

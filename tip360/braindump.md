@@ -163,7 +163,7 @@ Given in 1/3 octaves
 Table A.1. Maximum expanded uncertainty of measurement
 given for directivity, frequency weighting, linearity, influence
 by humidity,temperature,static pressure.
-Lots of provisions on what exactly a user manual should include.
+Lots of provisions on what exactly a user manual should
 
 
 TA Lärm. German standard.
@@ -643,8 +643,10 @@ Vesper PMM-3738. MEMS bottom port. IP57. Piezo.
 https://www.digikey.it/product-detail/en/pui-audio-inc/PMM-3738-VM1000-R/668-1577-1-ND/7062069
 
 Analog
+https://www.digikey.com/products/en/audio-products/microphones/158?FV=1880016%2C2dc0a91%2C39c0070%2C39c0071%2C39c0072%2C39c0073%2C39c0074%2C39c0076%2C39c0077%2C39c0078%2C39c0079%2C39c007a%2C39c007c%2C39c007e%2C39c007f%2C39c0080%2C39c0081%2C39c0082%2C39c0083%2C39c0084%2C39c0085%2C39c0086%2C39c001d%2C39c0054%2C9d80002%2Cffe0009e&quantity=0&ColumnSort=-1000011&page=4&stock=1&k=microphone&pageSize=25&pkeyword=microphone
 
-* CMC-9745-130T. Module.4-10mm dia. IP65. 500uA.  2 USD.
+* CMC-9745-130T. Module.4-10mm dia. IP55/65. 500uA.  2 USD.
+* CMB-6544PF. Very flat frequency response.
 * Knowles modules available with 50uA rating. 10USD++
 * SPM0687LR5H. 285 uA 
 

@@ -5,74 +5,117 @@ date: December, 2018
 ---
 
 
-# Motivation
+# Acoustic Noise
 
-## Why Accoustic Sensors
+## Occupational noise
 
-Most physical processes emit sound
-Infrasound and ultrasound
-Structure borne, fluid borne
-Non-invasive
+Regulated by ...
 
-## Why Machine Learning
+## Environmental noise
 
-Convert data into information
-Analysis by skilled human does not scale
+Regulated by
 
-`TODO: `
+## Health impact
 
-## Why Sensor Networks
-
-Continious monitoring
-Integrated with other systems
-Collect training data for ML 
-
-## Why Wireless
-
-Ease of placement
-Cheap to install
+## EU Directive enviro
 
 
+# Noise monitoring
 
-# Applications
 
-`TODO: fill out this section with usecases`
+## Current state in Oslo/Norway
 
-## Noise management in urban environments
+Absolute minimums
 
-EU regulation
+## Interested parties
 
-## Protecting animals from poachers
+Citizens
+Rental property managers
 
-Gunshots
-Chainsaw
 
-## Pasient care
+## Available solutions
 
-## Alerts for Security cameras
+Cheapest = from 2'000 EUR
 
-## Early warning systems for natural disasters
+# Project
 
-![](./images/landslide-sensor.jpg)
-
-Acoustic sensor for landslide detection. Loughborough University, 2010.
-
-::: notes
-https://www.lboro.ac.uk/service/publicity/news-releases/2010/164_ALARMS.html
-:::
+## Problem statement
 
 
 
-# Challenges
+## Requirements
 
-## Training data for machine learning
+* Legal
+* Physical
+* Costs
 
-Transfer learning
-Unsupervised pre-training
+# Design
 
-## Data rates
+## Hardware architecture
 
-`TODO: picture of size of audio data, size of information` 
+![](./images/hw-blocks-black.png)
+
+Power consumption: `<1mA`
+
+## Energy source
+
+1mA * 24 hours * 365 days = 8760 mAh
+4x Li-ion 18650 cell = 12800 mAh
+
+Battery size: 68x72x18 mm
+Total unit: ~100x100x25 mm
+
+
+## Bill of Materials
+
+`TODO: display BOM`
+
+## Connectivity
+
+Cost of 3G transmission
+`TODO`
+
+## Software architecture
+
+`TODO: image`
+
+# Prototype
+
+## Proto1
+
+* Based on Nordic Thingy52 devkit
+* Bluetooth Low Energy 4.2  / GPRS modem
+* Digital MEMS microphone. Not Class2
+* 1400mAh battery.
+* CNC milled enclosure. IP22
+
+# Conclusions
+
+## Feasibility
+
+
+## 
+
+# Bonus
+
+## ...
+
+Key market questions
+Key technical questions
+
+## Other usecases
+
+For acoustic sensors
+
+* 
+* Traffic estimation
+
+## Energy harvesting
+
+* Solar power
+* Streetlights
+
+Possible through external power connector
 
 ## Wireless connectivity
 
@@ -83,12 +126,11 @@ Keep install cost down
 Zero-configuration
 No custom network/gateways
 
-## Privacy
-
-
 
 ## Energy sources
 
 Solar power
 Harvest from existing appliances. IE streetlights
 
+Ease of placement
+Cheap to install

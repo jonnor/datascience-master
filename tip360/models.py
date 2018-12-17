@@ -1,5 +1,7 @@
 
 import math
+import numpy
+import pytest 
 
 
 def mic_signal(pascal, mic_db, pref=20e-6):
@@ -11,17 +13,20 @@ def mic_signal(pascal, mic_db, pref=20e-6):
 # Maxprice kr 49,- pr døgn opp til 9,5 GB
 # GPRS max should be able to do 7500 MB in 24hours. Making monthly dumps viable (ignoring power concerns...)
 # Ved 5 GB/mnd strupes hastigheten til 128 kb/s ut måneden
+talkmore_monthly = 0
 talkmore = {
     0: 2.0,
     5000: (199/5000),
     10000: (299/10000),
 }
+mycall_monthly = 0
 mycall = {
     0: 2.49,
     1000: (79/1000),
     3000: (149/3000),
     10000: (299/10000),
 }
+onecall_monthly = 0,
 onecall = {
     0: 1.89,
     1000: (79/1000),
@@ -30,8 +35,64 @@ onecall = {
     10000: (299/10000),
 }
 
-def transmit_costs(bytes, pricebreaks):
-    pass
+# http://www.com4.no/produkter/
+com4_monthly = 12
+com4 = {
+    0: (3.99),
+    10: (25/10),
+    50: (39/50),
+    100: (59/100),
+    1000: (89/1000),
+}
+
+# https://www.telenor.no/bedrift/iot/abonnement/#tab2=1
+# M2M Total
+telenor_m2mtotal_monthly = 20
+telenor_m2mtotal = {
+    0: (6.0),
+    10: (29/10),
+    100: (50/100),
+}
+
+# https://www.telia.no/bedrift/m2m/
+
+# https://stackoverflow.com/questions/17118350/how-to-find-nearest-value-that-is-greater-in-numpy-array
+def find_nearest_above(my_array, target):
+    np = numpy
+
+    diff = my_array - target
+    mask = np.ma.less_equal(diff, 0)
+    # We need to mask the negative differences and zero
+    # since we are looking for values above
+    if np.all(mask):
+        return None # returns None if target is greater than any value
+    masked_diff = np.ma.masked_array(diff, mask)
+    return masked_diff.argmin()
+
+def transmit_costs_monthly(bytes, base=com4_monthly, pricebreaks=com4):
+    def plan_price(plan_idx, megabytes):
+        plan_mb = plans[plan_idx]
+        price_mb = pricebreaks[plan_mb]
+        not_included = max(megabytes - plan_mb, 0)
+        not_included_price_mb = pricebreaks[0]
+        return base + (plan_mb*price_mb) + (not_included * not_included_price_mb)
+
+    plans = numpy.array(list(pricebreaks.keys()))
+    prices = [ plan_price(i, bytes/1e6) for i, p in enumerate(plans) ]
+    return min(prices)
+
+
+TRANSMIT=[
+    (5e6, 12+(5*3.99)),
+    (10e6, 12+(10*2.5)),
+    (12e6, 12+(10*2.5)+(2*3.99)),
+]
+
+@pytest.mark.parametrize('test', TRANSMIT)
+def test_transmit_costs(test):
+    data, expected = test
+    price = transmit_costs_monthly(data)
+    assert price == pytest.approx(expected)
 
 
 def octave_bands_ram(window, samples_second, n_bands=31, precision=2):
@@ -161,7 +222,6 @@ def test_pass():
 
     assert False
 
-import pytest
 
 @pytest.mark.parametrize('model', MODEL_UNSAT.keys())
 def test_fails(model):
@@ -172,14 +232,26 @@ def test_fails(model):
 def temp():
 
     drain = 0.8e-3
-    battery_ah = 9400e-3
+    battery_ah = 9600e-3
     days = battery_life_days(battery_ah, drain)
     print('days', days)
 
     print(locals())
 
+def monthly_data_short_leq(per_second=8):
+    return 1*per_second*3600*24*30
+
+def monthly_data_leq_avg(per_minute=1):
+    return 1*per_minute*60*24*30
 
 def main():
+
+    print('Short Leq', monthly_data_short_leq()/1e6)
+    print('NOK', transmit_costs_monthly(monthly_data_short_leq()))
+
+    print('Average Leq', monthly_data_leq_avg()/1e6)
+    print('NOK', transmit_costs_monthly(monthly_data_leq_avg()))
+
 
     low = 2e-3 # 40db SPL
     high = 634e-3 # 90 db SPL

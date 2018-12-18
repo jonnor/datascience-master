@@ -246,10 +246,13 @@ IP55 rated elecret mic. Looks to be within Class 2.
 
 ## Feasibility
 
-Possible to implement a sensor node with
+**Possible** to implement a sensor node with
 production, installation and running cost under 1000 NOK.
 
-By running only on battery and using cellular connectivity.
+By running *only on battery* and using *cellular connectivity*.
+
+Existing research indicates identification of noise source
+possible using standard 1/3 octave acoustic measurement.
 
 ## Learned
 

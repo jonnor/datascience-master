@@ -40,6 +40,15 @@ The WHO has set a Night Noise Guideline level for Europe at 40 dB Lnight.
 
 `TODO: mention impact on concentration/learning`
 
+
+"Health implication of road, railway and aircraft noise in the European Union"
+
+Environmental Noise Guidelines for the European Region – Executive summary (2018)
+http://www.euro.who.int/en/health-topics/environment-and-health/noise/publications/2018/environmental-noise-guidelines-for-the-european-region-executive-summary-2018
+Environmental Noise Guidelines for the European Region (2018)
+http://www.euro.who.int/en/publications/abstracts/environmental-noise-guidelines-for-the-european-region-2018
+Now includes "leisure noise". Lnight down to 44dBA. EU still tracking
+
 ### Regulations
 
 Ref [@EuNoiseDirective]
@@ -83,6 +92,17 @@ Kartlegge støynivå ned til 35 dB LpAeq,24h. Kartleggingen skal oppdateres hver
 direktiv 2002/49/EF annex II, som endret ved direktiv (EU) 2015/996."
 
 The attachments defines the noise indicators, measuring setups and requirements for plans to remedy.
+
+
+https://lovdata.no/dokument/SF/forskrift/2011-12-06-1357/KAPITTEL_3#KAPITTEL_3
+
+https://osha.europa.eu/en/legislation/directives/82
+
+http://stoyforeningen.no/Hva-er-stoey/Arbeidsplass-kontor-skole-barnehage
+
+"Hørselstap som skyldes støy på arbeidsplassen, er den vanligste yrkesskaden i Europa.
+Omlag halvparten av meldingene om yrkessykdom Arbeidstilsynet mottar, er meldinger om hørselskader."
+https://www.arbeidstilsynet.no/tema/stoy/
 
 
 ### Noise measurements
@@ -174,12 +194,14 @@ https://www.oslo.kommune.no/getfile.php/13300984/Innhold/Politikk%20og%20adminis
 - Inspill: For lave ambisjoner mhp. stille områder i Oslo.
 
 Oslo Kommune 2013 report
+
 - 754 skole- og barnehagebygg har støynivåer fra veitrafikk over anbefalt grense på 55 dB,
 hvorav 173 slike bygninger har svært høye støynivåer (over 65 dB).
 - 103 skole- og barnehagebygg har støy fra skinnegående trafikk over 55 dB,
 og 24 bygg har over 65 dB.
 
 Oslo Kommune statistics on noise. Wrt quiet areas, educadtional building
+
 http://statistikkbanken.oslo.kommune.no/webview/index.jsp?headers=r&Omrdesubset=1+-+15&stubs=Omrde&measure=common&virtualslice=Andel_value&layers=virtual&study=http%3A%2F%2F192.168.101.44%3A80%2Fobj%2FfStudy%2FTL-stille-omrader-prosent-areal&mode=cube&v=2&virtualsubset=Andel_value&Omrdeslice=1&rsubset=2006+-+2016&measuretype=4&rslice=2016&cube=http%3A%2F%2F192.168.101.44%3A80%2Fobj%2FfCube%2FTL-stille-omrader-prosent-areal_C1&top=yes
 
 Oslo Havn støy
@@ -256,7 +278,7 @@ Class 2 limits according to IEC 61672-1.
 
 Environmental protection
 
-* Weatherproofing grade. IP65, (per IEC 60529)
+* Weatherproofing grade. IP55+ (IEC 60529)
 * Temperature tolerance. Operational: -10C to +40C
 * Microphone protection. Windscreen, wind/rain, birds
 

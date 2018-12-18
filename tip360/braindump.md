@@ -1,9 +1,19 @@
 
+
+
 ## Terms
 
 * Wireless Sensor Network. WSN
 * Wireless acoustic sensor networks. WASN
 * Wireless multimedia sensor networks. WMSN
+
+Sound level
+
+* L=sound level. Unit: db(A)
+* 0dB = 20u Pa = human hearing threshold
+* 120dB = = pain threshold
+* +3dB = doubling of sound energy!
+* +10dB = perceptual doubling
 
 ## Topics
 
@@ -39,6 +49,8 @@ https://www.cirrusresearch.co.uk/blog/2018/11/noise-issues-in-uk-hospitals-need-
 The World Health Organisation (WHO) advises that patients shouldn’t be exposed to noise louder than 35 decibels
 Researchers from King’s College London say noise levels in intensive care
 – where the most vulnerable patients are looked after – regularly exceed 100 decibels.
+
+
 
 ### Data representations
 Raw audio.

@@ -56,18 +56,6 @@ telenor_m2mtotal = {
 
 # https://www.telia.no/bedrift/m2m/
 
-# https://stackoverflow.com/questions/17118350/how-to-find-nearest-value-that-is-greater-in-numpy-array
-def find_nearest_above(my_array, target):
-    np = numpy
-
-    diff = my_array - target
-    mask = np.ma.less_equal(diff, 0)
-    # We need to mask the negative differences and zero
-    # since we are looking for values above
-    if np.all(mask):
-        return None # returns None if target is greater than any value
-    masked_diff = np.ma.masked_array(diff, mask)
-    return masked_diff.argmin()
 
 def transmit_costs_monthly(bytes, base=com4_monthly, pricebreaks=com4):
     def plan_price(plan_idx, megabytes):
@@ -100,15 +88,15 @@ def octave_bands_ram(window, samples_second, n_bands=31, precision=2):
     bytes = samples * n_bands * precision 
     return bytes
 
-def radio_time(bytes, rate=50000, setup_time=10):
+def radio_time(bytes, rate=2500, setup_time=10):
     transmit_time = bytes / rate
     return setup_time + transmit_time
 
 
 def noise_sensor(ram_kb=32,
         storage_kb=128,
-        transmit_period_hours = 12,
-        noise_window=60,
+        transmit_period_hours = 1,
+        noise_window=1/8,
         noiseid_window=60,
         noiseid_samplerate = 4,
         noiseid_max_percent = 0.01,
@@ -149,6 +137,8 @@ def noise_sensor(ram_kb=32,
     transmit_time = radio_time(sum(data_sizes))
     # noise sent as one packet, noiseid as N packets
     transmit_ram = max(noise_storage, noiseid_data)
+
+    print('t time', transmit_time)
 
     ram_use = [
         z3.IntVal(256*8), # audio buffers
@@ -238,20 +228,29 @@ def temp():
 
     print(locals())
 
-def monthly_data_short_leq(per_second=8):
-    return 1*per_second*3600*24*30
+def daily_data_short_leq(per_second=8):
+    return 1*per_second*3600*24
 
-def monthly_data_leq_avg(per_minute=1):
-    return 1*per_minute*60*24*30
+def daily_data_leq_avg(per_minute=1):
+    return 1*per_minute*60*24
 
 def main():
 
-    print('Short Leq', monthly_data_short_leq()/1e6)
-    print('NOK', transmit_costs_monthly(monthly_data_short_leq()))
+    print('Short Leq', 30*daily_data_short_leq()/1e6)
+    print('NOK', transmit_costs_monthly(30*daily_data_short_leq()))
 
-    print('Average Leq', monthly_data_leq_avg()/1e6)
-    print('NOK', transmit_costs_monthly(monthly_data_leq_avg()))
+    print('Average Leq', 30*daily_data_leq_avg()/1e6)
+    print('NOK', transmit_costs_monthly(30*daily_data_leq_avg()))
 
+    t_time = daily_data_short_leq()/2500
+    print('transmit time daily', t_time)
+
+    """
+    with conservative numbers, does not work out for Short Leq.
+    Miight be OK if GPRS speed is faster than assumed, and power consumption lower.
+    >>> 100 * (300/(3600*24))
+    0.3472222222222222
+    """
 
     low = 2e-3 # 40db SPL
     high = 634e-3 # 90 db SPL

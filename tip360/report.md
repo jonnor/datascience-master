@@ -51,14 +51,14 @@ Now includes "leisure noise". Lnight down to 44dBA. EU still tracking
 
 ### Regulations
 
-Ref [@EuNoiseDirective]
+Environmental noise is regulated by EU directive 2002/49/EC[@EuNoiseDirective].
 
 * the determination of exposure to environmental noise
 * ensuring that information on environmental noise and its effects is made available to the public
 * preventing and reducing environmental noise where necessary
 and preserving environmental noise quality where it is good
 
-The Directive requires Member States to prepare and publish, every 5 years, noise maps and noise management action plans for:
+The Directive requires Member States to prepare and publish noise maps and noise management action plans every 5 years for:
 
 * agglomerations with more than 100,000 inhabitants
 * major roads (more than 3 million vehicles a year)
@@ -70,39 +70,23 @@ When developing noise management action plans, Member States' authorities are re
 The Directive does not set limit or target values, nor does it prescribe the measures to be included in the action plans.
 This is at the discretion of the individual Member State authorities.
 
+However, EU have defined  *indicators* for noise pollution.
 
-EU *indicators* for noise pollution
+Environmental Noise Directive (END)
+
+$L_{den}$: Designed to assess annoyance.
+It refers to an annual average day, evening and night period of exposure.
+Evening are weighted 5 dB(A) and a night weighting of 10 dB(A). 
+$L_{night}$: Designed to assess sleep disturbance.
+It refers to an annual average night period of exposure.
+
 Lden: day-evening-night, 55dB
 Lnight: night, 50dB
 
-Lden: Long-term average indicator designed to assess annoyance and defined by the Environmental Noise Directive (END).
-It refers to an annual average day, evening and night period of exposure with an evening weighting of 5 dB(A) and a night weighting of 10 dB(A). 
-Lnight: Long-term average indicator defined by the END and designed to assess sleep disturbance.
-It refers to an annual average night period of exposure.
-
 `TODO: include equations`
 
-In Norway, the coverning legislation for noise pollution is [@Forurensningsloven]
-
-"Når det gjennomsnittlige støynivået innendørs over døgnet overskrider 42 dB LpAeq,24h i eksisterende bygninger,
-skal det gjennomføres tiltak etter § 5-9. Gjelder rom som er godkjent av bygningsmyndigheten til varig opphold."
-Kartlegge støynivå ned til 35 dB LpAeq,24h. Kartleggingen skal oppdateres hvert femte år. 
-
-"Utendørs støynivå skal beregnes med de metoder som er beskrevet i
-direktiv 2002/49/EF annex II, som endret ved direktiv (EU) 2015/996."
-
-The attachments defines the noise indicators, measuring setups and requirements for plans to remedy.
-
-
-https://lovdata.no/dokument/SF/forskrift/2011-12-06-1357/KAPITTEL_3#KAPITTEL_3
-
-https://osha.europa.eu/en/legislation/directives/82
-
-http://stoyforeningen.no/Hva-er-stoey/Arbeidsplass-kontor-skole-barnehage
-
-"Hørselstap som skyldes støy på arbeidsplassen, er den vanligste yrkesskaden i Europa.
-Omlag halvparten av meldingene om yrkessykdom Arbeidstilsynet mottar, er meldinger om hørselskader."
-https://www.arbeidstilsynet.no/tema/stoy/
+In Norway, the coverning legislation for noise pollution is [@Forurensningsloven],
+which implements the EU directive.
 
 
 ### Noise measurements
@@ -138,9 +122,8 @@ Machine learning can be used to classify sounds into classes.
 
 ### Who may want to track noise
 
-Noise pollutants:
-
-To ensure compliance with noise regulations, and protect against false accusations.
+The noise pollutants,
+to ensure compliance with noise regulations and protect against false accusations.
 
 * Operators of road, railroad, airports and ports
 * Construction and industry companies
@@ -153,7 +136,7 @@ Those affected by noise pollution.
 * Workers
 * Pedestrians and bicyclists
 
-Those that are responsible for services where noise pollution can be an issue.
+Service operator where noise pollution can be an issue for users of service.
 
 * Hospitals
 * Schools, kindergarden
@@ -166,11 +149,11 @@ For Norway.
 
 * 100k people too much noise from railway
 * 900k people too much noise from road day-evening-night, 500k at night
-* Half of this in Oslo area
 * 200k are sleep disturbed or highly sleep disturbed 
 * Trends. "Oslo Data not provided or unsuitable for deriving trends" !!
 
 https://www.eea.europa.eu/themes/human/noise/sub-sections/noise-fact-sheets
+
 Per-country summarizations of noise situation. In 2017
 
 `TODO: describe to which degree monitoring is done today`
@@ -215,17 +198,17 @@ http://www.akustikk.info/ormoya/mnd_dag.htm
 
 ### Existing solutions
 
-There are a number of commercially available products for continious noise monitoring for industrial and smart-city usage.
-For outdoor monitoring, examples include [@CesvaTa120], [@NorsonicNor1531], [@UrbioticaUSound],
+There are a number of commercially available products for continious noise monitoring.
+For outdoor monitoring for industrial and smart-city usage [@CesvaTa120], [@NorsonicNor1531], [@UrbioticaUSound],
 [@ScantekScanmonitor], [@RionNa37a] and [@SoundEar320x].
 Of these only the SoundEar3-320X has pricing available,
 stating that it is the "most affordable external noise monitoring with system prices starting from €2,000".
 
 Fewer products seem to be dediated for continiously indoor noise monitoring alone,
 however some "weather station" devices also support sound level (in addition to temperature, humidity and air quality). 
-Examples include [@NetatmoHomecoach] and [@ArchosWeatherStation].
+Examples include Netatmo Homecoach [@NetatmoHomecoach] and Archos WeatherStation [@ArchosWeatherStation].
 
-One of the few noise sensor companies that explicitly target consumers is [@NoiseAware].
+One of the few noise sensor companies that explicitly target consumers is NoiseAware [@NoiseAware].
 They provide an indoor sensor which plugs into a mains power socket and communicates over over WiFi,
 and an outdoor unit, which is battery powered and communicates via the indoor unit.
 As of this time, their units are available for preorder in USA, with international launch "planned for 2019".
@@ -233,9 +216,7 @@ The indoor sensors costs 199USD per unit, and the outdoor unit an additional 99U
 To utilize the sensor, one must also have a subscription at 99USD/year.
 
 In addition to commercial products, a number of research projects have deployed sensor networks for acoustic noise.
-This includes [@Sonyc] in New York City. `TODO: mention 1-2 more`
-
-Barcelona city has . `TODO: source`
+This includes [@Sonyc] in New York City, and the Sentilo project in Barcelona. `TODO: source`
 
 ## Problem statement
 
@@ -243,7 +224,8 @@ Design a sensor node for environmental noise monitoring,
 that takes part in a wireless sensor network.
 
 The device must be able to measure sound level continiously
-and log measurements to a centralized system.
+and log the measurements to a centralized system.
+
 The system should allow to alert interested parties when sound level exceeds define threshold.
 
 The captured data should include neccesary information to help identify the source noise pollution.
@@ -254,18 +236,18 @@ The captured data should include neccesary information to help identify the sour
 
 ## Requirements
 
+As a basis for Sound Level Measurements and Environmental protection
+the Barcelona noise sensor specification[@BarcelonaSoundSensorSpecification] is used.
+
 Legal
 
-* Designed-for-privacy. Does not record peoples conversations.
+* Designed-for-privacy. Unable to record peoples conversations.
 
 Costs
 
 * Unit production costs `<1000 NOK`
 * Installation. `<1000 NOK`
 * Running costs. `<1000 NOK/year`
-
-As a basis for Sound Level Measurements and Environmental protection
-the [@BarcelonaSoundSensorSpecification] is used.
 
 Sound Level Measurements
 
@@ -308,11 +290,11 @@ Updateable over-the-air
 
 ## Desirable
 
-Extensible
+It is desirable that the system can be extended to support related usecases.
 
 - External microphone input.
-- Temperature/humidity. Can be used to compensate for sound. Battery monitoring needs temp.
-- Accelerometer. Structure born vibration.
+- Temperature/humidity sensor. Can be used to compensate for sound. Battery monitoring needs temp.
+- Accelerometer. Can be used to compensate sound, and record structure born vibration.
 - Can optionally collect raw data, as training data for machine learning.
 - Solar irradiance. Could be used to estimate/plan possible future solar-powered system/extension
 
@@ -320,34 +302,28 @@ Extensible
 # Design
 
 ## System architecture
-Sensor nodes. Central service.
+A Wireless Sensor Network consistems of many sensor nodes that communicate to a central service.
+There are many possible wireless technologies available, from 
 
 `TODO: architecture overview diagram`
 
-No custom gateways.
-No custom networks.
-
-Dataprocessing. What happens where.
+To minimize the install costs, the proposed design uses the standard cellular network,
+and no custom gateway devices. The network can be 2G with GPRS data connectivity,
+or 4G with NB-IoT connectivity.
 
 ## Data management platform
 
-Ingestion. In bulk. HTTP. MQTT.
-Storage in time-series database. Ex. InfluxDB
+The sensor node periodically communicates measurements to the central system over HTTP(S) or MQTT(S).
+This system creates aggregate statistics over longer time-periods and from multiple sensors.
+A graphical user interface allows users to query these statistics, and see status of the sensor devices.
 
-Pre-made.
+Pre-made platforms for noise data exist, including Sentilo,
+an open-source platform developed and used by city of Barcelona since 2013.
 
-Sentilo.
+`TODO: ref`
 http://www.sentilo.io/
-Open source platform developed and used by city of Barcelona since 2013.
-Have many noise sensors integrated around the city, from multiple manufacturers.
 https://github.com/sentilo/sentilo
-"We expect to release the 1.8 version before the end of the year or the early 19."
-https://groups.google.com/forum/#!topic/sentilo/ZddHIuT9oas
 
-`TODO: evaluate Sentilo API for noise measurements`.
-Note, can use an adapter service for ingestion if not suitable.
-
-`TODO: sanity check data amounts. Devices * daily rate`
 
 ## Power source
 
@@ -403,72 +379,62 @@ In firmware
 
 ### Noise source identification using machine learning
 
-Care about accurate detection/inference/prediction.
-But also need labeled raw data for evaluation/verification and supervised learning.
-To develop the algorithms.
+When the sound level exceeds a configured threshold,
+the sensor will collect more detailed information that can be
+used to automatically identify the noise source.
 
-Should mostly run ML classification for sounds that exceed a certain threshold.
-
-Event classification: What was this specific sound
-Scene classification: What is the general acoustic sound scene
-
-Questions
-
-* How long does analysis window need to be? Frame length?
-* Is it important to be able to calibrate/adjust existing classifications?
-
-Use the Leq measurements as the features for machine learning classifier.
+The noise profile data is based on the 1/3 octave band, commonly used in acoustic measurements.
+It has been shown that this can be used by a machine learning system to distinguish different noise sources. 
 `TODO: import source`
+They also show that when frequency spectrum samples are performed 10 times per second or more seldom,
+it is not possible to understand any conversations. This preserves the privacy requirement.
 
 ## Electronics
+
+![Hardware architecture](./images/hw-blocks.png) 
 
 Power switch.
 Indicator LEDs
 
 `TODO: bill of materials`
 
-`TODO: image of PCB`
 
 ![Prototype electronics, based on the Nordic Thingy52 devkit](./images/proto1-inside.jpg)
 
 ## Physical
 
+To make a sensor unit that could fit into an office or home,
+a custom designed case was prototyped. In small scale this can be CNC machined,
+and at larger scales it can be injection molded.
+
 ![Prototype viewed from front. Custom enclosure CNC machined from acrylic plastic](./images/proto1-front.jpg)
 
-Sensor unit. Integrated battery.
-Optional. External power source.
-
-`TODO: image of physical pieces in deployment scenario`
-
-Deployment scenarios.
-
-* House indoors. Battery only
-* House outdoor wall. Battery only
-* Indoors, fixed power
-* Road-pole. Solar power, or from streetlight 
-
-`TODO: concept image of unit`
-
+The overall dimensions when fitting the 4x18650 batteries is 100x100x25 mm.
+The prototype shown only has height=20mm.
 
 ## Installation
 
+Prototype can be attached to any flat surface of more than 100mm using 2 screws.
+For medium-term indoor uses it can also be attached using double-sided tape.
+
 ![Prototype installed in manufacturing and office space](./images/proto1-installed.jpg)
 
-4 meter +-0.2m specified in some measurements standards.
-Should require users to document their sensor placement.
-Should re-confirm if power on/off has happened. Or accelerometer detects a move.
-`TODO: How should data be adapted when deviating?`
+Example deployments scenarios inside
 
-Example deployment scenarios
+* In ceiling in office, mics down.
+* On wall in industrial space, mic sideways
+
+Example deployment scenarios outside
 
 * Hanging from streetlamp, mics down
 * Placed on streetlight pole, mics sideways
-* On a moving vechicle. Bus
+* On a moving vechicle used for noise mapping. Bus
 
-`TODO: add example 1-2 images`
-
-Test mode. For verify working install. 
-Measures and sends immediately. When switching hardware button, goes into test mode for N minutes.
+To enable the sensor, installer only needs to switch the on button.
+Immediately on power-on the sensor will transmit, allowing to verify data transmitted to sensor hub.
+The installer can then update the location of the sensor on the map, and add documentation
+about its exact placement.
+This process should be easy enough that consumers can perform installation themselves.
 
 
 # Conclusions

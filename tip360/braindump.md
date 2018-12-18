@@ -1,12 +1,5 @@
 
 
-
-## Terms
-
-* Wireless Sensor Network. WSN
-* Wireless acoustic sensor networks. WASN
-* Wireless multimedia sensor networks. WMSN
-
 Sound level
 
 * L=sound level. Unit: db(A)
@@ -14,15 +7,6 @@ Sound level
 * 120dB = = pain threshold
 * +3dB = doubling of sound energy!
 * +10dB = perceptual doubling
-
-## Topics
-
-* Energy source
-* Processing power, memory requirements
-* Network architecture.
-* Data compression.
-* Compressive sensing.
-* On-edge machine learning.
 
 ## Extensions
 
@@ -49,35 +33,6 @@ https://www.cirrusresearch.co.uk/blog/2018/11/noise-issues-in-uk-hospitals-need-
 The World Health Organisation (WHO) advises that patients shouldn’t be exposed to noise louder than 35 decibels
 Researchers from King’s College London say noise levels in intensive care
 – where the most vulnerable patients are looked after – regularly exceed 100 decibels.
-
-
-
-### Data representations
-Raw audio.
-Features for machine learning.
-Convolutional Neural Networks
-melspectogram
-
-Can mel-scaled spectrograms be used as 'raw' data format?
-Requirements: 
-- Learn-able. Can be used to train strong methods.
-- Annotate-able. Can be labeled by humans to establish ground truth.
-Transform back to audio for listening?
-- Adaptable, can be used for other purposes than originally intended.
-Ex. From birdsong presence detection to bird species classification
-Can be used to develop stronger systems as state of art improves, or constraints are relaxed.
-- General-purpose. Can be used across a wide range of problems.
-Bioacoustics, ecoacoustics, industrial monitoring, security
-
-
-
-### Data
-
-Summary/presentation statistics:
-
-- N/percentage days above threshold (per year,month)
-- Histogram of noise values. Per day obervations
-- Average/median noise over course of a day. Per-hour bins
 
 
 ### Energy source

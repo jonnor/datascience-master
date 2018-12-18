@@ -43,6 +43,8 @@ Forskrift om tiltaks- og grenseverdier $2-1, Arbeidsmiljøloven $4-4
 
 ## Environmental noise
 
+> Noise pollution in general environment
+
 **EU Directive 2002/49/EC**
 
 Covers residential areas.
@@ -86,7 +88,7 @@ http://www.lovdata.no/for/sf/md/xd-20040601-0931.html
 * 37 million road noise above Lden=65dB
 * 56 million affected at night (Lnight>50dbA)
 
-EEA: Population exposure to environmental noise, 30 Nov 2018
+EEA: Population exposure to environmental noise
 
 ## Current state in Oslo/Norway
 
@@ -158,8 +160,8 @@ Lowest price found: 2000 EUR
 
 ## Physical
 
+* **1 year+** battery lifetime, rechargable
 * Weatherproofing grade. **IP55+** (IEC 60529)
-* Temperature tolerance. Operational: **-10C to +40C**
 * **Easily mountable** on flat surface, such as a wall.
 * **Aestethically acceptable** for office/restaurant/home
 
@@ -243,6 +245,11 @@ IP55 rated elecret mic. Looks to be within Class 2.
 # Conclusions
 
 ## Feasibility
+
+Possible to implement a sensor node with
+production, installation and running cost under 1000 NOK.
+
+By running only on battery and using cellular connectivity.
 
 ## Learned
 

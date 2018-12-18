@@ -107,21 +107,29 @@ http://statistikkbanken.oslo.kommune.no/webview/index.jsp?headers=r&Omrdesubset=
 
 ## Personal dosimeter
 
-`TODO: picture`
+![](./images/dosebadge5.jpg)
 
 Standard: IEC 61252 Ed1.1 (2002-03), Personal Sound Exposure Meters
 
+::: notes
+https://proxy.duckduckgo.com/iu/?u=http%3A%2F%2Fi.b5z.net%2Fi%2Fu%2F1643541%2Fi%2F600xdoseBadge5.jpg&f=1
+:::
+
 ## Sound Level Meters
 
-`TODO: picture`
+![](./images/nor140.jpg)
 
 Standard: IEC 61672-1 2003, Sound Level Meters
 
+::: notes
+https://wpstatic.idium.no/web2.norsonic.com/2017/02/Sound-level-meter-Nor140-hand.jpg
+:::
+
 ## Continious monitoring
 
-`TODO: picture`
+![](./images/cesva-ta120.png)
 
-Price: 2'000 EUR+
+Lowest price found: 2000 EUR
 
 # Project
 
@@ -159,9 +167,15 @@ Price: 2'000 EUR+
 
 ## Hardware architecture
 
-![](./images/hw-blocks-black.png)
+![](./images/hw-blocks-black.png){ height=500px }
 
-Total power consumption: **<1mA**
+Power budget: **<1mA**
+
+## Bill of Materials
+
+![](./images/bom.png)
+
+Total: 84 USD, 756 NOK
 
 ## Energy source
 
@@ -174,24 +188,33 @@ Battery size: 68x72x18 mm
 Total unit: ~100x100x25 mm
 :::
 
-## Bill of Materials
-
-`TODO: display BOM`
-
 ## Connectivity
 
-Using 2G/GPRS or 4G/NB-IoT
+Using 2G/GPRS with COM4.no (alt: 4G/NB-IoT)
 
-$Leq_{minute}$: 1 440 bytes/day
-$Leq_{sec/8}$: 691 200 bytes/day
+| Type  | Data/day | Cost/month |
+| ------- |:-------:|-----:|
+| Leq minute | 1.5 kB | 13 NOK |
+| Leq sec/8 | 691.2 kB |  51 NOK  |
 
-`TODO: estimate power consumption`
+But, second/8 takes too much power!
 
 ## Software architecture
 
 ![](./images/processing-blocks.png)
 
-SoundLevel is continuous, NoiseIdentification on-demand.
+SoundLevel measured continuously, NoiseIdentification on-demand.
+
+## Noise Identification
+
+![](./images/third-octave-bands.png)
+
+Paper: "An Efficient Audio Coding Scheme for Quantitative and Qualitative Large Scale Acoustic Monitoring Using the Sensor Grid Approach"
+
+::: notes
+https://www.researchgate.net/profile/Daniele_Dubois/publication/229043727/figure/fig2/AS:300748777771026@1448715504886/Frequency-analysis-1-3-octave-band-To-bring-acoustic-measurement-closer-to-perceptive.png
+https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5751573/
+:::
 
 ## Microphone response
 
@@ -203,11 +226,19 @@ IP55 rated elecret mic. Looks to be within Class 2.
 
 ## Proto1
 
+![](./images/proto1-front.jpg){ height=500px }
+
+## Inside
+
 * Based on Nordic Thingy52 devkit
 * BLE4.2 + GPRS modem
-* Digital MEMS microphone. Not Class2
+* Digital MEMS microphone. Not Class2!
 * 1400mAh battery.
 * CNC milled enclosure. IP22
+
+## Installed
+
+![](./images/proto1-installed.jpg)
 
 # Conclusions
 
@@ -225,11 +256,12 @@ Can one do periodic sampling? As a mode?
 
 ## Technical TODOs
 
+Goal: Customer demo ready
+
 * Firmware: `Leq` calculation
 * Firmware: Transmit using 2G modem
-* Switch to proper microphone, analog preamp
-* Validate power consumption
-* Proof-of-concept noise identification
+* Android app for bridging BLE data to web
+* Minimal webinterface for sensor data
 
 ## Market TODOs
 

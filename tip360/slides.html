@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="author" content="Jon Nordby jonnord@nmbu.no">
+  <title>Wireless sensor for sound level monitoring</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="reveal.js/css/reveal.css">
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+  <link rel="stylesheet" href="reveal.js/css/theme/black.css" id="theme">
+  <!-- Printing and PDF exports -->
+  <script>
+    var link = document.createElement( 'link' );
+    link.rel = 'stylesheet';
+    link.type = 'text/css';
+    link.href = window.location.search.match( /print-pdf/gi ) ? 'reveal.js/css/print/pdf.css' : 'reveal.js/css/print/paper.css';
+    document.getElementsByTagName( 'head' )[0].appendChild( link );
+  </script>
+  <!--[if lt IE 9]>
+  <script src="reveal.js/lib/js/html5shiv.js"></script>
+  <![endif]-->
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide">
+  <h1 class="title">Wireless sensor for sound level monitoring</h1>
+  <p class="author">Jon Nordby <a href="mailto:jonnord@nmbu.no" class="email">jonnord@nmbu.no</a></p>
+  <p class="date">December, 2018</p>
+</section>
+
+<section><section id="acoustic-noise" class="title-slide slide level1"><h1>Acoustic Noise</h1></section><section id="sound-level" class="slide level2">
+<h2>Sound level</h2>
+<p><img data-src="./images/decibel-scale.jpg" /></p>
+<p>Normally A-weighted to simulate human hearing sensitivity.</p>
+<aside class="notes">
+<p>https://images-na.ssl-images-amazon.com/images/G/01/BISS/Aplus/3M/B00CPCHBCQ.PT04.300dpi._V377525867_.jpg</p>
+</aside>
+</section><section id="equivalent-sound-level" class="slide level2">
+<h2>Equivalent Sound Level</h2>
+<p><img data-src="./images/equivalent-continious-level.jpg" /></p>
+<p>Sound level, averaged over a time period <strong>T</strong>.</p>
+<aside class="notes">
+<p>https://proxy.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.labour.gov.on.ca%2Fimages%2Fhs%2Fnoise_en.jpg&amp;f=1</p>
+</aside>
+</section><section id="occupational-noise" class="slide level2">
+<h2>Occupational noise</h2>
+<blockquote>
+<p>Noise experienced by workers</p>
+</blockquote>
+<p><strong>EU Directive 2003/10/EC - noise</strong></p>
+<p>Covers everything from office work to industrial labor.</p>
+</section><section id="norwegian-regulations" class="slide level2">
+<h2>Norwegian regulations</h2>
+<p><img data-src="./images/tiltaksgrenser-arbeidsmiljo.png" /></p>
+<p>Forskrift om tiltaks- og grenseverdier $2-1, Arbeidsmiljøloven $4-4</p>
+</section><section id="environmental-noise" class="slide level2">
+<h2>Environmental noise</h2>
+<p><strong>EU Directive 2002/49/EC</strong></p>
+<p>Covers residential areas. Also relevant for hospitals, schools, kindergardens.</p>
+</section><section id="norwegian-regulations-1" class="slide level2">
+<h2>Norwegian regulations</h2>
+<p>Buildings (Byggteknisk forskrift, NS 8175.2008)</p>
+<ul>
+<li>Leq_24h <code>&lt; 30db</code> (new)</li>
+<li>Leq_24h <code>&lt; 35dB/42db</code> (old)</li>
+</ul>
+<p>Environment (Forurensningsloven)</p>
+<ul>
+<li>Lden <code>&lt; 55 dB</code></li>
+<li>Lnight <code>&lt; 50 dB</code></li>
+</ul>
+<p>WHO recommends Lnight &lt; 40 dB(A)</p>
+<aside class="notes">
+<p>https://lovdata.no/dokument/SFO/forskrift/2010-03-26-489 http://www.stoyforeningen.no/Hva-er-stoey/Boligstoey-regelverk http://www.lovdata.no/for/sf/md/xd-20040601-0931.html</p>
+</aside>
+</section><section id="health-impact" class="slide level2">
+<h2>Health impact</h2>
+<ul>
+<li>Hearing impairment</li>
+<li>Reduced concentration</li>
+<li>Increased stress</li>
+<li>Sleep disturbance</li>
+<li>Increased blood pressure</li>
+<li>Heart problems</li>
+</ul>
+</section><section id="environmental-noise-in-europe" class="slide level2">
+<h2>Environmental noise in Europe</h2>
+<ul>
+<li>Increasing problem</li>
+<li>Road traffic the biggest source</li>
+<li>125 million affected by road noise above Lden=55dB</li>
+<li>37 million road noise above Lden=65dB</li>
+<li>56 million affected at night (Lnight&gt;50dbA)</li>
+</ul>
+<p>EEA: Population exposure to environmental noise, 30 Nov 2018</p>
+</section><section id="current-state-in-oslonorway" class="slide level2">
+<h2>Current state in Oslo/Norway</h2>
+<p><img data-src="./images/oslo-noise.png" /></p>
+<p>Statistikkbanken Oslo Kommune</p>
+<p>:: notes</p>
+<p>Minimum efforts wrt legislation. ! 2015 plan created &quot;</p>
+<p>http://statistikkbanken.oslo.kommune.no/webview/index.jsp?headers=r&amp;Omrdesubset=1+-+15&amp;stubs=Omrde&amp;measure=common&amp;virtualslice=Andel_value&amp;layers=virtual&amp;study=http%3A%2F%2F192.168.101.44%3A80%2Fobj%2FfStudy%2FTL-stille-omrader-prosent-areal&amp;mode=cube&amp;v=2&amp;virtualsubset=Andel_value&amp;Omrdeslice=1&amp;rsubset=2006+-+2016&amp;measuretype=4&amp;rslice=2016&amp;cube=http%3A%2F%2F192.168.101.44%3A80%2Fobj%2FfCube%2FTL-stille-omrader-prosent-areal_C1&amp;top=yes</p>
+<p>::</p>
+</section></section>
+<section><section id="noise-measurements" class="title-slide slide level1"><h1>Noise measurements</h1></section><section id="personal-dosimeter" class="slide level2">
+<h2>Personal dosimeter</h2>
+<p><img data-src="./images/dosebadge5.jpg" /></p>
+<p>Standard: IEC 61252 Ed1.1 (2002-03), Personal Sound Exposure Meters</p>
+<aside class="notes">
+<p>https://proxy.duckduckgo.com/iu/?u=http%3A%2F%2Fi.b5z.net%2Fi%2Fu%2F1643541%2Fi%2F600xdoseBadge5.jpg&amp;f=1</p>
+</aside>
+</section><section id="sound-level-meters" class="slide level2">
+<h2>Sound Level Meters</h2>
+<p><img data-src="./images/nor140.jpg" /></p>
+<p>Standard: IEC 61672-1 2003, Sound Level Meters</p>
+<aside class="notes">
+<p>https://wpstatic.idium.no/web2.norsonic.com/2017/02/Sound-level-meter-Nor140-hand.jpg</p>
+</aside>
+</section><section id="continious-monitoring" class="slide level2">
+<h2>Continious monitoring</h2>
+<p><img data-src="./images/cesva-ta120.png" /></p>
+<p>Lowest price found: 2000 EUR</p>
+</section></section>
+<section><section id="project" class="title-slide slide level1"><h1>Project</h1></section><section id="problem-statement" class="slide level2">
+<h2>Problem statement</h2>
+<blockquote>
+<p>Design a wireless sensor node for environmental noise monitoring.</p>
+</blockquote>
+<ul>
+<li>Running only on battery power</li>
+<li>Does not require user-provided network</li>
+<li>Ability to identify noise source</li>
+</ul>
+</section></section>
+<section><section id="requirements" class="title-slide slide level1"><h1>Requirements</h1></section><section id="costs" class="slide level2">
+<h2>Costs</h2>
+<ul>
+<li>Unit production costs. <strong>&lt;1000 NOK</strong></li>
+<li>Installation. <strong>&lt;1000 NOK</strong></li>
+<li>Running costs. <strong>&lt;1000 NOK/year</strong></li>
+</ul>
+</section><section id="sound-level-measurements" class="slide level2">
+<h2>Sound Level Measurements</h2>
+<ul>
+<li>Continious sound level monitoring. <strong>LAeqT</strong></li>
+<li>Tolerance should be within <strong>IEC 61672, Class 2</strong></li>
+<li>Measurement resolution: <strong>per minute</strong> or better</li>
+<li>Latency: <strong>Reported daily</strong> or more often</li>
+</ul>
+</section><section id="physical" class="slide level2">
+<h2>Physical</h2>
+<ul>
+<li>Weatherproofing grade. <strong>IP55+</strong> (IEC 60529)</li>
+<li>Temperature tolerance. Operational: <strong>-10C to +40C</strong></li>
+<li><strong>Easily mountable</strong> on flat surface, such as a wall.</li>
+<li><strong>Aestethically acceptable</strong> for office/restaurant/home</li>
+</ul>
+</section></section>
+<section><section id="design" class="title-slide slide level1"><h1>Design</h1></section><section id="hardware-architecture" class="slide level2">
+<h2>Hardware architecture</h2>
+<p><img data-src="./images/hw-blocks-black.png" height="500" /></p>
+<p>Power budget: <strong>&lt;1mA</strong></p>
+</section><section id="bill-of-materials" class="slide level2">
+<h2>Bill of Materials</h2>
+<p><img data-src="./images/bom.png" /></p>
+<p>Total: 84 USD, 756 NOK</p>
+</section><section id="energy-source" class="slide level2">
+<h2>Energy source</h2>
+<p><img data-src="./images/4x18650.jpg" /></p>
+<p>1mA@365 days = 8760 mAh. 4x18650 = 12800 mAh</p>
+<aside class="notes">
+<p>Battery size: 68x72x18 mm Total unit: ~100x100x25 mm</p>
+</aside>
+</section><section id="connectivity" class="slide level2">
+<h2>Connectivity</h2>
+<p>Using 2G/GPRS with COM4.no (alt: 4G/NB-IoT)</p>
+<table>
+<thead>
+<tr class="header">
+<th>Type</th>
+<th style="text-align: center;">Data/day</th>
+<th style="text-align: right;">Cost/month</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Leq minute</td>
+<td style="text-align: center;">1.5 kB</td>
+<td style="text-align: right;">13 NOK</td>
+</tr>
+<tr class="even">
+<td>Leq sec/8</td>
+<td style="text-align: center;">691.2 kB</td>
+<td style="text-align: right;">51 NOK</td>
+</tr>
+</tbody>
+</table>
+<p>But, second/8 takes too much power!</p>
+</section><section id="software-architecture" class="slide level2">
+<h2>Software architecture</h2>
+<p><img data-src="./images/processing-blocks.png" /></p>
+<p>SoundLevel measured continuously, NoiseIdentification on-demand.</p>
+</section><section id="noise-identification" class="slide level2">
+<h2>Noise Identification</h2>
+<p><img data-src="./images/third-octave-bands.png" /></p>
+<p>Paper: “An Efficient Audio Coding Scheme for Quantitative and Qualitative Large Scale Acoustic Monitoring Using the Sensor Grid Approach”</p>
+<aside class="notes">
+<p>https://www.researchgate.net/profile/Daniele_Dubois/publication/229043727/figure/fig2/AS:300748777771026@1448715504886/Frequency-analysis-1-3-octave-band-To-bring-acoustic-measurement-closer-to-perceptive.png https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5751573/</p>
+</aside>
+</section><section id="microphone-response" class="slide level2">
+<h2>Microphone response</h2>
+<p><img data-src="./images/mic-response.png" /></p>
+<p>IP55 rated elecret mic. Looks to be within Class 2.</p>
+</section></section>
+<section><section id="prototype" class="title-slide slide level1"><h1>Prototype</h1></section><section id="proto1" class="slide level2">
+<h2>Proto1</h2>
+<p><img data-src="./images/proto1-front.jpg" height="500" /></p>
+</section><section id="inside" class="slide level2">
+<h2>Inside</h2>
+<ul>
+<li>Based on Nordic Thingy52 devkit</li>
+<li>BLE4.2 + GPRS modem</li>
+<li>Digital MEMS microphone. Not Class2!</li>
+<li>1400mAh battery.</li>
+<li>CNC milled enclosure. IP22</li>
+</ul>
+</section><section id="installed" class="slide level2">
+<h2>Installed</h2>
+<p><img data-src="./images/proto1-installed.jpg" /></p>
+</section></section>
+<section><section id="conclusions" class="title-slide slide level1"><h1>Conclusions</h1></section><section id="feasibility" class="slide level2">
+<h2>Feasibility</h2>
+</section><section id="learned" class="slide level2">
+<h2>Learned</h2>
+<ul>
+<li>Need very big batteries for always-on measurements</li>
+<li>Unable to provide <em>Short Leq</em> (8 per second) measurements</li>
+<li>Microphone consumes majority of energy! Can one do periodic sampling? As a mode?</li>
+</ul>
+</section></section>
+<section><section id="bonus" class="title-slide slide level1"><h1>Bonus</h1></section><section id="technical-todos" class="slide level2">
+<h2>Technical TODOs</h2>
+<p>Goal: Customer demo ready</p>
+<ul>
+<li>Firmware: <code>Leq</code> calculation</li>
+<li>Firmware: Transmit using 2G modem</li>
+<li>Android app for bridging BLE data to web</li>
+<li>Minimal webinterface for sensor data</li>
+</ul>
+</section><section id="market-todos" class="slide level2">
+<h2>Market TODOs</h2>
+<p>Market research for different segments</p>
+<ul>
+<li>Restaurants/hotels/AirBnB</li>
+<li>Schools/kindergardens/hospitals</li>
+<li>Road/rail/construction/industry</li>
+<li>Consumers experiencing noise (road/rail etc)</li>
+</ul>
+</section><section id="energy-harvesting" class="slide level2">
+<h2>Energy harvesting</h2>
+<p>Possible through external power connector.</p>
+<ul>
+<li>Solar/wind power</li>
+<li>Streetlights</li>
+</ul>
+</section><section id="other-usecases" class="slide level2">
+<h2>Other usecases</h2>
+<p>For acoustic sensors</p>
+<ul>
+<li>Traffic estimation</li>
+<li>Structural montoring</li>
+<li>Predictive maintenance</li>
+</ul>
+</section></section>
+    </div>
+  </div>
+
+  <script src="reveal.js/lib/js/head.min.js"></script>
+  <script src="reveal.js/js/reveal.js"></script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        // Push each slide change to the browser history
+        history: true,
+
+        // Optional reveal.js plugins
+        dependencies: [
+          { src: 'reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+          { src: 'reveal.js/plugin/zoom-js/zoom.js', async: true },
+          { src: 'reveal.js/plugin/notes/notes.js', async: true }
+        ]
+      });
+    </script>
+    </body>
+</html>

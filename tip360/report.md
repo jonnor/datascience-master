@@ -6,30 +6,26 @@
 
 ### Environmental noise
 
-`TODO: include two-liner definition`
+Noise is unwanted sound. Environmental noise is the summary of noise pollution from outside,
+caused by transport, industrial and recreational activities.
 
 Road traffic is the most widespread source of environmental noise.
 Noise from railways, air traffic and industry are also important sources of noise.
 
 ### Sound level
 
-`TODO: write def`
+Sound level is measured in decibel (dB).
+0dB is the threshold of hearing, at $20\e{-6} Pascal$ relative sound pressure. 
+The level is normally A-weighted, which simulates the frequency response of human hearing.
 
-![](./images/decibel-scale.jpg)
-
-Normally A-weighted to simulate human hearing sensitivity.
-
-::: notes
-https://images-na.ssl-images-amazon.com/images/G/01/BISS/Aplus/3M/B00CPCHBCQ.PT04.300dpi._V377525867_.jpg
-:::
+![Descibel scale with common noise sources](./images/decibel-scale.jpg)
 
 ### Equivalent Continious Sound Level
 
-`TODO: write def`
+The sound level is constantly changing.
+To get a single number representation, the sound level is averaged over a time period **T**.
 
-Sound level, averaged over a time period **T**.
-
-![](./images/equivalent-continious-level.jpg)
+![Equivalent continious sound level](./images/equivalent-continious-level.jpg)
 
 
 ## Background
@@ -221,23 +217,27 @@ the specifications for noise sensor in Barcelona[@BarcelonaSoundSensorSpecificat
 
 ![Hardware architecture](./images/hw-blocks.png) 
 
-
-`TODO: include power budget calculation`
+The microphone requires 0.5mA, the microcontroller typically 0.25 mA in always-listening mode.
+Amplifier and other is estimated to 0.10mA.
+This leaves 0.15mA average as the energy budget for data transmission.
 
 ![Bill of Materials](./images/bom.png)
 
-For a total cost of ~750 NOK, below the 1000 NOK target with some margin.
-
+Total component cost is 84 USD, ~750 NOK.
+This is below the 1000 NOK target with some margin.
 
 ## Power source
 
-`TODO: include calculations. power budget, battery size`
+With a 1mA energy budget and minimum 1 year lifetime,
+the power source needs to supply 1mA@365 days = 8760 mAh.
 
-Primarily battery-powered. Can run only on battery for 1 year+. Rechargeable.
+4x standard 18650 Li-ion have 4*3200 mAh = 12800 mAh capacity.
+After accounting for a 2.5% self-discharge per month this should be enough.
 
 ![4x 16850 Li-ion cells](./images/4x18650.jpg)
 
-The device can be charged using a standard USB charger via a Micro USB Type-B connector.
+By integrating a charging circuit, the device can be charged
+with common phone charger with Micro USB Type-B connector.
 Charging time is estimated to be 24 hours at 500mA.
 
 To optionally allow for a continious deployment without needing recharging,
@@ -255,23 +255,19 @@ To minimize the install costs, the proposed design uses the standard cellular ne
 and no custom gateway devices. The network can be 2G with GPRS data connectivity,
 or 4G with NB-IoT connectivity.
 
-`TODO: picture of module`
+![SARA cellular module. 2G/3G/4G](./images/sara-module.jpg)
 
-Chosen module. SARA
-Alternative NB-IoT
+Using 2G/GPRS with COM4.no, monthly fees are 12 NOK.
 
-Using 2G/GPRS with COM4.no
-
-| Type  | Data/day | Cost/month |
-| ------- |:-------:|-----:|
-| Leq minute | 1.5 kB | 13 NOK |
-| Leq sec/8 | 691.2 kB |  51 NOK  |
+| Type  | Data/day | Cost/month | Current draw |
+| ------- |:-------:|-----:|-----:|
+| Leq minute | 1.5 kB | 13 NOK | |
+| Leq sec/8 | 691.2 kB |  51 NOK  | |
 
 `TODO: define power utilization`
 
-
- (alt: 4G/NB-IoT)
-
+An alternative to 2G would be 4G/NB-IoT.
+1.5 kB over 365 days is 500 kB. Telenor offers NB-IoT with 5 MB/year for 99 NOK.
 
 
 ## Data processing
@@ -280,8 +276,7 @@ Using 2G/GPRS with COM4.no
 
 The firmware needs to capture microphone input continiously,
 and from this compute the `Leq` sound level.
-
-The processing required is specified in `TODO: ref standard`
+This processing is specified by IEC Sound Level meter standard[@IECSoundLevelMeters].
 For the STM32 platform, the provided Sound Meter Library[@STM32SoundMeterLibrary] can be used.
 
 ### Noise source identification using machine learning

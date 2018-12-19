@@ -4,7 +4,16 @@
 
 ## Definitions
 
-Sound level
+### Environmental noise
+
+`TODO: include two-liner definition`
+
+Road traffic is the most widespread source of environmental noise.
+Noise from railways, air traffic and industry are also important sources of noise.
+
+### Sound level
+
+`TODO: write def`
 
 ![](./images/decibel-scale.jpg)
 
@@ -14,27 +23,26 @@ Normally A-weighted to simulate human hearing sensitivity.
 https://images-na.ssl-images-amazon.com/images/G/01/BISS/Aplus/3M/B00CPCHBCQ.PT04.300dpi._V377525867_.jpg
 :::
 
-Equivalent Continious Sound Level
+### Equivalent Continious Sound Level
 
-![](./images/equivalent-continious-level.jpg)
+`TODO: write def`
 
 Sound level, averaged over a time period **T**.
 
+![](./images/equivalent-continious-level.jpg)
+
+
 ## Background
-
-### Environmental noise
-
-`TODO: include two-liner definition`
-
 
 ### Regulations
 
 Environmental noise is regulated in the EU by the Environmental Noise Directive (2002/49/EC)[@EuNoiseDirective].
+The purpose of the directive is to:
 
-* the determination of exposure to environmental noise
-* ensuring that information on environmental noise and its effects is made available to the public
+* determine peoples exposure to environmental noise
+* ensuring that information on environmental noise and its effects is available to the public
 * preventing and reducing environmental noise where necessary
-and preserving environmental noise quality where it is good
+* preserving environmental noise quality where it is good
 
 The Directive requires Member States to prepare and publish noise maps and noise management action plans every 5 years for:
 
@@ -43,7 +51,6 @@ The Directive requires Member States to prepare and publish noise maps and noise
 * major railways (more than 30.000 trains a year)
 * major airports (more than 50.000 movements a year, including small aircrafts and helicopters)
 
-
 The Directive does not set limit or target values, nor does it prescribe the measures to be included in the action plans.
 This is up to authorities of each individual Member State.
 
@@ -51,46 +58,32 @@ However, Environmental Noise Directive defines *indicators* for noise pollution:
 
 $L_{den}$: Designed to assess overall annoyance.
 It refers to an annual average day, evening and night period of exposure.
-Evening are weighted 5 dB(A) and a night weighting of 10 dB(A). 
+Evening are weighted 5 dB(A) and a night weighting of 10 dB(A).
+Indicator level: 55dB(A).
+
 $L_{night}$: Designed to assess sleep disturbance.
 It refers to an annual average night period of exposure.
-
-Lden: day-evening-night, 55dB
-Lnight: night, 50dB
+Indicator level: 50dB(A).
 
 In Norway, the coverning legislation for noise pollution is [@Forurensningsloven],
 which implements the EU directive.
 
 ### Health impact
 
-Noise pollution is a major environmental health problem in Europe.
+According to European Commission introduction on the Health effects of Noise [@EuNoiseHealthEffects],
+Noise pollution the second environmental cause of health problems in Europe, after air pollution.
 
-Environmental noise causes approximately 16 600 premature deaths in Europe each year,
-with almost 32 million adults suffering from annoyance and over 13 million suffering sleep disturbance.
-The WHO has identified noise as the second most significant environmental cause of ill health in western Europe,
-the first being air pollution.
+Sleepers that are exposed to night noise levels above 40dB on average throughout
+the year can suffer health effects like sleep disturbance and awakenings.
+Above 55dB long-term average exposure, noise can trigger elevated blood pressure and lead to ischaemic heart disease.
+The WHO has set a Night Noise Guideline level for Europe at 40 dB $L_{night}$.
 
-Road traffic is the most widespread source of environmental noise,
-with more than 100 million people affected by harmful levels in the EEA-33 member countries.
-Noise from railways, air traffic and industry are also important sources of noise.
+According to a report done on behalf of the European Commision[@RVIMTransportationNoise]
 
-Ref [@EuNoiseSources]
-
-The various directives for common noise sources:
-Road traffic noise, Aircraft noise, Railway noise, Noise from Equipment for Use Outdoors
-
-Population exposure to environmental noise
-https://www.eea.europa.eu/data-and-maps/indicators/exposure-to-and-annoyance-by-2/assessment-2
-Published 19 Jul 2018.
-Based on country submissions and redeliveries of the 2012 round of reporting,
-eceived by the EEA at the end of March 2017.
-
-The European Union's Seventh Environment Action Programme (7th EAP) sets the objective that by 2020
-noise pollution in the EU will have significantly decreased, moving closer to World Health Organization (WHO) recommended levels. 
-
-The WHO has set a Night Noise Guideline level for Europe at 40 dB Lnight.
-
-`TODO: mention impact on concentration/learning`
+"The exposure to transportation noise in Europe led in 2011 to about
+900 thousand cases of hypertension and 40 thousand hospital admissions due to cardiovascular disease and stroke"
+and "the number of cases of premature mortality due to these diseases as a result of noise exposure is about 10 thousand per year.",
+and "An estimated 8 million people experience sleep disturbance due to transportation noise and about 4 million perceive this as severe".
 
 
 ### Noise measurements
@@ -169,7 +162,6 @@ To enable a more widespread deployment of continious monitoring systems:
 Design a sensor node for environmental noise monitoring,
 that is substantially cheaper than existing offerings.
 
-
 The device must be able to measure sound level continiously
 and log the measurements to a centralized system.
 The system should allow alerting when sound level exceeds define threshold.
@@ -232,7 +224,7 @@ the specifications for noise sensor in Barcelona[@BarcelonaSoundSensorSpecificat
 
 `TODO: include power budget calculation`
 
-![](./images/bom.png)
+![Bill of Materials](./images/bom.png)
 
 For a total cost of ~750 NOK, below the 1000 NOK target with some margin.
 
@@ -308,6 +300,8 @@ on how often it will record noise profiles.
 
 ## Microphone
 
+![CMC-9745-130T microphone capsule](./images/CMC-9745-130T.jpg)
+
 The microphone is the most critical component to ensure high quality acoustic measurements.
 Additionally the microphone is the most sensitive component with respect to environmental protection,
 as it needs to be protected against water and dust without impacting acoustic performance.
@@ -320,15 +314,12 @@ it remains to be tested that the entire system can meet the standard.
 
 ## Physical
 
-To make a sensor unit that could fit into an office or home,
-a custom enclosure was designed and prototyped.
-
-In small scale this can be CNC machined,
-and at larger scales it can be injection molded.
+To make a sensor unit that could fit into an office or home, a custom enclosure was designed and prototyped.
+In small scale this can be CNC machined, and at larger scales it can be injection molded.
 
 ![Prototype viewed from front. Custom enclosure CNC machined from acrylic plastic](./images/proto1-front.jpg)
 
-The overall dimensions when fitting the 4x18650 batteries is 100x100x25 mm.
+The overall dimensions required for fitting the 4x 18650 batteries is 100x100x25 mm.
 The prototype shown only has height=20mm.
 
 ## Installation
@@ -382,5 +373,5 @@ and using a mobile network for connectivity.
 Existing research indicates that identification of noise sources is
 possible using 1/3 octave acoustic measurements.
 
-
+\newpage
 # References

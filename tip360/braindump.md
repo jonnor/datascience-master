@@ -659,7 +659,10 @@ SIM800. Sleep-mode: 1.2mA
 SIM800C. Sleep-mode: 0.88mA. 
 SIM800H. Sleep-mode: 0.7mA
 SIM900A. Sleep-mode: 1mA
-SARA-G3. Standby: 0.9mA. Connected: `<250mA`
+SARA-G3. Standby: 0.9mA. Transmitting: `300mA`
+
+SARA-N210. NB-IoT. 75mA-220mA, depending on transmit power
+https://www.u-blox.com/en/product/sara-n2-series
 
 GSM is 1W or 2W max transmit, depending on class/band.
 Datarate. 9.05kbps-85.6 kbps

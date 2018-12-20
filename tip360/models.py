@@ -238,12 +238,12 @@ def main():
 
     print('Short Leq', 30*daily_data_short_leq()/1e6)
     print('NOK', transmit_costs_monthly(30*daily_data_short_leq()))
+    print('current', 300*radio_time(daily_data_short_leq())/(24*3600))
 
     print('Average Leq', 30*daily_data_leq_avg()/1e6)
     print('NOK', transmit_costs_monthly(30*daily_data_leq_avg()))
+    print('current', 300*radio_time(daily_data_leq_avg())/(24*3600))
 
-    t_time = daily_data_short_leq()/2500
-    print('transmit time daily', t_time)
 
     """
     with conservative numbers, does not work out for Short Leq.

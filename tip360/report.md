@@ -5,33 +5,28 @@
 ## Definitions
 
 ### Environmental noise
-
 Noise is unwanted sound. Environmental noise is the summary of noise pollution from outside,
 caused by transport, industrial and recreational activities.
-
-Road traffic is the most widespread source of environmental noise.
-Noise from railways, air traffic and industry are also important sources of noise.
+Road traffic is the most widespread source of environmental noise in urban environments.
 
 ### Sound level
-
 Sound level is measured in decibel (dB).
-0dB is the threshold of hearing, at $20\e{-6} Pascal$ relative sound pressure. 
+0dB is the threshold of hearing, at $20 µPascal$ relative sound pressure. 
 The level is normally A-weighted, which simulates the frequency response of human hearing.
 
 ![Descibel scale with common noise sources](./images/decibel-scale.jpg)
 
 ### Equivalent Continious Sound Level
-
 The sound level is constantly changing.
 To get a single number representation, the sound level is averaged over a time period **T**.
 
 ![Equivalent continious sound level](./images/equivalent-continious-level.jpg)
 
 
+\newpage
 ## Background
 
 ### Regulations
-
 Environmental noise is regulated in the EU by the Environmental Noise Directive (2002/49/EC)[@EuNoiseDirective].
 The purpose of the directive is to:
 
@@ -61,7 +56,7 @@ $L_{night}$: Designed to assess sleep disturbance.
 It refers to an annual average night period of exposure.
 Indicator level: 50dB(A).
 
-In Norway, the coverning legislation for noise pollution is [@Forurensningsloven],
+In Norway, the coverning legislation for noise pollution is Forurensningsloven[@Forurensningsloven],
 which implements the EU directive.
 
 ### Health impact
@@ -219,13 +214,14 @@ the specifications for noise sensor in Barcelona[@BarcelonaSoundSensorSpecificat
 
 The microphone requires 0.5mA, the microcontroller typically 0.25 mA in always-listening mode.
 Amplifier and other is estimated to 0.10mA.
-This leaves 0.15mA average as the energy budget for data transmission.
+With a 1mA total energy budget, this leaves 0.15mA average for data transmission.
 
 ![Bill of Materials](./images/bom.png)
 
 Total component cost is 84 USD, ~750 NOK.
 This is below the 1000 NOK target with some margin.
 
+\newpage
 ## Power source
 
 With a 1mA energy budget and minimum 1 year lifetime,
@@ -247,29 +243,35 @@ mains power or low-voltage from other sensor systems deployed together.
 The batteries would then act like a buffer
 and backup for disruptions in the primary energy supply.
 
-
+\newpage
 ## Connectivity
-To let the sensor node send its measurements.
-
+The sensor sends measurements periodically to central service via wireless network.
 To minimize the install costs, the proposed design uses the standard cellular network,
-and no custom gateway devices. The network can be 2G with GPRS data connectivity,
-or 4G with NB-IoT connectivity.
+and no custom gateway devices.
+
+The modem is normally off, powering and connecting to the network a few times
+per day to upload data.
 
 ![SARA cellular module. 2G/3G/4G](./images/sara-module.jpg)
 
-Using 2G/GPRS with COM4.no, monthly fees are 12 NOK.
+Using SARA G350 module with 2G/GPRS and COM4.no provider, the monthly fees are 12 NOK.
+The module specifies 300 mA when transmitting. With estimated 10 second network registration time,
+22kbit/second effective upload rate, and 1 data upload per day, the current draws can be seen in the table below.
 
 | Type  | Data/day | Cost/month | Current draw |
 | ------- |:-------:|-----:|-----:|
-| Leq minute | 1.5 kB | 13 NOK | |
-| Leq sec/8 | 691.2 kB |  51 NOK  | |
+| Leq minute | 1.5 kB | 13 NOK | 0.04 mA |
+| Leq sec/8 | 691.2 kB |  51 NOK  | 1mA |
 
-`TODO: define power utilization`
+With a power budget at 0.15mA, minute-wise data can be achieved,
+but the much more detailed 1/8 second data is out of the budget by factor of 6.
 
-An alternative to 2G would be 4G/NB-IoT.
-1.5 kB over 365 days is 500 kB. Telenor offers NB-IoT with 5 MB/year for 99 NOK.
+An upcoming alternative to 2G would be 4G/LTE Cat NB1 "NB-IoT".
+Telenor offers NB-IoT with 5 MB/year for 99 NOK, which is enough for a whole year of minute wise data.
+The SARA N211 module for NB-IoT specifies transmit currents of 75-220mA (depending on transmit strength),
+which should give some power savings.
 
-
+\newpage
 ## Data processing
 
 ![Audio processing pipeline for sensor firmware](./images/processing-blocks.png)
@@ -279,7 +281,7 @@ and from this compute the `Leq` sound level.
 This processing is specified by IEC Sound Level meter standard[@IECSoundLevelMeters].
 For the STM32 platform, the provided Sound Meter Library[@STM32SoundMeterLibrary] can be used.
 
-### Noise source identification using machine learning
+### Noise source identification
 
 When the sound level exceeds a configured threshold,
 the sensor will collect more detailed information that can be
@@ -293,6 +295,7 @@ it is not possible to understand conversations. This preserves the privacy requi
 To avoid using too much energy, the noise identification trigger has an upper limit
 on how often it will record noise profiles.
 
+\newpage
 ## Microphone
 
 ![CMC-9745-130T microphone capsule](./images/CMC-9745-130T.jpg)
@@ -307,6 +310,7 @@ For that reason an IP55 rated microphone was selected, the CMC-9745-130T.
 While the microphone looks to be within the Class2 standard for frequency tolerance,
 it remains to be tested that the entire system can meet the standard.
 
+\newpage
 ## Physical
 
 To make a sensor unit that could fit into an office or home, a custom enclosure was designed and prototyped.
@@ -317,6 +321,7 @@ In small scale this can be CNC machined, and at larger scales it can be injectio
 The overall dimensions required for fitting the 4x 18650 batteries is 100x100x25 mm.
 The prototype shown only has height=20mm.
 
+\newpage
 ## Installation
 
 The designed enclosure can be attached to any flat surface of more than 100mm using 2 screws.
@@ -341,6 +346,7 @@ The installer can then update the location of the sensor on the map, and add doc
 about its exact placement.
 This process should be easy enough that consumers can perform installation themselves.
 
+\newpage
 ## Data management platform
 
 The sensor node periodically communicates measurements to the central system over HTTP(S) or MQTT(S).
@@ -352,6 +358,7 @@ an open-source[@SentiloGithub] platform developed and used by city of Barcelona 
 
 ![Map showing noise sensors in Barcelona using the Sentilo platform](./images/sentilo-map.png)
 
+\newpage
 # Discussion
 
 * Need very big batteries for always-on measurements

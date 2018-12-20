@@ -212,8 +212,8 @@ the specifications for noise sensor in Barcelona[@BarcelonaSoundSensorSpecificat
 
 ![Hardware architecture](./images/hw-blocks.png) 
 
-The microphone requires 0.5mA, the microcontroller typically 0.25 mA in always-listening mode.
-Amplifier and other is estimated to 0.10mA.
+The selected microphone requires 0.5mA, the STM32L4x1 microcontroller 0.25 mA in always-listening mode.
+Amplifier and other supporting circuitry is estimated to 0.10mA.
 With a 1mA total energy budget, this leaves 0.15mA average for data transmission.
 
 ![Bill of Materials](./images/bom.png)
@@ -228,7 +228,8 @@ With a 1mA energy budget and minimum 1 year lifetime,
 the power source needs to supply 1mA@365 days = 8760 mAh.
 
 4x standard 18650 Li-ion have 4*3200 mAh = 12800 mAh capacity.
-After accounting for a 2.5% self-discharge per month this should be enough.
+Taking into account 3% self-discharge per month this
+should have more than 9000 mAh usable power over a 12 month period.
 
 ![4x 16850 Li-ion cells](./images/4x18650.jpg)
 
@@ -263,10 +264,14 @@ The module specifies 300 mA when transmitting. With estimated 10 second network 
 | Leq minute | 1.5 kB | 13 NOK | 0.04 mA |
 | Leq sec/8 | 691.2 kB |  51 NOK  | 1mA |
 
-With a power budget at 0.15mA, minute-wise data can be achieved,
-but the much more detailed 1/8 second data is out of the budget by factor of 6.
+With a power budget at 0.15mA, minute-wise data can be achieved.
+The surplus energy can be used for computing and transmitting noise source identification data.
 
-An upcoming alternative to 2G would be 4G/LTE Cat NB1 "NB-IoT".
+However the much more detailed 1/8 second data is out of the budget by factor of 6.
+Additionally the 691 kB is too large to fit in FLASH storage, so it would
+be neccesary to send more than once per day.
+
+An upcoming alternative to 2G is the 4G technology LTE Cat NB1 "NB-IoT".
 Telenor offers NB-IoT with 5 MB/year for 99 NOK, which is enough for a whole year of minute wise data.
 The SARA N211 module for NB-IoT specifies transmit currents of 75-220mA (depending on transmit strength),
 which should give some power savings.
@@ -288,7 +293,7 @@ the sensor will collect more detailed information that can be
 used to automatically identify the noise source.
 
 The noise profile data is based on the 1/3 octave band, following the standard IEC 61260-1:2014[@IECOctaveBands].
-It has been shown that this can be used by a machine learning system to distinguish different noise sources[@AudioCodingSensorGrid].
+This can be used by a machine learning system to distinguish different noise sources[@AudioCodingSensorGrid].
 The paper also demonstrates that when frequency spectrum samples are performed 10 times per second or more seldom,
 it is not possible to understand conversations. This preserves the privacy requirement.
 
@@ -319,7 +324,7 @@ In small scale this can be CNC machined, and at larger scales it can be injectio
 ![Prototype viewed from front. Custom enclosure CNC machined from acrylic plastic](./images/proto1-front.jpg)
 
 The overall dimensions required for fitting the 4x 18650 batteries is 100x100x25 mm.
-The prototype shown only has height=20mm.
+Note that the prototype shown only has height=20mm.
 
 \newpage
 ## Installation
@@ -341,10 +346,9 @@ Example deployment scenarios outside
 * On a moving vechicle used for noise mapping. Bus
 
 To enable the sensor, installer only needs to switch the on button.
-Immediately on power-on the sensor will transmit, allowing to verify data transmitted to sensor hub.
-The installer can then update the location of the sensor on the map, and add documentation
-about its exact placement.
-This process should be easy enough that consumers can perform installation themselves.
+Immediately on power-on the sensor will transmit, allowing to verify that data is transmitted to the sensor hub.
+The installer can then update the location of the sensor on the map, and add documentation about its exact placement.
+This process should be easy enough that many consumers can perform installation themselves.
 
 \newpage
 ## Data management platform
@@ -361,10 +365,26 @@ an open-source[@SentiloGithub] platform developed and used by city of Barcelona 
 \newpage
 # Discussion
 
-* Need very big batteries for always-on measurements
-* Unable to provide *Short Leq* (8 per second) measurements
-* Microphone consumes majority of energy!
-Can one do periodic sampling? As a mode?
+The calculations show that minute-wise equivalent continous sound-level can be collected,
+and report at least every 24 hours over a cellular network, using a battery-only system with 1 year battery lifetime.
+There is some extra power budget, which should allow to sample some noise identifying information at loud moments.
+
+However empirical testing should be performed to validate this,
+by putting together the sytem and measuring the actual average power consumption over some days.
+
+Half of the power consumption comes from the microphone itself, which is currently designed
+to be always-listening. If instead the microphone could be turned on for shorter periods of
+time, like 100 ms every 1 second, power consumption would be reduced drastically.
+It is an open question how rarely one could sample while still giving a usable picture of the sound level,
+given that many sound sources vary a lot in intensity.
+A sampling system would likely not fullfil the requirements of a Class 2 sound level meter,
+but in some application areas (like noise indicator for hotels/restaurant/home)
+this might not be neccesary.
+
+The energy budget constraints means that detailed "Short Leq" (8 per second) measurements
+are not possible when on battery-only power, and the sensor is not able to give alerts within 1 hour.
+However these features could be made available for deployments which have an external power source.
+
 
 # Conclusion
 
@@ -373,7 +393,9 @@ acoustic noise sensor node with production, installation and running cost under 
 The installation costs are keep low by allowing battery-only operation
 and using a mobile network for connectivity.
 Existing research indicates that identification of noise sources is
-possible using 1/3 octave acoustic measurements.
+possible using 1/3 octave acoustic measurements which can be sampled on-demand.
+The next steps would be to complete a prototype and
+perform tests of the design under realistic conditions. 
 
 \newpage
 # References

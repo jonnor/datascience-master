@@ -360,3 +360,9 @@ Deep learning
 avoid need for batch-normalization. Faster and smoother convergence during training. Weights centered around 0.
 Designed for FNN, but can also be used with CNN. [CIFAR-10 example](https://github.com/bioinf-jku/SNNs/blob/master/Keras-CNN/CIFAR10-Conv-SELU.py)
 * [Dense Convolutional Networks](https://arxiv.org/pdf/1608.06993.pdf). Each layer gets all previous layers as input. Gives SOFA results over ResNet on CIFAR-100.
+
+Statistics
+
+* [Cloudera: Common Probability Distributions: The Data Scientist’s Crib Sheet](https://blog.cloudera.com/blog/2015/12/common-probability-distributions-the-data-scientists-crib-sheet/).
+Explains different probability distributions, their relationships and usages.
+

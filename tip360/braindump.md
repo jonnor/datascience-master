@@ -389,6 +389,24 @@ Utendørs støynivå skal beregnes med de metoder som er beskrevet i direktiv 20
 
 ## Literature
 
+[Designing and evaluating the performance of a wireless sensor network for environmental noise monitoring applications](http://www.sea-acustica.es/fileadmin/Oporto16/28.pdf). 2016
+Describes a Raspberry PI based system built for 200 GBP. 3G USB modem.
+IEC61672 Class 1.
+Collects 200 ms long audio buffers continiously. 44.1kHz
+A-weighted. 1 broadband noise, and 26 1/3 octave band (40 Hz-12.5 kHz) measurements
+Aggregated statistics (minute,hour,day) and per-minute Lmin, Lmax, L10, L50 and L90 calculated on server.
+Microphone. Cirrus Logic WM7132PE. $1.48, 250uA
+WM5102 audio codec.
+Calibration via standard 1/4" calibration units.
+Processing each sample in `<150ms 99.5%` of time
+
+[Støy Veg WMS](https://kartkatalog.geonorge.no/metadata/statens-vegvesen/stoy-veg-wms/4bbae38e-4718-481d-9827-237cd5e115c8)
+Åpne data om støy rundt vei. Statens Veivesen.
+Strategisk støykartlegging etter forurensingsforskriften §5 og Støyvarselkart etter T-1442.
+Datasettet oppdateres ikke, men produseres på nytt hvert 5 år.
+Gjennomført med Statens vegvesens beregningsverktøy NorStøy.
+Beregningsmetode er Nord2000Road.
+
 ### Noise classification
 
 ! noise measurements not always representative
@@ -409,6 +427,8 @@ The nodes sample the noise, estimate N (measuring L, S, R and F) and finally sen
 References to noise maps for New York [2], London [3], Munich [4], Beijing [5].
 ! references for subjective evaluations of road noise
 ! equations for noise parameters
+
+
 
 ### Wireless Sensor Networks
 [The Evolution of Wireless Sensor Networks](). Silicon Labs. Whitepaper.

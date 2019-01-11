@@ -353,6 +353,11 @@ Example: [librosa sound augmentation](https://www.kaggle.com/huseinzol05/sound-a
 * Programmatic supervision. Distant supervision. 
 * Weak supervision. [Data Programming](http://dawn.cs.stanford.edu/pubs/snorkel-nips2016.pdf)
 generates labels that are noisy and possibly conflicting, then learns the inaccuracies.
+* [mixup: Beyond Empirical Risk Minimization](https://arxiv.org/abs/1710.09412). FB Research, 2017.
+Data-agnostic data augmentation technique.
+Improves generalization.
+Very simple, done by mixing two sample files and their labels.
+
 
 Deep learning
 

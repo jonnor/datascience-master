@@ -26,7 +26,7 @@ To get a single number representation, the sound level is averaged over a time p
 \newpage
 ## Background
 
-### Regulations
+0### Regulations
 Environmental noise is regulated in the EU by the Environmental Noise Directive (2002/49/EC)[@EuNoiseDirective].
 The purpose of the directive is to:
 

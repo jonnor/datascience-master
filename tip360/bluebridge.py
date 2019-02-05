@@ -44,15 +44,20 @@ class MotionService():
             else:
                 self.orient_cccd.write(b"\x00\x00", True)
 
+def parse_audiolevel(buf):
+    assert len(buf) == 3, len(buf)
+
+    timestamp = int.from_bytes(buf[:2], byteorder='little')
+    level = int.from_bytes(buf[2:], byteorder='little')
+
+    return timestamp, level
 
 class MyDelegate(btle.DefaultDelegate):
     
     def handleNotification(self, hnd, data):
-        print(repr(data))
-
         if (hnd == m_orient_handle):
-            teptep = binascii.b2a_hex(data)
-            print('Notification: Orient: {}'.format(teptep))
+            t, level = parse_audiolevel(data)
+            print('Notification: Audio Level: {}'.format(level))
 
         else:
             teptep = binascii.b2a_hex(data)
@@ -88,7 +93,10 @@ def main():
         print('Configuring sensors...')
 
         thingy.motion.enable()
+        thingy.motion.set_orient_notification(False)
+        time.sleep(0.5)
         thingy.motion.set_orient_notification(True)
+
 
         # Allow sensors time to start up (might need more time for some sensors to be ready)
         print('Configured! Listening for changes')

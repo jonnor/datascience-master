@@ -8,6 +8,23 @@ Sound level
 * +3dB = doubling of sound energy!
 * +10dB = perceptual doubling
 
+## UT353 BT Sound Level Meter
+
+iENV Android app only available via website, not on Play Store.
+Sometimes struggles to connect to device.
+! Can record samples in a log, but export is not working.
+Cannot find the files on disk, and sharing fails.
+
+Device exposes on Bluetooth LE many READ/WRITE characteristics for setting,
+and a NOTIFY characteristic for the sound level.
+! However it is not producing values after power on.
+Likely need to set some values before.
+After using the iENV app, can see the notify messages in nRF Connect.
+Likely need to reverse engineer what values the iENV app sends for configuration.
+Can maybe be done by reading out all values before/after using app.
+Alternatively one can use an AdaFruit BLE sniffer
+https://learn.adafruit.com/reverse-engineering-a-bluetooth-low-energy-light-bulb/sniff-protocol
+
 ## Extensions
 
 - Noise modelling

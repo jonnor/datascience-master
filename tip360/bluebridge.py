@@ -7,26 +7,16 @@ import struct
 import binascii
 
 
-# Please see # Ref https://nordicsemiconductor.github.io/Nordic-Thingy52-FW/documentation
-# for more information on the UUIDs of the Services and Characteristics that are being used
-def Nordic_UUID(val):
-    """ Adds base UUID and inserts value to return Nordic UUID """
-    return btle.UUID("EF68%04X-9B35-4933-9B10-52FFA9740042" % val)
-
-
 # Notification handles used in notification delegate
+# FIXME: pass to delegate explicitly
 m_orient_handle = None
-MOTION_SERVICE_UUID         = 0x0400
-M_ORIENTATION_CHAR_UUID     = 0x0403
-CCCD_UUID = 0x2902
-
 
 class MotionService():
     """
-    Motion service module. Instance the class and enable to get access to the Motion interface.
     """
-    serviceUUID =           Nordic_UUID(MOTION_SERVICE_UUID)
-    orient_char_uuid =      Nordic_UUID(M_ORIENTATION_CHAR_UUID)
+    serviceUUID =         btle.UUID('00000000-0001-11e1-9ab4-0002a5d5c51b') 
+    orient_char_uuid =      btle.UUID("04000000-0001-11e1-ac36-0002a5d5c51b")
+    CCCD_UUID = 0x2902
 
     def __init__(self, periph):
         self.periph = periph
@@ -45,8 +35,7 @@ class MotionService():
         if self.orient_char is None:
             self.orient_char = self.motion_service.getCharacteristics(self.orient_char_uuid)[0]
             m_orient_handle = self.orient_char.getHandle()
-            self.orient_cccd = self.orient_char.getDescriptors(forUUID=CCCD_UUID)[0]
-
+            self.orient_cccd = self.orient_char.getDescriptors(forUUID=self.CCCD_UUID)[0]
 
     def set_orient_notification(self, state):
         if self.orient_cccd is not None:
@@ -59,7 +48,8 @@ class MotionService():
 class MyDelegate(btle.DefaultDelegate):
     
     def handleNotification(self, hnd, data):
-        #Debug print repr(data)
+        print(repr(data))
+
         if (hnd == m_orient_handle):
             teptep = binascii.b2a_hex(data)
             print('Notification: Orient: {}'.format(teptep))
@@ -67,14 +57,6 @@ class MyDelegate(btle.DefaultDelegate):
         else:
             teptep = binascii.b2a_hex(data)
             print('Notification: UNKOWN: hnd {}, data {}'.format(hnd, teptep))
-            
-
-    def _str_to_int(self, s):
-        """ Transform hex str into int. """
-        i = int(s, 16)
-        if i >= 2**7:
-            i -= 2**8
-        return i    
 
 
 

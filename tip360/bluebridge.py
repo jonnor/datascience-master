@@ -1,10 +1,35 @@
 
+import gevent
+
+
 from bluepy import btle
 
 import argparse
 import time
 import struct
 import binascii
+
+sensor_data = dict()
+
+import flask
+from flask import Flask
+app = Flask(__name__)
+
+@app.route("/data")
+def get_data():
+    return flask.jsonify(sensor_data)
+
+@app.route('/')
+def get_index():
+    html = open('index.html', 'r').read()
+    return (html, 200, { 'content-type': 'text/html' })
+
+@app.route('/app.js')
+def get_app():
+    html = open('app.js', 'r').read()
+    return (html, 200, { 'content-type': 'text/javascript' })
+
+import gevent.pywsgi
 
 
 # Notification handles used in notification delegate
@@ -58,7 +83,7 @@ class MyDelegate(btle.DefaultDelegate):
         if (hnd == m_orient_handle):
             t, level = parse_audiolevel(data)
             print('Notification: Audio Level: {}'.format(level))
-
+            sensor_data['sensor1'] = level
         else:
             teptep = binascii.b2a_hex(data)
             print('Notification: UNKOWN: hnd {}, data {}'.format(hnd, teptep))
@@ -83,31 +108,40 @@ def main():
 
     args = parser.parse_args()
 
-    print('Connecting to ' + args.mac_address)
-    thingy = Thingy52(args.mac_address)
+    #mac = args.mac_address
+    mac = 'C0:6E:41:31:38:48'
+
+    print('Connecting to ' + mac)
+    thingy = Thingy52(mac)
     print('Connected...')
     thingy.setDelegate(MyDelegate())
 
-    try:
-        # Enabling selected sensors
-        print('Configuring sensors...')
+    # Enabling selected sensors
+    print('Configuring sensors...')
 
-        thingy.motion.enable()
-        thingy.motion.set_orient_notification(False)
-        time.sleep(0.5)
-        thingy.motion.set_orient_notification(True)
+    thingy.motion.enable()
+    thingy.motion.set_orient_notification(False)
+    time.sleep(0.5)
+    thingy.motion.set_orient_notification(True)
 
 
-        # Allow sensors time to start up (might need more time for some sensors to be ready)
-        print('Configured! Listening for changes')
-        time.sleep(1.0)
-
+    def check_sensor():
         while True:            
             thingy.waitForNotifications(args.t)
+            gevent.sleep(0.1)
+    gevent.spawn(check_sensor)
 
-    finally:
-        thingy.disconnect()
-        del thingy
+    # Allow sensors time to start up (might need more time for some sensors to be ready)
+    print('Configured! Listening for changes')
+    time.sleep(1.0)
+
+    
+    http_server = gevent.pywsgi.WSGIServer(('', 5000), app)
+    http_server.serve_forever()
+
+    #finally:
+    #    thingy.disconnect()
+    #    del thingy
 
 
 if __name__ == "__main__":

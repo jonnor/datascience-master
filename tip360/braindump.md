@@ -363,9 +363,8 @@ http://cense.ifsttar.fr
 Picaut J., Can A., Ardouin J., Crépeaux P., Dhorne T., Écotière D., Lagrange M. Characterization of urban sound environments using a comprehensive approach combining open data, measurements, and modeling. J. Acoust. Soc. Am. 2017;141:3808. doi: 10.1121/1.4988416. [CrossRef]
 
 ## Barcelona
-??
-
-http://www.sentilo.io/wordpress/urbiotica-sentilo-ready-noise-sensor-successfully-tested/
+Sentilo.
+Ref paper?
 
 ## Basel
 Design of a Mobile Low-Cost Sensor Network Using Urban Buses for Real-Time Ubiquitous Noise Monitoring.
@@ -398,31 +397,6 @@ Plan: 25 sensors, Jena. March
 An open platform for distributed urban noise monitoring
 https://ieeexplore.ieee.org/document/8249339
 
-### Oslo
-
-Innenfor byområdene er kommunen ansvarlig for å sammenstille kartleggingen fra de ulike støykildene. Der byområdet består av flere kommuner er kommunen med flest innbyggere ansvarlig.
-Utendørs støynivå skal beregnes med de metoder som er beskrevet i direktiv 2002/49/EF annex II, som endret ved direktiv (EU) 2015/996.
-
-
-## Literature
-
-[Designing and evaluating the performance of a wireless sensor network for environmental noise monitoring applications](http://www.sea-acustica.es/fileadmin/Oporto16/28.pdf). 2016
-Describes a Raspberry PI based system built for 200 GBP. 3G USB modem.
-IEC61672 Class 1.
-Collects 200 ms long audio buffers continiously. 44.1kHz
-A-weighted. 1 broadband noise, and 26 1/3 octave band (40 Hz-12.5 kHz) measurements
-Aggregated statistics (minute,hour,day) and per-minute Lmin, Lmax, L10, L50 and L90 calculated on server.
-Microphone. Cirrus Logic WM7132PE. $1.48, 250uA
-WM5102 audio codec.
-Calibration via standard 1/4" calibration units.
-Processing each sample in `<150ms 99.5%` of time
-
-[Støy Veg WMS](https://kartkatalog.geonorge.no/metadata/statens-vegvesen/stoy-veg-wms/4bbae38e-4718-481d-9827-237cd5e115c8)
-Åpne data om støy rundt vei. Statens Veivesen.
-Strategisk støykartlegging etter forurensingsforskriften §5 og Støyvarselkart etter T-1442.
-Datasettet oppdateres ikke, men produseres på nytt hvert 5 år.
-Gjennomført med Statens vegvesens beregningsverktøy NorStøy.
-Beregningsmetode er Nord2000Road.
 
 ### Noise classification
 
@@ -432,9 +406,11 @@ Low-Cost Alternatives for Urban Noise Nuisance Monitoring Using Wireless Sensor 
 IEEE Sensors, 2014
 https://www.researchgate.net/publication/265726706_Low-Cost_Alternatives_for_Urban_Noise_Nuisance_Monitoring_Using_Wireless_Sensor_Networks
 
-Measuring the equivalent noise pressure level (called Leq) to acquite an accurate sound map using wireless networks with acoustic sensors. However, even with similar values of Leq, people can feel the noise differently according to its frequency characteristics.
+Measuring the equivalent noise pressure level (called Leq) to acquite an accurate sound map using wireless networks with acoustic sensors.
+However, even with similar values of Leq, people can feel the noise differently according to its frequency characteristics.
 Thus, indexes which can express people’s feelings by subjective measures are required.
-In this paper we analyze the suitability of using the psycho-acoustic metrics given by the Zwicker’s model, instead of just only considering Leq. The goal is to evaluate the hardware limitations of a low-cost wireless acoustic sensor network that is used to measure the annoyance,
+In this paper we analyze the suitability of using the psycho-acoustic metrics given by the Zwicker’s model, instead of just only considering Leq.
+The goal is to evaluate the hardware limitations of a low-cost wireless acoustic sensor network that is used to measure the annoyance,
 using two types of commercial and off-the shelf sensor nodes, Tmote-Invent nodes and Raspberry Pi platforms.
 Model measures the Nuisance (N) based on other parameters which are:
 Loudness (L), Sharpness (S), Roughness (R) and Fluctuation Strength (F).

@@ -333,7 +333,8 @@ Using two IIRs to get the response of an FIR filter, but with fewer calculations
 
 Dealing with lack of (labeled) data
 
-* Self learning. [Using Pseudo labeling for semi-supervised learning](https://towardsdatascience.com/simple-explanation-of-semi-supervised-learning-and-pseudo-labeling-c2218e8c769b). After having trained model on labeled data, run it on the unlabeled data to get (pseudo) labels, then train it on the combined setup. Up to 25% pseudo labels in a batch. When method provides confidence score, take only the most confident samples into training set.
+* Self learning. [Using Pseudo labeling for semi-supervised learning](https://towardsdatascience.com/simple-explanation-of-semi-supervised-learning-and-pseudo-labeling-c2218e8c769b).
+After having trained model on labeled data, run it on the unlabeled data to get (pseudo) labels, then train it on the combined setup. Up to 25% pseudo labels in a batch. When method provides confidence score, take only the most confident samples into training set.
 Also called .
 * Semi-supervised learning can be done using a generative model, like Gaussian mixture, Naive Bayes, Hidden Markov.
 Cluster-and-label: Use a clustering algorithm (unsupervised), take the labels of the majority of labeled data.
@@ -348,23 +349,23 @@ Train one classifier per feature, then have the two classifiers teach eachother.
 * Synthesising samples. Oversampling: duplicate some samples as-is.
 Randomly sample attributes.
 SMOTE, especially for balancing minority classes.
-* Data augmentation. Creating new samples based on peturbations of originals.
 Example: [librosa sound augmentation](https://www.kaggle.com/huseinzol05/sound-augmentation-librosa)
 * Programmatic supervision. Distant supervision. 
 * Weak supervision. [Data Programming](http://dawn.cs.stanford.edu/pubs/snorkel-nips2016.pdf)
 generates labels that are noisy and possibly conflicting, then learns the inaccuracies.
+
+Data Augmentation
+
 * [mixup: Beyond Empirical Risk Minimization](https://arxiv.org/abs/1710.09412). FB Research, 2017.
 Data-agnostic data augmentation technique.
 Improves generalization.
 Very simple, done by mixing two sample files and their labels.
-
+* Cutout / random erase
+* [deepaugment](https://github.com/barisozmen/deepaugment). Learn augmentation strategies from dataset, using Bayesian Optimization
 
 Deep learning
 
-* [Self-normalizing neural network](https://arxiv.org/abs/1706.02515) (SNN). SELU activation function and suitable normalization
-avoid need for batch-normalization. Faster and smoother convergence during training. Weights centered around 0.
-Designed for FNN, but can also be used with CNN. [CIFAR-10 example](https://github.com/bioinf-jku/SNNs/blob/master/Keras-CNN/CIFAR10-Conv-SELU.py)
-* [Dense Convolutional Networks](https://arxiv.org/pdf/1608.06993.pdf). Each layer gets all previous layers as input. Gives SOFA results over ResNet on CIFAR-100.
+* [Andrej Karpathy: A Recipe for Training Neural Networks](https://karpathy.github.io/2019/04/25/recipe/)
 
 Statistics
 

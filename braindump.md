@@ -1,3 +1,67 @@
+
+
+## Learning
+
+## Autumn 2019
+
+Univerity of Oslo classes
+
+* [STK-IN4300 – Statistical learning methods in Data Science](https://www.uio.no/studier/emner/matnat/math/STK-IN4300/index-eng.html).
+Autumn. 10 credits.
+2 mandatory assignments.
+Examination to be announced.
+* [STK4021 – Applied Bayesian Analysis](https://www.uio.no/studier/emner/matnat/math/STK4021/index-eng.html).
+Autumn. 10 credits.
+1 mandatory assignment.
+- [IN5230 – Electronic Noise - Estimates and Countermeasures](https://www.uio.no/studier/emner/matnat/ifi/IN5230/index-eng.html).
+10 credits. Autumn.
+Two lectures per week. Some weeks with lab/excercise.
+4 mandatory labs.
+* [MCT4047 – Music and Machine Learning](https://www.uio.no/studier/emner/hf/imv/MCT4047/index.html).
+Autumn. 5 credits.
+Video lecture preparations.
+Two-weeks intensive workshop (30 hours) with compulsory attendance (80%).
+Exam: Term paper.
+* [MCT4031 – Applied MCT Project 1](https://www.uio.no/studier/emner/hf/imv/MCT4031/index.html).
+Autumn. 10 credits.
+Prerequisite: MCT4000.
+Project-based. Problems defined by external partner.
+Introduction seminar.
+Weekly seminars with progress reporting.
+Exam: Term paper + Demo, oral discussion.
+* [ECON3170 – Data Science for Economists](https://www.uio.no/studier/emner/sv/oekonomi/ECON3170/index.html)
+- [GEO3515 – Remote Sensing](https://www.uio.no/studier/emner/matnat/geofag/GEO3515/index-eng.html)
+Autumn. 10p.
+Written project 30%. Approx 5 pages.
+Written exam 70%.
+
+
+## Spring 2020
+
+- [IN5450 – Array Signal Processing](https://www.uio.no/studier/emner/matnat/ifi/IN5450/index.html).
+Spring. 10 credits.
+Oral exam (or written if many).
+Emphasis on imaging systems and direction of arrival estimation.
+Depth review of classical and adaptive array processing techniques in time and Fourier domain.
+Overview of their use in different application areas.
+* [STK4150 – Environmental and spatial statistics](https://www.uio.no/studier/emner/matnat/math/STK4150/index-eng.html).
+Spring. 10 credits.
+1 mandatory assignment.
+- [GEO3460 – Surveying, Photogrammetry and Spatial Analysis](https://www.uio.no/studier/emner/matnat/geofag/GEO3460/index-eng.html).
+10 credits. Spring.
+Emphasis is on practical training in the acquisition,
+processing and presentation of data from surveying and photogrammetry.
+Up to 6 hours of lectures and up to 4 hours of practicals per week.
+Weekly exercises, and reports from 4 of these will be awarded a pass/fail.
+Two compulsory assignments counts towards the final grade.
+A 3-4 day compulsory field course will be at the end of the semester.
+* [STK4060 – Time series](https://www.uio.no/studier/emner/matnat/math/STK4060/index-eng.html)
+Spring. 10 credits.
+1 mandatory assignment.
+Autoregressive processes and moving averages (i.e. ARMA-processes) and with stationary processes.
+Correlogram, periodogram, spectrum. State-space models (Kalman filter).
+
+
 ## Ideas
 
 Flowhub related
